@@ -36,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void goLogin(View view){ closeDrawer(drawer_layout);}
 
+    public void goSignUp(View view){ redirectActivity(this, SiginupActivity.class);}
+
     public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
