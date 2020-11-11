@@ -1,0 +1,55 @@
+package graduationproject.homemanagementsystem;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+
+public class MainActivity extends AppCompatActivity {
+
+    private DrawerLayout drawer_layout;
+    private LinearLayout drawer_home;
+
+    @SuppressLint("ResourceAsColor")
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_home = (LinearLayout) findViewById(R.id.drawer_home);
+
+        drawer_home.setBackgroundColor(R.color.shade);
+    }
+
+    public void ClickMenu(View view){
+        openDrawer(drawer_layout);
+    }
+
+    public void goHome(View view){ closeDrawer(drawer_layout);}
+
+    public void goLogin(View view){ redirectActivity(this, LoginActivity.class);}
+
+    public static void openDrawer(DrawerLayout drawerLayout) {
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public static void closeDrawer(DrawerLayout drawerLayout){
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    public static void redirectActivity(Activity activity, Class aClass) {
+        Intent intent = new Intent(activity,aClass);
+        activity.startActivity(intent);
+    }
+}
