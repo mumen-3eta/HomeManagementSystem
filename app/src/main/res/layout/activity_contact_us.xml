@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient"
-        tools:context=".SiginupActivity">
+        tools:context=".ContactUsActivity">
 
 
         <include
@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Sign Up"
+                android:text="Contact Us"
                 android:textColor="#FFFFFF"
                 android:textSize="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -48,23 +48,41 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:padding="10dp"/>
 
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:paddingLeft="20dp"/>
 
             <EditText
                 android:id="@+id/editTextTextPersonName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/feild_background"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Enter Your Name"
                 android:inputType="textPersonName"/>
 
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:paddingLeft="20dp"/>
+
             <EditText
                 android:id="@+id/editTextTextEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/feild_background"
                 android:ems="10"
                 android:gravity="center"
@@ -72,27 +90,27 @@
                 android:inputType="textEmailAddress" />
 
 
-            <EditText
-                android:id="@+id/editTextTextPassword"
+            <TextView
+                android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:background="@drawable/feild_background"
-                android:ems="10"
-                android:gravity="center"
-                android:hint="Enter Your Password"
-                android:inputType="textPassword" />
+                android:text="Message"
+                android:paddingLeft="20dp"
+                />
 
             <EditText
-                android:id="@+id/editTextTextPassword2"
+                android:id="@+id/editTextTextPersonName2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/feild_background"
                 android:ems="10"
-                android:gravity="center"
-                android:hint="Confirm Your Password"
-                android:inputType="textPassword" />
+                android:inputType="textLongMessage"
+                android:hint="Enter Your Message"
+                android:gravity="start"
+                android:padding="10dp"/>
 
             <Button
                 android:id="@+id/button2"
@@ -101,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
                 android:padding="10dp"
-                android:text="Sign Up"
+                android:text="Send"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 

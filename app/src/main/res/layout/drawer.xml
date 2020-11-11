@@ -102,7 +102,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:id="@+id/drawer_contact">
+        android:id="@+id/drawer_contact"
+        android:onClick="goAboutUs">
 
         <ImageView
             android:layout_width="wrap_content"

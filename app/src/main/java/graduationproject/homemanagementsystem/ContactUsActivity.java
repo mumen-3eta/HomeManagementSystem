@@ -11,21 +11,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-public class SiginupActivity extends AppCompatActivity {
+public class ContactUsActivity extends AppCompatActivity {
 
-    private LinearLayout drawer_sign;
+    private LinearLayout drawer_contact;
     private DrawerLayout drawer_layout;
 
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_siginup);
+        setContentView(R.layout.activity_contact_us);
 
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer_sign = (LinearLayout) findViewById(R.id.drawer_sign);
+        drawer_contact = (LinearLayout) findViewById(R.id.drawer_contact);
 
-        drawer_sign.setBackgroundColor(R.color.shade);
+        drawer_contact.setBackgroundColor(R.color.shade);
     }
 
     public void ClickMenu(View view){
@@ -36,9 +36,9 @@ public class SiginupActivity extends AppCompatActivity {
 
     public void goLogin(View view){ redirectActivity(this, LoginActivity.class);}
 
-    public void goSignUp(View view){ closeDrawer(drawer_layout);}
+    public void goSignUp(View view){ redirectActivity(this, SiginupActivity.class);}
 
-    public void goAboutUs(View view){ redirectActivity(this, ContactUsActivity.class);}
+    public void goAboutUs(View view){ closeDrawer(drawer_layout);}
 
     public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);

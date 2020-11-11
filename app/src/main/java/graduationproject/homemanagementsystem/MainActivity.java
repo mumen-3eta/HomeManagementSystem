@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void goSignUp(View view){ redirectActivity(this, SiginupActivity.class);}
 
+    public void goAboutUs(View view){ redirectActivity(this, ContactUsActivity.class);}
+
     public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
