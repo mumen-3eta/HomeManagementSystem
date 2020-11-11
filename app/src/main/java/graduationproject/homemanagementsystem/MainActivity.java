@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout drawer_home;
 
     @SuppressLint("ResourceAsColor")
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
