@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,7 +26,9 @@ public class ContactUsActivity extends AppCompatActivity {
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer_contact = (LinearLayout) findViewById(R.id.drawer_contact);
 
-        drawer_contact.setBackgroundColor(R.color.shade);
+        Drawable drawable =  getResources().getDrawable(R.drawable.drawer_shoice);
+
+        drawer_contact.setBackground(drawable);
     }
 
     public void ClickMenu(View view){

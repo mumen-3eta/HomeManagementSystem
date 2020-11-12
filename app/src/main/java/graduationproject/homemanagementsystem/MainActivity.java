@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer_home = (LinearLayout) findViewById(R.id.drawer_home);
 
-        drawer_home.setBackgroundColor(R.color.shade);
+        Drawable drawable =  getResources().getDrawable(R.drawable.drawer_shoice);
+
+        drawer_home.setBackground(drawable);
     }
 
     public void ClickMenu(View view){
