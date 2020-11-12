@@ -42,10 +42,6 @@
                 android:text="Login"
                 android:textColor="#FFFFFF"
                 android:textSize="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:padding="10dp"/>
 
 
@@ -91,7 +87,8 @@
                 android:textColor="#FFFFFF"
                 android:textSize="17dp"
                 android:paddingLeft="20dp"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:onClick="goResetPassword"/>
 
         </LinearLayout>
 
