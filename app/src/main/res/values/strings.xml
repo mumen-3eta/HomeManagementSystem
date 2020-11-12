@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Home Management System</string>
+    <string name="reset_password_message">submit a registered email so that we can confirm your identity and send you an email to reset the password</string>
+    <string name="homeScreenText1">The Home Management Experience You really want</string>
+    <string name="homeScreenText2">Now you can confidently choose Home Management System with ease of mind.</string>
+    <string name="abutUsText1">We are five graduate students and this is our graduation project and we selected this project because we think it will benefit and solve a problem or it’s users.</string>
+    <string name="aboutUsText2">This application aims to make it easier for the user to control the house appliances.</string>
 </resources>
