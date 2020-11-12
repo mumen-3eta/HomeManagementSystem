@@ -81,14 +81,15 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Forget Password!"
                 android:textColor="#FFFFFF"
                 android:textSize="17dp"
                 android:paddingLeft="20dp"
                 android:padding="10dp"
-                android:onClick="goResetPassword"/>
+                android:onClick="goResetPassword"
+                android:layout_gravity="start"/>
 
         </LinearLayout>
 
