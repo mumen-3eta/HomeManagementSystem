@@ -9,14 +9,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class ResetPasswordActivity extends AppCompatActivity {
+public class ChangePasswordActivity extends AppCompatActivity {
 
     private DrawerLayout drawer_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_password);
+        setContentView(R.layout.activity_change_password);
 
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
     }
@@ -34,8 +34,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
     public void goContactUs(View view){ redirectActivity(this, ContactUsActivity.class);}
 
     public void goAboutUs(View view){ redirectActivity(this, AboutUsActivity.class);}
-
-    public void goChangePassword(View view){ redirectActivity(this, ChangePasswordActivity.class);}
 
     public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
