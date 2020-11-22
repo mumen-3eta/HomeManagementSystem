@@ -1,0 +1,263 @@
+:root {
+    --background_loginPage:  #343434 ;
+    --white_color:  white ;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    -webkit-transition: all 0.25s;
+    transition: all 0.25s;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+button:focus {
+    outline: none;
+}
+
+nav.nav__top-welcome {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0px auto;
+    padding-top: 30px;
+}
+
+nav.nav__top-welcome ul {
+    display: inline-block;
+    margin: 30px auto;
+}
+
+nav.nav__top-welcome ul li {
+    display: inline-block;
+    margin: 0 7px;
+}
+
+nav.nav__top-welcome ul li a {
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+nav.nav__top-welcome ul li a:focus, nav ul li a:hover {
+    color: #35728f;
+}
+
+nav.nav__top-welcome ul .siginUp {
+    background: #000000;
+    -webkit-box-shadow: 0px 4px 4px #00000040;
+    box-shadow: 0px 4px 4px #00000040;
+    border-radius: 30px;
+    padding: 6px 15px;
+}
+
+nav.nav__top-welcome ul .siginUp a {
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+nav.nav__top-welcome ul .siginUp a:focus, nav ul .siginUp a:hover {
+    color: white;
+    border-bottom: none;
+}
+
+nav.nav__top-welcome .Nav-List-1 {
+    margin: 0px 40px;
+    position: relative;
+}
+
+nav.nav__top-welcome .Nav-List-1 li:nth-child(1)::after {
+    content: "";
+    background: none;
+    width: 55px;
+    height: 3px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -5px;
+    right: 105px;
+}
+
+nav.nav__top-welcome .Nav-List-1 li:nth-child(1):focus::after, nav .Nav-List-1 li:nth-child(1):hover::after {
+    content: "";
+    -webkit-transition: linear 0.3s;
+    transition: linear 0.3s;
+    background-color: #35728f;
+    width: 55px;
+    height: 3px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -5px;
+    right: 165px;
+}
+
+nav.nav__top-welcome .Nav-List-1 li:nth-child(2)::after {
+    content: "";
+    background: none;
+    width: 60px;
+    height: 3px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -5px;
+    right: 165px;
+}
+
+nav.nav__top-welcome .Nav-List-1 li:nth-child(2):focus::after, nav .Nav-List-1 li:nth-child(2):hover::after {
+    -webkit-transition: linear 0.3s;
+    transition: linear 0.3s;
+    content: "";
+    background-color: #35728f;
+    width: 60px;
+    height: 3px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -5px;
+    right: 95px;
+}
+
+nav.nav__top-welcome .Nav-List-1 li:nth-child(3)::after {
+    content: "";
+    background: none;
+    width: 90px;
+    height: 3px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -5px;
+    right: 95px;
+}
+
+nav.nav__top-welcome .Nav-List-1 li:nth-child(3):focus::after, nav .Nav-List-1 li:nth-child(3):hover::after {
+    -webkit-transition: linear 0.3s;
+    transition: linear 0.3s;
+    content: "";
+    background: #35728f;
+    width: 80px;
+    height: 3px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: -5px;
+    right: 5px;
+}
+
+.nav-items {
+    -webkit-transition: ease-in-out 0.5s;
+    transition: ease-in-out 0.5s;
+    display: block;
+}
+
+.bargar-item {
+    margin: 30px 0px;
+    -webkit-transition: ease-in-out 0.5s;
+    transition: ease-in-out 0.5s;
+    display: none;
+    cursor: pointer;
+}
+
+.open {
+    -webkit-transition: ease-in-out 0.5s;
+    transition: ease-in-out 0.5s;
+    display: none;
+}
+
+
+@media only screen and (max-width: 800px) {
+    .nav__top-w{
+        /*overflow: hidden;*/
+    }
+    nav.nav__top-welcome {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 80%;
+        margin: 30px auto;
+    }
+    .nav-items {
+        display: none;
+    }
+    .bargar-item {
+        display: contents;
+    }
+    svg.logo-nav {
+        width: 80px;
+        height: 80px;
+        padding: 10px 0px;
+    }
+    svg.bargar {
+        width: 45px;
+        height: 45px;
+        padding: 10px 0px;
+    }
+    .min-nav-items {
+        background: linear-gradient(103.72deg, #45A0F4 0%, #68DFA6 105.3%);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        position: relative;
+        z-index: 1;
+    }
+
+    .min-nav-items ul {
+        text-align: center;
+        padding: 15px;
+    }
+
+    .min-nav-items ul li {
+        padding: 30px;
+    }
+
+    .min-nav-items ul li a {
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        -webkit-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+
+    .min-nav-items ul li a:focus, .min-nav-items ul li a:hover {
+        color: #35728f;
+    }
+
+    .min-nav-items ul:nth-child(2) li {
+        display: inline;
+        padding: 10px;
+    }
+
+    .min-nav-items ul .siginUp {
+        background: #000000;
+        -webkit-box-shadow: 0px 4px 4px #00000040;
+        box-shadow: 0px 4px 4px #00000040;
+        border-radius: 30px;
+        padding: 6px 15px;
+    }
+
+    .min-nav-items ul .siginUp a {
+        color: white;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+
+    .min-nav-items ul .siginUp a:focus, .min-nav-items ul .siginUp a:hover {
+        color: white;
+        border-bottom: none;
+    }
+}
