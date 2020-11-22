@@ -5,11 +5,11 @@
 
     <section>
       <div class="container py-3">
-          <div class="row">
-              <div class="text-center col-12 col-md-12">
-                <h2> Add Device </h2>
-              </div><!-- End Of col-->
-          </div><!-- End Of row-->
+        <div class="row">
+          <div class="text-center col-12 col-md-12">
+            <h2> Add New Device </h2>
+          </div><!-- End Of col-->
+        </div><!-- End Of row-->
       </div><!-- End Of container-->
     </section>
   </div>
@@ -22,11 +22,11 @@ import LeftNavBar from "@/components/MainPage/Nav/LeftNav";
 
 export default {
   name: "AddDevices",
-  components:{
+  components: {
     TopNavBar,
     LeftNavBar,
   },
-  computed:{
+  computed: {
     ...mapGetters(['GetUser']),
     ...mapGetters(['user']),
 
@@ -35,5 +35,5 @@ export default {
 </script>
 
 <style scoped>
-  @import "../../assets/css/MainPageStyle/_addDeviceStyle.css";
+@import "../../assets/css/MainPageStyle/_addDeviceStyle.css";
 </style>
