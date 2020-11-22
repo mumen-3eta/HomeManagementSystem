@@ -12,27 +12,28 @@ import ChangePasswordPage from "@/components/ChangePasswordPage";
 import ProfileUser from "@/components/MainPage/ProfileUser";
 import AddDevices from "@/components/MainPage/AddDevices";
 import PageNotFound from "@/components/ErrorsPages/PageNotFound";
+import DeviceInfo from "@/components/MainPage/DeviceInfo";
 
 Vue.use(Router)
 
 export default new Router({
-    mode : 'history',
-    routes:[
-        {path: '/' , name:"WelcomePage", component: WelcomePage},
-        {path: '/aboutUs' ,name: "AboutUsPage" , component: AboutUsPage},
-        {path: '/contactUs' , name: "ContactUsPage" , component: ContactUsPage},
+    mode: 'history',
+    routes: [
+        {path: '/', name: "WelcomePage", component: WelcomePage},
+        {path: '/aboutUs', name: "AboutUsPage", component: AboutUsPage},
+        {path: '/contactUs', name: "ContactUsPage", component: ContactUsPage},
         {
-            path: '/login' ,
-            name : "LoginPage" ,
+            path: '/login',
+            name: "LoginPage",
             component: LoginPage,
             // already be login 
-            beforeEnter: (to, from, next)=>{
+            beforeEnter: (to, from, next) => {
                 // if (localStorage.getItem('token') != null){
-                    if (store.getters['user']){
-                        return next({
-                            name:"WelcomePage"
-                        })
-                    }
+                if (store.getters['user']) {
+                    return next({
+                        name: "WelcomePage"
+                    })
+                }
                 // }
 
                 next()
@@ -40,14 +41,14 @@ export default new Router({
 
         },
         {
-            path: '/register' ,
+            path: '/register',
             name: "SignUpPage",
             component: SignUpPage,
             // already be login
-            beforeEnter: (to, from, next)=>{
-                if (store.getters['user']){
+            beforeEnter: (to, from, next) => {
+                if (store.getters['user']) {
                     return next({
-                        name:"WelcomePage"
+                        name: "WelcomePage"
                     })
                 }
 
@@ -55,14 +56,14 @@ export default new Router({
             }
         },
         {
-            path: '/forgetPassword' ,
-            name: "ForgetPassword" ,
+            path: '/forgetPassword',
+            name: "ForgetPassword",
             component: ForgetPassword,
             // already be login
-            beforeEnter: (to, from, next)=>{
-                if (store.getters['user']){
+            beforeEnter: (to, from, next) => {
+                if (store.getters['user']) {
                     return next({
-                        name:"WelcomePage"
+                        name: "WelcomePage"
                     })
                 }
 
@@ -70,14 +71,14 @@ export default new Router({
             }
         },
         {
-            path: '/ChangePassword' ,
-            name: "ChangePasswordPage" ,
+            path: '/ChangePassword',
+            name: "ChangePasswordPage",
             component: ChangePasswordPage,
             // already be login
-            beforeEnter: (to, from, next)=>{
-                if (store.getters['user']){
+            beforeEnter: (to, from, next) => {
+                if (store.getters['user']) {
                     return next({
-                        name:"WelcomePage"
+                        name: "WelcomePage"
                     })
                 }
 
@@ -86,14 +87,14 @@ export default new Router({
         },
         {
             path: '/mainPage',
-            name: "mainPage" ,
-            component:  main,
+            name: "mainPage",
+            component: main,
             // must be login
-            beforeEnter: (to, from, next)=>{
+            beforeEnter: (to, from, next) => {
                 // if (localStorage.getItem('token') == null){
-                if (!store.getters['user']){
+                if (!store.getters['user']) {
                     return next({
-                        name:"LoginPage"
+                        name: "LoginPage"
                     })
                 }
                 // }
@@ -103,14 +104,14 @@ export default new Router({
         },
         {
             path: '/mainPage/Profile/user',
-            name: "ProfileUser" ,
-            component:  ProfileUser,
+            name: "ProfileUser",
+            component: ProfileUser,
             // must be login
-            beforeEnter: (to, from, next)=>{
+            beforeEnter: (to, from, next) => {
                 // if (localStorage.getItem('token') == null){
-                if (!store.getters['user']){
+                if (!store.getters['user']) {
                     return next({
-                        name:"LoginPage"
+                        name: "LoginPage"
                     })
                 }
                 // }
@@ -120,14 +121,31 @@ export default new Router({
         },
         {
             path: '/mainPage/add-device',
-            name: "AddDevices" ,
-            component:  AddDevices,
+            name: "AddDevices",
+            component: AddDevices,
             // must be login
-            beforeEnter: (to, from, next)=>{
+            beforeEnter: (to, from, next) => {
                 // if (localStorage.getItem('token') == null){
-                if (!store.getters['user']){
+                if (!store.getters['user']) {
                     return next({
-                        name:"LoginPage"
+                        name: "LoginPage"
+                    })
+                }
+                // }
+
+                next()
+            }
+        },
+        {
+            path: '/mainPage/DeviceInfo/:Device_id',
+            name: "DeviceInfo",
+            component: DeviceInfo,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                // if (localStorage.getItem('token') == null){
+                if (!store.getters['user']) {
+                    return next({
+                        name: "LoginPage"
                     })
                 }
                 // }
