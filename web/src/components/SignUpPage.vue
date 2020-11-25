@@ -9,52 +9,88 @@
             <div class="Group1">
               <div class="input-group ">
                 <label for="name">Name</label>
-                <input v-if="!submitStatus" :class="{ }" v-model.trim="$v.name.$model"  type="text" placeholder="Enter Your Name" name="name" >
-                <input v-else-if="submitStatus" v-model.trim="$v.name.$model" :class="{ 'inputError':$v.name.$error ,'inputSuccess':!$v.name.$invalid }" type="text" placeholder="Enter Your Name" name="name" id="name">
-                <div >
-                  <span class="ErrorText" v-if="!$v.name.minLength"> Name must have at least {{$v.name.$params.minLength.min}} letters</span>
-                  <span class="ErrorText" v-if="!$v.name.maxLength"> Name must have at most {{$v.name.$params.maxLength.min}} letters</span>
+                <input v-if="!submitStatus" v-model.trim="$v.name.$model" :class="{ 'rounded-pill':true }" name="name"
+                       placeholder="Enter Your Name" type="text">
+                <input v-else-if="submitStatus" id="name"
+                       v-model.trim="$v.name.$model"
+                       :class="{ 'inputError':$v.name.$error ,'inputSuccess':!$v.name.$invalid , 'rounded-pill':true }"
+                       name="name" placeholder="Enter Your Name" type="text">
+                <div>
+                  <span v-if="!$v.name.minLength"
+                        class="ErrorText"> Name must have at least {{ $v.name.$params.minLength.min }} letters</span>
+                  <span v-if="!$v.name.maxLength"
+                        class="ErrorText"> Name must have at most {{ $v.name.$params.maxLength.min }} letters</span>
                 </div>
               </div>
               <div class="input-group">
                 <label for="email">E-Mail</label>
-                <input v-if="!submitStatus" :class="{ }" v-model.trim="$v.email.$model"  type="email" placeholder="Enter Your E-Mail" name="email"  >
-                <input v-else-if="submitStatus" v-model.trim="$v.email.$model" :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid }" type="email" placeholder="Enter Your E-Mail" name="email" id="email" >
+                <input v-if="!submitStatus" v-model.trim="$v.email.$model" :class="{ 'rounded-pill':true }" name="email"
+                       placeholder="Enter Your E-Mail" type="email">
+                <input v-else-if="submitStatus" id="email"
+                       v-model.trim="$v.email.$model"
+                       :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid , 'rounded-pill':true}"
+                       name="email" placeholder="Enter Your E-Mail" type="email">
                 <div>
-                  <span class="ErrorText" v-if="!$v.email.minLength"> Name must have at least {{$v.email.$params.minLength.min}} letters</span>
-                  <span class="ErrorText" v-if="!$v.email.maxLength"> Name must have at most {{$v.email.$params.maxLength.min}} letters</span>
+                  <span v-if="!$v.email.minLength"
+                        class="ErrorText"> Name must have at least {{ $v.email.$params.minLength.min }} letters</span>
+                  <span v-if="!$v.email.maxLength"
+                        class="ErrorText"> Name must have at most {{ $v.email.$params.maxLength.min }} letters</span>
                   <div v-if="error">
-                    <span class="ErrorText"> {{error}}</span>
+                    <span class="ErrorText"> {{ error }}</span>
                   </div>
                 </div>
               </div>
               <div class="input-group ">
                 <label for="Password">Password</label>
-                <input v-if="!submitStatus" :class="{ }" v-model.trim="$v.password.$model"  type="password" placeholder="Enter Your Password" name="Password"  >
-                <input v-else-if="submitStatus" v-model.trim="$v.password.$model" :class="{ 'inputError':$v.password.$error ,'inputSuccess':!$v.password.$invalid }" type="password" placeholder="Enter Your Password" name="Password" id="Password" >
+                <input v-if="!submitStatus" v-model.trim="$v.password.$model" :class="{ 'rounded-pill':true }"
+                       name="Password" placeholder="Enter Your Password" type="password">
+                <input v-else-if="submitStatus" id="Password"
+                       v-model.trim="$v.password.$model"
+                       :class="{ 'inputError':$v.password.$error ,'inputSuccess':!$v.password.$invalid , 'rounded-pill':true}"
+                       name="Password" placeholder="Enter Your Password" type="password">
                 <div>
-                  <span class="ErrorText" v-if="!$v.password.minLength"> password must have at least {{$v.password.$params.minLength.min}} letters</span>
-                  <span class="ErrorText" v-if="!$v.password.maxLength"> password must have at most {{$v.password.$params.maxLength.min}} letters</span>
+                  <span v-if="!$v.password.minLength"
+                        class="ErrorText"> password must have at least {{
+                      $v.password.$params.minLength.min
+                    }} letters</span>
+                  <span v-if="!$v.password.maxLength"
+                        class="ErrorText"> password must have at most {{
+                      $v.password.$params.maxLength.min
+                    }} letters</span>
                 </div>
               </div>
               <div class="input-group">
                 <label for="password_confirmation">Confirm Password</label>
-                <input v-if="!submitStatus" :class="{ }" v-model.trim="$v.password_confirmation.$model"  type="password" placeholder="Confirm password" name="password_confirmation" >
-                <input v-else-if="submitStatus" v-model.trim="$v.password_confirmation.$model" :class="{ 'inputError':$v.password_confirmation.$error ,'inputSuccess':!$v.password_confirmation.$invalid }" type="password" placeholder="Confirm password" name="password_confirmation" id="password_confirmation" >
+                <input v-if="!submitStatus" v-model.trim="$v.password_confirmation.$model"
+                       :class="{ 'rounded-pill':true }" name="password_confirmation" placeholder="Confirm password"
+                       type="password">
+                <input v-else-if="submitStatus" id="password_confirmation"
+                       v-model.trim="$v.password_confirmation.$model"
+                       :class="{ 'inputError':$v.password_confirmation.$error ,'inputSuccess':!$v.password_confirmation.$invalid  , 'rounded-pill':true }"
+                       name="password_confirmation" placeholder="Confirm password"
+                       type="password">
                 <div>
-                  <span class="ErrorText" v-if="!$v.password_confirmation.minLength"> password must have at least {{$v.password_confirmation.$params.minLength.min}} letters</span>
-                  <span class="ErrorText" v-if="!$v.password_confirmation.maxLength"> password must have at most {{$v.password_confirmation.$params.maxLength.min}} letters</span>
-                  <span class="ErrorText" v-if="!$v.password_confirmation.sameAsPassword">Passwords must be identical</span>
+                  <span v-if="!$v.password_confirmation.minLength"
+                        class="ErrorText"> password must have at least {{
+                      $v.password_confirmation.$params.minLength.min
+                    }} letters</span>
+                  <span v-if="!$v.password_confirmation.maxLength"
+                        class="ErrorText"> password must have at most {{
+                      $v.password_confirmation.$params.maxLength.min
+                    }} letters</span>
+                  <span v-if="!$v.password_confirmation.sameAsPassword"
+                        class="ErrorText">Passwords must be identical</span>
                 </div>
               </div>
             </div>
 
-            <div v-if="submitStatus" >
-              <p class="SuccessText" v-if="submitStatus === 'OK'&& !error">Thanks for your submission!</p>
-              <p class="ErrorText" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
-              <p class="PENDINGText" v-if="submitStatus === 'PENDING'">Sending...</p>
+            <div v-if="submitStatus">
+              <p v-if="submitStatus === 'OK'&& !error" class="SuccessText">Thanks for your submission!</p>
+              <p v-if="submitStatus === 'ERROR'" class="ErrorText">Please fill the form correctly.</p>
+              <p v-if="submitStatus === 'PENDING'" class="PENDINGText">Sending...</p>
             </div>
-            <scale-loader v-show="Loader" :loading="loading" :color="color" :height="height" :width="width"></scale-loader>
+            <scale-loader v-show="Loader" :color="color" :height="height" :loading="loading"
+                          :width="width"></scale-loader>
 
             <div v-show="!Loader" class="Group2">
               <div class="btn-group">
@@ -70,15 +106,16 @@
 </template>
 
 <script>
-import { required, minLength,maxLength,sameAs} from 'vuelidate/lib/validators'
+import {maxLength, minLength, required, sameAs} from 'vuelidate/lib/validators'
 import axios from 'axios'
 import NavBar from "@/components/TopBar/NavBar";
 import ScaleLoader from 'vue-spinner/src/ScaleLoader.vue'
+
 export default {
   name: "SignUpPage",
-  components:{
-      NavBar,
-      ScaleLoader,
+  components: {
+    NavBar,
+    ScaleLoader,
   },
   props: {
     loading: {
@@ -113,24 +150,29 @@ export default {
       password: '',
       password_confirmation: '',
       submitStatus: null,
-      error:null,
-      Loader:false,
+      error: null,
+      Loader: false,
     }
   },
-  validations:{
-    name:{required, minLength:minLength(3), maxLength:maxLength(50)},
-    email:{required, minLength:minLength(4), maxLength:maxLength(70)},
-    password:{required, minLength:minLength(6), maxLength:maxLength(60)},
-    password_confirmation:{required, minLength:minLength(6), maxLength:maxLength(60),sameAsPassword: sameAs('password')},
-
+  validations: {
+    name: {required, minLength: minLength(3), maxLength: maxLength(50)},
+    email: {required, minLength: minLength(4), maxLength: maxLength(70)},
+    password: {required, minLength: minLength(6), maxLength: maxLength(60)},
+    password_confirmation: {
+      required,
+      minLength: minLength(6),
+      maxLength: maxLength(60),
+      sameAsPassword: sameAs('password')
     },
-  methods:{
-    async checkForm () {
+
+  },
+  methods: {
+    async checkForm() {
       this.$v.$touch()
       if (this.$v.$invalid) {
-        this.Loader = true ;
+        this.Loader = true;
         setTimeout(() => {
-          this.Loader = false ;
+          this.Loader = false;
         }, 3000);
         this.submitStatus = 'ERROR';
         setTimeout(() => {
@@ -139,7 +181,7 @@ export default {
 
 
       } else {
-        this.Loader = true ;
+        this.Loader = true;
         // do your submit logic here
         this.submitStatus = 'PENDING'
         setTimeout(() => {
@@ -149,27 +191,27 @@ export default {
           this.submitStatus = null
         }, 2000);
         setTimeout(() => {
-          this.Loader = false ;
+          this.Loader = false;
         }, 3500);
         try {
-          const re = await axios.post('register-api',{
-            name  : this.name,
-            email     : this.email,
-            password  : this.password,
-            password_confirmation : this.password_confirmation
+          const re = await axios.post('register-api', {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            password_confirmation: this.password_confirmation
           });
-          if (re.data.errors == true){
+          if (re.data.errors == true) {
             this.error = re.data.messages.email[0];
-          }else {
-            this.error =null;
+          } else {
+            this.error = null;
 
-            localStorage.setItem('token' , re.data.token);
-            localStorage.setItem('user' , re.data.user);
+            localStorage.setItem('token', re.data.token);
+            localStorage.setItem('user', re.data.user);
             await this.$store.dispatch('user', re.data);
             this.$router.push('/mainPage');
-            this.Loader =false;
+            this.Loader = false;
           }
-        }catch (e) {
+        } catch (e) {
           this.error = 'Error'
         }
 
@@ -184,5 +226,5 @@ export default {
 
 
 <style scoped>
-  @import "../assets/css/_registerStyle.css";
+@import "../assets/css/_registerStyle.css";
 </style>
