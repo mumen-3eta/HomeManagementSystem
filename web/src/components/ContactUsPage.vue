@@ -3,16 +3,17 @@
     <NavBar/>
     <div class="content__body-contactUs">
       <div>
-        <h2>Contact Us</h2>
+        <h2 class="title">Contact Us</h2>
         <form action="#" @submit.prevent="checkForm">
           <div class="Group1">
             <div class="input-group ">
-              <label for="name">Name</label>
-              <input v-if="!submitStatus" v-model.trim="$v.name.$model" :class="{ 'rounded-pill':true }" name="name"
+              <label class="label1" for="name">Name</label>
+              <input v-if="!submitStatus" v-model.trim="$v.name.$model" :class="{ 'rounded-pill':true ,'input1':true }"
+                     name="name"
                      placeholder="Enter Your Name" type="text">
               <input v-else-if="submitStatus" id="name"
                      v-model.trim="$v.name.$model"
-                     :class="{ 'inputError':$v.name.$error ,'inputSuccess':!$v.name.$invalid , 'rounded-pill':true }"
+                     :class="{ 'inputError':$v.name.$error ,'inputSuccess':!$v.name.$invalid , 'rounded-pill':true,'input1':true }"
                      name="name" placeholder="Enter Your Name" type="text">
               <div>
                 <span v-if="!$v.name.minLength"
@@ -23,11 +24,12 @@
               </div>
             </div>
             <div class="input-group">
-              <label for="email">E-Mail</label>
-              <input v-if="!submitStatus" v-model.trim="$v.email.$model" :class="{ 'rounded-pill':true }" name="email"
+              <label class="label2" for="email">E-Mail</label>
+              <input v-if="!submitStatus" v-model.trim="$v.email.$model" :class="{ 'rounded-pill':true ,'input2':true }"
+                     name="email"
                      placeholder="Enter Your E-Mail" type="email">
               <input v-else-if="submitStatus" id="email" v-model.trim="$v.email.$model"
-                     :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid , 'rounded-pill':true  }"
+                     :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid , 'rounded-pill':true ,'input2':true  }"
                      name="email"
                      placeholder="Enter Your E-Mail"
                      type="email">
@@ -42,13 +44,14 @@
           </div>
           <div class="Group2">
             <div class="input-group">
-              <label for="contactsMessage">Message</label>
-              <textarea v-if="!submitStatus" v-model.trim="$v.contactsMessage.$model" :class="{ 'rounded-3':true }"
+              <label class="label3" for="contactsMessage">Message</label>
+              <textarea v-if="!submitStatus" v-model.trim="$v.contactsMessage.$model"
+                        :class="{ 'rounded-3':true ,'input3':true}"
                         cols="35" name="contactsMessage" placeholder="Enter Your Message ..." rows="9"></textarea>
               <textarea v-else-if="submitStatus"
                         id="contactsMessage"
                         v-model.trim="$v.contactsMessage.$model"
-                        :class="{ 'inputError':$v.contactsMessage.$error ,'inputSuccess':!$v.contactsMessage.$invalid , 'rounded-3':true  }"
+                        :class="{ 'inputError':$v.contactsMessage.$error ,'inputSuccess':!$v.contactsMessage.$invalid , 'rounded-3':true ,'input3':true }"
                         cols="35" name="contactsMessage"
                         placeholder="Enter Your Message ..." rows="9"></textarea>
               <div>
@@ -80,6 +83,7 @@
 <script>
 import {maxLength, minLength, required} from 'vuelidate/lib/validators'
 import NavBar from "@/components/TopBar/NavBar";
+import {TimelineLite} from "gsap";
 
 export default {
   name: "ContactUsPage",
@@ -93,6 +97,25 @@ export default {
       contactsMessage: '',
       submitStatus: null
     }
+  },
+  mounted() {
+    const title = document.getElementsByClassName('title');
+    const input1 = document.getElementsByClassName('input1');
+    const input2 = document.getElementsByClassName('input2');
+    const input3 = document.getElementsByClassName('input3');
+    const label1 = document.getElementsByClassName('label1');
+    const label2 = document.getElementsByClassName('label2');
+    const label3 = document.getElementsByClassName('label3');
+    const btnGroup = document.getElementsByClassName('btn-group');
+    const timeline = new TimelineLite()
+    timeline.from(title, {opacity: 0, duration: 1})
+        .from(label1, {opacity: 0, duration: 1, x: -100}, '-=1.5')
+        .from(input1, {opacity: 0, duration: 1, x: -50}, '-=0.8')
+        .from(label2, {opacity: 0, duration: 1, x: 50}, '-=1.5')
+        .from(input2, {opacity: 0, duration: 1, x: 50}, '-=0.8')
+        .from(label3, {opacity: 0, duration: 1, y: 50}, '-=1.5')
+        .from(input3, {opacity: 0, duration: 1, y: 50}, '-=0.8')
+        .from(btnGroup, {opacity: 0, duration: 1, y: 50}, '-=0.8')
   },
   validations: {
     name: {required, minLength: minLength(3), maxLength: maxLength(50)},
@@ -121,6 +144,7 @@ export default {
     },
 
   }
+
 }
 </script>
 
