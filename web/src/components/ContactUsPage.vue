@@ -12,7 +12,7 @@
                      placeholder="Enter Your Name" type="text">
               <input v-else-if="submitStatus" id="name"
                      v-model.trim="$v.name.$model"
-                     :class="{ 'inputError':$v.name.$error ,'inputSuccess':!$v.name.$invalid }"
+                     :class="{ 'inputError':$v.name.$error ,'inputSuccess':!$v.name.$invalid , 'rounded-pill':true }"
                      name="name" placeholder="Enter Your Name" type="text">
               <div>
                 <span v-if="!$v.name.minLength"
@@ -27,7 +27,8 @@
               <input v-if="!submitStatus" v-model.trim="$v.email.$model" :class="{ 'rounded-pill':true }" name="email"
                      placeholder="Enter Your E-Mail" type="email">
               <input v-else-if="submitStatus" id="email" v-model.trim="$v.email.$model"
-                     :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid }" name="email"
+                     :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid , 'rounded-pill':true  }"
+                     name="email"
                      placeholder="Enter Your E-Mail"
                      type="email">
               <div>
@@ -47,7 +48,7 @@
               <textarea v-else-if="submitStatus"
                         id="contactsMessage"
                         v-model.trim="$v.contactsMessage.$model"
-                        :class="{ 'inputError':$v.contactsMessage.$error ,'inputSuccess':!$v.contactsMessage.$invalid }"
+                        :class="{ 'inputError':$v.contactsMessage.$error ,'inputSuccess':!$v.contactsMessage.$invalid , 'rounded-3':true  }"
                         cols="35" name="contactsMessage"
                         placeholder="Enter Your Message ..." rows="9"></textarea>
               <div>

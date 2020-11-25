@@ -18,13 +18,17 @@
                 <input v-if="!submitStatus" v-model.trim="$v.password.$model" :class="{ 'rounded-pill':true }"
                        name="password" placeholder="Enter New password" type="password">
                 <input v-else v-model.trim="$v.password.$model"
-                       :class="{ 'inputError':$v.password.$error ,'inputSuccess':!$v.password.$invalid }"
+                       :class="{ 'inputError':$v.password.$error ,'inputSuccess':!$v.password.$invalid , 'rounded-pill':true}"
                        name="password" placeholder="Enter New password" type="password">
                 <div>
                   <span v-if="!$v.password.minLength"
-                        class="ErrorText"> password must have at least {{ $v.password.$params.minLength.min }} letters</span>
+                        class="ErrorText"> password must have at least {{
+                      $v.password.$params.minLength.min
+                    }} letters</span>
                   <span v-if="!$v.password.maxLength"
-                        class="ErrorText"> password must have at most {{ $v.password.$params.maxLength.min }} letters</span>
+                        class="ErrorText"> password must have at most {{
+                      $v.password.$params.maxLength.min
+                    }} letters</span>
                 </div>
               </div>
               <div class="input-group">
@@ -33,13 +37,17 @@
                        :class="{ 'rounded-pill':true }" name="confirm_password" placeholder="Confirm password"
                        type="password">
                 <input v-else v-model.trim="$v.password_confirmation.$model"
-                       :class="{ 'inputError':$v.password_confirmation.$error ,'inputSuccess':!$v.password_confirmation.$invalid }"
+                       :class="{ 'inputError':$v.password_confirmation.$error ,'inputSuccess':!$v.password_confirmation.$invalid , 'rounded-pill':true}"
                        name="confirm_password" placeholder="Confirm password" type="password">
                 <div>
                   <span v-if="!$v.password_confirmation.minLength"
-                        class="ErrorText"> password must have at least {{ $v.password_confirmation.$params.minLength.min }} letters</span>
+                        class="ErrorText"> password must have at least {{
+                      $v.password_confirmation.$params.minLength.min
+                    }} letters</span>
                   <span v-if="!$v.password_confirmation.maxLength"
-                        class="ErrorText"> password must have at most {{ $v.password_confirmation.$params.maxLength.min }} letters</span>
+                        class="ErrorText"> password must have at most {{
+                      $v.password_confirmation.$params.maxLength.min
+                    }} letters</span>
                   <span v-if="!$v.password_confirmation.sameAsPassword"
                         class="ErrorText">Passwords must be identical</span>
                 </div>

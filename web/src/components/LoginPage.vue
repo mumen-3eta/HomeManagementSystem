@@ -9,10 +9,12 @@
             <div class="Group1">
               <div class="input-group">
                 <label for="email">E-Mail</label>
-                <input v-if="!submitStatus" v-model.trim="$v.email.$model" :class="{ 'rounded-pill':true }" class="email"
+                <input v-if="!submitStatus" v-model.trim="$v.email.$model" :class="{ 'rounded-pill':true }"
+                       class="email"
                        name="email" placeholder="Enter Your E-Mail" type="email">
                 <input v-else-if="submitStatus" id="email"
-                       v-model.trim="$v.email.$model" :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid }"
+                       v-model.trim="$v.email.$model"
+                       :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid , 'rounded-pill':true}"
                        class="email" name="email" placeholder="Enter Your E-Mail" type="email">
                 <div>
                   <span v-if="!$v.email.minLength"
@@ -27,12 +29,17 @@
                        class="Password" name="Password" placeholder="Enter Your Password" type="password">
                 <input v-else-if="submitStatus" id="Password"
                        v-model.trim="$v.password.$model"
-                       :class="{ 'inputError':$v.password.$error ,'inputSuccess':!$v.password.$invalid }" class="Password" name="Password" placeholder="Enter Your Password" type="password">
+                       :class="{ 'inputError':$v.password.$error ,'inputSuccess':!$v.password.$invalid , 'rounded-pill':true}"
+                       class="Password" name="Password" placeholder="Enter Your Password" type="password">
                 <div>
                   <span v-if="!$v.password.minLength"
-                        class="ErrorText"> password must have at least {{ $v.password.$params.minLength.min }} letters</span>
+                        class="ErrorText"> password must have at least {{
+                      $v.password.$params.minLength.min
+                    }} letters</span>
                   <span v-if="!$v.password.maxLength"
-                        class="ErrorText"> password must have at most {{ $v.password.$params.maxLength.min }} letters</span>
+                        class="ErrorText"> password must have at most {{
+                      $v.password.$params.maxLength.min
+                    }} letters</span>
                 </div>
               </div>
             </div>

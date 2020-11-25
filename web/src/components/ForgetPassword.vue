@@ -18,7 +18,8 @@
                 <input v-if="!submitStatus" v-model.trim="$v.email.$model" :class="{ 'rounded-pill':true }" name="email"
                        placeholder="Enter Your E-Mail" type="email">
                 <input v-else v-model.trim="$v.email.$model"
-                       :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid }" name="email"
+                       :class="{ 'inputError':$v.email.$error ,'inputSuccess':!$v.email.$invalid , 'rounded-pill':true}"
+                       name="email"
                        placeholder="Enter Your E-Mail" type="email">
                 <div>
                   <span v-if="!$v.email.minLength"
