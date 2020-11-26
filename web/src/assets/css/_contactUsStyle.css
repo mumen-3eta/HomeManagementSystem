@@ -209,9 +209,10 @@
 
 
 @media only screen and (max-width: 800px) {
-    .content__body-c{
+    .content__body-c {
         margin-top: -50px;
     }
+
     .content__body-contactUs {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -231,8 +232,8 @@
         margin: -120px auto;
         min-height: 100vh;
         overflow: hidden;
-
     }
+
     .content__body-contactUs h2 {
         text-align: center;
         padding: 5px 50px;
@@ -248,6 +249,7 @@
         border-bottom: 3px solid white;
 
     }
+
     .content__body-contactUs form {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -260,9 +262,10 @@
         -ms-flex-pack: center;
         justify-content: center;
         text-align: center;
-        width: 90%;
+        width: 100%;
 
     }
+
     .content__body-contactUs form .Group1 {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -278,6 +281,7 @@
         -ms-flex-align: center;
         align-items: center;
     }
+
     .content__body-contactUs form .input-group {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -290,6 +294,7 @@
         margin: 5px auto;
         width: 90%;
     }
+
     .content__body-contactUs form .input-group label {
         padding: 0;
         font-family: Arial, Helvetica, sans-serif;
@@ -297,6 +302,7 @@
         font-size: 16px;
 
     }
+
     .content__body-contactUs form .input-group input[type=text], .content__body-contactUs form .input-group input[type=email] {
         border-radius: 30px;
         padding: 5px 15px;
@@ -306,6 +312,7 @@
         font-weight: bold;
         width: 100%;
     }
+
     .content__body-contactUs form .input-group textarea {
         border-radius: 5px;
         padding: 5px 15px;
@@ -315,30 +322,36 @@
         font-weight: bold;
         width: 100%;
     }
+
     .content__body-contactUs form .input-group ::-webkit-input-placeholder {
         color: #5c5c5c8f;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;
     }
+
     .content__body-contactUs form .input-group :-ms-input-placeholder {
         color: #5c5c5c8f;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;
     }
+
     .content__body-contactUs form .input-group ::-ms-input-placeholder {
         color: #5c5c5c8f;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;
     }
+
     .content__body-contactUs form .input-group ::placeholder {
         color: #5c5c5c8f;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;
     }
+
     .content__body-contactUs form .btn-group {
         margin: 15px auto;
 
     }
+
     .content__body-contactUs form .btn-group button {
         background: #089EDE;
         padding: 5px 60px;
@@ -350,6 +363,7 @@
         transition: ease-in-out 0.30s;
         border: 2px solid #089EDE;
     }
+
     .content__body-contactUs form .btn-group button:hover, .content__body-contactUs form .btn-group button:focus {
         border: 2px solid #089EDE;
         background: #3ea6fac7;
@@ -357,6 +371,7 @@
         box-shadow: 1px 2px 8px #21b0ee;
         color: white;
     }
+
     .content__body-contactUs input[type=text], .content__body-contactUs input[type=email], .content__body-contactUs textarea, .content__body-contactUs button {
         outline: none;
         border: none;

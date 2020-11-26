@@ -1,14 +1,14 @@
 .body-main {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     position: relative;
     background: #343434;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color: white;
     min-height: 100vh;
-
 }
+
 .body-main a {
     text-decoration: none;
     color: white;
@@ -57,15 +57,14 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    padding: 60px 0px;
-
+    padding: 60px 0;
 }
 
 
 .body-main section .body__content-main {
     position: relative;
-    left: 0px;
-    margin: 30px 0px 0px 150px;
+    left: 0;
+    margin: 30px 0 0 150px;
     width: auto;
     height: auto;
 }
@@ -122,17 +121,32 @@
     padding: 5px;
     background: #A5A5A5;
     border-radius: 5px;
-    margin: 15px auto 0px auto;
+    margin: auto;
     font-size: 16px;
 }
+
+.body-main section .body__content-main .All-Drivers .device.addDevice section p {
+    padding: 5px;
+    background: #A5A5A5;
+    border-radius: 5px;
+    margin: 15px auto 0 auto;
+    font-size: 16px;
+}
+
 
 .body-main section .body__content-main .All-Drivers .device .addimage {
     width: 125px;
     height: 120px;
 }
 
- /*Extra small devices (phones, 600px and down) */
-/*@media only screen and (min-width: 1463px) {*/
-
-/*}*/
+/*Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 410px) {
+    .body-main section .body__content-main {
+        position: relative;
+        left: 0;
+        margin: 30px 0 0 50px;
+        width: auto;
+        height: auto;
+    }
+}
 

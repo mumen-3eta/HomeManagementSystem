@@ -3,7 +3,7 @@
     <TopNavBar/>
     <LeftNavBar/>
     <section>
-      <div class="container py-5 px-5 ">
+      <div class="container py-5 px-4">
         <div class="row">
           <div class="col-12 col-md-12 col-lg-12 anim1">
             <h2> Device | name it</h2>
@@ -20,6 +20,7 @@
               <p class="nameDevice">Device Name {{ $route.params.Device_id }}</p>
               <p v-if="false" class="isActive"> Active </p>
               <p v-if="true" class="isNotActive"> Not Active </p>
+
             </div>
           </div><!-- End Of col-->
           <div class="anim3 col-12 col-md-8 col-lg-6 left__content-device">
@@ -77,7 +78,8 @@ export default {
     LeftNavBar,
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
+    ...mapGetters(['GetUser'])
   }
 
 }

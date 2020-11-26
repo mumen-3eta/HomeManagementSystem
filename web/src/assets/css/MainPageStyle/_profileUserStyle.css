@@ -38,7 +38,7 @@
     display: -ms-flexbox;
     display: flex;
     flex-direction: column;
-    margin-left: 80px;
+    margin-left: 50px;
     background: #343434;
 }
 
@@ -75,7 +75,7 @@
 
     .right__content {
         background: #535353;
-        margin-left: 5%;
+        margin-left: 0;
         padding: 5%;
         text-align: center;
         border-radius: 5px;
@@ -83,7 +83,7 @@
 
     .left__content {
         background: #535353;
-        margin-left: 5%;
+        margin-left: 0;
         margin-top: 15px;
         padding: 5%;
         text-align: center;
@@ -99,7 +99,7 @@
 
     .right__content {
         background: #535353;
-        margin-left: 15%;
+        margin-left: 0;
         padding: 5%;
         text-align: center;
         border-radius: 5px;
@@ -107,7 +107,7 @@
 
     .left__content {
         background: #535353;
-        margin-left: 15%;
+        margin-left: 0;
         margin-top: 15px;
         padding: 5%;
         text-align: center;

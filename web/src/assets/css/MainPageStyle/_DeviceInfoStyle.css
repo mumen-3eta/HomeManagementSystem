@@ -1,6 +1,6 @@
 .body-deviceInfo {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     position: relative;
     background: #343434;
     -webkit-box-sizing: border-box;
@@ -49,13 +49,13 @@
 }
 
 /* new style*/
-.body-deviceInfo section .user__profile-image {
-    width: 35%;
-    height: auto;
-    object-fit: cover;
-    border: 2px dashed #929292;
-    border-radius: 15%;
-}
+/*.body-deviceInfo section .user__profile-image {*/
+/*    width: 35%;*/
+/*    height: auto;*/
+/*    object-fit: cover;*/
+/*    border: 2px dashed #929292;*/
+/*    border-radius: 15%;*/
+/*}*/
 
 .container-device-right {
     background: #454545;
@@ -166,54 +166,56 @@
         padding: 15px;
     }
 
-    /*.right__content {*/
-    /*    background: #535353;*/
-    /*    margin-left: 5%;*/
-    /*    padding: 5%;*/
-    /*    text-align: center;*/
-    /*    border-radius: 5px;*/
-    /*}*/
-    /*.left__content {*/
-    /*    background: #535353;*/
-    /*    margin-left: 5%;*/
-    /*    margin-top: 15px;*/
-    /*    padding: 5%;*/
-    /*    text-align: center;*/
-    /*    border-radius: 5px;*/
-    /*}*/
 }
 
 
 /*720px*/
 @media (max-width: 768px) {
+
     .body-deviceInfo section .container h2 {
-        font-size: 1.5em;
+        font-size: 1.3em;
     }
 
     .container-device-info-left {
         background: #454545;
-        padding: 40px;
-        margin: 25px auto;
+        padding: 8px;
+        margin: 10px 20px;
         border-radius: 10px;
         box-shadow: 1px 1px 8px 0 #212121;
-        height: 24em;
+        height: 13em;
     }
 
-    /*.right__content {*/
-    /*    background: #535353;*/
-    /*    margin-left: 5%;*/
-    /*    padding: 5%;*/
-    /*    text-align: center;*/
-    /*    border-radius: 5px;*/
-    /*}*/
-    /*.left__content {*/
-    /*    background: #535353;*/
-    /*    margin-left: 5%;*/
-    /*    margin-top: 15px;*/
-    /*    padding: 5%;*/
-    /*    text-align: center;*/
-    /*    border-radius: 5px;*/
-    /*}*/
+    .container-device-right {
+        background: #454545;
+        padding: 20px;
+        margin: 10px 15px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 8px 0 #212121;
+    }
+
+    .body-deviceInfo section {
+        position: relative;
+        top: 60px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        flex-direction: column;
+        margin-left: 50px;
+        background: #343434;
+    }
+
+    .container-device-info-left .container-device-info .labelLocation {
+        font-size: 18px;
+        align-self: center;
+        color: #d7d7d7;
+    }
+
+    .container-device-info-left .container-device-info .nameLabelLocation {
+        margin-left: 15px;
+        align-self: center;
+        font-size: 15px;
+        text-transform: capitalize;
+    }
 }
 
 /*410px*/
@@ -224,15 +226,57 @@
 
     .container-device-info-left {
         background: #454545;
-        padding: 40px;
-        margin: 25px auto;
+        padding: 8px;
+        margin: 10px 20px;
         border-radius: 10px;
         box-shadow: 1px 1px 8px 0 #212121;
-        height: 24em;
-        margin-left: 15%;
+        height: 13em;
+    }
+
+    .container-device-right {
+        background: #454545;
+        padding: 20px;
+        margin: 10px 15px;
+        border-radius: 10px;
+        box-shadow: 1px 1px 8px 0 #212121;
+    }
+
+    .body-deviceInfo section {
+        position: relative;
+        top: 60px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        flex-direction: column;
+        margin-left: 50px;
+        background: #343434;
+    }
+
+    .container-device-info-left .container-device-info .labelLocation {
+        font-size: 18px;
+        align-self: center;
+        color: #d7d7d7;
+    }
+
+    .container-device-info-left .container-device-info .nameLabelLocation {
+        margin-left: 15px;
+        align-self: center;
+        font-size: 15px;
+        text-transform: capitalize;
+    }
+
+
+    .container-device-right img {
+        padding: 28px;
+    }
+
+    .container-device-right .nameDevice {
+        font-size: 20px;
+        margin-top: 15px;
     }
 
 
 }
+
 
 
