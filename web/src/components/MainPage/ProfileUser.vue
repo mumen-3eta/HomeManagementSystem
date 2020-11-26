@@ -5,7 +5,7 @@
 
     <section>
       <div class="container py-5 px-5 ">
-        <div class="row">
+        <div class="row anim-title">
           <div class="col-12 col-md-12 col-lg-12">
             <h2> Profile | {{ GetUser.name }}</h2>
           </div><!-- End Of col-->
@@ -13,7 +13,7 @@
 
         <div class="row justify-content-center align-items-center py-3">
           <div
-              class="col-12 col-md-4 col-lg-6 d-flex justify-content-center align-items-center flex-column right__content">
+              class="anim-left col-12 col-md-4 col-lg-6 d-flex justify-content-center align-items-center flex-column right__content">
             <img v-show="!GetUser.image" alt="User Image" class="user__profile-image" src="@/assets/img/man.svg"
                  title="User Image">
             <img v-show="GetUser.image" :src="GetUser.image" alt="User Image" class="user__profile-image"
@@ -38,7 +38,7 @@
               </div>
             </form>
           </div><!-- End Of col-->
-          <div class="col-12 col-md-8 col-lg-6 left__content">
+          <div class="anim-right col-12 col-md-8 col-lg-6 left__content">
             <div class="py-4">
               <h4 style="text-align: center">Update Profile</h4>
               <hr class="user__profile-hr mx-auto">
@@ -128,12 +128,23 @@ import {mapGetters} from "vuex";
 import axios from "axios";
 import firebase from 'firebase/app';
 import 'firebase/storage';
+import {TimelineLite} from "gsap";
 
 export default {
   name: "ProfileUser",
   components: {
     TopNavBar,
     LeftNavBar,
+  },
+  mounted() {
+    const animTitle = document.getElementsByClassName('anim-title');
+    const animLeft = document.getElementsByClassName('anim-left');
+    const animRight = document.getElementsByClassName('anim-right');
+    const timeline = new TimelineLite()
+    timeline.from(animTitle, {opacity: 0, duration: 1, y: -50})
+        .from(animLeft, {opacity: 0, duration: 1, y: -50}, '-=0.8')
+        .from(animRight, {opacity: 0, duration: 1, y: -50}, '-=0.6')
+
   },
   data() {
     return {

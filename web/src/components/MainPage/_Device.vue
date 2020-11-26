@@ -3,9 +3,14 @@
     <router-link :to="{path:'/mainPage/DeviceInfo/' + list.id }">
       <section>
         <img alt="" src="@/assets/img/Group 66.png">
-        <p>{{ list.name }}</p>
+        <div class="d-flex justify-content-center align-items-center mt-2">
+          <p>{{ list.name }}</p>
+          <button class="btn btn-danger text-light mx-3 my-auto" @click.prevent="DeleteDevice(list)"> Delete</button>
+        </div>
       </section>
+
     </router-link>
+
   </div>
 </template>
 
@@ -14,6 +19,12 @@ export default {
   name: "_Device",
   props: {
     list: Object,
+  },
+  methods: {
+    DeleteDevice(list) {
+      console.log(list);
+      // this.$store.dispatch() // to delete
+    }
   },
 
 }
