@@ -17,39 +17,8 @@
               </section>
             </a>
           </div>
-          <!-- all device-->
-          <div class="device">
-            <router-link to="/mainPage/DeviceInfo/1">
-              <section>
-                <img alt="" src="@/assets/img/Group 66.png">
-                <p>Device Name 1</p>
-              </section>
-            </router-link>
-          </div>
-          <div class="device">
-            <router-link to="/mainPage/DeviceInfo/2">
-              <section>
-                <img alt="" src="@/assets/img/Group 66.png">
-                <p>Device Name 2</p>
-              </section>
-            </router-link>
-          </div>
-          <div class="device">
-            <router-link to="/mainPage/DeviceInfo/3">
-              <section>
-                <img alt="" src="@/assets/img/Group 66.png">
-                <p>Device Name 3</p>
-              </section>
-            </router-link>
-          </div>
-          <div class="device">
-            <router-link to="/mainPage/DeviceInfo/4">
-              <section>
-                <img alt="" src="@/assets/img/Group 66.png">
-                <p>Device Name 4</p>
-              </section>
-            </router-link>
-          </div>
+          <Device v-for="list in lists" v-bind:key="list.id" :list="list"/>
+
         </div>
       </div>
       <!-- End -->
@@ -62,13 +31,34 @@
 
 import TopNavBar from "@/components/MainPage/Nav/TopNav";
 import LeftNavBar from "@/components/MainPage/Nav/LeftNav";
+import Device from "@/components/MainPage/_Device";
 import {mapGetters} from "vuex";
+import {TimelineLite} from "gsap";
 
 export default {
   name: "main",
   components: {
     TopNavBar,
     LeftNavBar,
+    Device,
+  },
+  data() {
+    return {
+      lists: [
+        {id: 1, name: 'device 1'},
+        {id: 2, name: 'device 2'},
+        {id: 3, name: 'device 3'},
+        {id: 4, name: 'device 4'},
+      ]
+    }
+  },
+  mounted() {
+    const addDevice = document.getElementsByClassName('addDevice');
+    const d1 = document.getElementsByClassName('1');
+    const timeline = new TimelineLite()
+    timeline.from(addDevice, {opacity: 0, duration: 1, y: -50})
+        .from(d1, {opacity: 0, duration: 1, y: -50}, '-=0.7')
+
   },
   computed: {
     ...mapGetters(['user'])
