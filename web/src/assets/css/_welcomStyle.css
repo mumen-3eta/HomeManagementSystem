@@ -64,6 +64,22 @@
     background: white;
 }
 
+.img4 {
+    width: 110%;
+}
+
+.img3 {
+    width: 115%;
+}
+
+.img2 {
+    width: 115%;
+}
+
+.img1 {
+    width: 110%;
+}
+
 
 @media only screen and (max-width: 800px) {
     .content__body-w {
@@ -135,6 +151,22 @@
     .content__body-welcome a:hover {
         color: #10AC78;
         background: white;
+    }
+
+    .img4 {
+        width: 90%;
+    }
+
+    .img3 {
+        width: 90%;
+    }
+
+    .img2 {
+        width: 90%;
+    }
+
+    .img1 {
+        width: 90%;
     }
 }
 
