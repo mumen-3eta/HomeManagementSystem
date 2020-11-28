@@ -9,13 +9,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class SiginupActivity extends AppCompatActivity {
 
     private LinearLayout drawer_sign;
     private DrawerLayout drawer_layout;
+    private EditText userNameTextField;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -25,6 +29,7 @@ public class SiginupActivity extends AppCompatActivity {
 
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer_sign = (LinearLayout) findViewById(R.id.drawer_sign);
+        userNameTextField = (EditText) findViewById(R.id.userNameTextField);
 
         Drawable drawable =  getResources().getDrawable(R.drawable.drawer_shoice);
 
@@ -46,7 +51,14 @@ public class SiginupActivity extends AppCompatActivity {
     public void goAboutUs(View view){ redirectActivity(this, AboutUsActivity.class);}
 
     public void signUpAction(View view){
-        
+        String userName = userNameTextField.getText().toString().trim();
+        Toast toast = new Toast(this);
+        if (userName.matches("^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,5}$")){
+             toast.makeText(this, "name is valid", Toast.LENGTH_SHORT).show();
+        }else {
+             toast.makeText(this, "name is not valid", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public static void openDrawer(DrawerLayout drawerLayout) {
