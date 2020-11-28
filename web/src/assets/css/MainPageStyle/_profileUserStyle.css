@@ -38,19 +38,18 @@
     display: -ms-flexbox;
     display: flex;
     flex-direction: column;
-    margin-left: 80px;
+    margin-left: 50px;
     background: #343434;
 }
 
-.user__profile-hr{
-    background: white;
-    width:15%;
-    height: 2px;
+.user__profile-hr {
+    width: 50%;
+    border-bottom: 3px solid white;
     border-radius: 30px;
 }
 
 /* new style*/
-.body-profileUser section .user__profile-image{
+.body-profileUser section .user__profile-image {
     width: 35%;
     height: auto;
     object-fit: cover;
@@ -61,7 +60,7 @@
 
 /*1800px*/
 @media (min-width: 1200px) {
-    .body-profileUser section .container{
+    .body-profileUser section .container {
         margin-left: 25px;
     }
 
@@ -70,19 +69,21 @@
 
 /*720px*/
 @media (max-width: 768px) {
-    .body-profileUser section .container h2{
+    .body-profileUser section .container h2 {
         font-size: 1.5em;
     }
+
     .right__content {
         background: #535353;
-        margin-left: 5%;
+        margin-left: 0;
         padding: 5%;
         text-align: center;
         border-radius: 5px;
     }
+
     .left__content {
         background: #535353;
-        margin-left: 5%;
+        margin-left: 0;
         margin-top: 15px;
         padding: 5%;
         text-align: center;
@@ -92,20 +93,21 @@
 
 /*410px*/
 @media (max-width: 410px) {
-    .body-profileUser section .container h2{
+    .body-profileUser section .container h2 {
         font-size: 1.3em;
     }
 
     .right__content {
         background: #535353;
-        margin-left: 15%;
+        margin-left: 0;
         padding: 5%;
         text-align: center;
         border-radius: 5px;
     }
+
     .left__content {
         background: #535353;
-        margin-left: 15%;
+        margin-left: 0;
         margin-top: 15px;
         padding: 5%;
         text-align: center;
