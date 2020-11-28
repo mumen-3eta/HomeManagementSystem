@@ -45,6 +45,10 @@ public class SiginupActivity extends AppCompatActivity {
 
     public void goAboutUs(View view){ redirectActivity(this, AboutUsActivity.class);}
 
+    public void signUpAction(View view){
+        
+    }
+
     public static void openDrawer(DrawerLayout drawerLayout) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
