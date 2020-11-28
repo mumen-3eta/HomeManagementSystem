@@ -9,20 +9,22 @@
         android:roundIcon="@mipmap/applogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".homePage"></activity>
-        <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".AboutUsActivity" />
-        <activity android:name=".ContactUsActivity" />
-        <activity android:name=".SiginupActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".homePage" />
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".ResetPasswordActivity" />
+        <activity android:name=".AboutUsActivity" />
+        <activity android:name=".ContactUsActivity" />
+        <activity android:name=".SiginupActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity"/>
+
     </application>
 
 </manifest>
