@@ -200,15 +200,14 @@ export default {
             password: this.password,
             password_confirmation: this.password_confirmation
           });
-          if (re.data.errors == true) {
+          if (re.data.errors) {
             this.error = re.data.messages.email[0];
           } else {
             this.error = null;
-
             localStorage.setItem('token', re.data.token);
             localStorage.setItem('user', re.data.user);
             await this.$store.dispatch('user', re.data);
-            this.$router.push('/mainPage');
+            await this.$router.push('/mainPage');
             this.Loader = false;
           }
         } catch (e) {

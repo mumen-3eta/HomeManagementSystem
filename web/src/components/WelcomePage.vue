@@ -45,7 +45,7 @@ export default {
         .from(title3, {opacity: 0, duration: 1, x: -100}, '-=0.8')
         .from(imageTitle, {opacity: 0, duration: 1, x: 100}, '-=0.7')
 
-    var scene = document.getElementById('scene');
+    const scene = document.getElementById('scene');
     new Parallax(scene);
 
   }
