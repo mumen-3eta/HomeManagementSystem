@@ -160,7 +160,7 @@ export default new Router({
             error page 404
         */
         {
-            path: '*',
+            path: '/*',
             name: 'PageNotFound',
             component: PageNotFound,
 
