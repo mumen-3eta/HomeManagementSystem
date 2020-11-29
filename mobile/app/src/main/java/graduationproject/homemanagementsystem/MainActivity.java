@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer_layout;
     private LinearLayout drawer_home;
 
-    public ArrayList<userClass> users = new ArrayList<>();
+    public static ArrayList<userClass> users = new ArrayList<>();
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawer_home.setBackground(drawable);
 
-        users.add(new userClass("Mumen", "mumen.3eta", "12345"));
+        users.add(new userClass("Mumen", "mumen.3eta@gmail.com", "Note12345"));
     }
 
     public void ClickMenu(View view){
