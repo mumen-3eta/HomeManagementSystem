@@ -28,7 +28,7 @@
                   Choose Image
                 </button>
                 <input ref="imageInput" accept="image/*" style="display: none" type="file"
-                       @change="onUpload" @change.prevent="previewImage">
+                       @change="previewImage" @change.prevent="onUpload">
                 <button v-if="uploadValue.toFixed() == 100" class="btn btn-success my-3" type="submit">Update</button>
                 <div v-if="uploadValue.toFixed() != 100">
                   <p> Progress : {{ uploadValue.toFixed() + "%" }}
@@ -161,9 +161,7 @@ export default {
     async checkForm() {
       try {
         let ImagePath;
-        if (this.picture) {
-          ImagePath = this.$store.getters.GetUser.image;
-        } else if (this.inputURLImage) {
+        if (this.inputURLImage) {
           ImagePath = this.inputURLImage;
         } else {
           ImagePath = this.$store.getters.GetUser.image;
