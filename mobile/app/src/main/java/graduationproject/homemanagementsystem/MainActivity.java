@@ -15,10 +15,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
+import graduationproject.homemanagementsystem.dataClasses.userClass;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawer_layout;
     private LinearLayout drawer_home;
+
+    public static ArrayList<userClass> users = new ArrayList<>();
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -32,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         Drawable drawable =  getResources().getDrawable(R.drawable.drawer_shoice);
 
         drawer_home.setBackground(drawable);
+
+        users.add(new userClass("Mumen", "mumen.3eta@gmail.com", "Note12345"));
     }
 
     public void ClickMenu(View view){
