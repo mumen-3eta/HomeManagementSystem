@@ -37,6 +37,29 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    background: #343434;
 }
 
+@media (min-width: 1200px) {
+    .body-AddDevice section .container {
+        margin-left: 50px auto;
+    }
+}
+
+/*720px*/
+@media (max-width: 768px) {
+    .body-AddDevice section .container h2 {
+        font-size: 1.5em;
+    }
+}
+
+/*410px*/
+@media (max-width: 410px) {
+    .body-profileUser section .container h2 {
+        font-size: 1.3em;
+    }
+
+}
 

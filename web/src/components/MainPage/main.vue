@@ -10,14 +10,14 @@
         <div class="All-Drivers">
           <!-- add Device-->
           <div class="device addDevice">
-            <a href="/mainPage/add-device">
+            <router-link to="/mainPage/add-device">
               <section>
                 <img alt="" class="addimage" src="@/assets/img/Group 70.png">
                 <p>Add Device</p>
               </section>
-            </a>
+            </router-link>
           </div>
-          <Device v-for="list in lists" v-bind:key="list.id" :list="list"/>
+          <Device v-for="list in lists" :key="list.id" :list="list"/>
 
         </div>
       </div>
@@ -31,7 +31,7 @@
 
 import TopNavBar from "@/components/MainPage/Nav/TopNav";
 import LeftNavBar from "@/components/MainPage/Nav/LeftNav";
-import Device from "@/components/MainPage/_Device";
+import Device from "@/components/MainPage/CardDevice";
 import {mapGetters} from "vuex";
 import {TimelineLite} from "gsap";
 
