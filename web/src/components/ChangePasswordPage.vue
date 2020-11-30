@@ -4,16 +4,16 @@
     <div class="body-changePassword">
       <div class="content__body-changePassword">
         <div class="main-body-content">
-          <h2>Change Password</h2>
+          <h2 class="anim1">Change Password</h2>
           <form action="#" @submit.prevent="checkForm">
             <div class="Group1">
 
-              <div class="input-group">
+              <div class="input-group anim2">
                 <p>
                   Enter New Password, And Can Login With new Password.
                 </p>
               </div>
-              <div class="input-group">
+              <div class="input-group anim3">
                 <label>Password</label>
                 <input v-if="!submitStatus" v-model.trim="$v.password.$model" :class="{ 'rounded-pill':true }"
                        name="password" placeholder="Enter New password" type="password">
@@ -31,7 +31,7 @@
                     }} letters</span>
                 </div>
               </div>
-              <div class="input-group">
+              <div class="input-group anim4">
                 <label>Confirm password</label>
                 <input v-if="!submitStatus" v-model.trim="$v.password_confirmation.$model"
                        :class="{ 'rounded-pill':true }" name="confirm_password" placeholder="Confirm password"
@@ -64,7 +64,7 @@
             </div>
 
             <div class="Group2">
-              <div class="btn-group">
+              <div class="btn-group anim5">
                 <button type="submit">submit</button>
               </div>
             </div>
@@ -79,6 +79,7 @@
 <script>
 import NavBar from "@/components/TopBar/NavBar";
 import {maxLength, minLength, required, sameAs} from "vuelidate/lib/validators";
+import {TimelineLite} from "gsap";
 // import axios from "axios";
 export default {
   name: "ChangePasswordPage",
@@ -92,6 +93,20 @@ export default {
       submitStatus: null,
       error: null
     }
+  },
+  mounted() {
+    const anim1 = document.getElementsByClassName('anim1');
+    const anim2 = document.getElementsByClassName('anim2');
+    const anim3 = document.getElementsByClassName('anim3');
+    const anim4 = document.getElementsByClassName('anim4');
+    const anim5 = document.getElementsByClassName('anim5');
+
+    const timeline = new TimelineLite()
+    timeline.from(anim1, {opacity: 0, duration: 1, y: -25})
+        .from(anim2, {opacity: 0, duration: 1, y: -50}, '-=0.9')
+        .from(anim3, {opacity: 0, duration: 1, y: -50}, '-=0.85')
+        .from(anim4, {opacity: 0, duration: 1, y: -50}, '-=0.8')
+        .from(anim5, {opacity: 0, duration: 1, y: -50}, '-=0.75')
   },
   validations: {
     password: {required, minLength: minLength(6), maxLength: maxLength(60)},
