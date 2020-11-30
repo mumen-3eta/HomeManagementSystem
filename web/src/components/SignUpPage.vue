@@ -4,10 +4,10 @@
     <div class="body-register">
       <div class="content__body-register">
         <div class="main-body-content">
-          <h2>Sign Up</h2>
+          <h2 class="anim1">Sign Up</h2>
           <form action="#" @submit.prevent="checkForm">
             <div class="Group1">
-              <div class="input-group ">
+              <div class="input-group anim2">
                 <label for="name">Name</label>
                 <input v-if="!submitStatus" v-model.trim="$v.name.$model" :class="{ 'rounded-pill':true }" name="name"
                        placeholder="Enter Your Name" type="text">
@@ -22,7 +22,7 @@
                         class="ErrorText"> Name must have at most {{ $v.name.$params.maxLength.min }} letters</span>
                 </div>
               </div>
-              <div class="input-group">
+              <div class="input-group anim3">
                 <label for="email">E-Mail</label>
                 <input v-if="!submitStatus" v-model.trim="$v.email.$model" :class="{ 'rounded-pill':true }" name="email"
                        placeholder="Enter Your E-Mail" type="email">
@@ -40,7 +40,7 @@
                   </div>
                 </div>
               </div>
-              <div class="input-group ">
+              <div class="input-group anim4">
                 <label for="Password">Password</label>
                 <input v-if="!submitStatus" v-model.trim="$v.password.$model" :class="{ 'rounded-pill':true }"
                        name="Password" placeholder="Enter Your Password" type="password">
@@ -59,7 +59,7 @@
                     }} letters</span>
                 </div>
               </div>
-              <div class="input-group">
+              <div class="input-group anim5">
                 <label for="password_confirmation">Confirm Password</label>
                 <input v-if="!submitStatus" v-model.trim="$v.password_confirmation.$model"
                        :class="{ 'rounded-pill':true }" name="password_confirmation" placeholder="Confirm password"
@@ -93,7 +93,7 @@
                           :width="width"></scale-loader>
 
             <div v-show="!Loader" class="Group2">
-              <div class="btn-group">
+              <div class="btn-group anim6">
                 <button type="submit">Regester</button>
               </div>
             </div>
@@ -110,6 +110,7 @@ import {maxLength, minLength, required, sameAs} from 'vuelidate/lib/validators'
 import axios from 'axios'
 import NavBar from "@/components/TopBar/NavBar";
 import ScaleLoader from 'vue-spinner/src/ScaleLoader.vue'
+import {TimelineLite} from "gsap";
 
 export default {
   name: "SignUpPage",
@@ -153,6 +154,22 @@ export default {
       error: null,
       Loader: false,
     }
+  },
+  mounted() {
+    const anim1 = document.getElementsByClassName('anim1');
+    const anim2 = document.getElementsByClassName('anim2');
+    const anim3 = document.getElementsByClassName('anim3');
+    const anim4 = document.getElementsByClassName('anim4');
+    const anim5 = document.getElementsByClassName('anim5');
+    const anim6 = document.getElementsByClassName('anim6');
+
+    const timeline = new TimelineLite()
+    timeline.from(anim1, {opacity: 0, duration: 1, y: -25})
+        .from(anim2, {opacity: 0, duration: 1, y: -50}, '-=0.9')
+        .from(anim3, {opacity: 0, duration: 1, y: -50}, '-=0.85')
+        .from(anim4, {opacity: 0, duration: 1, y: -50}, '-=0.8')
+        .from(anim5, {opacity: 0, duration: 1, y: -50}, '-=0.75')
+        .from(anim6, {opacity: 0, duration: 1, y: -50}, '-=0.7')
   },
   validations: {
     name: {required, minLength: minLength(3), maxLength: maxLength(50)},

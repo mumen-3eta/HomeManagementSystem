@@ -4,10 +4,10 @@
     <div class="body-login">
       <div class="content__body-login">
         <div class="main-body-content">
-          <h2>Login</h2>
+          <h2 class="anim1">Login</h2>
           <form action="#" @submit.prevent="checkForm">
             <div class="Group1">
-              <div class="input-group">
+              <div class="input-group anim2">
                 <label for="email">E-Mail</label>
                 <input v-if="!submitStatus" v-model.trim="$v.email.$model" :class="{ 'rounded-pill':true }"
                        class="email"
@@ -23,7 +23,7 @@
                         class="ErrorText"> E-mail must have at most {{ $v.email.$params.maxLength.min }} letters</span>
                 </div>
               </div>
-              <div class="input-group ">
+              <div class="input-group anim3">
                 <label for="Password">Password</label>
                 <input v-if="!submitStatus" v-model.trim="$v.password.$model" :class="{ 'rounded-pill':true }"
                        class="Password" name="Password" placeholder="Enter Your Password" type="password">
@@ -57,10 +57,10 @@
                           :width="width"></scale-loader>
 
             <div v-show="!Loader" class="Group2">
-              <div class="btn-group">
+              <div class="btn-group anim4">
                 <button type="submit">Login</button>
               </div>
-              <div class="input-group">
+              <div class="input-group anim5">
                 <label for="Password">Forget Password?
                   <router-link to="/forgetPassword"> Reset Password</router-link>
                 </label>
@@ -78,6 +78,7 @@ import {maxLength, minLength, required} from 'vuelidate/lib/validators'
 import axios from "axios";
 import NavBar from "@/components/TopBar/NavBar";
 import ScaleLoader from 'vue-spinner/src/ScaleLoader.vue'
+import {TimelineLite} from "gsap";
 
 export default {
   name: "LoginPage",
@@ -119,6 +120,20 @@ export default {
       error: null,
       Loader: false,
     }
+  },
+  mounted() {
+    const anim1 = document.getElementsByClassName('anim1');
+    const anim2 = document.getElementsByClassName('anim2');
+    const anim3 = document.getElementsByClassName('anim3');
+    const anim4 = document.getElementsByClassName('anim4');
+    const anim5 = document.getElementsByClassName('anim5');
+
+    const timeline = new TimelineLite()
+    timeline.from(anim1, {opacity: 0, duration: 1, y: -25})
+        .from(anim2, {opacity: 0, duration: 1, y: -50}, '-=0.9')
+        .from(anim3, {opacity: 0, duration: 1, y: -50}, '-=0.85')
+        .from(anim4, {opacity: 0, duration: 1, y: -50}, '-=0.8')
+        .from(anim5, {opacity: 0, duration: 1, y: 50}, '-=0.75')
   },
   validations: {
     email: {required, minLength: minLength(4), maxLength: maxLength(70)},

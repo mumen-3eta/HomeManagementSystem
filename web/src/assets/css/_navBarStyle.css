@@ -1,6 +1,6 @@
 :root {
-    --background_loginPage:  #343434 ;
-    --white_color:  white ;
+    --background_loginPage: #343434;
+    --white_color: white;
 }
 
 a {
@@ -175,9 +175,10 @@ nav.nav__top-welcome .Nav-List-1 li:nth-child(3):focus::after, nav .Nav-List-1 l
 
 
 @media only screen and (max-width: 800px) {
-    .nav__top-w{
+    .nav__top-w {
         /*overflow: hidden;*/
     }
+
     nav.nav__top-welcome {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -191,29 +192,35 @@ nav.nav__top-welcome .Nav-List-1 li:nth-child(3):focus::after, nav .Nav-List-1 l
         width: 80%;
         margin: 30px auto;
     }
+
     .nav-items {
         display: none;
     }
+
     .bargar-item {
         display: contents;
     }
+
     svg.logo-nav {
         width: 80px;
         height: 80px;
         padding: 10px 0px;
     }
+
     svg.bargar {
         width: 45px;
         height: 45px;
         padding: 10px 0px;
     }
+
     .min-nav-items {
         background: linear-gradient(103.72deg, #45A0F4 0%, #68DFA6 105.3%);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
         height: 100vh;
-        position: relative;
+        position: fixed;
+        width: 100%;
         z-index: 1;
     }
 
