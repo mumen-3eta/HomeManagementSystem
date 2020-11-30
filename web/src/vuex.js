@@ -5,7 +5,8 @@ import VuexPersistence from 'vuex-persist'
 Vue.use(Vuex);
 
 const state = {
-    user: null
+    user: null,
+    deviceInfoAdd: []
 };
 
 const store = new Vuex.Store({
@@ -17,16 +18,25 @@ const store = new Vuex.Store({
         },
         GetUser: (state) => {
             return state.user.user;
+        },
+        deviceInfoAdd: (state) => {
+            return state.deviceInfoAdd;
         }
     },
     actions: {
         user(context, user) {
             context.commit('user', user);
+        },
+        deviceInfoAdd(context, deviceInfoAdd) {
+            context.commit('deviceInfoAdd', deviceInfoAdd);
         }
     },
     mutations: {
         user(state, user) {
             state.user = user;
+        },
+        deviceInfoAdd(state, deviceInfoAdd) {
+            state.deviceInfoAdd = deviceInfoAdd;
         }
     }
 

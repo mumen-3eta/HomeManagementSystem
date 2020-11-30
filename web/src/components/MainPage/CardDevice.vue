@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "_Device",
+  name: "CardDevice",
   props: {
     list: Object,
   },

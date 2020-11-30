@@ -10,76 +10,47 @@
             <h2> Add New Device</h2>
           </div><!-- End Of col-->
         </div><!-- End Of row-->
-        <form class="row g-4">
-          <div class="col-md-6">
-            <label class="form-label" for="inputEmail4">Email</label>
-            <input id="inputEmail4" class="form-control" type="email">
+        <form class="row g-4" @submit.prevent="AddDeviceForm">
+          <div class="col-md-6 anim2">
+            <label class="form-label" for="inputNameDevice">Name Device<span class="text-danger px-1">*</span></label>
+            <input id="inputNameDevice" v-model.trim="deviceInfo.nameDevice" class="form-control"
+                   placeholder="EX: Your name Device" required type="text">
           </div>
-          <div class="col-md-6">
-            <label class="form-label" for="inputPassword4">Password</label>
-            <input id="inputPassword4" class="form-control" type="password">
+          <div class="col-md-6 anim3">
+            <label class="form-label" for="inputLocation">Location<span class="text-danger px-1">*</span></label>
+            <input id="inputLocation" v-model.trim="deviceInfo.nameLocation" class="form-control"
+                   placeholder="EX: Living Rome"
+                   required type="text">
           </div>
-          <div class="col-12">
-            <label class="form-label" for="inputAddress">Address</label>
-            <input id="inputAddress" class="form-control" placeholder="1234 Main St" type="text">
+          <div class="col-md-6 anim4">
+            <label class="form-label" for="inputTypeDevice">Type Device<span class="text-danger px-1">*</span></label>
+            <input id="inputTypeDevice" v-model.trim="deviceInfo.nameType" class="form-control" placeholder="EX: TV"
+                   required type="text">
           </div>
-          <div class="col-12">
-            <label class="form-label" for="inputAddress2">Address 2</label>
-            <input id="inputAddress2" class="form-control" placeholder="Apartment, studio, or floor" type="text">
-          </div>
-          <div class="col-md-6">
-            <label class="form-label" for="inputCity">City</label>
-            <input id="inputCity" class="form-control" type="text">
-          </div>
-          <div class="col-md-4">
-            <label class="form-label" for="inputState">State</label>
-            <select id="inputState" class="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
+          <div class="col-md-6 anim5">
+            <label class="form-label" for="inputStatus">Status<span class="text-danger px-1">*</span></label>
+            <select id="inputStatus" v-model.trim="deviceInfo.status" class="form-select" required>
+              <!--              <option value="-1">Choose One...</option>-->
+              <option selected value="0">Not Active</option>
+              <option value="1">Active</option>
             </select>
           </div>
-          <div class="col-md-2">
-            <label class="form-label" for="inputZip">Zip</label>
-            <input id="inputZip" class="form-control" type="text">
-          </div>
-          <div class="col-12">
+          <div class="col-12 anim6">
             <button class="btn btn-info text-light" type="submit">ADD Device</button>
           </div>
         </form>
-        <!--        <form action="">-->
-        <!--          <div class="row">-->
-        <!--            <div class="col-12 col-md-6 ">-->
-        <!--              <div class="form-group my-2">-->
-        <!--                <label class="my-2" for="exampleInputEmail1">Email address<span-->
-        <!--                    class="text-danger px-1">*</span></label>-->
-        <!--                <input id="exampleInputEmail1" v-model.trim="email" aria-describedby="emailHelp"-->
-        <!--                       class="form-control"-->
-        <!--                       placeholder="example@example.example" type="email">-->
-        <!--                <small id="emailHelp" class="form-text text-muted"></small>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--            <div class="col-12 col-md-6 ">-->
-        <!--              <div class="form-group my-2">-->
-        <!--                <label class="my-2" for="exampleInputEmail1">Email address<span-->
-        <!--                    class="text-danger px-1">*</span></label>-->
-        <!--                <input id="exampleInputEmail1" v-model.trim="email" aria-describedby="emailHelp"-->
-        <!--                       class="form-control"-->
-        <!--                       placeholder="example@example.example" type="email">-->
-        <!--                <small id="emailHelp" class="form-text text-muted"></small>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--            <div class="col-12 col-md-6 ">-->
-        <!--              <div class="form-group my-2">-->
-        <!--                <label class="my-2" for="exampleInputEmail1">Email address<span-->
-        <!--                    class="text-danger px-1">*</span></label>-->
-        <!--                <input id="exampleInputEmail1" v-model.trim="email" aria-describedby="emailHelp"-->
-        <!--                       class="form-control"-->
-        <!--                       placeholder="example@example.example" type="email">-->
-        <!--                <small id="emailHelp" class="form-text text-muted"></small>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--          </div>&lt;!&ndash; End Of row&ndash;&gt;-->
-        <!--        </form>-->
+
+        <!--                <div class="container py-5">-->
+        <!--                  <div class="row">-->
+        <!--                    <div class="col">-->
+        <!--                      <p>{{ deviceInfoAdd.nameDevice }}</p>-->
+        <!--                      <p>{{ deviceInfoAdd.nameLocation }}</p>-->
+        <!--                      <p>{{ deviceInfoAdd.nameType }}</p>-->
+        <!--                      <p>{{ deviceInfoAdd.status | Status }} </p>-->
+        <!--                    </div>&lt;!&ndash; End Of col&ndash;&gt;-->
+        <!--                  </div>&lt;!&ndash; End Of row&ndash;&gt;-->
+        <!--                </div>&lt;!&ndash; End Of container&ndash;&gt;-->
+
       </div><!-- End Of container-->
     </section>
   </div>
@@ -89,6 +60,7 @@
 import {mapGetters} from "vuex";
 import TopNavBar from "@/components/MainPage/Nav/TopNav";
 import LeftNavBar from "@/components/MainPage/Nav/LeftNav";
+import {TimelineLite} from "gsap";
 
 export default {
   name: "AddDevices",
@@ -96,10 +68,50 @@ export default {
     TopNavBar,
     LeftNavBar,
   },
-  computed: {
-    ...mapGetters(['GetUser']),
-    ...mapGetters(['user']),
+  data() {
+    return {
+      deviceInfo: {
+        nameDevice: null,
+        nameLocation: null,
+        nameType: null,
+        status: 'Not Active',
+      },
+    }
+  },
+  methods: {
+    AddDeviceForm() {
+      // Add function and hidden for any user (save for one user كل يوزر له أجهزته الخاصة)
+      this.$store.dispatch('deviceInfoAdd', this.deviceInfo)
+      // set default input (Empty)
+      this.deviceInfo = {nameDevice: null, nameLocation: null, nameType: null, status: 'Not Active',}
 
+    }
+  },
+  mounted() {
+    const anim1 = document.getElementsByClassName('anim1');
+    const anim2 = document.getElementsByClassName('anim2');
+    const anim3 = document.getElementsByClassName('anim3');
+    const anim4 = document.getElementsByClassName('anim4');
+    const anim5 = document.getElementsByClassName('anim5');
+    const anim6 = document.getElementsByClassName('anim6');
+
+    const timeline = new TimelineLite()
+    timeline.from(anim1, {opacity: 0, duration: 1, y: -50})
+        .from(anim2, {opacity: 0, duration: 1, y: 50}, '-=0.8')
+        .from(anim3, {opacity: 0, duration: 1, y: 50}, '-=0.8')
+        .from(anim4, {opacity: 0, duration: 1, y: 50}, '-=0.8')
+        .from(anim5, {opacity: 0, duration: 1, y: 50}, '-=0.8')
+        .from(anim6, {opacity: 0, duration: 1, y: 50}, '-=0.8')
+
+  },
+  filters: {
+    Status: function (value) {
+      if (value == '-1') return 'Choose nothing';
+      return value == 0 ? 'Not Active' : 'Active';
+    }
+  },
+  computed: {
+    ...mapGetters(['GetUser', 'deviceInfoAdd', 'user']),
   },
 }
 </script>
