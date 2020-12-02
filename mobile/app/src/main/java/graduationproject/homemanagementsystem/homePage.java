@@ -2,6 +2,7 @@ package graduationproject.homemanagementsystem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -16,8 +17,16 @@ public class homePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        for (userClass user: MainActivity.users){
-            Log.e("Check user list", user.toString());
+
+
+        Intent intent = getIntent();
+        String userEmail;
+        if (intent.getStringExtra("email").equals("")){
+
+        }else {
+            userEmail = intent.getStringExtra("email");
+            Log.e("Check user list", userEmail);
         }
+
     }
 }

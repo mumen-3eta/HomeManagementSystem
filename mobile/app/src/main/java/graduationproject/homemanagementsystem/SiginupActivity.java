@@ -75,7 +75,9 @@ public class SiginupActivity extends AppCompatActivity {
             userClass newUser = new userClass(userName, userEmail,userPassword);
             MainActivity.users.add(newUser);
             toast.makeText(this, "sign up successful", Toast.LENGTH_SHORT).show();
-            redirectActivity(this, homePage.class);
+            Intent intent = new Intent(this, homePage.class);
+            intent.putExtra("email", userEmail);
+            this.startActivity(intent);
         }else if (!validUserName){
             toast.makeText(this, "name is not valid", Toast.LENGTH_SHORT).show();
             return;
