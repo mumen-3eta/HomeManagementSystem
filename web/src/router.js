@@ -13,6 +13,7 @@ import ProfileUser from "@/components/MainPage/ProfileUser";
 import AddDevices from "@/components/MainPage/AddDevices";
 import PageNotFound from "@/components/ErrorsPages/PageNotFound";
 import DeviceInfo from "@/components/MainPage/DeviceInfo";
+import EditInfoDevice from "@/components/MainPage/EditInfoDevice";
 
 Vue.use(Router)
 
@@ -150,6 +151,22 @@ export default new Router({
                 }
                 // }
 
+                next()
+            }
+        },
+        {
+            path: '/mainPage/DeviceInfo/:Device_id/edit',
+            name: "EditDeviceInfo",
+            component: EditInfoDevice,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                // if (localStorage.getItem('token') == null){
+                if (!store.getters['user']) {
+                    return next({
+                        name: "LoginPage"
+                    })
+                }
+                // }
                 next()
             }
         },

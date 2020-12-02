@@ -38,9 +38,13 @@
                   <p class="nameLabelLocation">TV</p>
                 </div>
                 <div class="form-check form-switch isActiveInput justify-content-end align-items-center">
-                  <input id="flexSwitchCheckDefault" class="form-check-input" type="checkbox">
-                  <label class="form-check-label  pl-2" for="flexSwitchCheckDefault">Active</label>
+                  <label class="form-check-label pl-2 text-danger">Not Active</label>
                 </div>
+                <!--       if  need last input active active it (checkbox active)         -->
+                <!--                <div class="form-check form-switch isActiveInput justify-content-end align-items-center">-->
+                <!--                  <input id="flexSwitchCheckDefault" class="form-check-input" type="checkbox">-->
+                <!--                  <label class="form-check-label  pl-2" for="flexSwitchCheckDefault">Active</label>-->
+                <!--                </div>-->
               </div>
 
             </div>
