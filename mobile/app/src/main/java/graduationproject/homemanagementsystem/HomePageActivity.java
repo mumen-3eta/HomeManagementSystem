@@ -10,7 +10,7 @@ import java.io.Console;
 
 import graduationproject.homemanagementsystem.dataClasses.userClass;
 
-public class homePage extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,8 @@ public class homePage extends AppCompatActivity {
             userEmail = intent.getStringExtra("email");
             Log.e("Check user list", userEmail);
         }
+
+
 
     }
 }
