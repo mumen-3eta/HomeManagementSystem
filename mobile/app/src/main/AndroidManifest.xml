@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/applogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Splash">
+        <activity android:name=".Splash" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,13 +17,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".homePage" />
-        <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".AboutUsActivity" />
-        <activity android:name=".ContactUsActivity" />
-        <activity android:name=".SiginupActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".ChangePasswordActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ResetPasswordActivity" android:screenOrientation="portrait" />
+        <activity android:name=".AboutUsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ContactUsActivity" android:screenOrientation="portrait" />
+        <activity android:name=".SiginupActivity" android:screenOrientation="portrait" />
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
+
 
     </application>
 
