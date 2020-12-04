@@ -40,16 +40,16 @@
           </div>
         </form>
 
-        <div v-if="this.deviceInfoAdd" class="container py-5">
-          <div class="row">
-            <div class="col">
-              <p>{{ deviceInfoAdd.nameDevice }}</p>
-              <p>{{ deviceInfoAdd.nameLocation }}</p>
-              <p>{{ deviceInfoAdd.nameType }}</p>
-              <p>{{ deviceInfoAdd.status | Status }} </p>
-            </div><!-- End Of col-->
-          </div><!-- End Of row-->
-        </div><!-- End Of container-->
+        <!--        <div v-if="this.deviceInfoAdd" class="container py-5">-->
+        <!--          <div class="row">-->
+        <!--            <div class="col">-->
+        <!--              <p>{{ deviceInfoAdd.nameDevice }}</p>-->
+        <!--              <p>{{ deviceInfoAdd.nameLocation }}</p>-->
+        <!--              <p>{{ deviceInfoAdd.nameType }}</p>-->
+        <!--              <p>{{ deviceInfoAdd.status | Status }} </p>-->
+        <!--            </div>&lt;!&ndash; End Of col&ndash;&gt;-->
+        <!--          </div>&lt;!&ndash; End Of row&ndash;&gt;-->
+        <!--        </div>&lt;!&ndash; End Of container&ndash;&gt;-->
 
       </div><!-- End Of container-->
     </section>
