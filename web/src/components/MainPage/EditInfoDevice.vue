@@ -19,7 +19,7 @@
           <div class="col-md-6 anim3">
             <label class="form-label" for="inputLocation">Location<span class="text-danger px-1">*</span></label>
             <input id="inputLocation" v-model.trim="deviceInfo.nameLocation" class="form-control"
-                   placeholder="EX: Living Rome"
+                   placeholder="EX: Living Room"
                    required type="text">
           </div>
           <div class="col-md-6 anim4">
