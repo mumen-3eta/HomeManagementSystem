@@ -19,7 +19,7 @@
           <div class="col-md-6 anim3">
             <label class="form-label" for="inputLocation">Location<span class="text-danger px-1">*</span></label>
             <input id="inputLocation" v-model.trim="deviceInfo.nameLocation" class="form-control"
-                   placeholder="EX: Living Rome"
+                   placeholder="EX: Living Room"
                    required type="text">
           </div>
           <div class="col-md-6 anim4">
@@ -27,14 +27,14 @@
             <input id="inputTypeDevice" v-model.trim="deviceInfo.nameType" class="form-control" placeholder="EX: TV"
                    required type="text">
           </div>
-          <div class="col-md-6 anim5">
-            <label class="form-label" for="inputStatus">Status<span class="text-danger px-1">*</span></label>
-            <select id="inputStatus" v-model.trim="deviceInfo.status" class="form-select" required>
-              <!--              <option value="-1">Choose One...</option>-->
-              <option selected value="0">Not Active</option>
-              <option value="1">Active</option>
-            </select>
-          </div>
+          <!--          <div class="col-md-6 anim5">-->
+          <!--            <label class="form-label" for="inputStatus">Status<span class="text-danger px-1">*</span></label>-->
+          <!--            <select id="inputStatus" v-model.trim="deviceInfo.status" class="form-select" required>-->
+          <!--              &lt;!&ndash;              <option value="-1">Choose One...</option>&ndash;&gt;-->
+          <!--              <option selected value="0">Not Active</option>-->
+          <!--              <option value="1">Active</option>-->
+          <!--            </select>-->
+          <!--          </div>-->
           <div class="col-12 anim6">
             <button class="btn btn-info text-light" type="submit">ADD Device</button>
           </div>
@@ -92,7 +92,7 @@ export default {
     const anim2 = document.getElementsByClassName('anim2');
     const anim3 = document.getElementsByClassName('anim3');
     const anim4 = document.getElementsByClassName('anim4');
-    const anim5 = document.getElementsByClassName('anim5');
+    // const anim5 = document.getElementsByClassName('anim5');
     const anim6 = document.getElementsByClassName('anim6');
 
     const timeline = new TimelineLite()
@@ -100,16 +100,16 @@ export default {
         .from(anim2, {opacity: 0, duration: 1, y: 50}, '-=0.8')
         .from(anim3, {opacity: 0, duration: 1, y: 50}, '-=0.8')
         .from(anim4, {opacity: 0, duration: 1, y: 50}, '-=0.8')
-        .from(anim5, {opacity: 0, duration: 1, y: 50}, '-=0.8')
+        // .from(anim5, {opacity: 0, duration: 1, y: 50}, '-=0.8')
         .from(anim6, {opacity: 0, duration: 1, y: 50}, '-=0.8')
 
   },
-  filters: {
-    Status: function (value) {
-      if (value == '-1') return 'Choose nothing';
-      return value == 0 ? 'Not Active' : 'Active';
-    }
-  },
+  // filters: {
+  //   Status: function (value) {
+  //     if (value == '-1') return 'Choose nothing';
+  //     return value == 0 ? 'Not Active' : 'Active';
+  //   }
+  // },
   computed: {
     ...mapGetters(['GetUser', 'deviceInfoAdd', 'user']),
   },

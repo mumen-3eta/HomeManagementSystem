@@ -45,10 +45,10 @@ export default {
   data() {
     return {
       lists: [
-        {id: 1, name: 'device 1'},
-        {id: 2, name: 'device 2'},
-        {id: 3, name: 'device 3'},
-        {id: 4, name: 'device 4'},
+        {id: 1, name: 'device 1', status: 0},
+        {id: 2, name: 'device 2', status: 1},
+        {id: 3, name: 'device 3', status: 0},
+        {id: 4, name: 'device 4', status: 1},
       ]
     }
   },
