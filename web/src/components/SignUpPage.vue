@@ -109,8 +109,10 @@
 import {maxLength, minLength, required, sameAs} from 'vuelidate/lib/validators'
 import axios from 'axios'
 import NavBar from "@/components/TopBar/NavBar";
-import ScaleLoader from 'vue-spinner/src/ScaleLoader.vue'
+import ScaleLoader from 'vue-spinner/src/ScaleLoader.vue';
 import {TimelineLite} from "gsap";
+import {boomify} from "@/utils";
+
 
 export default {
   name: "SignUpPage",
@@ -218,7 +220,8 @@ export default {
             password_confirmation: this.password_confirmation
           });
           if (re.data.errors) {
-            this.error = re.data.messages.email[0];
+            // Error handling from api
+            boomify(400, re.data.messages.email[0]);
           } else {
             this.error = null;
             localStorage.setItem('token', re.data.token);
@@ -228,14 +231,13 @@ export default {
             this.Loader = false;
           }
         } catch (e) {
-          this.error = 'Error'
+          this.error = e.msg || e.message;
+          console.log(e.statusError)
         }
 
 
       }
     },
-
-
   }
 }
 </script>
