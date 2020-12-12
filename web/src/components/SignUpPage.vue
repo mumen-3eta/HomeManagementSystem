@@ -214,23 +214,24 @@ export default {
         }, 3500);
         try {
           // "/api/users/register"
-          const re = await axios.post('register-api', {
+          const re = await axios.post('/api/users/register', {
             name: this.name,
             email: this.email,
             password: this.password,
-            password_confirmation: this.password_confirmation
+            // password_confirmation: this.password_confirmation || this.password
           });
           if (re.data.errors) {
             // Error handling from api
             boomify(400, re.data.messages.email[0]);
-          } else {
-            this.error = null;
-            localStorage.setItem('token', re.data.token);
-            localStorage.setItem('user', re.data.user);
-            await this.$store.dispatch('user', re.data);
-            await this.$router.push('/mainPage');
-            this.Loader = false;
           }
+          this.error = null;
+          console.log(re.data.csrfToken);
+          localStorage.setItem('token', re.data.csrfToken);
+          localStorage.setItem('user', re.data.user);
+          await this.$store.dispatch('user', re.data);
+          await this.$router.push('/mainPage');
+          this.Loader = false;
+
         } catch (e) {
           this.error = e.msg || e.message;
           console.log(e.statusError)

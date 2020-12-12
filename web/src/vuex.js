@@ -17,7 +17,7 @@ const store = new Vuex.Store({
             return state.user;
         },
         GetUser: (state) => {
-            return state.user.user;
+            return state.user;
         },
         deviceInfoAdd: (state) => {
             return state.deviceInfoAdd;
