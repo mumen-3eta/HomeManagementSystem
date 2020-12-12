@@ -34,6 +34,7 @@ import LeftNavBar from "@/components/MainPage/Nav/LeftNav";
 import Device from "@/components/MainPage/CardDevice";
 import {mapGetters} from "vuex";
 import {TimelineLite} from "gsap";
+import axios from "axios";
 
 export default {
   name: "main",
@@ -59,6 +60,14 @@ export default {
     timeline.from(addDevice, {opacity: 0, duration: 1, y: -50})
         .from(d1, {opacity: 0, duration: 1, y: -50}, '-=0.7')
 
+  },
+  async beforeMount() {
+    const re = await axios.get('/api/users/me');
+    let {user} = re.data;
+    // if (!user.image)
+    //   user.image = "https://www.pinclipart.com/picdir/middle/38-388919_computer-icons-user-profile-clip-art-avatar-user.png"
+    // console.log(user);
+    await this.$store.dispatch('user', user);
   },
   computed: {
     ...mapGetters(['user'])

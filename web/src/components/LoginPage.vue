@@ -167,7 +167,7 @@ export default {
         }, 3500);
 
         try {
-          let response = await axios.post('login-api', {
+          let response = await axios.post('/api/users/login', {
             email: this.email,
             password: this.password
           });
