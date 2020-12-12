@@ -213,6 +213,7 @@ export default {
           this.Loader = false;
         }, 3500);
         try {
+          // "/api/users/register"
           const re = await axios.post('register-api', {
             name: this.name,
             email: this.email,
