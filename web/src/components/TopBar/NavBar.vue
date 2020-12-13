@@ -17,13 +17,13 @@
           </li>
         </ul>
 
-        <ul v-if="user">
+        <ul v-if="TokenUser">
           <li class="siginUp"><a href="javascript:void(0)" @click.prevent="handleClick">Log Out</a></li>
           <li>
             <router-link to="/mainPage">Dashboard</router-link>
           </li>
         </ul>
-        <ul v-if="!user">
+        <ul v-if="!TokenUser">
           <li>
             <router-link to="/login">Login</router-link>
           </li>
@@ -64,13 +64,13 @@
             <router-link to="/contactUs">Contacts</router-link>
           </li>
         </ul>
-        <ul v-if="user">
+        <ul v-if="TokenUser">
           <li class="siginUp"><a href="javascript:void(0)" @click.prevent="handleClick">Log Out</a></li>
           <li>
             <router-link to="/mainPage">Dashboard</router-link>
           </li>
         </ul>
-        <ul v-if="!user ">
+        <ul v-if="!TokenUser ">
           <li>
             <router-link to="/login">Login</router-link>
           </li>
@@ -107,12 +107,13 @@ export default {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       this.$store.dispatch('user', null);
+      this.$store.dispatch('TokenUser', null);
       this.$store.dispatch('deviceInfoAdd', null);
       this.$router.push('/login');
     }
   },
   computed: {
-    ...mapGetters(['user', 'deviceInfoAdd'])
+    ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
   }
 }
 </script>

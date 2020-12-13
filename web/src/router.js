@@ -27,16 +27,13 @@ export default new Router({
             path: '/login',
             name: "LoginPage",
             component: LoginPage,
-            // already be login 
+            // already be login
             beforeEnter: (to, from, next) => {
-                // if (localStorage.getItem('token') != null){
-                if (store.getters['user']) {
+                if (store.getters['TokenUser']) {
                     return next({
                         name: "WelcomePage"
                     })
                 }
-                // }
-
                 next()
             }
 
@@ -47,12 +44,11 @@ export default new Router({
             component: SignUpPage,
             // already be login
             beforeEnter: (to, from, next) => {
-                if (store.getters['user']) {
+                if (store.getters['TokenUser']) {
                     return next({
                         name: "WelcomePage"
                     })
                 }
-
                 next()
             }
         },
@@ -62,7 +58,7 @@ export default new Router({
             component: ForgetPassword,
             // already be login
             beforeEnter: (to, from, next) => {
-                if (store.getters['user']) {
+                if (store.getters['TokenUser']) {
                     return next({
                         name: "WelcomePage"
                     })
@@ -77,7 +73,7 @@ export default new Router({
             component: ChangePasswordPage,
             // already be login
             beforeEnter: (to, from, next) => {
-                if (store.getters['user']) {
+                if (store.getters['TokenUser']) {
                     return next({
                         name: "WelcomePage"
                     })
@@ -92,14 +88,11 @@ export default new Router({
             component: main,
             // must be login
             beforeEnter: (to, from, next) => {
-                // if (localStorage.getItem('token') == null){
-                if (!store.getters['user']) {
+                if (!store.getters['TokenUser']) {
                     return next({
                         name: "LoginPage"
                     })
                 }
-                // }
-
                 next()
             }
         },
@@ -110,7 +103,7 @@ export default new Router({
             // must be login
             beforeEnter: (to, from, next) => {
                 // if (localStorage.getItem('token') == null){
-                if (!store.getters['user']) {
+                if (!store.getters['TokenUser']) {
                     return next({
                         name: "LoginPage"
                     })
@@ -127,7 +120,7 @@ export default new Router({
             // must be login
             beforeEnter: (to, from, next) => {
                 // if (localStorage.getItem('token') == null){
-                if (!store.getters['user']) {
+                if (!store.getters['TokenUser']) {
                     return next({
                         name: "LoginPage"
                     })
@@ -144,7 +137,7 @@ export default new Router({
             // must be login
             beforeEnter: (to, from, next) => {
                 // if (localStorage.getItem('token') == null){
-                if (!store.getters['user']) {
+                if (!store.getters['TokenUser']) {
                     return next({
                         name: "LoginPage"
                     })
@@ -161,7 +154,7 @@ export default new Router({
             // must be login
             beforeEnter: (to, from, next) => {
                 // if (localStorage.getItem('token') == null){
-                if (!store.getters['user']) {
+                if (!store.getters['TokenUser']) {
                     return next({
                         name: "LoginPage"
                     })

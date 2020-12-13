@@ -225,16 +225,13 @@ export default {
             boomify(400, re.data.messages.email[0]);
           }
           this.error = null;
-          console.log(re.data.csrfToken);
           localStorage.setItem('token', re.data.csrfToken);
-          localStorage.setItem('user', re.data.user);
-          await this.$store.dispatch('user', re.data);
+          // localStorage.setItem('user', re.data.user);
+          await this.$store.dispatch('TokenUser', re.data);
           await this.$router.push('/mainPage');
           this.Loader = false;
-
         } catch (e) {
           this.error = e.msg || e.message;
-          console.log(e.statusError)
         }
 
 
