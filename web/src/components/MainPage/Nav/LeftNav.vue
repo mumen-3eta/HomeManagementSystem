@@ -29,12 +29,13 @@ export default {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       this.$store.dispatch('user', null);
+      this.$store.dispatch('TokenUser', null);
       this.$store.dispatch('deviceInfoAdd', null);
       this.$router.push('/login');
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user', 'TokenUser', 'deviceInfoAdd'])
   }
 }
 </script>

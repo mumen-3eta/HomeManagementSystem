@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 const state = {
     user: null,
+    TokenUser: null || localStorage.getItem('token'),
     deviceInfoAdd: []
 };
 
@@ -19,6 +20,9 @@ const store = new Vuex.Store({
         GetUser: (state) => {
             return state.user;
         },
+        TokenUser: (state) => {
+            return state.TokenUser;
+        },
         deviceInfoAdd: (state) => {
             return state.deviceInfoAdd;
         }
@@ -27,6 +31,9 @@ const store = new Vuex.Store({
         user(context, user) {
             context.commit('user', user);
         },
+        TokenUser(context, TokenUser) {
+            context.commit('TokenUser', TokenUser);
+        },
         deviceInfoAdd(context, deviceInfoAdd) {
             context.commit('deviceInfoAdd', deviceInfoAdd);
         }
@@ -34,6 +41,9 @@ const store = new Vuex.Store({
     mutations: {
         user(state, user) {
             state.user = user;
+        },
+        TokenUser(state, TokenUser) {
+            state.TokenUser = TokenUser;
         },
         deviceInfoAdd(state, deviceInfoAdd) {
             state.deviceInfoAdd = deviceInfoAdd;
