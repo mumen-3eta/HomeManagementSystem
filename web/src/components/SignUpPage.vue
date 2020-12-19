@@ -225,7 +225,7 @@ export default {
             boomify(400, re.data.messages.email[0]);
           }
           this.error = null;
-          localStorage.setItem('token', re.data.csrfToken);
+          localStorage.setItem('csrfToken', re.data.csrfToken);
           // localStorage.setItem('user', re.data.user);
           await this.$store.dispatch('TokenUser', re.data);
           await this.$router.push('/mainPage');

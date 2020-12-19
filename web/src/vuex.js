@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 const state = {
     user: null,
-    TokenUser: null || localStorage.getItem('token'),
+    TokenUser: null,
     deviceInfoAdd: []
 };
 

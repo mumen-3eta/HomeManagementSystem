@@ -10,8 +10,10 @@
       <li>
         <router-link style="font-size: 15px" to="/mainPage/add-device">Add Device</router-link>
       </li>
-      <!--      <li><router-link to="/mainPage/Profile/user" >Profile</router-link></li>-->
-      <li><a href="/mainPage/Profile/user">Profile</a></li>
+      <li>
+        <router-link to="/mainPage/Profile/user">Profile</router-link>
+      </li>
+      <!--      <li><a href="/mainPage/Profile/user">Profile</a></li>-->
 
       <li><a class="logout" href="javascript:void(0)" title="Log Out" @click.prevent="handleClick"><img
           alt="" src="@/assets/img/exit.png"></a></li>
@@ -21,13 +23,15 @@
 
 <script>
 import {mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: "LeftNav",
   methods: {
-    handleClick() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+    async handleClick() {
+
+      await axios.put('/api/users/logout');
+      localStorage.removeItem('csrfToken');
       this.$store.dispatch('user', null);
       this.$store.dispatch('TokenUser', null);
       this.$store.dispatch('deviceInfoAdd', null);
@@ -36,6 +40,9 @@ export default {
   },
   computed: {
     ...mapGetters(['user', 'TokenUser', 'deviceInfoAdd'])
+  }
+  , beforeMount() {
+    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
   }
 }
 </script>
