@@ -21,7 +21,6 @@ router.post("/register", async (req, res) => {
         let bg_Color = "4f4f4f";
         let font_Color = "fff";
         const image = `https://ui-avatars.com/api/?name=${name}&color=${font_Color}&background=${bg_Color}`;
-        // const image = "https://www.pinclipart.com/picdir/middle/38-388919_computer-icons-user-profile-clip-art-avatar-user.png"
 
         const user = new User({name, email, password, image});
         const persistedUser = await user.save();
