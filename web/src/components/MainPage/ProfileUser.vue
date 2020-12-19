@@ -232,6 +232,9 @@ export default {
     ...mapGetters(['user']),
 
   },
+  beforeMount() {
+    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+  }
 }
 </script>
 

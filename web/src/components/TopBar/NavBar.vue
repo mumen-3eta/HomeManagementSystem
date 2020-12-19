@@ -85,6 +85,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: "Nav-Bar",
@@ -94,18 +95,11 @@ export default {
       // token :false
     }
   },
-  // mounted() {
-  //   let token = localStorage.getItem('token');
-  //   if ( token == null){
-  //     this.token = false
-  //   }else {
-  //     this.token = true
-  //   }
-  // },
   methods: {
-    handleClick() {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+    async handleClick() {
+      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+      await axios.put('/api/users/logout');
+      localStorage.removeItem('csrfToken');
       this.$store.dispatch('user', null);
       this.$store.dispatch('TokenUser', null);
       this.$store.dispatch('deviceInfoAdd', null);
