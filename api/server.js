@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+const logger = require('morgan');
 
 const { getSecret } = require('./secrets');
 const router = require('./routes');
@@ -21,6 +22,7 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(logger('dev'));
 
 app.use('/api/v1', router);
 
