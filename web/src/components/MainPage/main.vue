@@ -62,11 +62,7 @@ export default {
 
   },
   async beforeMount() {
-    const re = await axios.get('/api/users/me');
-    let {user} = re.data;
-    // if (!user.image)
-    //   user.image = "https://www.pinclipart.com/picdir/middle/38-388919_computer-icons-user-profile-clip-art-avatar-user.png"
-    // console.log(user);
+    const {user} = (await axios.get('/api/v1/users/me')).data;
     await this.$store.dispatch('user', user);
   },
   computed: {
