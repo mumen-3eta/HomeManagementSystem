@@ -30,7 +30,7 @@ export default {
   methods: {
     async handleClick() {
 
-      await axios.put('/api/users/logout');
+      await axios.put('/api/v1/users/logout');
       localStorage.removeItem('csrfToken');
       this.$store.dispatch('user', null);
       this.$store.dispatch('TokenUser', null);

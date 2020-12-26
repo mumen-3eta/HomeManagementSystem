@@ -6,9 +6,8 @@
     </div>
     <div>
           <span>
-<!--            <img v-show="!user.image" alt="User Image" src="@/assets/img/man.svg" title="User Image">-->
-            <img v-show="user.image" :src="user.image" alt="User Image" title="User Image">
-            <label title="User Name">{{ user.name }}</label>
+            <img v-show="user.profileInfo.image" :src="user.profileInfo.image" alt="User Image" title="User Image">
+            <label title="User Name">{{ user.basicInfo.userName }}</label>
           </span>
     </div>
   </nav>

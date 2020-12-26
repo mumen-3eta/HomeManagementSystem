@@ -8,9 +8,9 @@
           <form action="#" @submit.prevent="checkForm">
             <div class="Group1">
               <div class="input-group anim2">
-                <label for="name">Name</label>
+                <label for="name">User Name</label>
                 <input v-if="!submitStatus" v-model.trim="$v.name.$model" :class="{ 'rounded-pill':true }" name="name"
-                       placeholder="Enter Your Name" type="text">
+                       placeholder="Enter Your user Name" type="text">
                 <input v-else-if="submitStatus" id="name"
                        v-model.trim="$v.name.$model"
                        :class="{ 'inputError':$v.name.$error ,'inputSuccess':!$v.name.$invalid , 'rounded-pill':true }"
@@ -35,9 +35,7 @@
                         class="ErrorText"> Name must have at least {{ $v.email.$params.minLength.min }} letters</span>
                   <span v-if="!$v.email.maxLength"
                         class="ErrorText"> Name must have at most {{ $v.email.$params.maxLength.min }} letters</span>
-                  <div v-if="error">
-                    <span class="ErrorText"> {{ error }}</span>
-                  </div>
+
                 </div>
               </div>
               <div class="input-group anim4">
@@ -88,6 +86,9 @@
               <p v-if="submitStatus === 'OK'&& !error" class="SuccessText">Thanks for your submission!</p>
               <p v-if="submitStatus === 'ERROR'" class="ErrorText">Please fill the form correctly.</p>
               <p v-if="submitStatus === 'PENDING'" class="PENDINGText">Sending...</p>
+            </div>
+            <div v-if="error">
+              <span class="ErrorText"> {{ error }}</span>
             </div>
             <scale-loader v-show="Loader" :color="color" :height="height" :loading="loading"
                           :width="width"></scale-loader>
@@ -174,13 +175,13 @@ export default {
         .from(anim6, {opacity: 0, duration: 1, y: -50}, '-=0.7')
   },
   validations: {
-    name: {required, minLength: minLength(3), maxLength: maxLength(50)},
-    email: {required, minLength: minLength(4), maxLength: maxLength(70)},
-    password: {required, minLength: minLength(6), maxLength: maxLength(60)},
+    name: {required, minLength: minLength(3), maxLength: maxLength(25)},
+    email: {required, minLength: minLength(4), maxLength: maxLength(50)},
+    password: {required, minLength: minLength(6), maxLength: maxLength(50)},
     password_confirmation: {
       required,
       minLength: minLength(6),
-      maxLength: maxLength(60),
+      maxLength: maxLength(50),
       sameAsPassword: sameAs('password')
     },
 
@@ -188,6 +189,18 @@ export default {
   methods: {
     async checkForm() {
       this.$v.$touch()
+      if (this.$v.name.$model) {
+        let userName = this.$v.name.$model;
+        let usernameRegex = /^[a-zA-Z0-9]+$/;
+        let CheckUserName = usernameRegex.test(userName);//true or false
+        if (!CheckUserName) {
+          this.error = "user name Faild";
+          setTimeout(() => {
+            this.error = null;
+          }, 3000);
+          return false;
+        }
+      }
       if (this.$v.$invalid) {
         this.Loader = true;
         setTimeout(() => {
@@ -213,25 +226,23 @@ export default {
           this.Loader = false;
         }, 3500);
         try {
-          // "/api/users/register"
-          const re = await axios.post('/api/users/register', {
-            name: this.name,
+          const re = await axios.post('/api/v1/users/register', {
+            userName: this.name,
             email: this.email,
             password: this.password,
-            // password_confirmation: this.password_confirmation || this.password
           });
           if (re.data.errors) {
             // Error handling from api
-            boomify(400, re.data.messages.email[0]);
+            boomify(400, "Email is already taken");
           }
           this.error = null;
           localStorage.setItem('csrfToken', re.data.csrfToken);
-          // localStorage.setItem('user', re.data.user);
           await this.$store.dispatch('TokenUser', re.data);
           await this.$router.push('/mainPage');
           this.Loader = false;
         } catch (e) {
           this.error = e.msg || e.message;
+          return false;
         }
 
 
