@@ -65,7 +65,11 @@ UserSchema.plugin(uniqueValidator);
 UserSchema.pre('save', function (next) {
   const user = this;
 
-  if (user.isModified('password')) {
+  const bgColor = '4f4f4f';
+  const fontColor = 'fff';
+  user.profileInfo.image = `https://ui-avatars.com/api/?name=${user.basicInfo.userName}&color=${fontColor}&background=${bgColor}`;
+
+  if (user.isModified('basicInfo.password')) {
     bcrypt
       .genSalt(12)
       .then((salt) => bcrypt.hash(user.basicInfo.password, salt))
@@ -75,14 +79,6 @@ UserSchema.pre('save', function (next) {
       })
       .catch((err) => next(err));
   }
-
-  if (user.isModified('image')) {
-    const bgColor = '4f4f4f';
-    const fontColor = 'fff';
-    user.profileInfo.image = `https://ui-avatars.com/api/?name=${user.basicInfo.userName}&color=${fontColor}&background=${bgColor}`;
-  }
-
-  next();
 });
 
 module.exports = mongoose.model('User', UserSchema);

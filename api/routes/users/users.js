@@ -2,15 +2,16 @@
 const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 
-const User = require('../models/user');
-const Session = require('../models/session');
-const { authenticate } = require('../middleware/authenticate');
-const { csrfCheck } = require('../middleware/csrfCheck');
-const { initSession, isEmail } = require('../utils/utils');
+const User = require('../../models/user');
+const Session = require('../../models/session');
+const { authenticate } = require('../../middleware/authenticate');
+const { csrfCheck } = require('../../middleware/csrfCheck');
+const { initSession, isEmail } = require('../../utils/utils');
 
 router.post('/register', async (req, res) => {
   try {
     const { userName, email, password } = req.body;
+
     if (!isEmail(email)) {
       throw new Error('Email must be a valid email address.');
     }
@@ -78,13 +79,13 @@ router.post('/login', async (req, res) => {
         ],
       });
     }
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ 'basicInfo.email': email });
     if (!user) {
       throw new Error();
     }
     const userId = user._id;
 
-    const passwordValidated = await bcrypt.compare(password, user.password);
+    const passwordValidated = await bcrypt.compare(password, user.basicInfo.password);
     if (!passwordValidated) {
       throw new Error();
     }
@@ -122,9 +123,13 @@ router.get('/me', authenticate, async (req, res) => {
     const user = await User.findById(
       { _id: userId },
       {
-        email: 1, userName: 1, _id: 0,
+        basicInfo: {
+          email: 1, userName: 1, isAdmin: 1,
+        },
+        _id: 0,
       },
     );
+    delete user.basicInfo.createdAt;
     res.json({
       title: 'Authentication successful',
       detail: 'Successfully authenticated user',
@@ -152,7 +157,7 @@ router.delete('/me', authenticate, csrfCheck, async (req, res) => {
     }
     const user = await User.findById({ _id: userId });
 
-    const passwordValidated = await bcrypt.compare(password, user.password);
+    const passwordValidated = await bcrypt.compare(password, user.basicInfo.password);
     if (!passwordValidated) {
       throw new Error();
     }
