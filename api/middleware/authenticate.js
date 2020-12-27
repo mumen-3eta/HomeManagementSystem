@@ -1,4 +1,3 @@
-const User = require('../models/user');
 const Session = require('../models/session');
 
 const authenticate = async (req, res, next) => {

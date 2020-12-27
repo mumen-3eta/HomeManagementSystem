@@ -34,6 +34,7 @@ import LeftNavBar from "@/components/MainPage/Nav/LeftNav";
 import Device from "@/components/MainPage/CardDevice";
 import {mapGetters} from "vuex";
 import {TimelineLite} from "gsap";
+import axios from "axios";
 
 export default {
   name: "main",
@@ -45,10 +46,10 @@ export default {
   data() {
     return {
       lists: [
-        {id: 1, name: 'device 1'},
-        {id: 2, name: 'device 2'},
-        {id: 3, name: 'device 3'},
-        {id: 4, name: 'device 4'},
+        {id: 1, name: 'device 1', status: 0},
+        {id: 2, name: 'device 2', status: 1},
+        {id: 3, name: 'device 3', status: 0},
+        {id: 4, name: 'device 4', status: 1},
       ]
     }
   },
@@ -59,6 +60,10 @@ export default {
     timeline.from(addDevice, {opacity: 0, duration: 1, y: -50})
         .from(d1, {opacity: 0, duration: 1, y: -50}, '-=0.7')
 
+  },
+  async beforeMount() {
+    const {user} = (await axios.get('/api/v1/users/me')).data;
+    await this.$store.dispatch('user', user);
   },
   computed: {
     ...mapGetters(['user'])

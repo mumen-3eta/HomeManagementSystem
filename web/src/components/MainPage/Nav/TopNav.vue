@@ -6,9 +6,8 @@
     </div>
     <div>
           <span>
-              <img v-show="!GetUser.image" src="@/assets/img/man.svg" title="User Image" alt="User Image">
-              <img v-show="GetUser.image" :src="GetUser.image" title="User Image" alt="User Image">
-              <label title="User Name">{{GetUser.name}}</label>
+            <img v-show="user.profileInfo.image" :src="user.profileInfo.image" alt="User Image" title="User Image">
+            <label title="User Name">{{ user.basicInfo.userName }}</label>
           </span>
     </div>
   </nav>
@@ -17,9 +16,10 @@
 
 <script>
 import {mapGetters} from "vuex";
+
 export default {
   name: "TopNav",
-  computed:{
+  computed: {
     ...mapGetters(['GetUser']),
     ...mapGetters(['user'])
   },
@@ -27,5 +27,5 @@ export default {
 </script>
 
 <style scoped>
-    @import "../../../assets/css/MainPageStyle/_topNavStyle.css";
+@import "../../../assets/css/MainPageStyle/_topNavStyle.css";
 </style>

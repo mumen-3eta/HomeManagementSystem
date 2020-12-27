@@ -101,8 +101,8 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    border: 2px dashed #A5A5A5;
-    border-radius: 15px;
+    /*border: 2px dashed #A5A5A5;*/
+    /*border-radius: 15px;*/
     padding: 35px;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
@@ -112,9 +112,34 @@
     align-items: center;
 }
 
+
+.body-main section .body__content-main .All-Drivers .device.addDevice section {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    border: 2px dashed #929292;
+    border-radius: 15px;
+    padding: 58px;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.body-main section .body__content-main .All-Drivers .device.addDevice section img {
+    width: auto;
+    height: auto;
+}
+
 .body-main section .body__content-main .All-Drivers .device section img {
-    width: 120px;
-    height: 120px;
+    width: auto;
+    height: auto;
 }
 
 .body-main section .body__content-main .All-Drivers .device section p {

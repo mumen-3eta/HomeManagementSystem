@@ -7,20 +7,21 @@
       <div class="container py-5 px-5 ">
         <div class="row anim-title">
           <div class="col-12 col-md-12 col-lg-12">
-            <h2> Profile | {{ GetUser.name }}</h2>
+            <h2 v-if="user.basicInfo.userName"> Profile | {{ user.basicInfo.userName }}</h2>
           </div><!-- End Of col-->
         </div><!-- End Of row-->
 
         <div class="row justify-content-center align-items-center py-3">
           <div
               class="anim-left col-12 col-md-4 col-lg-6 d-flex justify-content-center align-items-center flex-column right__content">
-            <img v-show="!GetUser.image" alt="User Image" class="user__profile-image" src="@/assets/img/man.svg"
+            <img v-show="user.profileInfo.image" :src="user.profileInfo.image" alt="User Image"
+                 class="user__profile-image"
                  title="User Image">
-            <img v-show="GetUser.image" :src="GetUser.image" alt="User Image" class="user__profile-image"
-                 title="User Image">
+
             <div class="user__profile-info py-4 text-center">
-              <h3>{{ GetUser.name }}</h3>
-              <p>{{ GetUser.email }}</p>
+              <h3 v-if="user.basicInfo.FullName">{{ user.basicInfo.FullName }}</h3>
+              <h6 v-if="user.basicInfo.userName">{{ user.basicInfo.userName }}</h6>
+              <p>{{ user.basicInfo.email }}</p>
             </div>
             <form @submit.prevent="checkImage">
               <div class="d-flex flex-column">
@@ -48,25 +49,25 @@
               <li class="nav-item" role="presentation">
                 <a id="info-tab" aria-controls="info" aria-selected="true" class="nav-link active" data-toggle="tab"
                    href="#info"
-                   role="tab">Info</a>
+                   role="tab">Base Info</a>
               </li>
               <li class="nav-item" role="presentation">
                 <a id="password-tab" aria-controls="password" aria-selected="false" class="nav-link" data-toggle="tab"
-                   href="#password" role="tab">Password</a>
+                   href="#password" role="tab">Login info</a>
               </li>
             </ul>
             <div id="myTabContent" class="tab-content">
               <div id="info" aria-labelledby="info-tab" class="tab-pane fade show active" role="tabpanel">
                 <form class="py-3" @submit.prevent="checkForm">
                   <div class="form-group my-2">
-                    <label for="exampleInputEmail1">Email address<span class="text-danger px-1">*</span></label>
+                    <label for="exampleInputEmail1">First Name<span class="text-danger px-1">*</span></label>
                     <input id="exampleInputEmail1" v-model.trim="email" aria-describedby="emailHelp"
                            class="form-control"
                            placeholder="example@example.example" type="email">
                     <small id="emailHelp" class="form-text text-muted"></small>
                   </div>
                   <div class="form-group my-3">
-                    <label for="exampleInputName">Your Name<span class="text-danger px-1">*</span></label>
+                    <label for="exampleInputName">last Name<span class="text-danger px-1">*</span></label>
                     <input id="exampleInputName" v-model="name" aria-describedby="nameHelp" class="form-control"
                            placeholder="example example" type="text">
                     <small id="nameHelp" class="form-text text-muted"></small>
@@ -87,20 +88,20 @@
               <div id="password" aria-labelledby="password-tab" class="tab-pane fade" role="tabpanel">
                 <form class="py-3">
                   <div class="form-group my-2">
-                    <label for="exampleInputCurrentPassword">Current Password<span
+                    <label for="exampleInputCurrentPassword">E-mail<span
                         class="text-danger px-1">*</span></label>
                     <input id="exampleInputCurrentPassword" aria-describedby="currentPasswordHelp" class="form-control"
-                           placeholder="**********" type="password">
+                           placeholder="test@test.com" type="email">
                     <small id="currentPasswordHelp" class="form-text text-muted"></small>
                   </div>
                   <div class="form-group my-3">
-                    <label for="exampleInputPassword1">New Password<span class="text-danger px-1">*</span></label>
+                    <label for="exampleInputPassword1">User Name<span class="text-danger px-1">*</span></label>
                     <input id="exampleInputPassword1" aria-describedby="passwordHelp" class="form-control"
-                           placeholder="**********" type="password">
+                           placeholder="your User Name" type="text">
                     <small id="passwordHelp" class="form-text text-muted"></small>
                   </div>
                   <div class="form-group my-3">
-                    <label for="exampleInputConfirmPassword">Confirm Password<span
+                    <label for="exampleInputConfirmPassword">Password<span
                         class="text-danger px-1">*</span></label>
                     <input id="exampleInputConfirmPassword" aria-describedby="passwordHelp" class="form-control"
                            placeholder="**********" type="password">
@@ -228,10 +229,13 @@ export default {
 
   },
   computed: {
-    ...mapGetters(['GetUser']),
-    ...mapGetters(['user']),
+    ...mapGetters(['GetUser', 'user'])
+
 
   },
+  beforeMount() {
+    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+  }
 }
 </script>
 

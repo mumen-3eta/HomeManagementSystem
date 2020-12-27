@@ -167,14 +167,13 @@ export default {
         }, 3500);
 
         try {
-          let response = await axios.post('login-api', {
+          let response = await axios.post('/api/v1/users/login', {
             email: this.email,
             password: this.password
           });
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('user', response.data.user);
-          await this.$store.dispatch('user', response.data);
-          this.$router.push('/mainPage');
+          localStorage.setItem('csrfToken', response.data.csrfToken);
+          await this.$store.dispatch('TokenUser', response.data);
+          await this.$router.push('/mainPage');
           this.Loader = false;
 
         } catch (e) {
