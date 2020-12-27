@@ -1,17 +1,25 @@
 package graduationproject.homemanagementsystem.dataClasses;
 
+import android.graphics.Bitmap;
+
+import java.util.ArrayList;
+
 public class userClass {
     private String userName;
     private String userEmail;
     private String userPassword;
+    private Bitmap userPhoto;
+    private ArrayList devices;
 
     public userClass() {
+        this.devices = new ArrayList<deviceClass>();
     }
 
     public userClass(String name, String email, String password) {
         this.userName = name;
         this.userEmail = email;
         this.userPassword = password;
+        this.devices = new ArrayList<deviceClass>();
     }
 
     public String getUserName() {
@@ -36,6 +44,22 @@ public class userClass {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public Bitmap getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(Bitmap userPhoto) {
+        this.userPhoto = userPhoto;
+    }
+
+    public ArrayList getDevices() {
+        return devices;
+    }
+
+    public void setDevices(ArrayList devices) {
+        this.devices = devices;
     }
 
     @Override

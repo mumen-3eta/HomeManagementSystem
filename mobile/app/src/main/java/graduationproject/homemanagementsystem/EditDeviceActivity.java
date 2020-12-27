@@ -16,20 +16,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.Console;
-
-import graduationproject.homemanagementsystem.dataClasses.deviceAdapter;
-import graduationproject.homemanagementsystem.dataClasses.deviceClass;
 import graduationproject.homemanagementsystem.dataClasses.userClass;
 
-public class HomePageActivity extends AppCompatActivity {
+public class EditDeviceActivity extends AppCompatActivity {
 
     private DrawerLayout homePageDrawer;
     private LinearLayout drawer_home;
@@ -37,26 +31,25 @@ public class HomePageActivity extends AppCompatActivity {
     private Drawable drawable;
     private TextView userNameBar;
     private String userEmail;
+    private EditText editTextTextPersonName3;
+    private EditText editTextTextPersonName4;
+    private EditText editTextTextPersonName5;
     private ImageView pic;
     private final int logoutTimeOut = 499;
-    private ListView listView;
-    private deviceAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
-
+        setContentView(R.layout.activity_edit_device);
 
         homePageDrawer = (DrawerLayout) findViewById(R.id.home_page_drawer_layout);
-        drawer_home = (LinearLayout) findViewById(R.id.drawer_home);
         drawer_logout = (LinearLayout) findViewById(R.id.drawer_logout);
         userNameBar = (TextView) findViewById(R.id.userNameBar);
-        listView = (ListView) findViewById(R.id.listView);
-
+        editTextTextPersonName3 = (EditText) findViewById(R.id.editTextTextPersonName3);
+        editTextTextPersonName4 = (EditText) findViewById(R.id.editTextTextPersonName4);
+        editTextTextPersonName5 = (EditText) findViewById(R.id.editTextTextPersonName5);
         drawable =  getResources().getDrawable(R.drawable.home_page_drawer_shoice);
         pic = (ImageView) findViewById(R.id.pic);
-        drawer_home.setBackground(drawable);
 
         Intent intent = getIntent();
         try {
@@ -68,18 +61,18 @@ public class HomePageActivity extends AppCompatActivity {
                 for (userClass user: MainActivity.users){
                     if (user.getUserEmail().equals(userEmail)){
                         userNameBar.setText(user.getUserName());
+                        editTextTextPersonName3.setText(user.getUserEmail());
+                        editTextTextPersonName4.setText(user.getUserName());
+                        editTextTextPersonName5.setText(user.getUserPassword());
                         if (user.getUserPhoto() != null){
                             pic.setImageBitmap(user.getUserPhoto());
                         }
-                        adapter = new deviceAdapter(this, user.getDevices());
-                        listView.setAdapter(adapter);
                     }
                 }
             }
         }catch (NullPointerException e){
             //do nothing
         }
-
     }
 
     public void ClickMenu(View view){
@@ -88,7 +81,7 @@ public class HomePageActivity extends AppCompatActivity {
 
     public void hideDrawer(View view){ closeDrawer(homePageDrawer);}
 
-    public void goHome(View view){ closeDrawer(homePageDrawer);}
+    public void goHome(View view){ redirectActivity(this, HomePageActivity.class, userEmail);}
 
     public void goAddNewDevice(View view){ redirectActivity(this, AddNewDeviceActivity.class, userEmail);}
 
@@ -122,7 +115,7 @@ public class HomePageActivity extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                Activity homePageActivity = HomePageActivity.this;
+                Activity homePageActivity = EditDeviceActivity.this;
                 redirectActivity(homePageActivity, MainActivity.class);
             }
         }, logoutTimeOut);

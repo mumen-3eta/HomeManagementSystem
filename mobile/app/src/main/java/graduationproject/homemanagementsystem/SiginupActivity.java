@@ -75,9 +75,7 @@ public class SiginupActivity extends AppCompatActivity {
             userClass newUser = new userClass(userName, userEmail,userPassword);
             MainActivity.users.add(newUser);
             toast.makeText(this, "sign up successful", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, HomePageActivity.class);
-            intent.putExtra("email", userEmail);
-            this.startActivity(intent);
+            redirectActivity(this, HomePageActivity.class, userEmail);
         }else if (!validUserName){
             toast.makeText(this, "name is not valid", Toast.LENGTH_SHORT).show();
             return;
@@ -95,7 +93,7 @@ public class SiginupActivity extends AppCompatActivity {
     }
 
 
-    public boolean checkUserName(String userName){
+    public static boolean checkUserName(String userName){
         if (userName.matches("^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,5}$")){
             return true;
         }else {
@@ -103,7 +101,7 @@ public class SiginupActivity extends AppCompatActivity {
         }
     }
 
-    public boolean checkUserEmail(String userEmail){
+    public static boolean checkUserEmail(String userEmail){
         if (userEmail.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
             return true;
         }else {
@@ -111,7 +109,7 @@ public class SiginupActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isUsedEmail(String userEmail) {
+    public static boolean isUsedEmail(String userEmail) {
         for (userClass user: MainActivity.users){
             if (user.getUserEmail().equals(userEmail)){
                 return true;
@@ -120,7 +118,7 @@ public class SiginupActivity extends AppCompatActivity {
         return false;
     }
 
-    public String checkUserPassword(String userPassword, String confirmPassword){
+    public static String checkUserPassword(String userPassword, String confirmPassword){
         final int passwordMinLength = 6;
         if (userPassword.length() < passwordMinLength){
             return "password is short, it must have at least 6 characters";
@@ -132,8 +130,24 @@ public class SiginupActivity extends AppCompatActivity {
             return "password must contain at least one capital letter";
         }
         if (!userPassword.equals(confirmPassword)){
-            return  " password does not match";
+            return  "password does not match";
         }
+
+        return  "valid";
+    }
+
+    public static String checkUserPassword(String userPassword){
+        final int passwordMinLength = 6;
+        if (userPassword.length() < passwordMinLength){
+            return "password is short, it must have at least 6 characters";
+        }
+        if (!userPassword.matches("(.*[0-9]+.*)")){
+            return "password must contain at least one number";
+        }
+        if (!userPassword.matches(".*[A-Z]+.*")){
+            return "password must contain at least one capital letter";
+        }
+
 
         return  "valid";
     }
@@ -149,5 +163,16 @@ public class SiginupActivity extends AppCompatActivity {
     public static void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity,aClass);
         activity.startActivity(intent);
+    }
+
+    public static void redirectActivity(Activity activity, Class aClass, String userEmail) {
+        Intent intent = new Intent(activity,aClass);
+        intent.putExtra("email", userEmail);
+        activity.startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
     }
 }

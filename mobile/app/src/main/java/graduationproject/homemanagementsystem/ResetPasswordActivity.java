@@ -49,4 +49,9 @@ public class ResetPasswordActivity extends AppCompatActivity {
         Intent intent = new Intent(activity,aClass);
         activity.startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
+    }
 }

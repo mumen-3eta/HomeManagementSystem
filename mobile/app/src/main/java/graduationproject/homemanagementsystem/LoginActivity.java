@@ -64,9 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (validUserEmail && correspondingPassword.equals(userPassword)){
             toast.makeText(this, "login successful", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, HomePageActivity.class);
-            intent.putExtra("email", userEmail);
-            this.startActivity(intent);
+            redirectActivity(this, HomePageActivity.class, userEmail);
         }else if (!validUserEmail){
             toast.makeText(this, "email is not valid", Toast.LENGTH_SHORT).show();
         }else if (validUserEmail && !correspondingPassword.equals("no")){
@@ -104,5 +102,16 @@ public class LoginActivity extends AppCompatActivity {
     public static void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity,aClass);
         activity.startActivity(intent);
+    }
+
+    public static void redirectActivity(Activity activity, Class aClass, String userEmail) {
+        Intent intent = new Intent(activity,aClass);
+        intent.putExtra("email", userEmail);
+        activity.startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
     }
 }

@@ -8,15 +8,20 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
+import graduationproject.homemanagementsystem.dataClasses.deviceClass;
 import graduationproject.homemanagementsystem.dataClasses.userClass;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +44,22 @@ public class MainActivity extends AppCompatActivity {
 
         drawer_home.setBackground(drawable);
 
-        users.add(new userClass("Mumen", "mumen.3eta@gmail.com", "Note12345"));
+        userClass newUser = new userClass("Mumen", "mumen.3eta@gmail.com", "Note12345");
+        deviceClass deviceClass = new deviceClass("My TV", "Living Room", "TV");
+        deviceClass deviceClass2 = new deviceClass("My light", "Living Room", "Light");
+        newUser.getDevices().add(deviceClass);
+        newUser.getDevices().add(deviceClass2);
+        newUser.getDevices().add(deviceClass);
+        newUser.getDevices().add(deviceClass2);
+        newUser.getDevices().add(deviceClass);
+        newUser.getDevices().add(deviceClass2);
+        newUser.getDevices().add(deviceClass);
+        newUser.getDevices().add(deviceClass2);
+        newUser.getDevices().add(deviceClass);
+        newUser.getDevices().add(deviceClass2);
+        newUser.getDevices().add(deviceClass);
+        newUser.getDevices().add(deviceClass2);
+        users.add(newUser);
     }
 
     public void ClickMenu(View view){
@@ -67,5 +87,15 @@ public class MainActivity extends AppCompatActivity {
     public static void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity,aClass);
         activity.startActivity(intent);
+    }
+
+    public final static Bitmap stringToBitmap(String in){
+        byte[] bytes = Base64.decode(in, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
     }
 }
