@@ -1,22 +1,22 @@
 @import "_MessagesStyle/__messageStyle.css";
 
 /* body-login*/
-.body-login{
+.body-login {
     margin: -128px auto;
     min-height: 100vh;
 }
-
 
 
 .content__body-login {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     text-align: center;
     width: 500px;
     margin: 10px auto;
-    background: linear-gradient(103.72deg, #45A0F4 0%, #68DFA6 105.3%);  background-repeat: no-repeat;
+    background: linear-gradient(103.72deg, #45A0F4 0%, #68DFA6 105.3%);
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     -webkit-box-sizing: border-box;
@@ -24,8 +24,6 @@
     -webkit-box-shadow: 1px 1px 8px 1px #abeecd;
     box-shadow: 1px 1px 8px 1px #abeecd;
     border-radius: 10px;
-
-
 }
 
 .content__body-login h2 {
@@ -224,20 +222,20 @@
 
 .inputError {
     border: #c53c3c;
-    -webkit-box-shadow: 0px 1px 8px  #862929;
-    box-shadow: 0px 1px 8px  #862929;
+    -webkit-box-shadow: 0px 1px 8px #862929;
+    box-shadow: 0px 1px 8px #862929;
 }
 
 .inputSuccess {
     border: #48c53c;
-    -webkit-box-shadow: 0px 1px 8px  #298638;
-    box-shadow: 0px 1px 8px  #298638;
+    -webkit-box-shadow: 0px 1px 8px #298638;
+    box-shadow: 0px 1px 8px #298638;
 }
 
 @media only screen and (max-width: 800px) {
 
 
-    .content__body-L{
+    .content__body-L {
         margin: -42px auto;
         min-height: 100vh;
     }
@@ -246,7 +244,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         text-align: center;
         width: 90%;
         margin: 10px auto;
@@ -261,9 +259,11 @@
         border-radius: 10px;
 
     }
+
     .content__body-login .main-body-content {
         width: 100%;
     }
+
     .content__body-login h2 {
         text-align: center;
         padding: 5px 25px;
@@ -277,6 +277,7 @@
         transition: ease-in-out 0.25s;
         border-bottom: 3px solid white;
     }
+
     .content__body-login form {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -287,6 +288,7 @@
         flex-direction: column;
         padding: 0px 10px;
     }
+
     .content__body-login form .Group1 {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -302,6 +304,7 @@
         -ms-flex-align: center;
         align-items: center;
     }
+
     .content__body-login form .input-group {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -313,12 +316,14 @@
         text-align: start;
         margin: 5px auto;
     }
+
     .content__body-login form .input-group label {
         padding: 0;
         font-family: Arial, Helvetica, sans-serif;
         color: #C9E6F5;
         font-size: 16px;
     }
+
     .content__body-login form .input-group input[type=text], .content__body-login form .input-group input[type=email], .content__body-login form .input-group input[type=password] {
         border-radius: 30px;
         padding: 4px 15px;
@@ -327,29 +332,35 @@
         background: #C9E6F5;
         font-weight: bold;
     }
+
     .content__body-login form .input-group ::-webkit-input-placeholder {
         color: #5c5c5c8f;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;
     }
+
     .content__body-login form .input-group :-ms-input-placeholder {
         color: #5c5c5c8f;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;
     }
+
     .content__body-login form .input-group ::-ms-input-placeholder {
         color: #5c5c5c8f;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;
     }
+
     .content__body-login form .input-group ::placeholder {
         color: #5c5c5c8f;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-weight: bold;
     }
+
     .content__body-login form .btn-group {
         margin: 20px auto;
     }
+
     .content__body-login form .btn-group button {
         background: #178d66;
         padding: 5px 50px;
@@ -361,6 +372,7 @@
         transition: ease-in-out 0.30s;
         border: 2px solid #178d66;
     }
+
     .content__body-login form .btn-group button:hover, .content__body-login form .btn-group button:focus {
         border: 2px solid #22926d;
         background: #25a57a;
@@ -368,9 +380,11 @@
         box-shadow: 1px 2px 8px #228f6a;
         color: white;
     }
+
     .content__body-login input[type=text], .content__body-login input[type=email], .content__body-login textarea, .content__body-login button {
         outline: none;
         border: none;
     }
 }
+
 /*# sourceMappingURL=style.css.map */
