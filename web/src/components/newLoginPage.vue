@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <!--    <NavBar/>-->
+  <div class="content__body-loginNew">
     <div class="main-card">
       <div class="img-card">
         <img alt="background-image" class="img-borderRadius" src="@/assets/img/bg-image.jpg">
@@ -14,12 +13,14 @@
           <div>
             <div class="inputForm">
               <label id="labelInput1" class="text-label" for="input1">UserName or Email</label>
-              <input id="input1" class="input-style" name="input1" type="text">
+              <input id="input1" v-model.trim="email" class="input-style" name="input1" type="text"
+                     @change.prevent="testEmail">
               <hr id="line1" class="style_line">
             </div>
             <div class="inputForm">
               <label id="labelInput2" class="text-label" for="input2">Password</label>
-              <input id="input2" class="input-style" type="password">
+              <input id="input2" v-model.trim="password" class="input-style" type="password"
+                     @change.prevent="testPassword">
               <hr id="line2" class="style_line">
             </div>
             <div class="card-check">
@@ -40,17 +41,67 @@
       </div>
     </div>
   </div>
-
-
 </template>
 
 <script>
-// import NavBar from "@/components/TopBar/NavBar";
+
 
 export default {
   name: "newLoginPage",
-  components: {
-    // NavBar,
+  components: {},
+  data() {
+    return {
+      email: null,
+      password: null,
+
+    }
+  },
+  methods: {
+    testEmail() {
+      this.valiided = this.email || '';
+      console.log(this.email)
+    },
+    testPassword() {
+      this.valiided = this.password || '';
+      console.log(this.password)
+    },
+  },
+  mounted() {
+    const input1 = document.getElementById("input1");
+    const labelInput1 = document.getElementById("labelInput1");
+    const input2 = document.getElementById("input2");
+    const labelInput2 = document.getElementById("labelInput2");
+    const line1 = document.getElementById("line1");
+    const line2 = document.getElementById("line2");
+
+    input1.addEventListener("focusin", function () {
+      SlidUp(labelInput1, "move");
+      SlidUp(line1, "line-dis");
+    })
+    input2.addEventListener("focusin", function () {
+      SlidUp(labelInput2, "move");
+      SlidUp(line2, "line-dis");
+    })
+
+
+    input1.addEventListener("focusout", function () {
+      SlidDown(labelInput1, "move");
+      SlidDown(line1, "line-dis");
+    })
+    input2.addEventListener("focusout", function () {
+      SlidDown(labelInput2, "move");
+      SlidDown(line2, "line-dis");
+    })
+
+
+    function SlidUp(input, nameClass) {
+      input.classList.add(nameClass);
+    }
+
+    function SlidDown(input, nameClass) {
+      input.classList.remove(nameClass);
+    }
+
   },
 
 }
