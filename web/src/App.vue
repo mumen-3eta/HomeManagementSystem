@@ -17,17 +17,20 @@ export default {
 </script>
 
 <style scoped>
+/*body {*/
+/*  background: linear-gradient(103.72deg, #45A0F4 0%, #68DFA6 105.3%);*/
+/*}*/
 
-.body-app {
-  padding: 0;
-  margin: 0;
-  position: relative;
-  background: linear-gradient(103.72deg, #45A0F4 0%, #68DFA6 105.3%);
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  color: white;
-  /*min-height: 100vh;*/
-}
+/*.body-app {*/
+/*  padding: 0;*/
+/*  margin: 0;*/
+/*  position: relative;*/
+/*  background: linear-gradient(103.72deg, #45A0F4 0%, #68DFA6 105.3%);*/
+/*  -webkit-box-sizing: border-box;*/
+/*  box-sizing: border-box;*/
+/*  color: white;*/
+/*  !*min-height: 100vh;*!*/
+/*}*/
 
 /*.body-app {*/
 /*  display: flex;*/
