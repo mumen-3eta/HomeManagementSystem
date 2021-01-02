@@ -1,46 +1,40 @@
 <template>
-  <div class="content__body-loginNew">
-    <div class="main-card">
-      <div class="img-card">
-        <img alt="background-image" class="img-borderRadius" src="@/assets/img/bg-image.jpg">
-      </div>
-      <div class="login-Card">
-        <div class="header_loginCard">
-          <h1 class="titleHeader"> Welcome back </h1>
-          <p class="text-gray">Sign to continue using Tipe</p>
-        </div>
-        <form>
-          <div>
-            <div class="inputForm">
-              <label id="labelInput1" class="text-label" for="input1">UserName or Email</label>
-              <input id="input1" v-model.trim="email" class="input-style" name="input1" type="text"
-                     @change.prevent="testEmail">
-              <hr id="line1" class="style_line">
-            </div>
-            <div class="inputForm">
-              <label id="labelInput2" class="text-label" for="input2">Password</label>
-              <input id="input2" v-model.trim="password" class="input-style" type="password"
-                     @change.prevent="testPassword">
-              <hr id="line2" class="style_line">
-            </div>
-            <div class="card-check">
-              <label class="container_RememberMe forRes">Remember Me
-                <input type="checkbox">
-                <span class="checkMark"></span>
-              </label>
-              <p><a class="link-forgot forRes" href="#">Forgot your password?</a></p>
-            </div>
-            <div>
-              <button class="btn-submitForm" type="submit">Login</button>
-            </div>
+  <header class="Main__Header">
+    <main class="main__login">
+      <div class="login__photo"></div>
+      <div class="login__inform">
+        <h2 class="login__inform-title">Welcome back</h2>
+        <p class="login__inform-minTitle">Sign to continue using Tipe</p>
+        <form action="" class="login__form">
+          <div class="form__group">
+            <label id="emailUsername_LabelInput" class="form__input-label" for="EmailUsername_input">username or
+              E-mail</label>
+            <input id="EmailUsername_input" class="form__input-input" type="text">
+            <hr id="line1" class="style_line">
+          </div>
+          <div class="form__group">
+            <label id="password_LabelInput" class="form__input-label" for="password_input">Password</label>
+            <input id="password_input" class="form__input-input" type="password">
+            <hr id="line2" class="style_line">
+          </div>
+          <div class="form__group">
+            <p class="form__forgot">
+              <a class="form__forgot-link" href="">Forgot your password?</a>
+            </p>
+          </div>
+          <div class="form__group">
+            <button class="form__button-submit" type="submit">Login</button>
           </div>
         </form>
-        <div>
-          <p class="forRes">Don't have an account?<a class="link-forgot" href="#"> Register Here</a></p>
+        <div class="go__register">
+          <p class="register__label">
+            Don't have an account?
+            <a class="register__label-link" href="">Register Here</a>
+          </p>
         </div>
       </div>
-    </div>
-  </div>
+    </main>
+  </header>
 </template>
 
 <script>
@@ -67,10 +61,10 @@ export default {
     },
   },
   mounted() {
-    const input1 = document.getElementById("input1");
-    const labelInput1 = document.getElementById("labelInput1");
-    const input2 = document.getElementById("input2");
-    const labelInput2 = document.getElementById("labelInput2");
+    const input1 = document.getElementById("EmailUsername_input");
+    const labelInput1 = document.getElementById("emailUsername_LabelInput");
+    const input2 = document.getElementById("password_input");
+    const labelInput2 = document.getElementById("password_LabelInput");
     const line1 = document.getElementById("line1");
     const line2 = document.getElementById("line2");
 
@@ -82,8 +76,8 @@ export default {
       SlidUp(labelInput2, "move");
       SlidUp(line2, "line-dis");
     })
-
-
+    // let value = input1.value
+    // if (value) {
     input1.addEventListener("focusout", function () {
       SlidDown(labelInput1, "move");
       SlidDown(line1, "line-dis");
@@ -92,6 +86,8 @@ export default {
       SlidDown(labelInput2, "move");
       SlidDown(line2, "line-dis");
     })
+
+    // }
 
 
     function SlidUp(input, nameClass) {
@@ -109,4 +105,5 @@ export default {
 
 <style scoped>
 @import "../assets/css/_NEWloginStyle.css";
+@import "../assets/css/ClearStyle/normalize.css";
 </style>

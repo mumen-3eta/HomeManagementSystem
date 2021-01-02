@@ -15,6 +15,7 @@ import PageNotFound from "@/components/ErrorsPages/PageNotFound";
 import DeviceInfo from "@/components/MainPage/DeviceInfo";
 import EditInfoDevice from "@/components/MainPage/EditInfoDevice";
 import newLoginPage from "@/components/newLoginPage";
+import MainHomePage from "@/Pages/MainHomePage";
 
 Vue.use(Router)
 
@@ -166,6 +167,7 @@ export default new Router({
         },
 
         {path: '/new/login', name: "newLoginPage", component: newLoginPage},
+        {path: '/v2/main/home', name: "MainHomePage", component: MainHomePage},
 
         /*
             Must Be Last
