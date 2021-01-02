@@ -104,6 +104,6 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/css/_NEWloginStyle.css";
-@import "../assets/css/ClearStyle/normalize.css";
+@import "../../assets/css/_NEWloginStyle.css";
+@import "../../assets/css/ClearStyle/normalize.css";
 </style>

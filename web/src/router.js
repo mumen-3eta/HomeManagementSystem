@@ -11,11 +11,12 @@ import store from "@/vuex";
 import ChangePasswordPage from "@/components/ChangePasswordPage";
 import ProfileUser from "@/components/MainPage/ProfileUser";
 import AddDevices from "@/components/MainPage/AddDevices";
-import PageNotFound from "@/components/ErrorsPages/PageNotFound";
+import PageNotFound from "@/Pages/ErrorsPages/PageNotFound";
 import DeviceInfo from "@/components/MainPage/DeviceInfo";
 import EditInfoDevice from "@/components/MainPage/EditInfoDevice";
-import newLoginPage from "@/components/newLoginPage";
-import MainHomePage from "@/Pages/MainHomePage";
+import newLoginPage from "@/Pages/Site/newLoginPage";
+import MainHomePage from "@/Pages/Main/MainHomePage";
+import MainProfilePage from "@/Pages/Main/MainProfilePage";
 
 Vue.use(Router)
 
@@ -166,8 +167,11 @@ export default new Router({
             }
         },
 
-        {path: '/new/login', name: "newLoginPage", component: newLoginPage},
+        // new Code here
+        {path: '/v2/login', name: "newLoginPage", component: newLoginPage},
         {path: '/v2/main/home', name: "MainHomePage", component: MainHomePage},
+        {path: '/v2/main/profile', name: "ProfileUser", component: MainProfilePage},
+
 
         /*
             Must Be Last
