@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router'
-import WelcomePage from "@/components/WelcomePage";
+import WelcomePage from "@/Pages/Site/WelcomePage";
 import AboutUsPage from "@/components/AboutUsPage";
 import ContactUsPage from "@/components/ContactUsPage";
 import LoginPage from "@/components/LoginPage";
