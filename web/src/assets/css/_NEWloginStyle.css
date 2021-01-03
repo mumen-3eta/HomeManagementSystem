@@ -2,10 +2,10 @@
     --gray-v1-500: #e9e8ec;
     --alabaster-v1-500: #a18fbf;
     --gray-v2-500: #324a53;
-    --link-v2-hover: #4f585b;
-    --rajah-v1-red: #ec7d7d;
-    --rajah-v2-red: #ae0606;
-    --rajah-v1-red-op1: #d9acac;
+    --link-v2-hover: #356166;
+    --rajah-v1-red: #425d60;
+    --label-v2-500: #425d60;
+    --label-v2-900: #2f939f;
 
 }
 
@@ -30,6 +30,7 @@ img {
     height: 100vh;
     min-height: 100vh;
     max-height: 100vh;
+    user-select: none;
 }
 
 /* main login*/
@@ -48,7 +49,7 @@ img {
 
 @media (max-width: 1600px) {
     .main__login {
-        margin: 6rem auto;
+        margin: 5rem auto;
         width: calc(100% - 30rem);
         border-radius: 10px;
     }
@@ -75,18 +76,32 @@ img {
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 770px) {
     .main__login {
-        margin: 3.9rem auto 4rem auto;
+        margin: auto;
         width: calc(100% - 3rem);
     }
 }
+
+/*@media (max-width: 420px) {*/
+/*    .main__login {*/
+/*        margin: 3.9rem auto 4rem auto;*/
+/*        width: calc(100% - 3rem);*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 380px) {*/
+/*    !* main login*!*/
+/*    .main__login {*/
+/*        margin: auto;*/
+/*        width: calc(100% - 3rem);*/
+/*    }*/
+/*}*/
 
 /* login photo*/
 .login__photo {
     width: 40%;
     height: 100%;
-    /*background-image: url("../image/edgar-Kb5qpvXFwKA-unsplash.jpg");*/
     background-image: url("../img/LoginAndRegisterPage/edgar-Kb5qpvXFwKA-unsplash.jpg");
     background-position: center;
     background-size: cover;
@@ -106,19 +121,20 @@ img {
     display: flex;
     flex-direction: column;
     text-align: start;
-    padding: 1.8rem 5rem;
+    padding: 3.8rem 5rem;
 }
 
 .login__inform-title {
     color: var(--gray-v2-500);
-    font-size: 2.5rem;
+    font-size: 2.9rem;
     font-weight: bold;
 }
 
 .login__inform-minTitle {
     color: var(--gray-v2-500);
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: normal;
+    margin-bottom: 2.25rem;
 }
 
 @media (max-width: 900px) {
@@ -155,7 +171,7 @@ img {
     background: none;
     height: 2.3rem;
     border: none;
-    /*border-bottom: 3px solid var(--rajah-v1-red-op1);*/
+    /*border-bottom: 3px solid var(--label-v2-900);*/
     transition: all 0.3s ease;
 }
 
@@ -173,7 +189,7 @@ img {
 }
 
 .form__input-label {
-    color: var(--rajah-v1-red-op1);
+    color: var(--label-v2-500);
     font-size: 1.3rem;
     text-transform: capitalize;
     position: absolute;
@@ -197,26 +213,31 @@ img {
     left: 0;
     top: 3.1rem;
     transition: all linear 0.25s;
-    border-top: 3px solid var(--rajah-v1-red);
+    border-top: 3px solid var(--label-v2-500);
     background: none;
     border-radius: 3px;
 }
 
 /* ?? class to add in js */
 .move {
-    transition: all linear 0.3s;
+    transition: all linear 0.25s;
     top: 0;
     left: 0;
-    font-size: 0.9rem;
-    color: var(--rajah-v1-red);
+    font-size: 1.125rem;
+    color: var(--label-v2-900);
 }
 
 .line-dis {
     width: 100%;
-    border-top: 3px solid var(--rajah-v2-red);
+    border-top: 3px solid var(--label-v2-900);
 }
 
 /* form forgot link */
+.form__forgot {
+    margin-top: 0.525rem;
+    margin-bottom: 0;
+}
+
 .form__forgot-link {
     color: var(--gray-v2-500);
     outline: none;
@@ -234,11 +255,12 @@ img {
 .form__button-submit {
     background-color: var(--gray-v2-500);
     border: none;
-    padding: 0.325rem 0.1rem;
+    padding: 0.725rem 0.025rem;
     color: var(--gray-v1-500);
     border-radius: 3px;
     text-transform: uppercase;
-    font-size: 1.150rem;
+    font-size: 1.350rem;
+    margin-top: 4.425rem;
 }
 
 .form__button-submit:focus {
