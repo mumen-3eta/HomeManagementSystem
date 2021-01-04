@@ -25,6 +25,11 @@ button:focus {
 }
 
 /* new style */
+.main__nav {
+    width: 100%;
+    position: fixed;
+}
+
 
 .main__nav_content {
     display: flex;
@@ -36,19 +41,127 @@ button:focus {
 }
 
 
-/* nav link list */
-.nav__items {
+/* nav image */
+.main-nav__lists {
     display: flex;
-    justify-content: center;
 }
+
+.nav__logo {
+    justify-content: start;
+    align-items: center;
+}
+
+/* nav link list */
 
 .nav__element {
     display: flex;
 }
 
-.nav__link-list {
-    color: white;
+.nav__element-list {
+    padding: 0 0.525rem;
 }
+
+.nav__link-list {
+    color: #9fe0e0;
+    font-size: 1.325rem;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    padding: 0.5rem 0.8rem;
+    border-radius: 5px;
+}
+
+.nav__link-list:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #2d7c7c;
+}
+
+@media (hover: hover) {
+    .nav__element-list:hover .nav__link-list {
+        background-color: #52a0a0;
+        color: white;
+    }
+}
+
+/*1000*/
+@media (max-width: 1000px) {
+    .ul-list-min {
+        display: none;
+    }
+}
+
+/* nav items btn */
+.nav__items-btn {
+    background-color: #52a0a0;
+    border-radius: 5px;
+    padding: 0.625rem 1.25rem;
+    border: 2px solid #52a0a0;
+}
+
+/* just btn first */
+.nav__items-btn:nth-child(2n+1) {
+    background: none;
+    /*box-shadow: 0 0 0 3px #52a0a0;*/
+    margin-right: 0.525rem;
+    border: 2px solid #52a0a0;
+}
+
+@media (hover: hover) {
+    .nav__items-btn:hover {
+        background-color: white;
+        border: 2px solid white;
+    }
+
+    .nav__items-btn:hover .nav_link-btn {
+        color: #52a0a0;
+    }
+}
+
+.nav_link-btn {
+    color: white;
+    font-size: 1.1rem;
+    outline: none;
+}
+
+@media (max-width: 600px) {
+    .nav_btn_items {
+        display: none;
+    }
+}
+
+
+/* menu btn */
+
+.fas__menu-btn {
+    padding: 0.25rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    display: none;
+}
+
+.menu-btn {
+    font-size: 1.5rem;
+    color: #8ae4e4;
+}
+
+
+@media (hover: hover) {
+    .fas__menu-btn:hover .menu-btn {
+        color: #3e7575;
+    }
+}
+
+@media (max-width: 1000px) {
+    .fas__menu-btn {
+        display: block;
+    }
+}
+
+
+/* menu  responsive */
+.menu__responsive {
+
+}
+
 
 /* old style */
 

@@ -1,7 +1,7 @@
 <template>
   <div>
+    <NavBar/>
     <div class="content__body-w">
-      <NavBar/>
       <!--      <div class="content__body-welcome">-->
       <!--        <div class="imageTitle">-->
       <!--          <ul id="scene" class="svg-background">-->
@@ -21,6 +21,7 @@
       <!--        </div>-->
       <!--      </div>-->
     </div>
+
   </div>
 </template>
 
