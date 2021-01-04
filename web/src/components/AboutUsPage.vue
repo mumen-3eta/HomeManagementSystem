@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import NavBar from "@/components/TopBar/NavBar";
+import NavBar from "@/components/Dir_Welcome/NavBar";
 import {TimelineLite} from "gsap";
 
 export default {

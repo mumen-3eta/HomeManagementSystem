@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import NavBar from "@/components/TopBar/NavBar";
+import NavBar from "@/components/Dir_Welcome/NavBar";
 import {maxLength, minLength, required} from "vuelidate/lib/validators";
 import {TimelineLite} from "gsap";
 // import axios from "axios";

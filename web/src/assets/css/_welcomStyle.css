@@ -1,12 +1,3 @@
-.content__body-w {
-    height: 100vh;
-    background-image: url("../img/welcomePage/overlay_BG.png"), url("../img/welcomePage/andyone--WW8jBak7bo-unsplash.jpg");
-    background-position: center, center;
-    background-repeat: no-repeat, no-repeat;
-    background-size: cover, cover;
-}
-
-
 /*.content__body-welcome {*/
 /*    display: -webkit-box;*/
 /*    display: -ms-flexbox;*/
