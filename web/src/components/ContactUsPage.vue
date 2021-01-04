@@ -82,7 +82,7 @@
 
 <script>
 import {maxLength, minLength, required} from 'vuelidate/lib/validators'
-import NavBar from "@/components/TopBar/NavBar";
+import NavBar from "@/components/Dir_Welcome/NavBar";
 import {TimelineLite} from "gsap";
 
 export default {

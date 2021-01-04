@@ -1,52 +1,37 @@
 <template>
   <div>
+    <!--   Nav bar    -->
     <NavBar/>
-    <div class="content__body-w">
-      <!--      <div class="content__body-welcome">-->
-      <!--        <div class="imageTitle">-->
-      <!--          <ul id="scene" class="svg-background">-->
-      <!--            <li class="layer" data-depth="-0.9"><img alt="image" class="img4" src="@/assets/img/polygons.png"></li>-->
-      <!--            <li class="layer" data-depth="0.5"><img alt="image" class="img1" src="@/assets/img/Group 3.png"></li>-->
-      <!--            <li class="layer" data-depth="0.7"><img alt="image" class="img2" src="@/assets/img/Group 3-1.png"></li>-->
-      <!--            <li class="layer" data-depth="0.82"><img alt="image" class="img3" src="@/assets/img/Group 3-2.png"></li>-->
-      <!--          </ul>-->
-      <!--        </div>-->
-      <!--        <div>-->
-      <!--          <h2 class="title1">The Home Management Experience You really want</h2>-->
-      <!--          <p class="title2">-->
-      <!--            Now you can confidently choose Home Management System without worrying that no one will be able to use the-->
-      <!--            site.-->
-      <!--          </p>-->
-      <!--          <router-link class="title3" title="Go to Login Page" to="/login"> Get Started</router-link>-->
-      <!--        </div>-->
-      <!--      </div>-->
-    </div>
+
+    <!--   header   -->
+    <HeaderSc/>
+    <HeaderSc/>
 
   </div>
 </template>
 
 <script>
-import NavBar from "@/components/TopBar/NavBar";
-import {TimelineLite} from "gsap";
-import Parallax from 'parallax-js'
+import NavBar from "@/components/Dir_Welcome/NavBar";
+import HeaderSc from "@/components/Dir_Welcome/HeaderSc";
 
 export default {
   name: "WelcomePage",
   components: {
+    HeaderSc,
     NavBar,
   },
   mounted() {
-    const title1 = document.getElementsByClassName('title1');
-    const title2 = document.getElementsByClassName('title2');
-    const title3 = document.getElementsByClassName('title3');
-    const imageTitle = document.getElementsByClassName('svg-background');
-    const timeline = new TimelineLite()
-    timeline.from(title1, {opacity: 0, duration: 1, y: -100})
-        .from(title2, {opacity: 0, duration: 1, x: -100}, '-=0.9')
-        .from(title3, {opacity: 0, duration: 1, x: -100}, '-=0.8')
-        .from(imageTitle, {opacity: 0, duration: 1, x: 100}, '-=0.7')
-    const scene = document.getElementById('scene');
-    new Parallax(scene);
+    // const title1 = document.getElementsByClassName('title1');
+    // const title2 = document.getElementsByClassName('title2');
+    // const title3 = document.getElementsByClassName('title3');
+    // const imageTitle = document.getElementsByClassName('svg-background');
+    // const timeline = new TimelineLite()
+    // timeline.from(title1, {opacity: 0, duration: 1, y: -100})
+    //     .from(title2, {opacity: 0, duration: 1, x: -100}, '-=0.9')
+    //     .from(title3, {opacity: 0, duration: 1, x: -100}, '-=0.8')
+    //     .from(imageTitle, {opacity: 0, duration: 1, x: 100}, '-=0.7')
+    // const scene = document.getElementById('scene');
+    // new Parallax(scene);
 
   }
 }

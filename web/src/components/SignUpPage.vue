@@ -109,7 +109,7 @@
 <script>
 import {maxLength, minLength, required, sameAs} from 'vuelidate/lib/validators'
 import axios from 'axios'
-import NavBar from "@/components/TopBar/NavBar";
+import NavBar from "@/components/Dir_Welcome/NavBar";
 import ScaleLoader from 'vue-spinner/src/ScaleLoader.vue';
 import {TimelineLite} from "gsap";
 import {boomify} from "@/utils";

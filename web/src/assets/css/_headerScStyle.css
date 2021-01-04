@@ -1,0 +1,26 @@
+:root {
+
+}
+
+.container__headerSc {
+    height: 100vh;
+    background-image: url("../img/welcomePage/overlay_BG.png"), url("../img/welcomePage/andyone--WW8jBak7bo-unsplash.jpg");
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    background-size: cover, cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+    padding: 2rem 5rem;
+
+}
+
+.headerSc__section {
+    background-color: rgba(115, 226, 210, 0.2);
+    padding: 5rem 2.5rem;
+    border-radius: 10px;
+    color: #ffffff;
+    width: 70%;
+    font-size: 1.25rem;
+}
