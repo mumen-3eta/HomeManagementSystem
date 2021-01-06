@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="nav--Z-index">
     <!--  nav max width~~>1000  -->
     <div id="main__nav" class="main__nav">
       <nav class="main__nav_content">
@@ -114,11 +114,13 @@ export default {
 
     function myFunction() {
       if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-        document.getElementById("main__nav").style.backgroundColor = "#242221bd";
+        document.getElementById("main__nav").style.backgroundColor = "rgba(7,6,6,0.9)";
+        document.getElementById("main__nav").style.boxShadow = "0 0 0 3px #70cbcb";
         document.getElementById("image_logo").style.width = "75%";
       } else {
         document.getElementById("main__nav").style.backgroundColor = "";
         document.getElementById("image_logo").style.width = "";
+        document.getElementById("main__nav").style.boxShadow = "";
       }
     }
   }
