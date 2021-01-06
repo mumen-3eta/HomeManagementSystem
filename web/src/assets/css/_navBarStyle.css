@@ -37,6 +37,12 @@ button:focus {
 .main__nav {
     width: 100%;
     position: fixed;
+    z-index: 9999;
+    transition: all 0.3s ease;
+}
+
+.nav--Z-index {
+    z-index: 999;
 }
 
 
@@ -176,6 +182,7 @@ button:focus {
     width: 100%;
     height: min-content;
     min-width: 350px;
+    z-index: 9999;
 }
 
 .father-list-min {

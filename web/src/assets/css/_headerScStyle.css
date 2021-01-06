@@ -1,26 +1,137 @@
 :root {
+    --blue__219d9d: #219d9d;
+    --blue__rgba: rgba(115, 226, 210, 0.2);
+    --blue__8ae4e4: #8ae4e4;
+    --wihte__ffffff: #ffff;
+}
 
+/* p default */
+p {
+    margin: 0;
 }
 
 .container__headerSc {
-    height: 100vh;
+    height: 95vh;
+    width: 100%;
     background-image: url("../img/welcomePage/overlay_BG.png"), url("../img/welcomePage/andyone--WW8jBak7bo-unsplash.jpg");
     background-position: center, center;
     background-repeat: no-repeat, no-repeat;
     background-size: cover, cover;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: justify;
-    padding: 2rem 5rem;
-
+    /*padding: 2rem 5rem;*/
+    position: relative;
+    clip-path: polygon(100% 88%, 50% 100%, 0 88%, 0 0, 50% 0, 100% 0);
 }
 
+/* headerSc  section */
 .headerSc__section {
-    background-color: rgba(115, 226, 210, 0.2);
-    padding: 5rem 2.5rem;
+    background-color: var(--blue__rgba);
+    padding: 1.8rem 2.5rem;
     border-radius: 10px;
-    color: #ffffff;
-    width: 70%;
+    color: var(--wihte__ffffff);
+    width: 60%;
     font-size: 1.25rem;
+    text-align: center;
 }
+
+.headerSc__title {
+    margin: 0;
+    font-size: 1.8rem;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    text-transform: capitalize;
+}
+
+.headerSc__carousel {
+    margin: 1.2rem auto;
+}
+
+.headerSc__carousel-container {
+    margin: 0 auto;
+}
+
+.headerSc__carousel-p {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1.2rem;
+}
+
+.headerSc__carousel-img {
+    width: 25%;
+    margin: 1.2rem auto;
+}
+
+.headerSc__carousel-img-v2 {
+    width: 20%;
+    margin: 1.2rem auto;
+}
+
+
+/* container box shadow  */
+
+.container__box-shadow-v1 {
+    display: flex;
+    height: 7rem;
+    width: 100%;
+    position: absolute;
+    top: 82.1vh;
+    left: 0;
+    background-color: var(--blue__219d9d);
+    clip-path: polygon(100% 20%, 50% 100%, 0 20%, 0 0, 50% 80%, 100% 0);
+    z-index: 9;
+}
+
+.container__box-shadow {
+    display: flex;
+    height: 7rem;
+    width: 100%;
+    position: absolute;
+    top: 83vh;
+    left: 0;
+    background-color: var(--blue__8ae4e4);
+    clip-path: polygon(100% 20%, 50% 100%, 0 20%, 0 0, 50% 80%, 100% 0);
+    z-index: 99;
+    opacity: 0.7;
+}
+
+
+.container__box-shadow-v2 {
+    display: flex;
+    height: 7rem;
+    width: 100%;
+    position: absolute;
+    top: 83.8vh;
+    left: 0;
+    background-color: var(--blue__219d9d);
+    clip-path: polygon(100% 20%, 50% 100%, 0 20%, 0 0, 50% 80%, 100% 0);
+    z-index: 9;
+}
+
+@media (max-width: 800px) {
+    .headerSc__carousel-img {
+        width: 50%;
+        margin: 0.6rem auto;
+    }
+
+    .headerSc__carousel-img-v2 {
+        width: 50%;
+        margin: 0.6rem auto;
+    }
+
+    .headerSc__section {
+        width: 70%;
+    }
+
+    .headerSc__carousel-p {
+        width: 100%;
+    }
+
+    .headerSc__title {
+        font-size: 1.4rem;
+    }
+}
+
+
