@@ -3,6 +3,9 @@
     <main class="main__login">
       <div class="login__photo"></div>
       <div class="login__inform">
+        <div class="close__to-home">
+          <router-link class="close__to-home_link" to="/"><i class="far fa-times-circle"></i></router-link>
+        </div>
         <h2 class="login__inform-title">Welcome back</h2>
         <p class="login__inform-minTitle">Sign to continue using Tipe</p>
         <form action="" class="login__form">

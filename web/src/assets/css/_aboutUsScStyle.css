@@ -1,0 +1,11 @@
+:root {
+    --bg-aboutUsSection: #c9f8f8;
+}
+
+.container__aboutUsSc {
+    width: 100%;
+    height: 100vh;
+    background-color: var(--bg-aboutUsSection);
+    margin-top: -6rem;
+    padding-top: 6rem;
+}
