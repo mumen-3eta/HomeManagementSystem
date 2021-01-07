@@ -50,10 +50,11 @@
           </carousel>
         </div>
       </div>
+      <div class="container__box-shadow-v1"></div>
+      <div class="container__box-shadow"></div>
     </div>
-    <div class="container__box-shadow-v1"></div>
-    <div class="container__box-shadow"></div>
-    <div class="container__box-shadow-v2"></div>
+
+
   </div>
 
 </template>
