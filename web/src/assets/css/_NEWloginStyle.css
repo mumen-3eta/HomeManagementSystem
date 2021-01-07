@@ -315,6 +315,35 @@ img {
     }
 }
 
+.close__to-home {
+    width: 100%;
+    position: relative;
+}
+
+.close__to-home_link {
+    position: absolute;
+    right: 0;
+    font-size: 2.3rem;
+    color: var(--gray-v2-500);
+    transition: all 0.3s ease;
+}
+
+@media (hover: hover) {
+    .close__to-home_link:hover {
+        transform: scale(1.2);
+        color: var(--label-v2-900);
+    }
+}
+
+@media (max-width: 900px) {
+    .close__to-home_link {
+        position: absolute;
+        right: 1.5rem;
+        font-size: 2.3rem;
+        color: var(--gray-v2-500);
+        transition: all 0.3s ease;
+    }
+}
 
 /*End All File */
 
