@@ -18,18 +18,18 @@
         </div>
         <div v-if="!TokenUser" class="nav_btn_items">
           <button class="nav__items-btn" type="button">
-            <router-link class="nav_link-btn" to="/login">Login</router-link>
+            <router-link class="nav_link-btn" to="/v2/login">Login</router-link>
           </button>
           <button class="nav__items-btn" type="button">
-            <router-link class="nav_link-btn" to="/register">SigUp</router-link>
+            <router-link class="nav_link-btn" to="/v2/register">SigUp</router-link>
           </button>
         </div>
         <div v-if="TokenUser" class="nav_btn_items">
-          <button class="nav__items-btn" type="button">
-            <a class="nav_link-btn" href="javascript:void(0)" @click.prevent="handleClick">logout</a>
+          <button class="nav__items-btn" type="button" @click.prevent="handleClick">
+            <a class="nav_link-btn">logout</a>
           </button>
           <button class="nav__items-btn" type="button">
-            <router-link class="nav_link-btn" to="/mainPage">Dashboard</router-link>
+            <router-link class="nav_link-btn" to="/v2/main/home">Dashboard</router-link>
           </button>
         </div>
         <div id="btn_menu_open" class="fas__menu-btn">
@@ -53,19 +53,21 @@
         <div class="nav__element-min">
           <div v-if="!TokenUser">
             <button class="nav__items-btn" type="button">
-              <router-link class="nav_link-btn" to="/login">Login</router-link>
+              <router-link class="nav_link-btn" to="/v2/login">Login</router-link>
             </button>
             <button class="nav__items-btn" type="button">
-              <router-link class="nav_link-btn" to="/register">SigUp</router-link>
+              <router-link class="nav_link-btn" to="/v2/register">SigUp</router-link>
             </button>
           </div>
           <div v-if="TokenUser">
-            <button class="nav__items-btn" type="button">
-              <a class="nav_link-btn" href="javascript:void(0)" @click.prevent="handleClick">logout</a>
+            <button class="nav__items-btn" type="button" @click.prevent="handleClick">
+              <a class="nav_link-btn">logout</a>
             </button>
-            <button class="nav__items-btn" type="button">
-              <router-link class="nav_link-btn" to="/mainPage">Dashboard</router-link>
-            </button>
+
+            <router-link class="nav_link-btn" to="/v2/main/home">
+              <button class="nav__items-btn" type="button">Dashboard</button>
+            </router-link>
+
           </div>
         </div>
 
@@ -83,12 +85,12 @@ export default {
   methods: {
     async handleClick() {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      await axios.put('/api/users/logout');
+      await axios.put('/api/v1/users/logout');
       localStorage.removeItem('csrfToken');
       this.$store.dispatch('user', null);
       this.$store.dispatch('TokenUser', null);
       this.$store.dispatch('deviceInfoAdd', null);
-      this.$router.push('/login');
+      this.$router.push('/v2/login');
     }
   },
   computed: {
