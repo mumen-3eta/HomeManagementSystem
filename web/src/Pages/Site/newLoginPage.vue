@@ -7,19 +7,22 @@
           <router-link class="close__to-home_link" to="/"><i class="far fa-times-circle"></i></router-link>
         </div>
         <h2 class="login__inform-title">Welcome back</h2>
-        <p class="login__inform-minTitle">Sign to continue using Tipe</p>
-        <form action="" class="login__form">
+        <p class="login__inform-minTitle">Sign to continue using HMSy</p>
+        <form action="#" class="login__form" @submit.prevent="checkForm">
           <div class="form__group">
             <label id="emailUsername_LabelInput" class="form__input-label" for="EmailUsername_input">username or
               E-mail</label>
-            <input id="EmailUsername_input" class="form__input-input" type="text">
+            <input id="EmailUsername_input" v-model.trim="userNameOrEmail" class="form__input-input" type="text">
             <hr id="line1" class="style_line">
           </div>
           <div class="form__group">
             <label id="password_LabelInput" class="form__input-label" for="password_input">Password</label>
-            <input id="password_input" class="form__input-input" type="password">
+            <input id="password_input" v-model.trim="Password" class="form__input-input" type="password">
             <hr id="line2" class="style_line">
+
           </div>
+          <p class="error_style">{{ this.errors.errorUserNameOrEmail }}</p>
+          <p class="error_style">{{ this.errors.errorPassword }}</p>
           <div class="form__group">
             <p class="form__forgot">
               <a class="form__forgot-link" href="">Forgot your password?</a>
@@ -32,7 +35,7 @@
         <div class="go__register">
           <p class="register__label">
             Don't have an account?
-            <a class="register__label-link" href="">Register Here</a>
+            <router-link class="register__label-link" to="/v2/register">Register Here</router-link>
           </p>
         </div>
       </div>
@@ -42,25 +45,60 @@
 
 <script>
 
+import axios from "axios";
 
 export default {
   name: "newLoginPage",
   components: {},
   data() {
     return {
-      email: null,
-      password: null,
-
+      userNameOrEmail: null,
+      Password: null,
+      errors: {
+        errorUserNameOrEmail: null,
+        errorPassword: null,
+      },
     }
   },
   methods: {
-    testEmail() {
-      this.valiided = this.email || '';
-      console.log(this.email)
-    },
-    testPassword() {
-      this.valiided = this.password || '';
-      console.log(this.password)
+    async checkForm() {
+      if (this.userNameOrEmail) {
+        let userNameOrEmail = this.userNameOrEmail;
+        let usernameRegex = /^[a-zA-Z0-9]+$/;
+        let EmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        let CheckUserName = usernameRegex.test(userNameOrEmail);//true or false
+        let CheckEmail = EmailRegex.test(userNameOrEmail);//true or false
+        if (!CheckEmail && !CheckUserName) {
+          this.errors.errorUserNameOrEmail = "Sorry! Email Faild, must be (@) and (.) and ignored space";
+          setTimeout(() => {
+            this.errors.errorUserNameOrEmail = null;
+          }, 3000);
+          return false;
+        } else {
+          if (!CheckUserName && !CheckEmail) {
+            this.errors.errorUserNameOrEmail = "Sorry! User Name Faild, must be (a-z) and (0-1) and ignored space";
+            setTimeout(() => {
+              this.errors.errorUserNameOrEmail = null;
+            }, 3000);
+            return false;
+          }
+        }
+      }
+
+      try {
+        let response = await axios.post('/api/v1/users/login', {
+          email: this.userNameOrEmail,
+          password: this.Password
+        });
+        localStorage.setItem('csrfToken', response.data.csrfToken);
+        await this.$store.dispatch('TokenUser', response.data);
+        await this.$router.push('/v2/main/home');
+      } catch (e) {
+        this.errors.errorUserNameOrEmail = 'Invalid Email/Password' || e.msg || e.message;
+        return false;
+      }
+
+
     },
   },
   mounted() {
