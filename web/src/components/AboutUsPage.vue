@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../assets/css/_aboutUsStyle.css";
+@import "../assets/temp/Temp_Old_Style__needDelete/_aboutUsStyle.css";
 </style>
 
 

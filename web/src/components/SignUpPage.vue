@@ -254,5 +254,5 @@ export default {
 
 
 <style scoped>
-@import "../assets/css/_registerStyle.css";
+@import "../assets/temp/Temp_Old_Style__needDelete/_registerStyle.css";
 </style>

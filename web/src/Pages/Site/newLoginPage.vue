@@ -117,15 +117,19 @@ export default {
       SlidUp(labelInput2, "move");
       SlidUp(line2, "line-dis");
     })
-    // let value = input1.value
+
     // if (value) {
     input1.addEventListener("focusout", function () {
-      SlidDown(labelInput1, "move");
-      SlidDown(line1, "line-dis");
+      if (!input1.value) {
+        SlidDown(labelInput1, "move");
+        SlidDown(line1, "line-dis");
+      }
     })
     input2.addEventListener("focusout", function () {
-      SlidDown(labelInput2, "move");
-      SlidDown(line2, "line-dis");
+      if (!input2.value) {
+        SlidDown(labelInput2, "move");
+        SlidDown(line2, "line-dis");
+      }
     })
 
     // }

@@ -149,16 +149,22 @@ export default {
     // let value = input1.value
     // if (value) {
     input1.addEventListener("focusout", function () {
-      SlidDown(labelInput1, "move_R");
-      SlidDown(line1_U, "line-dis_R");
+      if (!input1.value) {
+        SlidDown(labelInput1, "move_R");
+        SlidDown(line1_U, "line-dis_R");
+      }
     })
     input2.addEventListener("focusout", function () {
-      SlidDown(labelInput2, "move_R");
-      SlidDown(line1_E, "line-dis_R");
+      if (!input2.value) {
+        SlidDown(labelInput2, "move_R");
+        SlidDown(line1_E, "line-dis_R");
+      }
     })
     input3.addEventListener("focusout", function () {
-      SlidDown(labelInput3, "move_R");
-      SlidDown(line2, "line-dis_R");
+      if (!input3.value) {
+        SlidDown(labelInput3, "move_R");
+        SlidDown(line2, "line-dis_R");
+      }
     })
 
     // }
