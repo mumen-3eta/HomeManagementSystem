@@ -10,9 +10,9 @@
         </div>
         <div class="ul-list-max">
           <ul class="nav__element">
-            <li class="nav__element-list"><a class="nav__link-list" href="">Home</a></li>
+            <li class="nav__element-list"><a class="nav__link-list" href="#HomeSection">Home</a></li>
             <li class="nav__element-list"><a class="nav__link-list" href="">About us</a></li>
-            <li class="nav__element-list"><a class="nav__link-list" href="">contact us</a></li>
+            <li class="nav__element-list"><a class="nav__link-list" href="#contactUsSection">contact us</a></li>
             <li class="nav__element-list"><a class="nav__link-list" href="">our Team</a></li>
           </ul>
         </div>
@@ -44,9 +44,9 @@
           <i class="fas fa-times "></i>
         </button>
         <ul class="nav__element-min">
-          <li class="nav__element-list-min"><a class="nav__link-list-min" href="">Home</a></li>
+          <li class="nav__element-list-min"><a class="nav__link-list-min" href="#HomeSection">Home</a></li>
           <li class="nav__element-list-min"><a class="nav__link-list-min" href="">About us</a></li>
-          <li class="nav__element-list-min"><a class="nav__link-list-min" href="">contact us</a></li>
+          <li class="nav__element-list-min"><a class="nav__link-list-min" href="#contactUsSection">contact us</a></li>
           <li class="nav__element-list-min"><a class="nav__link-list-min" href="">our Team</a></li>
         </ul>
 
