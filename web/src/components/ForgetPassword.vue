@@ -125,5 +125,5 @@ export default {
 
 
 <style scoped>
-@import "../assets/css/_forgetPasswordStyle.css";
+@import "../assets/temp/Temp_Old_Style__needDelete/_forgetPasswordStyle.css";
 </style>
