@@ -4,7 +4,7 @@
     <NavBar/>
 
     <!--   header   -->
-    <HeaderSc/>
+    <HeaderSc id="HomeSection"/>
 
     <!--  about us  -->
     <AboutUsSc/>
@@ -16,7 +16,7 @@
     <AskedQuestionSc/>
 
     <!--   Contact us And information contact   -->
-    <ContactUsAndInfoSc/>
+    <ContactUsAndInfoSc id="contactUsSection"/>
     <!-- Footer -->
     <FooterSc/>
   </div>
