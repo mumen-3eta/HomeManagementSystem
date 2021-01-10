@@ -19,6 +19,9 @@
     <ContactUsAndInfoSc id="contactUsSection"/>
     <!-- Footer -->
     <FooterSc/>
+
+    <!--    btn up -->
+    <UpButton/>
   </div>
 </template>
 
@@ -30,10 +33,12 @@ import AboutUsSc from "@/components/Dir_Welcome/AboutUsSc";
 import AskedQuestionSc from "@/components/Dir_Welcome/AskedQuestionSc";
 import ContactUsAndInfoSc from "@/components/Dir_Welcome/ContactUsAndInfoSc";
 import OurTeamSc from "@/components/Dir_Welcome/OurTeamSc";
+import UpButton from "@/components/Dir_UpButton/UpButton";
 
 export default {
   name: "WelcomePage",
   components: {
+    UpButton,
     OurTeamSc,
     ContactUsAndInfoSc,
     AskedQuestionSc,
