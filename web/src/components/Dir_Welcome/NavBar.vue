@@ -109,22 +109,28 @@ export default {
       father_list_min.style.opacity = 0;
       father_list_min.classList.toggle("father-list-min");
     });
-
     window.onscroll = function () {
-      myFunction()
+      scrollFunction();
     };
 
-    function myFunction() {
+    function scrollFunction() {
       if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
         document.getElementById("main__nav").style.backgroundColor = "rgba(7,6,6,0.9)";
         document.getElementById("main__nav").style.boxShadow = "0 0 0 3px #70cbcb";
         document.getElementById("image_logo").style.width = "75%";
+        document.getElementById("up_Button").style.display = "block";
       } else {
         document.getElementById("main__nav").style.backgroundColor = "";
         document.getElementById("image_logo").style.width = "";
         document.getElementById("main__nav").style.boxShadow = "";
+        document.getElementById("up_Button").style.display = "none";
       }
     }
+
+    document.getElementById("up_Button").addEventListener("click", function () {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
   }
 }
 </script>
