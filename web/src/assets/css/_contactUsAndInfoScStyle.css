@@ -226,6 +226,12 @@
     margin-bottom: 1rem;
 }
 
+#MsgInputContact {
+    height: 12.5rem;
+    max-height: 12.5rem;
+    min-height: 12.5rem;
+}
+
 .InputContact {
     border: none;
     border-bottom: 2px solid var(--text-v2_color);
