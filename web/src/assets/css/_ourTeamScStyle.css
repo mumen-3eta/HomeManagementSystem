@@ -1,5 +1,158 @@
+:root {
+    --bg__ourTeamSc: white;
+    --color__ourTeamSc: white;
+    --border__bottom: #1b7f8c;
+    --color__ourTeam-title: #0d7571;
+    --bg_Member_team: #317a7a;
+    --MemberTeam_box-shadow: #435254;
+    --MemberTeam-job: #e3e3e3;
+    --color__linkHover: #a3dfe3;
+}
+
 .container__ourTeamSc {
     width: 100%;
     height: 100vh;
-    background-color: white;
+    background-color: var(--bg__ourTeamSc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.container__ourTeamSc-title {
+    font-size: 3.5rem;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    margin: 2rem auto;
+    border-bottom: 3px solid var(--border__bottom);
+    color: var(--color__ourTeam-title);
+    padding-top: 5rem;
+}
+
+.main__ourTeamSc {
+    width: 80%;
+    height: auto;
+    margin: 0 auto 3.5rem auto;
+    padding: 2.5rem;
+    transition: all .3s ease;
+    transform: rotate(-2deg);
+}
+
+.Member__Team {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    background-color: var(--bg_Member_team);
+    width: 80%;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px 0 var(--MemberTeam_box-shadow);
+    margin: 2rem;
+}
+
+.Member__Team-img {
+    width: 100%;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+}
+
+.Member__img {
+    border-radius: 5px 5px 0 0;
+    transition: all 0.3s ease;
+}
+
+.Member__Team-name {
+    font-size: 2rem;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    text-transform: capitalize;
+    color: var(--color__ourTeamSc);
+    margin: 0.8rem auto 0 auto;
+}
+
+.Member__Team-job {
+    font-size: 1.4rem;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    text-transform: capitalize;
+    color: var(--MemberTeam-job);
+    margin: 0.5rem auto 0.8rem auto;
+}
+
+@media (max-width: 1200px) {
+    .container__ourTeamSc {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+/* Social_media-ul */
+.Social_media-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.Social_media-ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.Social_media-list {
+    margin: 0 1rem;
+    padding: 0.1rem;
+}
+
+.Social_media-link {
+    color: var(--color__ourTeamSc);
+    padding: 0.25rem;
+    font-size: 1.4rem;
+}
+
+@media (hover: hover) {
+    .Social_media-link:hover {
+        color: var(--color__linkHover);
+    }
+}
+
+@media (max-width: 750px) {
+    .Social_media-main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 3rem;
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .Social_media-list {
+        margin: 0.5rem 0.5rem;
+        padding: 0.1rem;
+    }
+
+    .Social_media-link {
+        padding: 0.25rem;
+        font-size: 1.2rem;
+    }
+}
+
+/* dot style */
+
+.owl-theme .owl-dots .owl-dot span {
+    background: var(--color__linkHover);
+    width: 30px;
+    height: 8px;
+    margin: 5px -3px;
+    display: block;
+    -webkit-backface-visibility: visible;
+    transition: opacity 200ms ease;
+    border-radius: 30px;
+}
+
+.owl-theme .owl-dots .owl-dot.active span, .owl-theme .owl-dots .owl-dot:hover span {
+    background: var(--color__ourTeam-title);
 }

@@ -11,9 +11,9 @@
         <div class="ul-list-max">
           <ul class="nav__element">
             <li class="nav__element-list"><a class="nav__link-list" href="#HomeSection">Home</a></li>
-            <li class="nav__element-list"><a class="nav__link-list" href="">About us</a></li>
+            <li class="nav__element-list"><a class="nav__link-list" href="#AboutUs">About us</a></li>
             <li class="nav__element-list"><a class="nav__link-list" href="#contactUsSection">contact us</a></li>
-            <li class="nav__element-list"><a class="nav__link-list" href="">our Team</a></li>
+            <li class="nav__element-list"><a class="nav__link-list" href="#ourTeamSection">our Team</a></li>
           </ul>
         </div>
         <div v-if="!TokenUser" class="nav_btn_items">
@@ -45,9 +45,9 @@
         </button>
         <ul class="nav__element-min">
           <li class="nav__element-list-min"><a class="nav__link-list-min" href="#HomeSection">Home</a></li>
-          <li class="nav__element-list-min"><a class="nav__link-list-min" href="">About us</a></li>
+          <li class="nav__element-list-min"><a class="nav__link-list-min" href="#AboutUs">About us</a></li>
           <li class="nav__element-list-min"><a class="nav__link-list-min" href="#contactUsSection">contact us</a></li>
-          <li class="nav__element-list-min"><a class="nav__link-list-min" href="">our Team</a></li>
+          <li class="nav__element-list-min"><a class="nav__link-list-min" href="#ourTeamSection">our Team</a></li>
         </ul>
 
         <div class="nav__element-min">

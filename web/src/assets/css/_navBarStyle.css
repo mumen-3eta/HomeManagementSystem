@@ -39,6 +39,7 @@ button:focus {
     position: fixed;
     z-index: 9999;
     transition: all 0.3s ease;
+    user-select: none;
 }
 
 .nav--Z-index {
@@ -226,4 +227,11 @@ button:focus {
 .nav__link-list-min:focus {
     outline: none;
     box-shadow: 0 0 0 3px var(--green-600-v1);
+}
+
+@media (hover: hover) {
+    .nav__link-list-min:hover {
+        background: var(--green-700-v1);
+        color: var(--white_color);
+    }
 }
