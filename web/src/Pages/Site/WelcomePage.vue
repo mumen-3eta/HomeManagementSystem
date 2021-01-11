@@ -7,10 +7,10 @@
     <HeaderSc id="HomeSection"/>
 
     <!--  about us  -->
-    <AboutUsSc/>
+    <AboutUsSc id="AboutUs"/>
 
     <!--   our Team   -->
-    <OurTeamSc/>
+    <OurTeamSc id="ourTeamSection"/>
 
     <!--  Asked Questions    -->
     <AskedQuestionSc/>
