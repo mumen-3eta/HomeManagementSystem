@@ -436,12 +436,17 @@ h4, h5, h6 {
 }
 
 /** Profile */
+.profile {
+    position: relative;
+}
+
 .profile__button {
     display: flex;
     align-items: center;
-    padding: 0.1625rem 0;
+    padding: 0.35rem 0.8rem;
     font-size: 1.2rem;
     transition: color 0.3s ease;
+
 }
 
 .profile__button:focus .profile__img {
@@ -477,7 +482,7 @@ h4, h5, h6 {
 
 @media (max-width: 1400px) {
     .profile__button {
-        padding: 0;
+        padding: 0.35rem 0.8rem;
     }
 
     .profile__img {
