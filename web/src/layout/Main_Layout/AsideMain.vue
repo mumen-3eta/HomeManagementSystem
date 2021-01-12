@@ -14,7 +14,8 @@
         <button class="profile-main__setting focus--box-shadow" type="button">
           <img alt="profile image user" class="profile-main__photo" src="@/assets/img/MainHomePage/user.jpg">
         </button>
-        <h1 class="profile-main__name">Team Project</h1>
+        <h1 class="profile-main__name">{{ user.basicInfo.userName }}</h1>
+        <h6 class="profile-main__name">{{ user.basicInfo.email }}</h6>
       </div>
       <ul class="statistics">
         <li class="statistics__entry">
@@ -40,8 +41,19 @@
 </template>
 
 <script>
+import axios from "axios";
+import {mapGetters} from "vuex";
+
 export default {
-  name: "AsideMain"
+  name: "AsideMain",
+  async beforeMount() {
+    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+    const {user} = (await axios.get('/api/v1/users/me')).data;
+    await this.$store.dispatch('user', user);
+  },
+  computed: {
+    ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
+  },
 }
 </script>
 
