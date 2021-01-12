@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="container__ourTeamSc">
-      <h2 class="container__ourTeamSc-title">Our Team</h2>
+      <h2 v-animate-onscroll="'animated fadeIn'" class="container__ourTeamSc-title">Our Team</h2>
       <div class="main__ourTeamSc">
         <carousel :autoplay="true" :dots="true" :nav="false"
                   :responsive="{0:{items:1},600:{items:2},1200:{items:3},1800:{items:4}}">
           <!--      member 1      -->
-          <div class="Member__Team">
+          <div v-animate-onscroll="'animated fadeIn fadeInUp'" class="Member__Team">
             <div class="Member__Team-img">
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/teamMember1.jpg">
@@ -40,7 +40,7 @@
           </div>
 
           <!--      member 2      -->
-          <div class="Member__Team">
+          <div v-animate-onscroll="'animated fadeIn fadeInUp'" class="Member__Team">
             <div class="Member__Team-img">
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/teamMember2.jpeg">
@@ -74,7 +74,7 @@
           </div>
 
           <!--      member 3      -->
-          <div class="Member__Team">
+          <div v-animate-onscroll="'animated fadeIn fadeInUp'" class="Member__Team">
             <div class="Member__Team-img">
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/teamMember3.jpg">
@@ -108,7 +108,7 @@
           </div>
 
           <!--      member 4      -->
-          <div class="Member__Team">
+          <div v-animate-onscroll="'animated fadeIn fadeInUp'" class="Member__Team">
             <div class="Member__Team-img">
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/teamMember4.jpg">
@@ -142,7 +142,7 @@
           </div>
 
           <!--      member 5      -->
-          <div class="Member__Team">
+          <div v-animate-onscroll="'animated fadeIn fadeInUp'" class="Member__Team">
             <div class="Member__Team-img">
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/teamMember5.jpg">

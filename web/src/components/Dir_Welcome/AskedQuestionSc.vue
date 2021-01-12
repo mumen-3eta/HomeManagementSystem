@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="container__askedQuestionSc">
-      <div class="askedQuestion-section">
+      <div v-animate-onscroll="'animated fadeInLeft'" class="askedQuestion-section">
         <div class="askedQuestionSc-title">
           <h2 class="asked-h">Frequently Asked Questions</h2>
         </div>
         <div class="askedQuestionSc-body">
-          <div class="container__body-asked">
+          <div v-animate-css.click="'animated fadeIn'" class="container__body-asked">
             <div ref="btnDown11" class="container__question" @click.prevent="down1">
               <p class="text-question">How is a decentralized network different from the traditional web?</p>
               <button id="btn_Down-01" ref="btnDown01" class="text-question__btn" @click.prevent="down11">
@@ -26,7 +26,7 @@
               </p>
             </div>
           </div><!--duplicated -->
-          <div class="container__body-asked">
+          <div v-animate-css.click="'animated fadeIn'" class="container__body-asked">
             <div ref="btnDown22" class="container__question" @click.prevent="down2">
               <p class="text-question">How is a decentralized network different from the traditional web?</p>
               <button id="btn_Down-02" ref="btnDown02" class="text-question__btn" @click.prevent="down22">
@@ -46,7 +46,7 @@
               </p>
             </div>
           </div><!--duplicated -->
-          <div class="container__body-asked">
+          <div v-animate-css.click="'animated fadeIn'" class="container__body-asked">
             <div ref="btnDown33" class="container__question" @click.prevent="down3">
               <p class="text-question">How is a decentralized network different from the traditional web?</p>
               <button id="btn_Down-03" ref="btnDown03" class="text-question__btn" @click.prevent="down33">
@@ -66,7 +66,7 @@
               </p>
             </div>
           </div><!--duplicated -->
-          <div class="container__body-asked">
+          <div v-animate-css.click="'animated fadeIn'" class="container__body-asked">
             <div ref="btnDown44" class="container__question" @click.prevent="down4">
               <p class="text-question">How is a decentralized network different from the traditional web?</p>
               <button id="btn_Down-04" ref="btnDown04" class="text-question__btn" @click.prevent="down44">
@@ -86,7 +86,7 @@
               </p>
             </div>
           </div><!--duplicated -->
-          <div class="container__body-asked">
+          <div v-animate-css.click="'animated fadeIn'" class="container__body-asked">
             <div ref="btnDown55" class="container__question" @click.prevent="down5">
               <p class="text-question">How is a decentralized network different from the traditional web?</p>
               <button id="btn_Down-05" ref="btnDown05" class="text-question__btn" @click.prevent="down55">
@@ -106,7 +106,7 @@
               </p>
             </div>
           </div><!--duplicated -->
-          <div class="container__body-asked">
+          <div v-animate-css.click="'animated fadeIn'" class="container__body-asked">
             <div ref="btnDown66" class="container__question" @click.prevent="down6">
               <p class="text-question">How is a decentralized network different from the traditional web?</p>
               <button id="btn_Down-06" ref="btnDown06" class="text-question__btn" @click.prevent="down66">
