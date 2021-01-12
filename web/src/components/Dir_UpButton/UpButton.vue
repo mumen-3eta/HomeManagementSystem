@@ -1,5 +1,5 @@
 <template>
-  <button id="up_Button" class="up_Btn">
+  <button id="up_Button" v-animate-onscroll="'animated fadeInRight'" class="up_Btn">
     <i class="fas fa-angle-up"></i>
   </button>
 </template>

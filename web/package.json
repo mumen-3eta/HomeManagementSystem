@@ -8,12 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "firebase": "^8.0.1",
-    "gsap": "^3.5.1",
+    "gsap": "^3.6.0",
     "parallax-js": "^3.1.0",
+    "v-animate-css": "0.0.3",
     "vue": "^2.6.11",
+    "vue-animate-onscroll": "^1.0.8",
     "vue-owl-carousel": "^2.0.3",
     "vue-router": "^3.4.8",
     "vue-spinner": "^1.0.4",

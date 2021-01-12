@@ -2,12 +2,12 @@
   <div>
     <div class="container__contactUsAndInfoSc">
       <div class="container__infoBox-shadow"></div>
-      <div class="contactUs-main__section">
-        <div class="contactus__title">
+      <div v-animate-onscroll.repeat="'animated fadeIn'" class="contactUs-main__section ">
+        <div v-animate-onscroll.repeat="'animated fadeInUp'" class="contactus__title">
           <h2 class="contactus__title-h">Contact the Pied Piper team</h2>
         </div>
         <div class="contactUs__info">
-          <div class="information__Section">
+          <div v-animate-onscroll.repeat="'animated fadeIn fadeInLeft'" class="information__Section">
             <h3 class="information__Section-title">Let's talk about the future of the internet</h3>
             <p class="information__Section-p">We're here to answer your questions and discuss the decentralized future
               of the internet.</p>
@@ -27,7 +27,7 @@
             </ul>
 
           </div>
-          <div class="contactMsg__Section">
+          <div v-animate-onscroll.repeat="'animated fadeIn fadeInLeft'" class="contactMsg__Section">
             <form action="#" class="form__contactUs">
               <div class="form__contactUs-group">
                 <label id="lab_EmailInputContact" class="labelInputContact "

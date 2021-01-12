@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container__headerSc">
-      <div class="headerSc__section">
+      <div v-animate-onscroll="'animated fadeIn'" class="headerSc__section">
         <h2 class="headerSc__title">
           Home Management Experience You really want
         </h2>
