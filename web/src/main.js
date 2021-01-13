@@ -7,6 +7,7 @@ import store from "@/vuex";
 import firebase from 'firebase/app';
 import 'firebase/storage';
 import '@/animateCss'
+import '@/sweetalert2'
 
 
 Vue.use(Vuelidate)

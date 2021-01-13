@@ -9,8 +9,10 @@
       </form>
       <div class="profile">
         <button id="btn_Profile" class="profile__button" type="button">
-          <span class="profile__name"><i class="fas fa-caret-down"></i>{{ user.basicInfo.userName }}</span>
-          <img alt="profile image" class="profile__img" src="@/assets/img/MainHomePage/user.jpg">
+          <span v-show="user.basicInfo.userName" class="profile__name"><i
+              class="fas fa-caret-down"></i>{{ user.basicInfo.userName }}</span>
+          <img v-show="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image" class="profile__img">
+          <!--src="@/assets/img/MainHomePage/user.jpg"-->
         </button>
         <div id="profile__menu" class="profile__menu">
           <ul class="profile__menu-ul">
@@ -52,10 +54,7 @@ import {mapGetters} from "vuex";
 export default {
   name: "HeaderMain",
   mounted() {
-    document.getElementById("btn_Profile").addEventListener("click", function () {
-      document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
-      document.getElementById("profile__menu").classList.toggle("profile__menu-open");
-    });
+
   },
   methods: {
     async handleClick() {
@@ -72,6 +71,10 @@ export default {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const {user} = (await axios.get('/api/v1/users/me')).data;
     await this.$store.dispatch('user', user);
+    document.getElementById("btn_Profile").addEventListener("click", function () {
+      document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
+      document.getElementById("profile__menu").classList.toggle("profile__menu-open");
+    });
   },
   computed: {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
@@ -89,12 +92,13 @@ export default {
 
 .profile__menu {
   position: absolute;
-  width: 100%;
+  left: -2.1rem;
+  width: calc(100% + 2.1rem);
   height: 12.74rem;
   background-color: white;
   z-index: 999;
   box-shadow: 1px 1px 4px #9d9c9c;
-  border-radius: 0 0 10px 10px;
+  border-radius: 10px 0 10px 10px;
   display: none;
   transition: all 0.3s ease;
 }
