@@ -182,6 +182,7 @@ i.fa-caret-down {
   font-size: 1.25rem;
   font-family: Ubuntu, Arial, Helvetica, sans-serif;
   text-transform: capitalize;
+  cursor: pointer;
 }
 
 </style>
