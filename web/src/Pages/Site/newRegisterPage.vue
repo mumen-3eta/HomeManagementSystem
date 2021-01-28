@@ -33,7 +33,7 @@
             </p>
           </div>
           <div class="form__group-R">
-            <button class="form__button-submit" type="submit">Login</button>
+            <button class="form__button-submit" type="submit">Sign Up</button>
           </div>
         </form>
         <div class="go__login">

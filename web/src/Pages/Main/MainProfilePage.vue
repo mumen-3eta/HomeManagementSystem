@@ -8,6 +8,7 @@
       <!--   ********** body content can change it here *****************-->
       <ProfileUserMain/>
 
+
     </main><!-- End Main -->
     <!--    aside here -->
     <!--    <AsideMain/>-->
@@ -19,10 +20,16 @@
 import NavMain from "@/layout/Main_Layout/NavMain";
 import HeaderMain from "@/layout/Main_Layout/HeaderMain";
 import ProfileUserMain from "@/components/Dir_Main/ProfileUserMain";
+// import AsideMain from "@/layout/Main_Layout/AsideMain";
 
 export default {
   name: "MainProfilePage",
-  components: {ProfileUserMain, HeaderMain, NavMain},
+  components: {
+    ProfileUserMain,
+    HeaderMain,
+    NavMain,
+    // AsideMain
+  },
 }
 </script>
 

@@ -11,11 +11,11 @@
         </button>
       </div>
       <div class="profile-main">
-        <button class="profile-main__setting focus--box-shadow" type="button">
-          <img alt="profile image user" class="profile-main__photo" src="@/assets/img/MainHomePage/user.jpg">
-        </button>
-        <h1 class="profile-main__name">{{ user.basicInfo.userName }}</h1>
-        <h6 class="profile-main__name">{{ user.basicInfo.email }}</h6>
+        <div v-show="user.profileInfo.image" class="profile-main__setting focus--box-shadow" type="button">
+          <img :src="user.profileInfo.image" alt="profile image user" class="profile-main__photo">
+        </div>
+        <h1 v-show="user.basicInfo.userName" class="profile-main__name">{{ user.basicInfo.userName }}</h1>
+        <h6 v-show="user.basicInfo.email" class="profile-main__name">{{ user.basicInfo.email }}</h6>
       </div>
       <ul class="statistics">
         <li class="statistics__entry">
