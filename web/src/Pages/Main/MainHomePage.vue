@@ -11,7 +11,6 @@
     </main><!-- End Main -->
     <!--    aside here -->
     <AsideMain/>
-
   </div>
 </template>
 
