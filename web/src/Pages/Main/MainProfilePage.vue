@@ -10,7 +10,7 @@
 
     </main><!-- End Main -->
     <!--    aside here -->
-    <AsideMain/>
+    <!--    <AsideMain/>-->
 
   </div>
 </template>
@@ -18,12 +18,11 @@
 <script>
 import NavMain from "@/layout/Main_Layout/NavMain";
 import HeaderMain from "@/layout/Main_Layout/HeaderMain";
-import AsideMain from "@/layout/Main_Layout/AsideMain";
 import ProfileUserMain from "@/components/Dir_Main/ProfileUserMain";
 
 export default {
   name: "MainProfilePage",
-  components: {ProfileUserMain, HeaderMain, AsideMain, NavMain},
+  components: {ProfileUserMain, HeaderMain, NavMain},
 }
 </script>
 

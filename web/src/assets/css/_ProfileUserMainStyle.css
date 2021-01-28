@@ -1,0 +1,85 @@
+.profile__Main-container {
+    background-color: white;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+}
+
+.profile__Main-containerInfo {
+    background-color: rgb(139, 145, 144);
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.profile__Main-containerInfo .profile__Main-Info {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: -4rem;
+}
+
+.profile__Main-containerInfo .profile__Main-Info .p__Main-image {
+    width: 25%;
+    border-radius: 50%;
+    padding: 0.5rem;
+}
+
+.profile__Main-containerInfo .profile__Main-Info h3,
+.profile__Main-containerInfo .profile__Main-Info h6 {
+    color: #ffffff;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+
+.profile__Main-containerEditInfo {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem 0;
+}
+
+
+.profile__Main-containerEditInfo h2.profile__Main-EditInfoH2 {
+    text-transform: capitalize;
+    color: #0d7571;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    padding: 0.25rem;
+    border-bottom: 3px solid #0d7571;
+    cursor: default;
+}
+
+.profile__Main-containerEditInfo .profile__Main-EditInfo {
+
+}
+
+
+@media (max-width: 1000px) {
+    .profile__Main-container {
+        margin-top: 1rem;
+    }
+}
+
+@media (max-width: 900900px) {
+    .profile__Main-container {
+        background-color: white;
+        width: 90%;
+        margin: 1.5rem auto 0 auto;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+
+    }
+}
+
