@@ -116,9 +116,12 @@
 
 .profile__Main-containerEditInfo .profile__Main-EditInfo .profile__image-outline {
     background-color: rgba(29, 93, 90, 0.5);
-    background-image: url("https://via.placeholder.com/200");
-    width: 200px;
-    height: 200px;
+    background-image: url("https://via.placeholder.com/220");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 220px;
+    height: 220px;
     max-width: 200px;
     max-height: 200px;
     border: 2px solid rgba(29, 93, 90, 0.5);
@@ -128,7 +131,7 @@
 
 .profile__Main-containerEditInfo .profile__Main-EditInfo .profile__image-btn {
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: start;
     text-align: start;
     margin: 0.8rem auto;
