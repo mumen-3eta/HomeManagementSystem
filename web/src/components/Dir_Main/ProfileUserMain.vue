@@ -17,10 +17,9 @@
           <p class="image__errors">{{ errors }}</p>
           <div class="profile__image-btn">
             <input id="input__file" ref="imageInput" accept="image/*" hidden type="file" @change.prevent="previewImage">
-            <button v-show="!imageLoading" class="Add-btn btn btn-info" @click.prevent="onPickImage">Choose Image
+            <button v-show="!imageLoading" class="Add-btn btn btn-info" @click.prevent="onPickImage">Choose Your Image
             </button>
             <button v-show="imageLoading" class="upload-btn btn btn-success" @click.prevent="onUploadImage">upload
-              Image
             </button>
             <button v-show="imageLoading" class="btn btn-danger" @click.prevent="onCancelImage">Cancel</button>
           </div>
@@ -104,14 +103,15 @@ export default {
         }
       }
     },
-    onUploadImage() {
+    onUploadImage: function () {
       this.picture = null;
       const D = new Date();
       const Year = D.getFullYear();
       const Month = D.getMonth();
       const Time = D.getTime();
-      const FullName = 'User/Profile/' + `${Year}_${Month}_${Time}`;
-      const storageRef = firebase.storage().ref(FullName + `${this.imageName}`).put(this.imageData);
+      const FullName = 'User/Profile/' + `${Year}_${Month}_${Time}` + `${this.imageName}`;
+      const ImagePath = firebase.storage().ref(FullName);
+      const storageRef = ImagePath.put(this.imageData);
       storageRef.on(`state_change`, snapshot => {
         this.uploadValue = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       }, error => {
@@ -120,12 +120,31 @@ export default {
         this.uploadValue = 100;
         storageRef.snapshot.ref.getDownloadURL().then((url) => {
           this.picture = url;
-          // API code For update in dataBase
-          // this.picture = url in firebase
+          //  Delete old Image
+          /*
+          * new api and store url in api and use it like (localStorage)
+          * for user one url unique
+          * */
+          let FromURL = localStorage.getItem('url_img');
+          if (FromURL) {
+            let oldRefFromURL = firebase.storage().refFromURL(FromURL);
+            if (oldRefFromURL) {
+              this.OnDeleteImage(oldRefFromURL); // to delete old
+            }
+          }
+          localStorage.setItem('url_img', url);
         })
       })
       this.onCancelImage();
     },
+    OnDeleteImage(deletedImage) {
+      deletedImage.delete().then(() => {
+        // File deleted successfully
+        console.log("File deleted successfully");
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
   },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');

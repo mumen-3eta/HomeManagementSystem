@@ -7,7 +7,8 @@ Vue.use(Vuex);
 const state = {
     user: null,
     TokenUser: null,
-    deviceInfoAdd: []
+    deviceInfoAdd: [],
+    // Image: null,
 };
 
 const store = new Vuex.Store({
@@ -23,6 +24,9 @@ const store = new Vuex.Store({
         TokenUser: (state) => {
             return state.TokenUser;
         },
+        // Image: (state) => {
+        //     return state.Image;
+        // },
         deviceInfoAdd: (state) => {
             return state.deviceInfoAdd;
         }
@@ -34,6 +38,9 @@ const store = new Vuex.Store({
         TokenUser(context, TokenUser) {
             context.commit('TokenUser', TokenUser);
         },
+        // Image(context, Image) {
+        //     context.commit('Image', Image);
+        // },
         deviceInfoAdd(context, deviceInfoAdd) {
             context.commit('deviceInfoAdd', deviceInfoAdd);
         }
@@ -45,6 +52,9 @@ const store = new Vuex.Store({
         TokenUser(state, TokenUser) {
             state.TokenUser = TokenUser;
         },
+        // Image(state, Image) {
+        //     state.Image = Image;
+        // },
         deviceInfoAdd(state, deviceInfoAdd) {
             state.deviceInfoAdd = deviceInfoAdd;
         }
