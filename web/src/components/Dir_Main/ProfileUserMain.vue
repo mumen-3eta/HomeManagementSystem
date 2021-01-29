@@ -9,19 +9,40 @@
         </div>
       </div>
       <div class="profile__Main-containerEditInfo">
-        <h2 class="profile__Main-EditInfoH2">Update Your Profile</h2>
+        <h2 class="profile__Main-EditInfoH2 mb-4">Update Your Profile</h2>
         <div class="profile__Main-EditInfo">
-          <div class="profile__image-outline">
-            <img :alt="this.imageName" :src="imageLoading">
+          <div class="profile__Main-EditInfoImg">
+            <div class="profile__image-outline">
+              <img :alt="this.imageName" :src="imageLoading">
+            </div>
+            <p class="image__errors">{{ errors }}</p>
+            <div class="profile__image-btn">
+              <input id="input__file" ref="imageInput" accept="image/*" hidden type="file"
+                     @change.prevent="previewImage">
+              <button v-show="!imageLoading" class="Add-btn btn btn-info" @click.prevent="onPickImage">Choose Your Image
+              </button>
+              <button v-show="imageLoading" class="upload-btn btn btn-success" @click.prevent="onUploadImage">upload
+              </button>
+              <button v-show="imageLoading" class="btn btn-danger" @click.prevent="onCancelImage">Cancel</button>
+            </div>
           </div>
-          <p class="image__errors">{{ errors }}</p>
-          <div class="profile__image-btn">
-            <input id="input__file" ref="imageInput" accept="image/*" hidden type="file" @change.prevent="previewImage">
-            <button v-show="!imageLoading" class="Add-btn btn btn-info" @click.prevent="onPickImage">Choose Your Image
-            </button>
-            <button v-show="imageLoading" class="upload-btn btn btn-success" @click.prevent="onUploadImage">upload
-            </button>
-            <button v-show="imageLoading" class="btn btn-danger" @click.prevent="onCancelImage">Cancel</button>
+          <div class="profile__Main-EditInfoImg">
+            <div class="profile__Main-EditInfoData__title">
+              <ul class="profile__Main-EditInfoData__ul">
+                <li class="profile__Main-EditInfoData__li"><a id="Base_Info" class="profile__Main-EditInfoData__active"
+                                                              href="javascript:void(0);">Base Info</a></li>
+                <li class="profile__Main-EditInfoData__li"><a id="Login_Info" href="javascript:void(0);">Login info</a>
+                </li>
+              </ul>
+            </div>
+            <div class="profile__Main-EditInfoData__body">
+              <div id="bodyBaseInfo" class="profile__Main-EditInfoData__bodyInfo">
+                bodyBaseInfo
+              </div>
+              <div id="bodyLoginInfo" class="profile__Main-EditInfoData__bodyInfo profile__bodyInfo-NotActive">
+                bodyLoginInfo
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -150,6 +171,26 @@ export default {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const {user} = (await axios.get('/api/v1/users/me')).data;
     await this.$store.dispatch('user', user);
+
+    const Base_Info = document.getElementById('Base_Info');
+    const Login_Info = document.getElementById('Login_Info');
+    const bodyBaseInfo = document.getElementById('bodyBaseInfo');
+    const bodyLoginInfo = document.getElementById('bodyLoginInfo');
+    Base_Info.addEventListener("click", function () {
+      Base_Info.classList.toggle('profile__Main-EditInfoData__active');
+      Login_Info.classList.remove('profile__Main-EditInfoData__active');
+
+      bodyLoginInfo.classList.add('profile__bodyInfo-NotActive');
+      bodyBaseInfo.classList.remove('profile__bodyInfo-NotActive');
+
+    })
+    Login_Info.addEventListener("click", function () {
+      Login_Info.classList.toggle('profile__Main-EditInfoData__active');
+      Base_Info.classList.remove('profile__Main-EditInfoData__active');
+
+      bodyLoginInfo.classList.remove('profile__bodyInfo-NotActive');
+      bodyBaseInfo.classList.add('profile__bodyInfo-NotActive');
+    })
   },
   computed: {
     ...mapGetters(['user', 'TokenUser'])
