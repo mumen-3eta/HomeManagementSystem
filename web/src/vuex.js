@@ -5,7 +5,10 @@ import VuexPersistence from 'vuex-persist'
 Vue.use(Vuex);
 
 const state = {
-    user: null,
+    user: {
+        profileInfo: {},
+        basicInfo: {},
+    },
     TokenUser: null,
     deviceInfoAdd: [],
     // Image: null,
