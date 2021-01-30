@@ -37,7 +37,29 @@
             </div>
             <div class="profile__Main-EditInfoData__body">
               <div id="bodyBaseInfo" class="profile__Main-EditInfoData__bodyInfo">
-                bodyBaseInfo
+                <form @submit.prevent="OnUpdateBodyInfo">
+                  <div class="profile__bodyInfo-group">
+                    <label id="firstNameInputLabel" class="profile__bodyInfo-groupLabel" for="firstNameInput">First
+                      Name</label>
+                    <input id="firstNameInput" v-model.trim="userData.profileInfo.email"
+                           class="profile__bodyInfo-groupInput" type="text">
+                  </div>
+                  <div class="profile__bodyInfo-group">
+                    <label id="lastNameInputLabel" class="profile__bodyInfo-groupLabel" for="lastNameInput">Last
+                      Name</label>
+                    <input id="lastNameInput" v-model.trim="userData.profileInfo.firstName"
+                           class="profile__bodyInfo-groupInput" type="text">
+                  </div>
+                  <div class="profile__bodyInfo-group">
+                    <label id="emailInputLabel" class="profile__bodyInfo-groupLabel" for="emailInput">Last Name</label>
+                    <input id="emailInput" v-model.trim="userData.profileInfo.lastName"
+                           class="profile__bodyInfo-groupInput"
+                           type="email">
+                  </div>
+                  <div class="profile__bodyInfo-groupBTN">
+                    <button class="profile__bodyInfo-SubmitBTN" type="submit">Update</button>
+                  </div>
+                </form>
               </div>
               <div id="bodyLoginInfo" class="profile__Main-EditInfoData__bodyInfo profile__bodyInfo-NotActive">
                 bodyLoginInfo
@@ -60,6 +82,15 @@ export default {
   name: "ProfileUserMain",
   data() {
     return {
+      userData: {
+        profileInfo: {
+          email: this.$store.getters.user.basicInfo.email,
+          firstName: null,
+          lastName: null,
+        },
+        basicInfo: {},
+        error: null,
+      },
       picture: null,
       imageLoading: null,
       imageName: null,
@@ -165,6 +196,11 @@ export default {
       }).catch((error) => {
         console.log(error);
       });
+    },
+
+    //  OnUpdateBodyInfo
+    OnUpdateBodyInfo() {
+
     }
   },
   async beforeMount() {
@@ -183,14 +219,86 @@ export default {
       bodyLoginInfo.classList.add('profile__bodyInfo-NotActive');
       bodyBaseInfo.classList.remove('profile__bodyInfo-NotActive');
 
-    })
+    });
     Login_Info.addEventListener("click", function () {
       Login_Info.classList.toggle('profile__Main-EditInfoData__active');
       Base_Info.classList.remove('profile__Main-EditInfoData__active');
 
       bodyLoginInfo.classList.remove('profile__bodyInfo-NotActive');
       bodyBaseInfo.classList.add('profile__bodyInfo-NotActive');
+    });
+
+
+    const input1 = document.getElementById("firstNameInput");
+    const labelInput1 = document.getElementById("firstNameInputLabel");
+    const input2 = document.getElementById("lastNameInput");
+    const labelInput2 = document.getElementById("lastNameInputLabel");
+    const input3 = document.getElementById("emailInput");
+    const labelInput3 = document.getElementById("emailInputLabel");
+
+    if (this.$store.getters.user.basicInfo.email) {
+      SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+    } else {
+      SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+    }
+
+    if (this.$store.getters.user.basicInfo.firstName) {
+      SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+    } else {
+      SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+    }
+    if (this.$store.getters.user.basicInfo.lastName) {
+      SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+    } else {
+      SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+    }
+
+    input1.addEventListener("focusin", function () {
+      SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+      SlidUp(input1, "AddBorder");
+
     })
+    input2.addEventListener("focusin", function () {
+      SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+      SlidUp(input2, "AddBorder");
+    })
+    input3.addEventListener("focusin", function () {
+      SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+      SlidUp(input3, "AddBorder");
+    })
+
+
+    input1.addEventListener("focusout", function () {
+      if (!input1.value) {
+        SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+        SlidDown(input1, "AddBorder");
+
+      }
+    })
+    input2.addEventListener("focusout", function () {
+      if (!input2.value) {
+        SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+        SlidDown(input2, "AddBorder");
+
+      }
+    })
+    input3.addEventListener("focusout", function () {
+      if (!input3.value) {
+        SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+        SlidDown(input3, "AddBorder");
+
+      }
+    })
+
+
+    function SlidUp(input, nameClass) {
+      input.classList.add(nameClass);
+    }
+
+    function SlidDown(input, nameClass) {
+      input.classList.remove(nameClass);
+    }
+
   },
   computed: {
     ...mapGetters(['user', 'TokenUser'])
