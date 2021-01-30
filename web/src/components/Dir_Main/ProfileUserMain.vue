@@ -41,20 +41,23 @@
                   <div class="profile__bodyInfo-group">
                     <label id="firstNameInputLabel" class="profile__bodyInfo-groupLabel" for="firstNameInput">First
                       Name</label>
-                    <input id="firstNameInput" v-model.trim="userData.profileInfo.email"
+                    <input id="firstNameInput" v-model.trim="userData.profileInfo.lastName"
                            class="profile__bodyInfo-groupInput" type="text">
+                    <p class="error_style">{{ userData.profileInfo.error }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
                     <label id="lastNameInputLabel" class="profile__bodyInfo-groupLabel" for="lastNameInput">Last
                       Name</label>
                     <input id="lastNameInput" v-model.trim="userData.profileInfo.firstName"
                            class="profile__bodyInfo-groupInput" type="text">
+                    <p class="error_style">{{ userData.profileInfo.error }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
-                    <label id="emailInputLabel" class="profile__bodyInfo-groupLabel" for="emailInput">Last Name</label>
-                    <input id="emailInput" v-model.trim="userData.profileInfo.lastName"
+                    <label id="emailInputLabel" class="profile__bodyInfo-groupLabel" for="emailInput">Email</label>
+                    <input id="emailInput" v-model.trim="userData.profileInfo.email"
                            class="profile__bodyInfo-groupInput"
                            type="email">
+                    <p class="error_style">{{ userData.profileInfo.error }}</p>
                   </div>
                   <div class="profile__bodyInfo-groupBTN">
                     <button class="profile__bodyInfo-SubmitBTN" type="submit">Update</button>
@@ -62,7 +65,33 @@
                 </form>
               </div>
               <div id="bodyLoginInfo" class="profile__Main-EditInfoData__bodyInfo profile__bodyInfo-NotActive">
-                bodyLoginInfo
+                <form @submit.prevent="OnUpdateBodyInfoLogin">
+                  <div class="profile__bodyInfo-group">
+                    <label id="currentInputLabel" class="profile__bodyInfo-groupLabel" for="currentInput">Current
+                      Password</label>
+                    <input id="currentInput" v-model.trim="userData.basicInfo.currentPassword"
+                           class="profile__bodyInfo-groupInput" type="password">
+                    <p class="error_style">{{ userData.basicInfo.error }}</p>
+                  </div>
+                  <div class="profile__bodyInfo-group">
+                    <label id="newPasswordInputLabel" class="profile__bodyInfo-groupLabel" for="newPasswordInput">New
+                      Password</label>
+                    <input id="newPasswordInput" v-model.trim="userData.basicInfo.newPassword"
+                           class="profile__bodyInfo-groupInput" type="password">
+                    <p class="error_style">{{ userData.basicInfo.error }}</p>
+                  </div>
+                  <div class="profile__bodyInfo-group">
+                    <label id="confirmationPasswordInputLabel" class="profile__bodyInfo-groupLabel"
+                           for="confirmationPasswordInput">Password Confirmation</label>
+                    <input id="confirmationPasswordInput" v-model.trim="userData.basicInfo.passwordConfirmation"
+                           class="profile__bodyInfo-groupInput"
+                           type="password">
+                    <p class="error_style">{{ userData.basicInfo.error }}</p>
+                  </div>
+                  <div class="profile__bodyInfo-groupBTN">
+                    <button class="profile__bodyInfo-SubmitBTN" type="submit">Update</button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -87,9 +116,14 @@ export default {
           email: this.$store.getters.user.basicInfo.email,
           firstName: null,
           lastName: null,
+          error: null,
         },
-        basicInfo: {},
-        error: null,
+        basicInfo: {
+          currentPassword: null,
+          newPassword: null,
+          passwordConfirmation: null,
+          error: null
+        },
       },
       picture: null,
       imageLoading: null,
@@ -155,7 +189,15 @@ export default {
         }
       }
     },
-    onUploadImage: function () {
+    onUploadImage() {
+      this.$swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Thank you, Send it',
+        text: "Update your Picture Profile",
+        showConfirmButton: false,
+        timer: 1500
+      })
       this.picture = null;
       const D = new Date();
       const Year = D.getFullYear();
@@ -185,6 +227,7 @@ export default {
             }
           }
           localStorage.setItem('url_img', url);
+
         })
       })
       this.onCancelImage();
@@ -192,7 +235,7 @@ export default {
     OnDeleteImage(deletedImage) {
       deletedImage.delete().then(() => {
         // File deleted successfully
-        console.log("File deleted successfully");
+        // console.log("File deleted successfully");
       }).catch((error) => {
         console.log(error);
       });
@@ -200,8 +243,59 @@ export default {
 
     //  OnUpdateBodyInfo
     OnUpdateBodyInfo() {
-
-    }
+      if (this.userData.profileInfo.email
+          || this.userData.profileInfo.firstName
+          || this.userData.profileInfo.lastName) {
+        // section Api for send message
+        // try {
+        //    code..
+        // }catch (e) {
+        //    catch errors..
+        // }
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Thank you, Send it',
+          text: "Update your information, Successfully",
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    },
+    //  OnUpdateBodyInfoLogin
+    OnUpdateBodyInfoLogin() {
+      if (this.userData.basicInfo.currentPassword
+          && this.userData.basicInfo.newPassword
+          && this.userData.basicInfo.passwordConfirmation) {
+        // section Api for send message
+        // try {
+        //    code..
+        // }catch (e) {
+        //    catch errors..
+        // }
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Thank you, Send it',
+          text: "Update your password",
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.EmptyFromInfoLogin();//empty form
+      }
+    },
+    EmptyFromInfoLogin() {
+      this.userData.basicInfo.currentPassword = null;
+      this.userData.basicInfo.newPassword = null;
+      this.userData.basicInfo.passwordConfirmation = null;
+      this.userData.basicInfo.error = null;
+      document.getElementById("currentInput").style.borderBottom = "";
+      document.getElementById("newPasswordInput").style.borderBottom = "";
+      document.getElementById("confirmationPasswordInput").style.borderBottom = "";
+      document.getElementById("currentInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
+      document.getElementById("newPasswordInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
+      document.getElementById("confirmationPasswordInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
+    },
   },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
@@ -236,57 +330,100 @@ export default {
     const input3 = document.getElementById("emailInput");
     const labelInput3 = document.getElementById("emailInputLabel");
 
-    if (this.$store.getters.user.basicInfo.email) {
+    if (this.$store.getters.user.basicInfo.lastName) {
       SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+      input1.style.borderBottom = "2px solid #219D9D";
     } else {
       SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+      input1.style.borderBottom = "";
     }
-
     if (this.$store.getters.user.basicInfo.firstName) {
       SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+      input2.style.borderBottom = "2px solid #219D9D";
     } else {
       SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+      input2.style.borderBottom = "";
     }
-    if (this.$store.getters.user.basicInfo.lastName) {
+    if (this.$store.getters.user.basicInfo.email) {
       SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+      input3.style.borderBottom = "2px solid #219D9D";
     } else {
       SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+      input3.style.borderBottom = "";
     }
 
     input1.addEventListener("focusin", function () {
       SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
-      SlidUp(input1, "AddBorder");
-
+      input1.style.borderBottom = "2px solid #219D9D";
     })
     input2.addEventListener("focusin", function () {
       SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
-      SlidUp(input2, "AddBorder");
+      input2.style.borderBottom = "2px solid #219D9D";
     })
     input3.addEventListener("focusin", function () {
       SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
-      SlidUp(input3, "AddBorder");
+      input3.style.borderBottom = "2px solid #219D9D";
     })
 
 
     input1.addEventListener("focusout", function () {
       if (!input1.value) {
         SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
-        SlidDown(input1, "AddBorder");
-
+        input1.style.borderBottom = "";
       }
     })
     input2.addEventListener("focusout", function () {
       if (!input2.value) {
         SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
-        SlidDown(input2, "AddBorder");
-
+        input2.style.borderBottom = "";
       }
     })
     input3.addEventListener("focusout", function () {
       if (!input3.value) {
         SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
-        SlidDown(input3, "AddBorder");
+        input3.style.borderBottom = "";
+      }
+    })
 
+
+    const currentInput = document.getElementById("currentInput");
+    const currentInputLabel = document.getElementById("currentInputLabel");
+    const newPasswordInput = document.getElementById("newPasswordInput");
+    const newPasswordInputLabel = document.getElementById("newPasswordInputLabel");
+    const confirmationPasswordInput = document.getElementById("confirmationPasswordInput");
+    const confirmationPasswordInputLabel = document.getElementById("confirmationPasswordInputLabel");
+
+
+    currentInput.addEventListener("focusin", function () {
+      SlidUp(currentInputLabel, "profile__bodyInfo-groupLabelAddMoved");
+      currentInput.style.borderBottom = "2px solid #219D9D";
+    })
+    newPasswordInput.addEventListener("focusin", function () {
+      SlidUp(newPasswordInputLabel, "profile__bodyInfo-groupLabelAddMoved");
+      newPasswordInput.style.borderBottom = "2px solid #219D9D";
+    })
+    confirmationPasswordInput.addEventListener("focusin", function () {
+      SlidUp(confirmationPasswordInputLabel, "profile__bodyInfo-groupLabelAddMoved");
+      confirmationPasswordInput.style.borderBottom = "2px solid #219D9D";
+    })
+
+
+    currentInput.addEventListener("focusout", function () {
+      if (!currentInput.value) {
+        SlidDown(currentInputLabel, "profile__bodyInfo-groupLabelAddMoved");
+        currentInput.style.borderBottom = "";
+      }
+    })
+    newPasswordInput.addEventListener("focusout", function () {
+      if (!newPasswordInput.value) {
+        SlidDown(newPasswordInputLabel, "profile__bodyInfo-groupLabelAddMoved");
+        newPasswordInput.style.borderBottom = "";
+      }
+    })
+    confirmationPasswordInput.addEventListener("focusout", function () {
+      if (!confirmationPasswordInput.value) {
+        SlidDown(confirmationPasswordInputLabel, "profile__bodyInfo-groupLabelAddMoved");
+        confirmationPasswordInput.style.borderBottom = "";
       }
     })
 
