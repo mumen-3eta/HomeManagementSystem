@@ -484,6 +484,7 @@ h4, h5, h6 {
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 50%;
+    object-fit: cover;
     /*    style="width:20%;height: 100%"*/
 }
 

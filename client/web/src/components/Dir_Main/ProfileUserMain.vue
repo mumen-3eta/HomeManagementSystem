@@ -3,8 +3,17 @@
     <div class="profile__Main-container">
       <div class="profile__Main-containerInfo">
         <div class="profile__Main-Info">
-          <img v-show="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image" class="p__Main-image">
-          <h3 v-show="user.basicInfo.userName">{{ user.basicInfo.userName }}</h3>
+          <div>
+            <img v-show="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image"
+                 class="p__Main-image">
+          </div>
+          <h3 v-show="user.profileInfo.firstName && user.profileInfo.lastName">{{ user.profileInfo.firstName }}
+            {{ user.profileInfo.lastName }}</h3>
+          <div v-show="user.basicInfo.userName" class="profile__Main-InfoSpan">
+            <i class="fa fa-quote-left"></i>
+            <p> {{ user.basicInfo.userName }}</p>
+            <i class="fa fa-quote-right"></i>
+          </div>
           <h6 v-show="user.basicInfo.email">{{ user.basicInfo.email }}</h6>
         </div>
       </div>
@@ -191,19 +200,34 @@ export default {
       }
     },
     async onUploadImage() {
-      // this.$swal.fire({
-      //   position: 'center',
-      //   icon: 'success',
-      //   title: 'Thank you, Send it',
-      //   text: "Update your Picture Profile",
-      //   showConfirmButton: false,
-      //   timer: 1500
-      // })
+      let timerInterval
+      this.$swal.fire({
+        title: 'Image is Upload now',
+        html: 'Wait,  I will close in <b></b> milliseconds.',
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: () => {
+          this.$swal.showLoading()
+          timerInterval = setInterval(() => {
+            const content = this.$swal.getContent()
+            if (content) {
+              const b = content.querySelector('b')
+              if (b) {
+                b.textContent = this.$swal.getTimerLeft()
+              }
+            }
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        if (result.dismiss === this.$swal.DismissReason) {
+          console.log('I was closed by the timer')
+        }
+      })
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-
       const getUser = await axios.get('/api/v1/users/profile');
-
-
       this.picture = null;
       const D = new Date();
       const Year = D.getFullYear();
@@ -220,19 +244,19 @@ export default {
         this.uploadValue = 100;
         storageRef.snapshot.ref.getDownloadURL().then((url) => {
           this.picture = url;
-          //  Delete old Image
-          /*
-          * new api and store url in api and use it like (localStorage)
-          * for user one url unique
-          * */
-          console.log(getUser.data.data.profileInfo.image)
-          let FromURL = getUser.data.data.profileInfo.image;
-          if (FromURL) {
-            let oldRefFromURL = firebase.storage().refFromURL(FromURL);
-            if (oldRefFromURL) {
-              this.OnDeleteImage(oldRefFromURL); // to delete old
+          // Delete old Image
+          let isUserImage = getUser.data.data.profileInfo.image.split("?");
+          if (isUserImage[0].toString() !== "https://ui-avatars.com/api/") {
+            let FromURL = getUser.data.data.profileInfo.image;
+            // console.log(firebase.storage().refFromURL(FromURL))
+            if (FromURL) {
+              let oldRefFromURL = firebase.storage().refFromURL(FromURL);
+              if (oldRefFromURL) {
+                this.OnDeleteImage(oldRefFromURL); // to delete old
+              }
             }
           }
+          //End test
           this.storeImageInDB(url);
           this.$swal.fire({
             position: 'center',
@@ -242,8 +266,6 @@ export default {
             showConfirmButton: false,
             timer: 1500
           })
-
-
         })
       })
       this.onCancelImage();
@@ -293,8 +315,6 @@ export default {
           showConfirmButton: false,
           timer: 1500
         })
-
-
       }
     },
     //  OnUpdateBodyInfoLogin
@@ -336,7 +356,6 @@ export default {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const user = await axios.get('/api/v1/users/profile');
     await this.$store.dispatch('user', user.data.data);
-
     const Base_Info = document.getElementById('Base_Info');
     const Login_Info = document.getElementById('Login_Info');
     const bodyBaseInfo = document.getElementById('bodyBaseInfo');
