@@ -70,15 +70,46 @@
 }
 
 .profile__Main-containerInfo .profile__Main-Info .p__Main-image {
-    width: 100%;
+    /*width: 100%;*/
     border-radius: 50%;
     padding: 0.5rem;
+    width: 200px;
+    height: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+
 }
 
 .profile__Main-containerInfo .profile__Main-Info h3,
-.profile__Main-containerInfo .profile__Main-Info h6 {
+.profile__Main-containerInfo .profile__Main-Info h6,
+.profile__Main-Info .profile__Main-InfoSpan {
     color: var(--bg-White);
     font-family: var(--FontFamily_profile);
+}
+
+.profile__Main-Info .profile__Main-InfoSpan {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -0.3rem;
+    font-size: 1.3rem;
+}
+
+.profile__Main-Info .profile__Main-InfoSpan .fa-quote-left,
+.profile__Main-Info .profile__Main-InfoSpan .fa-quote-right {
+    font-size: 0.9rem;
+    color: var(--bg-color__EditInfoData__body);
+}
+
+.profile__Main-Info .profile__Main-InfoSpan .fa-quote-right {
+    margin-top: 0.8rem;
+    padding-left: 0.3rem;
+}
+
+.profile__Main-Info .profile__Main-InfoSpan .fa-quote-left {
+    margin-top: -0.8rem;
+    padding-right: 0.3rem;
 }
 
 @media (max-width: 1000px) {
