@@ -1,8 +1,15 @@
 {
-  "editor.formatOnSave": false,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint", 
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint":true
+  "[javascript]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
   },
-  "cSpell.words": [],
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": false,
+  "files.eol": "\n",
+  "cSpell.words": ["Rawdaty"],
+  "prettier.singleQuote": true
 }

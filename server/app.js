@@ -1,5 +1,7 @@
-/* eslint-disable no-console */
+require('dotenv').config();
+
 const express = require('express');
+const compression = require('compression');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
@@ -7,6 +9,7 @@ const logger = require('morgan');
 
 const { getSecret } = require('./secrets');
 const router = require('./routes');
+const { clientError, serverError } = require('./controllers/errorHandle');
 
 mongoose
   .connect(getSecret('dbUri'), {
@@ -18,16 +21,17 @@ mongoose
   .catch((err) => console.log('Error connecting to mongoDB', err));
 
 const app = express();
-const port = process.env.PORT || 3000;
+app.set('port', process.env.PORT || 3000);
+app.disable('x-powered-by');
 
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(compression());
 app.use(logger('dev'));
 
 app.use('/api/v1', router);
 
-app.listen(port, () => {
-  console.log(`Server running on port http://localhost:${port}`);
-});
+app.use(clientError);
+app.use(serverError);
 
-module.exports = { app };
+module.exports = app;
