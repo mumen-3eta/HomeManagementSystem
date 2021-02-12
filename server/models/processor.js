@@ -14,6 +14,7 @@ const ProcessorSchema = new Schema({
   ProcessorId: {
     type: Schema.Types.ObjectId,
     ref: 'ProcessorProduction',
+    unique: true,
   },
   userId: {
     type: Schema.Types.ObjectId,
@@ -25,7 +26,10 @@ ProcessorSchema.plugin(uniqueValidator);
 ProcessorProductionSchema.plugin(uniqueValidator);
 
 const Processor = mongoose.model('Processor', ProcessorSchema);
-const ProcessorProduction = mongoose.model('ProcessorProduction', ProcessorProductionSchema);
+const ProcessorProduction = mongoose.model(
+  'ProcessorProduction',
+  ProcessorProductionSchema
+);
 
 module.exports = {
   Processor,

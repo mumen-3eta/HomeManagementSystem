@@ -2,10 +2,10 @@ const router = require('express').Router();
 
 const usersRoute = require('./users');
 const processorRoute = require('./processor');
-const controlerRoute = require('./controler');
+const controllerRoute = require('./controller');
 
 router.use('/users', usersRoute);
-router.use('/processor', processorRoute);
-router.use('/controler', controlerRoute);
+router.use('/', processorRoute);
+router.use('/', controllerRoute);
 
 module.exports = router;

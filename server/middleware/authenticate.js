@@ -14,15 +14,9 @@ const authenticate = async (req, res, next) => {
     req.session = session;
     next();
   } catch (err) {
-    res.status(401).json({
-      errors: [
-        {
-          title: 'Unauthorized',
-          detail: 'Authentication credentials invalid',
-          errorMessage: err.message,
-        },
-      ],
-    });
+    res
+      .status(401)
+      .json(boomify(401, 'Authentication credentials invalid', err.message));
   }
 };
 

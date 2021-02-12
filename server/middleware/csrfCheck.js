@@ -1,3 +1,5 @@
+const { boomify } = require('../utils');
+
 const csrfCheck = async (req, res, next) => {
   try {
     const { csrfToken } = req.session;
@@ -8,15 +10,9 @@ const csrfCheck = async (req, res, next) => {
     }
     next();
   } catch (err) {
-    res.status(401).json({
-      errors: [
-        {
-          title: 'Unauthorized',
-          detail: 'CSRF has been attempted.',
-          errorMessage: err.message,
-        },
-      ],
-    });
+    res
+      .status(401)
+      .json(boomify(401, 'CSRF has been attempted .', err.message));
   }
 };
 

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const controlerRoute = require('./controler');
+const controlerRoute = require('./controller');
 const locationRoute = require('./location');
 const typeRoute = require('./type');
 
