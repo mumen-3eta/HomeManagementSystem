@@ -41,22 +41,22 @@
                   <div class="profile__bodyInfo-group">
                     <label id="firstNameInputLabel" class="profile__bodyInfo-groupLabel" for="firstNameInput">First
                       Name</label>
-                    <input id="firstNameInput" v-model.trim="userData.profileInfo.lastName"
+                    <input id="firstNameInput" v-model.trim="userData.profileInfo.firstName"
                            class="profile__bodyInfo-groupInput" type="text">
                     <p class="error_style">{{ userData.profileInfo.error }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
                     <label id="lastNameInputLabel" class="profile__bodyInfo-groupLabel" for="lastNameInput">Last
                       Name</label>
-                    <input id="lastNameInput" v-model.trim="userData.profileInfo.firstName"
+                    <input id="lastNameInput" v-model.trim="userData.profileInfo.lastName"
                            class="profile__bodyInfo-groupInput" type="text">
                     <p class="error_style">{{ userData.profileInfo.error }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
-                    <label id="emailInputLabel" class="profile__bodyInfo-groupLabel" for="emailInput">Email</label>
-                    <input id="emailInput" v-model.trim="userData.profileInfo.email"
+                    <label id="mobileInputLabel" class="profile__bodyInfo-groupLabel" for="mobileInput">mobile</label>
+                    <input id="mobileInput" v-model.trim="userData.profileInfo.mobile"
                            class="profile__bodyInfo-groupInput"
-                           type="email">
+                           type="text">
                     <p class="error_style">{{ userData.profileInfo.error }}</p>
                   </div>
                   <div class="profile__bodyInfo-groupBTN">
@@ -113,9 +113,10 @@ export default {
     return {
       userData: {
         profileInfo: {
-          email: this.$store.getters.user.basicInfo.email,
-          firstName: null,
-          lastName: null,
+          mobile: this.$store.getters.user.profileInfo.mobile,
+          firstName: this.$store.getters.user.profileInfo.firstName,
+          lastName: this.$store.getters.user.profileInfo.lastName,
+          image: this.$store.getters.user.profileInfo.image,
           error: null,
         },
         basicInfo: {
@@ -189,15 +190,20 @@ export default {
         }
       }
     },
-    onUploadImage() {
-      this.$swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Thank you, Send it',
-        text: "Update your Picture Profile",
-        showConfirmButton: false,
-        timer: 1500
-      })
+    async onUploadImage() {
+      // this.$swal.fire({
+      //   position: 'center',
+      //   icon: 'success',
+      //   title: 'Thank you, Send it',
+      //   text: "Update your Picture Profile",
+      //   showConfirmButton: false,
+      //   timer: 1500
+      // })
+      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+
+      const getUser = await axios.get('/api/v1/users/profile');
+
+
       this.picture = null;
       const D = new Date();
       const Year = D.getFullYear();
@@ -219,18 +225,39 @@ export default {
           * new api and store url in api and use it like (localStorage)
           * for user one url unique
           * */
-          let FromURL = localStorage.getItem('url_img');
+          console.log(getUser.data.data.profileInfo.image)
+          let FromURL = getUser.data.data.profileInfo.image;
           if (FromURL) {
             let oldRefFromURL = firebase.storage().refFromURL(FromURL);
             if (oldRefFromURL) {
               this.OnDeleteImage(oldRefFromURL); // to delete old
             }
           }
-          localStorage.setItem('url_img', url);
+          this.storeImageInDB(url);
+          this.$swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thank you, Send it',
+            text: "Update your information, Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          })
+
 
         })
       })
       this.onCancelImage();
+    },
+    async storeImageInDB(URL) {
+      const user = await axios.post('/api/v1/users/profile', {
+        profileInfo: {
+          firstName: this.$store.getters.user.profileInfo.firstName,
+          lastName: this.$store.getters.user.profileInfo.lastName,
+          mobile: this.$store.getters.user.profileInfo.mobile,
+          image: URL
+        }
+      });
+      await this.$store.dispatch('user', user.data.data);
     },
     OnDeleteImage(deletedImage) {
       deletedImage.delete().then(() => {
@@ -242,16 +269,22 @@ export default {
     },
 
     //  OnUpdateBodyInfo
-    OnUpdateBodyInfo() {
-      if (this.userData.profileInfo.email
-          || this.userData.profileInfo.firstName
-          || this.userData.profileInfo.lastName) {
+    async OnUpdateBodyInfo() {
+      if (this.userData.profileInfo.mobile
+          && this.userData.profileInfo.firstName
+          && this.userData.profileInfo.lastName) {
         // section Api for send message
-        // try {
-        //    code..
-        // }catch (e) {
-        //    catch errors..
-        // }
+
+        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+        const user = await axios.post('/api/v1/users/profile', {
+          profileInfo: {
+            firstName: this.userData.profileInfo.firstName,
+            lastName: this.userData.profileInfo.lastName,
+            mobile: this.userData.profileInfo.mobile,
+            image: this.$store.getters.user.profileInfo.image
+          }
+        });
+        await this.$store.dispatch('user', user.data.data);
         this.$swal.fire({
           position: 'center',
           icon: 'success',
@@ -260,6 +293,8 @@ export default {
           showConfirmButton: false,
           timer: 1500
         })
+
+
       }
     },
     //  OnUpdateBodyInfoLogin
@@ -299,8 +334,8 @@ export default {
   },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const {user} = (await axios.get('/api/v1/users/me')).data;
-    await this.$store.dispatch('user', user);
+    const user = await axios.get('/api/v1/users/profile');
+    await this.$store.dispatch('user', user.data.data);
 
     const Base_Info = document.getElementById('Base_Info');
     const Login_Info = document.getElementById('Login_Info');
@@ -327,24 +362,24 @@ export default {
     const labelInput1 = document.getElementById("firstNameInputLabel");
     const input2 = document.getElementById("lastNameInput");
     const labelInput2 = document.getElementById("lastNameInputLabel");
-    const input3 = document.getElementById("emailInput");
-    const labelInput3 = document.getElementById("emailInputLabel");
+    const input3 = document.getElementById("mobileInput");
+    const labelInput3 = document.getElementById("mobileInputLabel");
 
-    if (this.$store.getters.user.basicInfo.lastName) {
+    if (this.$store.getters.user.profileInfo.lastName) {
       SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
       input1.style.borderBottom = "2px solid #219D9D";
     } else {
       SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
       input1.style.borderBottom = "";
     }
-    if (this.$store.getters.user.basicInfo.firstName) {
+    if (this.$store.getters.user.profileInfo.firstName) {
       SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
       input2.style.borderBottom = "2px solid #219D9D";
     } else {
       SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
       input2.style.borderBottom = "";
     }
-    if (this.$store.getters.user.basicInfo.email) {
+    if (this.$store.getters.user.profileInfo.mobile) {
       SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
       input3.style.borderBottom = "2px solid #219D9D";
     } else {
