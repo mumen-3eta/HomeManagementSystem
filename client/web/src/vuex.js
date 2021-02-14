@@ -11,6 +11,7 @@ const state = {
     },
     TokenUser: null,
     deviceInfoAdd: [],
+    processorId: null,
     // Image: null,
 };
 
@@ -32,7 +33,10 @@ const store = new Vuex.Store({
         // },
         deviceInfoAdd: (state) => {
             return state.deviceInfoAdd;
-        }
+        },
+        processorId: (state) => {
+            return state.processorId;
+        },
     },
     actions: {
         user(context, user) {
@@ -46,7 +50,10 @@ const store = new Vuex.Store({
         // },
         deviceInfoAdd(context, deviceInfoAdd) {
             context.commit('deviceInfoAdd', deviceInfoAdd);
-        }
+        },
+        processorId(context, processorId) {
+            context.commit('processorId', processorId);
+        },
     },
     mutations: {
         user(state, user) {
@@ -60,6 +67,9 @@ const store = new Vuex.Store({
         // },
         deviceInfoAdd(state, deviceInfoAdd) {
             state.deviceInfoAdd = deviceInfoAdd;
+        },
+        processorId(state, processorId) {
+            state.processorId = processorId;
         }
     }
 

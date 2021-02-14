@@ -28,7 +28,13 @@
                 <p class="profile__menu-nameTitle">notifications </p>
               </router-link>
             </li>
-            <li class="profile__menu-li">
+            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+              <router-link :to="{path:'/v2/main/admin'}" class="profile__menu-link">
+                <i class="fas fa-desktop profile__menu-icon"></i>
+                <p class="profile__menu-nameTitle">Create device</p>
+              </router-link>
+            </li>
+            <li v-if="!user.basicInfo.isAdmin" class="profile__menu-li">
               <router-link class="profile__menu-link" to="#">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">my device</p>
@@ -69,8 +75,8 @@ export default {
   },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const {user} = (await axios.get('/api/v1/users/me')).data;
-    await this.$store.dispatch('user', user);
+    const user = await axios.get('/api/v1/users/profile');
+    await this.$store.dispatch('user', user.data.data);
     document.getElementById("btn_Profile").addEventListener("click", function () {
       document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
       document.getElementById("profile__menu").classList.toggle("profile__menu-open");

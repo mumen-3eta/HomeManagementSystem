@@ -48,7 +48,6 @@ export default {
   name: "AsideMain",
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    // const {user} = (await axios.get('/api/v1/users/me')).data;
     const user = await axios.get('/api/v1/users/profile');
     await this.$store.dispatch('user', user.data.data);
   },

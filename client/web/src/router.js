@@ -7,6 +7,7 @@ import MainHomePage from "@/Pages/Main/MainHomePage";
 import MainProfilePage from "@/Pages/Main/MainProfilePage";
 import newLoginPage from "@/Pages/Site/newLoginPage";
 import newRegisterPage from "@/Pages/Site/newRegisterPage";
+import AdminDashBoardPanelPage from "@/Pages/Admin/AdminDashBoardPanelPage";
 
 Vue.use(Router)
 
@@ -107,6 +108,26 @@ export default new Router({
             }
         },
 
+        /* Main Admin || email:mainadmin@hmsy.test || password : mainadmin@hmsy.test */
+        {
+            path: '/v2/main/admin',
+            name: "AdminDashBoardPanelPage",
+            component: AdminDashBoardPanelPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (!store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
 
         /*
             Must Be Last
