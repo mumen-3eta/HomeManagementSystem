@@ -52,21 +52,21 @@
                       Name</label>
                     <input id="firstNameInput" v-model.trim="userData.profileInfo.firstName"
                            class="profile__bodyInfo-groupInput" type="text">
-                    <p class="error_style">{{ userData.profileInfo.error }}</p>
+                    <p class="error_style">{{ userData.profileInfo.error.firstName }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
                     <label id="lastNameInputLabel" class="profile__bodyInfo-groupLabel" for="lastNameInput">Last
                       Name</label>
                     <input id="lastNameInput" v-model.trim="userData.profileInfo.lastName"
                            class="profile__bodyInfo-groupInput" type="text">
-                    <p class="error_style">{{ userData.profileInfo.error }}</p>
+                    <p class="error_style">{{ userData.profileInfo.error.lastName }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
                     <label id="mobileInputLabel" class="profile__bodyInfo-groupLabel" for="mobileInput">mobile</label>
                     <input id="mobileInput" v-model.trim="userData.profileInfo.mobile"
                            class="profile__bodyInfo-groupInput"
                            type="text">
-                    <p class="error_style">{{ userData.profileInfo.error }}</p>
+                    <p class="error_style">{{ userData.profileInfo.error.mobile }}</p>
                   </div>
                   <div class="profile__bodyInfo-groupBTN">
                     <button class="profile__bodyInfo-SubmitBTN" type="submit">Update</button>
@@ -76,27 +76,28 @@
               <div id="bodyLoginInfo" class="profile__Main-EditInfoData__bodyInfo profile__bodyInfo-NotActive">
                 <form @submit.prevent="OnUpdateBodyInfoLogin">
                   <div class="profile__bodyInfo-group">
+                    <label id="userNameInputLabel" class="profile__bodyInfo-groupLabel"
+                           for="userNameInput">User Name</label>
+                    <input id="userNameInput" v-model.trim="userData.basicInfo.userName"
+                           class="profile__bodyInfo-groupInput"
+                           type="text">
+                    <p class="error_style">{{ userData.basicInfo.error.userName }}</p>
+                  </div>
+                  <div class="profile__bodyInfo-group">
                     <label id="currentInputLabel" class="profile__bodyInfo-groupLabel" for="currentInput">Current
                       Password</label>
                     <input id="currentInput" v-model.trim="userData.basicInfo.currentPassword"
                            class="profile__bodyInfo-groupInput" type="password">
-                    <p class="error_style">{{ userData.basicInfo.error }}</p>
+                    <p class="error_style">{{ userData.basicInfo.error.currentPassword }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
                     <label id="newPasswordInputLabel" class="profile__bodyInfo-groupLabel" for="newPasswordInput">New
                       Password</label>
                     <input id="newPasswordInput" v-model.trim="userData.basicInfo.newPassword"
                            class="profile__bodyInfo-groupInput" type="password">
-                    <p class="error_style">{{ userData.basicInfo.error }}</p>
+                    <p class="error_style">{{ userData.basicInfo.error.newPassword }}</p>
                   </div>
-                  <div class="profile__bodyInfo-group">
-                    <label id="confirmationPasswordInputLabel" class="profile__bodyInfo-groupLabel"
-                           for="confirmationPasswordInput">Password Confirmation</label>
-                    <input id="confirmationPasswordInput" v-model.trim="userData.basicInfo.passwordConfirmation"
-                           class="profile__bodyInfo-groupInput"
-                           type="password">
-                    <p class="error_style">{{ userData.basicInfo.error }}</p>
-                  </div>
+
                   <div class="profile__bodyInfo-groupBTN">
                     <button class="profile__bodyInfo-SubmitBTN" type="submit">Update</button>
                   </div>
@@ -126,13 +127,22 @@ export default {
           firstName: this.$store.getters.user.profileInfo.firstName,
           lastName: this.$store.getters.user.profileInfo.lastName,
           image: this.$store.getters.user.profileInfo.image,
-          error: null,
+          error: {
+            mobile: null,
+            firstName: null,
+            lastName: null,
+            image: null,
+          }
         },
         basicInfo: {
           currentPassword: null,
           newPassword: null,
-          passwordConfirmation: null,
-          error: null
+          userName: this.$store.getters.user.basicInfo.userName,
+          error: {
+            currentPassword: null,
+            newPassword: null,
+            userName: null,
+          }
         },
       },
       picture: null,
@@ -284,7 +294,6 @@ export default {
     OnDeleteImage(deletedImage) {
       deletedImage.delete().then(() => {
         // File deleted successfully
-        // console.log("File deleted successfully");
       }).catch((error) => {
         console.log(error);
       });
@@ -296,6 +305,18 @@ export default {
           && this.userData.profileInfo.firstName
           && this.userData.profileInfo.lastName) {
         // section Api for send message
+        let mobile = this.userData.profileInfo.mobile;
+        if (mobile) {
+          let mobileRegex = /^[0-9]+$/;
+          let CheckMobile = mobileRegex.test(mobile);//true or false
+          if (!CheckMobile) {
+            this.userData.profileInfo.error.mobile = "Sorry! User mobile Faild, must be number";
+            setTimeout(() => {
+              this.userData.profileInfo.error.mobile = null;
+            }, 3000);
+            return false;
+          }
+        }
 
         axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
         const user = await axios.post('/api/v1/users/profile', {
@@ -318,21 +339,43 @@ export default {
       }
     },
     //  OnUpdateBodyInfoLogin
-    OnUpdateBodyInfoLogin() {
+    async OnUpdateBodyInfoLogin() {
       if (this.userData.basicInfo.currentPassword
           && this.userData.basicInfo.newPassword
-          && this.userData.basicInfo.passwordConfirmation) {
-        // section Api for send message
-        // try {
-        //    code..
-        // }catch (e) {
-        //    catch errors..
-        // }
+          && this.userData.basicInfo.userName) {
+        let userName = this.userData.basicInfo.userName;
+        if (userName) {
+          let usernameRegex = /^[a-zA-Z0-9]+$/;
+          let CheckUserName = usernameRegex.test(userName);//true or false
+          if (!CheckUserName) {
+            this.userData.basicInfo.error.userName = "Sorry! User Name Faild, must be (a-z) and (0-1) and ignored space";
+            setTimeout(() => {
+              this.userData.basicInfo.error.userName = null;
+            }, 3000);
+            return false;
+          }
+        }
+        /***
+         *** section Api for send message
+         *** need check for api can't update password and can update email solve this problem
+         *** for api not hear ..
+         *** ***/
+        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+        const user = await axios.post('/api/v1/users/profile', {
+          basicInfo: {
+            userName: this.userData.basicInfo.userName,
+            email: this.$store.getters.user.basicInfo.email,
+            // currentPassword: this.userData.basicInfo.currentPassword,
+            Password: this.userData.basicInfo.newPassword,
+            isAdmin: false,
+          }
+        });
+        await this.$store.dispatch('user', user.data.data);
         this.$swal.fire({
           position: 'center',
           icon: 'success',
           title: 'Thank you, Send it',
-          text: "Update your password",
+          text: "Update your information, Successfully",
           showConfirmButton: false,
           timer: 1500
         })
@@ -342,14 +385,13 @@ export default {
     EmptyFromInfoLogin() {
       this.userData.basicInfo.currentPassword = null;
       this.userData.basicInfo.newPassword = null;
-      this.userData.basicInfo.passwordConfirmation = null;
-      this.userData.basicInfo.error = null;
+      this.userData.basicInfo.error.currentPassword = null;
+      this.userData.basicInfo.error.newPassword = null;
+      this.userData.basicInfo.error.userName = null;
       document.getElementById("currentInput").style.borderBottom = "";
       document.getElementById("newPasswordInput").style.borderBottom = "";
-      document.getElementById("confirmationPasswordInput").style.borderBottom = "";
       document.getElementById("currentInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
       document.getElementById("newPasswordInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
-      document.getElementById("confirmationPasswordInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
     },
   },
   async beforeMount() {
@@ -383,6 +425,8 @@ export default {
     const labelInput2 = document.getElementById("lastNameInputLabel");
     const input3 = document.getElementById("mobileInput");
     const labelInput3 = document.getElementById("mobileInputLabel");
+    const input4 = document.getElementById("userNameInput");
+    const labelInput4 = document.getElementById("userNameInputLabel");
 
     if (this.$store.getters.user.profileInfo.lastName) {
       SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
@@ -404,6 +448,13 @@ export default {
     } else {
       SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
       input3.style.borderBottom = "";
+    }
+    if (this.$store.getters.user.basicInfo.userName) {
+      SlidUp(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
+      input4.style.borderBottom = "2px solid #219D9D";
+    } else {
+      SlidDown(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
+      input4.style.borderBottom = "";
     }
 
     input1.addEventListener("focusin", function () {
@@ -444,8 +495,8 @@ export default {
     const currentInputLabel = document.getElementById("currentInputLabel");
     const newPasswordInput = document.getElementById("newPasswordInput");
     const newPasswordInputLabel = document.getElementById("newPasswordInputLabel");
-    const confirmationPasswordInput = document.getElementById("confirmationPasswordInput");
-    const confirmationPasswordInputLabel = document.getElementById("confirmationPasswordInputLabel");
+    const userNameInput = document.getElementById("userNameInput");
+    const userNameInputLabel = document.getElementById("userNameInputLabel");
 
 
     currentInput.addEventListener("focusin", function () {
@@ -456,9 +507,9 @@ export default {
       SlidUp(newPasswordInputLabel, "profile__bodyInfo-groupLabelAddMoved");
       newPasswordInput.style.borderBottom = "2px solid #219D9D";
     })
-    confirmationPasswordInput.addEventListener("focusin", function () {
-      SlidUp(confirmationPasswordInputLabel, "profile__bodyInfo-groupLabelAddMoved");
-      confirmationPasswordInput.style.borderBottom = "2px solid #219D9D";
+    userNameInput.addEventListener("focusin", function () {
+      SlidUp(userNameInputLabel, "profile__bodyInfo-groupLabelAddMoved");
+      userNameInput.style.borderBottom = "2px solid #219D9D";
     })
 
 
@@ -474,10 +525,10 @@ export default {
         newPasswordInput.style.borderBottom = "";
       }
     })
-    confirmationPasswordInput.addEventListener("focusout", function () {
-      if (!confirmationPasswordInput.value) {
-        SlidDown(confirmationPasswordInputLabel, "profile__bodyInfo-groupLabelAddMoved");
-        confirmationPasswordInput.style.borderBottom = "";
+    userNameInput.addEventListener("focusout", function () {
+      if (!userNameInput.value) {
+        SlidDown(userNameInputLabel, "profile__bodyInfo-groupLabelAddMoved");
+        userNameInput.style.borderBottom = "";
       }
     })
 
