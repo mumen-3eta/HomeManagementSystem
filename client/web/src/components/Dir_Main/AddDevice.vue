@@ -108,6 +108,8 @@ export default {
           ProcessorId: this.Processor_ID,
         });
         await this.$store.dispatch('processorId', responseProcessor.data.data);
+        const ProcessorIds = await axios.get('/api/v1/user/processor');
+        await this.$store.dispatch('userProcessorIds', ProcessorIds.data.data);
         this.$modal.hide('AddNewProcessorId')
         this.$swal.fire({
           position: 'center',
@@ -136,10 +138,11 @@ export default {
     },
     async deleteProcessorID(processor_Id) {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      // const responseProcessor =
-      await axios.delete('/api/v1/user/processor');
+      const responseProcessor =
+          await axios.delete('/api/v1/user/processor');
       // await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
       console.log(processor_Id)
+      console.log(responseProcessor)
 
     },
   },
