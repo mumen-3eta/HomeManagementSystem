@@ -2,15 +2,26 @@
   <div class="div__nav">
     <nav class="nav">
       <ul class="nav__list" role="menubar">
-        <li class="nav__item nav__item--isActive">
-          <router-link aria-label="Home" class="nav__link focus--box-shadow" role="menuitem" to="/v2/main/home">
+        <li :class="['nav__item',this.$route.path === '/v2/main/home' ? 'nav__item--isActive':'']">
+          <router-link :to="{path:'/v2/main/home'}" aria-label="Home" class="nav__link focus--box-shadow"
+                       role="menuitem">
             <i class="fas fa-home nav__icon"></i>
           </router-link>
         </li>
-        <li class="nav__item">
-          <a aria-label="heart" class="nav__link focus--box-shadow" href="#" role="menuitem">
-            <i class="far fa-heart nav__icon"></i>
-          </a>
+        <li v-if="!user.basicInfo.isAdmin"
+            :class="['nav__item',this.$route.path === '/v2/main/device/add' ? 'nav__item--isActive':'']">
+          <router-link :to="{path:'/v2/main/device/add'}" aria-label="heart" class="nav__link focus--box-shadow"
+                       role="menuitem">
+            <i class="far fa-desktop nav__icon"></i>
+
+          </router-link>
+        </li>
+        <li v-if="user.basicInfo.isAdmin"
+            :class="['nav__item',this.$route.path === '/v2/main/admin' ? 'nav__item--isActive':'']">
+          <router-link :to="{path:'/v2/main/admin'}" aria-label="heart" class="nav__link focus--box-shadow"
+                       role="menuitem">
+            <i class="fas fa-laptop-medical nav__icon"></i>
+          </router-link>
         </li>
         <li class="nav__item">
           <a aria-label="heart" class="nav__link focus--box-shadow" href="#" role="menuitem">
@@ -22,10 +33,11 @@
             <i class="fas fa-print nav__icon"></i>
           </a>
         </li>
-        <li class="nav__item">
-          <a aria-label="heart" class="nav__link focus--box-shadow" href="#" role="menuitem">
+        <li :class="['nav__item',this.$route.path === '/v2/main/profile' ? 'nav__item--isActive':'']">
+          <router-link :to="{path:'/v2/main/profile'}" aria-label="heart" class="nav__link focus--box-shadow"
+                       role="menuitem">
             <i class="fas fa-user-tie nav__icon"></i>
-          </a>
+          </router-link>
         </li>
       </ul>
     </nav><!-- End NAV -->
@@ -33,8 +45,13 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
-  name: "NavMain"
+  name: "NavMain",
+  computed: {
+    ...mapGetters(['user', 'TokenUser'])
+  },
 }
 </script>
 

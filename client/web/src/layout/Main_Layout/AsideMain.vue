@@ -18,18 +18,18 @@
         <h6 v-show="user.basicInfo.email" class="profile-main__name">{{ user.basicInfo.email }}</h6>
       </div>
       <ul class="statistics">
-        <li class="statistics__entry">
-          <a class="statistics__entry-description" href="">Team</a>
-          <span class="statistics__entry-quantity">3</span>
+        <li v-if="!user.basicInfo.isAdmin" class="statistics__entry">
+          <a class="statistics__entry-description" href="">Processor Id</a>
+          <span class="statistics__entry-quantity">{{ this.$store.getters.userProcessorIds.length }}</span>
         </li>
-        <li class="statistics__entry">
-          <a class="statistics__entry-description" href="">Projects</a>
+        <li v-if="!user.basicInfo.isAdmin" class="statistics__entry">
+          <a class="statistics__entry-description" href="">Controller</a>
           <span class="statistics__entry-quantity">6</span>
         </li>
-        <li class="statistics__entry">
-          <a class="statistics__entry-description" href="">Feedback</a>
-          <span class="statistics__entry-quantity">68</span>
-        </li>
+        <!--        <li class="statistics__entry">-->
+        <!--          <a class="statistics__entry-description" href="">Feedback</a>-->
+        <!--          <span class="statistics__entry-quantity">68</span>-->
+        <!--        </li>-->
       </ul>
       <div class="banner">
         <h3 class="banner__title">Premium access</h3>
@@ -50,9 +50,11 @@ export default {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const user = await axios.get('/api/v1/users/profile');
     await this.$store.dispatch('user', user.data.data);
+    const responseProcessor = await axios.get('/api/v1/user/processor');
+    await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
   },
   computed: {
-    ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
+    ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser', 'userProcessorIds'])
   },
 }
 </script>
