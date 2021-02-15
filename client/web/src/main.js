@@ -8,8 +8,9 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 import '@/animateCss'
 import '@/sweetalert2'
+import vModal from 'vue-js-modal'
 
-
+Vue.use(vModal)
 Vue.use(Vuelidate)
 
 // Initialize Firebase

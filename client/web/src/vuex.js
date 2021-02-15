@@ -5,13 +5,11 @@ import VuexPersistence from 'vuex-persist'
 Vue.use(Vuex);
 
 const state = {
-    user: {
-        profileInfo: {},
-        basicInfo: {},
-    },
+    user: null,
     TokenUser: null,
     deviceInfoAdd: [],
     processorId: null,
+    userProcessorIds: null,
     // Image: null,
 };
 
@@ -37,6 +35,9 @@ const store = new Vuex.Store({
         processorId: (state) => {
             return state.processorId;
         },
+        userProcessorIds: (state) => {
+            return state.userProcessorIds;
+        },
     },
     actions: {
         user(context, user) {
@@ -54,6 +55,10 @@ const store = new Vuex.Store({
         processorId(context, processorId) {
             context.commit('processorId', processorId);
         },
+
+        userProcessorIds(context, userProcessorIds) {
+            context.commit('userProcessorIds', userProcessorIds);
+        },
     },
     mutations: {
         user(state, user) {
@@ -70,6 +75,10 @@ const store = new Vuex.Store({
         },
         processorId(state, processorId) {
             state.processorId = processorId;
+        },
+
+        userProcessorIds(state, userProcessorIds) {
+            state.userProcessorIds = userProcessorIds;
         }
     }
 

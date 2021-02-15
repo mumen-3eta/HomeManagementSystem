@@ -1,0 +1,168 @@
+:root {
+    --border__color-addDevice: rgba(50, 57, 57, 0.5);
+}
+
+.font__sizeXl {
+    font-size: 1.2rem;
+}
+
+.container__AddProcessorID {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    justify-content: start;
+    align-items: center;
+    justify-items: start;
+    justify-self: center;
+    transition: all 0.3s ease;
+}
+
+.fas-closeBTN {
+    position: absolute;
+    background-color: #434a4a;
+    color: var(--white_color);
+    font-size: 1.5rem;
+    top: 1.25rem;
+    right: 1.25rem;
+    border-radius: 8px;
+    padding: 0.36rem 0.7rem;
+    cursor: pointer;
+    transition: all ease 0.3s;
+}
+
+.fas-closeBTN:hover {
+    background-color: #525b5b;
+}
+
+.container__AddProcessorID h2 {
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    justify-self: center;
+    padding: 0.5rem;
+    margin: 0.5rem auto;
+    border-bottom: 2px solid var(--border__color-addDevice);
+    transition: all 0.3s ease;
+}
+
+.container__AddProcessorID .input-group__AddProcessorID {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    justify-items: center;
+    justify-self: center;
+    padding: 0.5rem;
+    margin: 0.5rem auto;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.container__AddProcessorID .input-group__AddProcessorID label {
+    width: 100%;
+    display: flex;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+}
+
+.container__AddProcessorID .input-group__AddProcessorID input[type='text'] {
+    width: 100%;
+    display: flex;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    padding: 0.5rem 0.8rem;
+    margin: 0.5rem auto;
+    border: 2px solid var(--border__color-addDevice);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.container__AddProcessorID .input-group__AddProcessorID input[type='text']:focus {
+    outline: none;
+}
+
+.container__AddProcessorID .input-group__AddProcessorID .btn-group__AddProcessorID {
+    display: flex;
+    width: 100%;
+    justify-content: start;
+    justify-items: center;
+    justify-self: center;
+    margin-right: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.container__AddProcessorID .input-group__AddProcessorID .btn-group__AddProcessorID .btn {
+    display: flex;
+    justify-content: start;
+    justify-items: center;
+    justify-self: center;
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+
+.container__AddProcessorID .otherWay_AddProcessorID {
+    width: 100%;
+    margin: 0.5rem auto;
+    padding-top: 1rem;
+    border-top: 2px solid var(--border__color-addDevice);
+    transition: all 0.3s ease;
+}
+
+.container__AddProcessorID .otherWay_AddProcessorID .otherWay_btnAdd {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+    transition: all 0.3s ease;
+}
+
+.container__AddProcessorID .otherWay_AddProcessorID h4 {
+    width: 100%;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+}
+
+.container__AddProcessorID .otherWay_AddProcessorID .btn {
+    width: 45%;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+
+.handle__camera {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+    width: 100%;
+    height: 300px;
+    background-color: var(--border__color-addDevice);
+    margin: 0.5rem auto;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.ScanOpen {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+    transition: all 0.3s ease;
+}
+
+
+
+

@@ -35,7 +35,7 @@
               </router-link>
             </li>
             <li v-if="!user.basicInfo.isAdmin" class="profile__menu-li">
-              <router-link class="profile__menu-link" to="#">
+              <router-link :to="{path:'/v2/main/device/add'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">my device</p>
               </router-link>
