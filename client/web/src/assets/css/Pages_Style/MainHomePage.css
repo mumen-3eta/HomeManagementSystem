@@ -662,6 +662,10 @@ section.section__mTop {
         color: var(--alabaster);
     }
 
+    .team__link:hover .setting .fa-trash-alt {
+        color: var(--alabaster);
+    }
+
     .team__link:hover .photo__item {
         background-color: var(--alabaster);
         /*border-color: var(--true-v);*/
@@ -777,7 +781,17 @@ section.section__mTop {
     }
 }
 
+@media (hover: hover) {
+    .setting:hover i.fa-trash-alt {
+        color: var(--true-v);
+    }
+}
+
 .setting i.fa-ellipsis-v {
+    color: var(--dune);
+}
+
+.setting i.fa-trash-alt {
     color: var(--dune);
 }
 
@@ -1005,7 +1019,7 @@ section.section__mTop {
     font-size: 18px;
 }
 
-.icon .fa-handshake {
+.icon .fa-desktop {
     line-height: 2;
     font-size: 20px;
     color: var(--alabaster);
