@@ -11,13 +11,13 @@ module.exports = {
             },
         }
     },
-    runtimeCompiler: true,
-    configureWebpack: {
-        resolve: {
-            alias: {
-                vue: 'vue/dist/vue.esm-bundler.js',
-            },
-        },
-    },
+    // runtimeCompiler: true,
+    // configureWebpack: {
+    //     resolve: {
+    //         alias: {
+    //             vue: 'vue/dist/vue.esm-bundler.js',
+    //         },
+    //     },
+    // },
 
 };

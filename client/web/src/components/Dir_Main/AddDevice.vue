@@ -17,7 +17,7 @@
       <ul class="project">
         <li v-for="(ProcessorId,index) in userProcessorIds" v-bind:key="index"
             class="project__item">
-          <a class="project__link focus--box-shadow" href="">
+          <a class="project__link focus--box-shadow" href="#">
             <div class="project__wrapper">
               <div class="project__element project__icon">
                 <div class="icon icon--viking">
@@ -43,7 +43,8 @@
     </section><!-- End SECTION -->
 
     <!--    modal Add Processor id  -->
-    <modal :resizable="false" :width="650" height="auto" name="AddNewProcessorId">
+    <modal :resizable="false" :width="650" height="auto" name="AddNewProcessorId" @closed="CloseProcessorId"
+           @before-open="CloseProcessorId">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseProcessorId"></i>
       <div class="container__AddProcessorID">
         <h2>Add New Processor ID</h2>
@@ -95,9 +96,12 @@ export default {
   methods: {
     OpenProcessorId() {
       this.$modal.show('AddNewProcessorId')
+      this.ClearProcessorID();
     },
     CloseProcessorId() {
       this.$modal.hide('AddNewProcessorId')
+      this.ClearProcessorID();
+      this.isShowingCamera = false;
     },
     async addProcessorID() {
       let ProcessorID = this.Processor_ID;
@@ -166,19 +170,42 @@ export default {
       }
     },
     async deleteProcessorID(processor_Id) {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const responseProcessor =
-          await axios.delete('/api/v1/user/processor');
-      // await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
-      console.log(processor_Id)
-      console.log(responseProcessor)
+      this.$swal.fire({
+        title: 'Are you sure?',
+        html: `You won't Delete this ProcessorId <strong>${processor_Id.ProcessorId}</strong>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#35997c',
+        cancelButtonColor: '#cb4848',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.DeleteFunction(processor_Id);
+          this.$swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Delete Processor Id, Successfully',
+            toast: false,
+            text: "ProcessorID \"" + processor_Id.ProcessorId + "\"",
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+      })
 
+    },
+    async DeleteFunction(processor_Id) {
+      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+      await axios.delete('/api/v1/user/processor', {data: {ProcessorId: processor_Id.ProcessorId}});
+      const responseProcessor = await axios.get('/api/v1/user/processor');
+      await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
     },
   },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const responseProcessor = await axios.get('/api/v1/user/processor');
     await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
+    this.isShowingCamera = false;
   },
   computed: {
     ...mapGetters(['processorId', 'userProcessorIds'])
