@@ -15,9 +15,12 @@
         <div class="container__DeviceId">
           <div v-if="processorId" class="container__processor_Id">
             <div class="svg_Generator">
-              <VueBarcode id="svg_element" background="none" fontSize="14" v-bind:value="processorId" width="1">Sorry ,
-                some thing error
-              </VueBarcode>
+              <div>
+                <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="processorId">Sorry , some
+                  thing error
+                </qrcode-vue>
+                <p v-if="processorId">{{ processorId }}</p>
+              </div>
             </div>
             <div class="btn-group_Generate-2">
               <button class="btn btn-secondary" @click.prevent="copyText">Copy Processor Id</button>
@@ -46,11 +49,14 @@ import AsideMain from "@/layout/Main_Layout/AsideMain";
 import NavMain from "@/layout/Main_Layout/NavMain";
 import axios from "axios";
 import {mapGetters} from "vuex";
-import VueBarcode from 'vue-barcode';
+import QrcodeVue from 'vue-qrcode';
 
 export default {
   name: "AdminDashBoardPanelPage",
-  components: {HeaderMain, AsideMain, NavMain, VueBarcode,},
+  components: {
+    HeaderMain, AsideMain, NavMain,
+    QrcodeVue,
+  },
   data() {
     return {
       processor_Id: null,
@@ -103,40 +109,15 @@ export default {
       })
     },
     downloadsAsImage(processorId) {
-      let svg = document.querySelector('svg');
-      document.querySelector('canvas');
-
-      function triggerDownload(imgURI) {
-        let evt = new MouseEvent('click', {
-          view: window,
-          bubbles: false,
-          cancelable: true
-        });
-        let a = document.createElement('a');
-        let nameImage = "ProcessorID_" + processorId;
-        a.setAttribute('download', nameImage + '.png');
-        a.setAttribute('href', imgURI);
-        a.setAttribute('target', '_blank');
-        a.dispatchEvent(evt);
-      }
-
-      let canvas = document.getElementById('canvas');
-      let ctx = canvas.getContext('2d');
-      let data = (new XMLSerializer()).serializeToString(svg);
-      let DOMURL = window.URL || window.webkitURL || window;
-      let img = new Image();
-      let svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
-      let url = DOMURL.createObjectURL(svgBlob);
-      img.onload = function () {
-        ctx.drawImage(img, 0, 0);
-        DOMURL.revokeObjectURL(url);
-
-        let imgURI = canvas
-            .toDataURL('image/png')
-            .replace('image/png', 'image/octet-stream');
-        triggerDownload(imgURI);
-      };
-      img.src = url;
+      const image = document.getElementById('svg_element').src;
+      let imageSplit_1 = image.split(';')[0];
+      let imageExtension = imageSplit_1.split('/')[1];
+      let a = document.createElement('a');
+      a.href = image;
+      a.download = `ProcessorID_${processorId}.${imageExtension}`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     },
   },
   beforeMount() {
