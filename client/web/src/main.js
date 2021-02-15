@@ -9,8 +9,11 @@ import 'firebase/storage';
 import '@/animateCss'
 import '@/sweetalert2'
 import vModal from 'vue-js-modal'
+import VueQrcodeReader from 'vue-qrcode-reader'
+
 
 Vue.use(vModal)
+Vue.use(VueQrcodeReader)
 Vue.use(Vuelidate)
 
 // Initialize Firebase

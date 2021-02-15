@@ -57,8 +57,8 @@
     align-items: start;
     justify-items: center;
     justify-self: center;
-    padding: 0.5rem;
-    margin: 0.5rem auto;
+    padding: 0.2rem;
+    margin: 0.3rem auto;
     flex-direction: column;
     transition: all 0.3s ease;
 }
@@ -147,11 +147,17 @@
     justify-items: center;
     justify-self: center;
     width: 100%;
-    height: 300px;
+    height: 350px;
     background-color: var(--border__color-addDevice);
     margin: 0.5rem auto;
     color: white;
     transition: all 0.3s ease;
+}
+
+.scanner-container,
+.scanner-container video {
+    width: 100%;
+    height: 350px;
 }
 
 .ScanOpen {
@@ -164,5 +170,15 @@
 }
 
 
+.wait_class-cam {
+    display: flex;
+    justify-self: center;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    width: 100%;
+    height: 100%;
 
+}
 

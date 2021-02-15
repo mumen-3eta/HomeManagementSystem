@@ -59,10 +59,16 @@
         <div class="otherWay_AddProcessorID">
           <div class="otherWay_btnAdd">
             <h4>Other Way To Add Processor ID</h4>
-            <button class="btn btn-secondary" @click.prevent="openScan">Scan BarCode</button>
+            <button class="btn btn-secondary" @click.prevent="openScan">
+              {{ !isShowingCamera ? 'Scan BarCode' : 'Exit Scanning' }}
+            </button>
           </div>
           <div id="handle__camera" class="handle__camera ScanOpen">
-            place camera
+
+            <qrcode-stream v-if="isShowingCamera" @decode="onDecode" @init="onInit">
+              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">Wait For Open Camera...</p>
+            </qrcode-stream>
+            <p v-if="!isShowingCamera">place camera, Pleas Check your web Came</p>
           </div>
         </div>
       </div>
@@ -82,6 +88,8 @@ export default {
     return {
       Processor_ID: null,
       errorProcessorID: null,
+      isShowingCamera: false,
+      isShowingWait: true,
     }
   },
   methods: {
@@ -135,6 +143,27 @@ export default {
       const handle__camera = document.getElementById('handle__camera');
       handle__camera.style.transition = 'all ease 0.3s ';
       handle__camera.classList.toggle('ScanOpen');
+      this.isShowingCamera = !this.isShowingCamera;
+      setTimeout(() => {
+        this.isShowingWait = false;
+      }, 550);
+
+
+    },
+    onDecode(decodedString) {
+      this.Processor_ID = decodedString
+      // console.log(decodedString)
+      // ...
+    },
+    async onInit(promise) {
+      try {
+        await promise;
+        console.log("init", promise);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        //  ....
+      }
     },
     async deleteProcessorID(processor_Id) {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
