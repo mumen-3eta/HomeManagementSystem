@@ -87,10 +87,12 @@ export default {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
       await axios.put('/api/v1/users/logout');
       localStorage.removeItem('csrfToken');
-      this.$store.dispatch('user', null);
-      this.$store.dispatch('TokenUser', null);
-      this.$store.dispatch('deviceInfoAdd', null);
-      this.$router.push('/v2/login');
+      await this.$store.dispatch('user', null);
+      await this.$store.dispatch('TokenUser', null);
+      await this.$store.dispatch('deviceInfoAdd', null);
+      await this.$store.dispatch('processorId', null);
+      await this.$store.dispatch('userProcessorIds', null);
+      await this.$router.push('/v2/login');
     }
   },
   computed: {
