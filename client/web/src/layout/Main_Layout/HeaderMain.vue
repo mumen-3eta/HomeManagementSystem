@@ -9,10 +9,9 @@
       </form>
       <div class="profile">
         <button id="btn_Profile" class="profile__button" type="button">
-          <span v-show="user.basicInfo.userName" class="profile__name"><i
+          <span v-if="user.basicInfo.userName" class="profile__name"><i
               class="fas fa-caret-down"></i>{{ user.basicInfo.userName }}</span>
-          <img v-show="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image" class="profile__img">
-          <!--src="@/assets/img/MainHomePage/user.jpg"-->
+          <img v-if="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image" class="profile__img">
         </button>
         <div id="profile__menu" class="profile__menu">
           <ul class="profile__menu-ul">
@@ -59,18 +58,17 @@ import {mapGetters} from "vuex";
 
 export default {
   name: "HeaderMain",
-  mounted() {
-
-  },
   methods: {
     async handleClick() {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
       await axios.put('/api/v1/users/logout');
       localStorage.removeItem('csrfToken');
-      this.$store.dispatch('user', null);
-      this.$store.dispatch('TokenUser', null);
-      this.$store.dispatch('deviceInfoAdd', null);
-      this.$router.push('/v2/login');
+      await this.$store.dispatch('user', null);
+      await this.$store.dispatch('TokenUser', null);
+      await this.$store.dispatch('deviceInfoAdd', null);
+      await this.$store.dispatch('processorId', null);
+      await this.$store.dispatch('userProcessorIds', null);
+      await this.$router.push('/v2/login');
     }
   },
   async beforeMount() {
