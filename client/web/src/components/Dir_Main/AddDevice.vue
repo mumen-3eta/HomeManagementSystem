@@ -12,7 +12,14 @@
         </div>
       </header>
 
-      <div class="project my-3 mx-auto p-2">
+      <div class="project my-3 mx-auto p-2 position-relative">
+        <div class="search_group">
+          <i class="fa fa-search search_group-icon"></i>
+          <label for="searchId"></label>
+          <input id="searchId" v-model="searchTerm" class="search_group-input" type="search">
+          <button class="btn btn-secondary mx-2 search_group-btn" @click.prevent="OpenScanSearch">Scan To Search
+          </button>
+        </div>
         <vue-good-table
             :columns="columns"
             :pagination-options="{
@@ -32,24 +39,22 @@
                   }"
             :rows="rows"
             :search-options=" {
-                    enabled: true,
+                    enabled: false,
                     skipDiacritics: true,
                     placeholder: 'Search this table',
-                  }"
-        >
-          <div slot="table-actions">
-            <button class="btn btn-secondary mx-2">Scan For Search</button>
-          </div>
+                    externalQuery: searchTerm
+                  }">
+          <div slot="table-actions" class="btn_searchScan"></div>
           <template slot="table-row" slot-scope="props">
               <span v-if="props.column.field === 'btn_Action'">
                   <!--       not work yet           -->
-                <button @click.prevent="deleteProcessorID(props.row.Processor_Id)">Delete</button>
+                <button class="btn_deleted" @click.prevent="deleteProcessorID(props.row.Processor_Id)"><i
+                    class="fas fa-trash-alt"></i> Delete</button>
               </span>
             <span v-else>
                 {{ props.formattedRow[props.column.field] }}
               </span>
           </template>
-
         </vue-good-table>
       </div>
     </section><!-- End SECTION -->
@@ -87,6 +92,24 @@
       </div>
     </modal>
     <!--   End modal Add Processor id  -->
+
+    <!--    modal Search Processor id  -->
+    <modal :resizable="false" :width="650" height="auto" name="SearchProcessorId" @closed="AfterCloseScanSearch"
+           @before-open="AfterCloseScanSearch">
+      <i class="fas-closeBTN fas fa-times" @click.prevent="CloseScanSearch"></i>
+      <div class="container__AddProcessorID">
+        <h3>Scan To Search</h3>
+        <div class="otherWay_AddProcessorID">
+          <div class="handle__camera">
+            <qrcode-stream v-if="isShowingCamera" @decode="onDecodeSearch" @init="onInit">
+              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">Wait For Open Camera...</p>
+            </qrcode-stream>
+            <p v-if="!isShowingCamera">place camera, Pleas Check your web Came</p>
+          </div>
+        </div>
+      </div>
+    </modal>
+    <!--   End modal Search Processor id  -->
   </div>
 </template>
 
@@ -103,6 +126,7 @@ export default {
       errorProcessorID: null,
       isShowingCamera: false,
       isShowingWait: true,
+      searchTerm: null,
       columns: [
         {
           label: 'ID',
@@ -118,6 +142,7 @@ export default {
           label: 'Processor ID',
           field: 'Processor_Id',
           type: 'string',
+          sortable: false,
         },
         // {
         //   label: 'Created On',
@@ -129,7 +154,8 @@ export default {
         {
           label: 'Action',
           field: 'btn_Action',
-          type: 'string',
+          type: 'number',
+          sortable: false,
         },
       ],
       rows: this.$store.getters.userAllProcessor,
@@ -144,6 +170,25 @@ export default {
       this.$modal.hide('AddNewProcessorId')
       this.ClearProcessorID();
       this.isShowingCamera = false;
+      this.isShowingWait = true
+    },
+    OpenScanSearch() {
+      this.$modal.show('SearchProcessorId')
+      this.isShowingCamera = !this.isShowingCamera;
+      setTimeout(() => {
+        this.isShowingWait = false;
+      }, 550);
+    },
+    CloseScanSearch() {
+      this.$modal.hide('SearchProcessorId')
+      this.isShowingCamera = false;
+      this.isShowingWait = true
+      this.searchTerm = null;
+    },
+    AfterCloseScanSearch() {
+      this.$modal.hide('SearchProcessorId')
+      this.isShowingCamera = false;
+      this.isShowingWait = true
     },
     async addProcessorID() {
       let ProcessorID = this.Processor_ID;
@@ -208,6 +253,15 @@ export default {
       this.Processor_ID = decodedString
       // console.log(decodedString)
       // ...
+    },
+    onDecodeSearch(decodedString) {
+      this.searchTerm = decodedString
+      setTimeout(() => {
+        this.$modal.hide('SearchProcessorId')
+        this.isShowingCamera = false;
+        this.isShowingWait = true
+      }, 50);
+
     },
     async onInit(promise) {
       try {
