@@ -10,7 +10,7 @@ const state = {
     deviceInfoAdd: [],
     processorId: null,
     userProcessorIds: null,
-    // Image: null,
+    userAllProcessor: [],
 };
 
 const store = new Vuex.Store({
@@ -26,9 +26,9 @@ const store = new Vuex.Store({
         TokenUser: (state) => {
             return state.TokenUser;
         },
-        // Image: (state) => {
-        //     return state.Image;
-        // },
+        userAllProcessor: (state) => {
+            return state.userAllProcessor;
+        },
         deviceInfoAdd: (state) => {
             return state.deviceInfoAdd;
         },
@@ -46,9 +46,9 @@ const store = new Vuex.Store({
         TokenUser(context, TokenUser) {
             context.commit('TokenUser', TokenUser);
         },
-        // Image(context, Image) {
-        //     context.commit('Image', Image);
-        // },
+        userAllProcessor(context, userAllProcessor) {
+            context.commit('userAllProcessor', userAllProcessor);
+        },
         deviceInfoAdd(context, deviceInfoAdd) {
             context.commit('deviceInfoAdd', deviceInfoAdd);
         },
@@ -67,9 +67,9 @@ const store = new Vuex.Store({
         TokenUser(state, TokenUser) {
             state.TokenUser = TokenUser;
         },
-        // Image(state, Image) {
-        //     state.Image = Image;
-        // },
+        userAllProcessor(state, userAllProcessor) {
+            state.userAllProcessor = userAllProcessor;
+        },
         deviceInfoAdd(state, deviceInfoAdd) {
             state.deviceInfoAdd = deviceInfoAdd;
         },

@@ -5,104 +5,53 @@
       <header class="section__header">
         <h2 class="section__title">Processor</h2>
         <div class="section__control-s">
-          <!--    solve this problem by (get request API)      -->
-          <!--          <div class="search">-->
-          <!--            <button class=" search__button focus&#45;&#45;box-shadow" type="button">-->
-          <!--              <i class="fas fa-search"></i>-->
-          <!--            </button>-->
-          <!--            <input v-model.trim="search" class="search__input focus&#45;&#45;box-shadow" type="search">-->
-          <!--          </div>-->
-
           <button class="section__button section__button--painted focus--box-shadow" type="button"
                   @click.prevent="OpenProcessorId">
             <i class="fas fa-plus"></i>
           </button>
         </div>
       </header>
-      <ul class="project">
-        <li v-for="(ProcessorId,index) in userProcessorIds" v-bind:key="index"
-            class="project__item">
-          <a class="project__link focus--box-shadow" href="#">
-            <div class="project__wrapper">
-              <div class="project__element project__icon">
-                <div class="icon icon--viking">
-                  <i class="fas fa-desktop"></i>
-                </div>
-              </div>
-              <div class="project__element project__inform">
-                <span class="project__inform-name">Processor # {{ ++index }}</span>
-              </div>
-              <div class="project__element project__inform">
-                <span class="project__inform-name font__sizeXl">{{ ProcessorId }}</span>
-              </div>
 
-              <div class="project__element project__setting">
-                <button class="setting focus--box-shadow" type="button" @click.prevent="deleteProcessorID(processorId)">
-                  <i class="fas fa-trash-alt"></i>
-                </button>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-      <!--      &lt;!&ndash;      test filter &ndash;&gt;-->
-      <!--      <ul class="project">-->
-      <!--        <li v-for="(processor,index) in filteredList" v-bind:key="index"-->
-      <!--            class="project__item">-->
-      <!--          <a class="project__link focus&#45;&#45;box-shadow" href="#">-->
-      <!--            <div class="project__wrapper">-->
-      <!--              <div class="project__element project__icon">-->
-      <!--                <div class="icon icon&#45;&#45;viking">-->
-      <!--                  <i class="fas fa-desktop"></i>-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--              <div class="project__element project__inform">-->
-      <!--                <span class="project__inform-name">Processor # {{ ++index }}</span>-->
-      <!--              </div>-->
-      <!--              <div class="project__element project__inform">-->
-      <!--                <span class="project__inform-name font__sizeXl">{{ processor.processorId }}</span>-->
-      <!--              </div>-->
+      <div class="project my-3 mx-auto p-2">
+        <vue-good-table
+            :columns="columns"
+            :pagination-options="{
+                    enabled: true,
+                    mode: 'records',
+                    perPage: 5,
+                    position: 'bottom',
+                    perPageDropdown: [5, 7, 9],
+                    dropdownAllowAll: false,
+                    setCurrentPage: 1,
+                    nextLabel: 'next',
+                    prevLabel: 'prev',
+                    rowsPerPageLabel: 'Rows per page',
+                    ofLabel: 'of',
+                    pageLabel: 'page', // for 'pages' mode
+                    allLabel: 'All',
+                  }"
+            :rows="rows"
+            :search-options=" {
+                    enabled: true,
+                    skipDiacritics: true,
+                    placeholder: 'Search this table',
+                  }"
+        >
+          <div slot="table-actions">
+            <button class="btn btn-secondary mx-2">Scan For Search</button>
+          </div>
+          <template slot="table-row" slot-scope="props">
+              <span v-if="props.column.field === 'btn_Action'">
+                  <!--       not work yet           -->
+                <button @click.prevent="deleteProcessorID(props.row.Processor_Id)">Delete</button>
+              </span>
+            <span v-else>
+                {{ props.formattedRow[props.column.field] }}
+              </span>
+          </template>
 
-      <!--              <div class="project__element project__setting">-->
-      <!--                <button class="setting focus&#45;&#45;box-shadow" type="button" @click.prevent="deleteProcessorID(processorId)">-->
-      <!--                  <i class="fas fa-trash-alt"></i>-->
-      <!--                </button>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--          </a>-->
-      <!--        </li>-->
-      <!--      </ul>-->
-      <!--      &lt;!&ndash;      end filter&ndash;&gt;-->
-
-      <!--      <div class="project">-->
-      <!--        <vue-good-table-->
-      <!--            :columns="columns"-->
-      <!--            :pagination-options="{-->
-      <!--              enabled: true,-->
-      <!--              mode: 'records',-->
-      <!--              perPage: 5,-->
-      <!--              position: 'bottom',-->
-      <!--              perPageDropdown: [5, 7, 9],-->
-      <!--              dropdownAllowAll: false,-->
-      <!--              setCurrentPage: 1,-->
-      <!--              nextLabel: 'next',-->
-      <!--              prevLabel: 'prev',-->
-      <!--              rowsPerPageLabel: 'Rows per page',-->
-      <!--              ofLabel: 'of',-->
-      <!--              pageLabel: 'page', // for 'pages' mode-->
-      <!--              allLabel: 'All',-->
-      <!--            }"-->
-      <!--            :rows="rows"-->
-      <!--            :search-options=" {-->
-      <!--              enabled: true,-->
-      <!--              skipDiacritics: true,-->
-      <!--              placeholder: 'Search this table',-->
-      <!--            }">-->
-      <!--          <div slot="table-actions">-->
-      <!--            <button class="btn btn-secondary">Scan For Search</button>-->
-      <!--          </div>-->
-      <!--        </vue-good-table>-->
-      <!--      </div>-->
+        </vue-good-table>
+      </div>
     </section><!-- End SECTION -->
 
     <!--    modal Add Processor id  -->
@@ -154,43 +103,36 @@ export default {
       errorProcessorID: null,
       isShowingCamera: false,
       isShowingWait: true,
-      search: null,
-      // processorList: [
-      //   new processor(
-      //       '1',
-      //       this.$store.getters.processorId.ProcessorId,
-      //   ),
-      // ],
-      // columns: [
-      //   {
-      //     label: 'ID',
-      //     field: 'id',
-      //     type: 'string',
-      //   },
-      //   {
-      //     label: 'Name',
-      //     field: 'name',
-      //     type: 'string',
-      //   },
-      //   {
-      //     label: 'Processor ID',
-      //     field: 'Processor_Id',
-      //     type: 'string',
-      //   },
-      //   // {
-      //   //   label: 'Created On',
-      //   //   field: 'createdAt',
-      //   //   type: 'date',
-      //   //   dateInputFormat: 'yyyy-MM-dd',
-      //   //   dateOutputFormat: 'MMM do yy',
-      //   // },
-      //   {
-      //     label: 'Action',
-      //     field: 'btn_Action',
-      //     type: 'string',
-      //   },
-      // ],
-      // rows: [],
+      columns: [
+        {
+          label: 'ID',
+          field: 'id',
+          type: 'string',
+        },
+        {
+          label: 'Name',
+          field: 'name',
+          type: 'string',
+        },
+        {
+          label: 'Processor ID',
+          field: 'Processor_Id',
+          type: 'string',
+        },
+        // {
+        //   label: 'Created On',
+        //   field: 'createdAt',
+        //   type: 'date',
+        //   dateInputFormat: 'yyyy-MM-dd',
+        //   dateOutputFormat: 'MMM do yy',
+        // },
+        {
+          label: 'Action',
+          field: 'btn_Action',
+          type: 'string',
+        },
+      ],
+      rows: this.$store.getters.userAllProcessor,
     }
   },
   methods: {
@@ -216,19 +158,27 @@ export default {
           return false;
         }
         axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const responseProcessor = await axios.post('/api/v1/user/processor', {
+        const {data: {data: ProcessorIdData}} = await axios.post('/api/v1/user/processor', {
           ProcessorId: this.Processor_ID,
         });
-        await this.$store.dispatch('processorId', responseProcessor.data.data);
-        const ProcessorIds = await axios.get('/api/v1/user/processor');
-        await this.$store.dispatch('userProcessorIds', ProcessorIds.data.data);
+        await this.$store.dispatch('processorId', ProcessorIdData);
+        const {data: {data: processorData}} = await axios.get('/api/v1/user/processor');
+        await this.$store.dispatch('userProcessorIds', processorData);
+        const userAllProcessors = processorData.map((item, i) => ({
+          id: i,
+          name: `processorID #${i}`,
+          Processor_Id: item,
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('userAllProcessor', userAllProcessors);
+        this.rows = this.$store.getters.userAllProcessor;
         this.$modal.hide('AddNewProcessorId')
         this.$swal.fire({
           position: 'center',
           icon: 'success',
           title: 'Add Processor ID, Successfully',
           toast: false,
-          text: responseProcessor.data.data.ProcessorId,
+          text: ProcessorIdData.ProcessorId,
           showConfirmButton: false,
           timer: 1500
         })
@@ -272,7 +222,7 @@ export default {
     async deleteProcessorID(processor_Id) {
       this.$swal.fire({
         title: 'Are you sure?',
-        html: `You won't Delete this ProcessorId <strong>${processor_Id.ProcessorId}</strong>`,
+        html: `You won't Delete this ProcessorId <strong>${processor_Id}</strong>`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#35997c',
@@ -281,12 +231,13 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.DeleteFunction(processor_Id);
+          console.log(processor_Id)
           this.$swal.fire({
             position: 'center',
             icon: 'success',
             title: 'Delete Processor Id, Successfully',
             toast: false,
-            text: "ProcessorID \"" + processor_Id.ProcessorId + "\"",
+            text: "ProcessorID \"" + processor_Id + "\"",
             showConfirmButton: false,
             timer: 1500
           })
@@ -295,63 +246,44 @@ export default {
 
     },
     async DeleteFunction(processor_Id) {
+      console.log(processor_Id)
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      await axios.delete('/api/v1/user/processor', {data: {ProcessorId: processor_Id.ProcessorId}});
-      const responseProcessor = await axios.get('/api/v1/user/processor');
-      await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
+      // await axios.delete('/api/v1/user/processor', {data: {ProcessorId: processor_Id.ProcessorId}});
+      await axios.delete('/api/v1/user/processor', {data: {ProcessorId: processor_Id}});
+      const {data: {data: processorData}} = await axios.get('/api/v1/user/processor');
+      await this.$store.dispatch('userProcessorIds', processorData);
+      const userAllProcessors = processorData.map((item, i) => ({
+        id: i,
+        name: `processorID #${i}`,
+        Processor_Id: item,
+        btn_Action: ''
+      }))
+      await this.$store.dispatch('userAllProcessor', userAllProcessors);
+      this.rows = this.$store.getters.userAllProcessor;
     },
-    // fieldFn() {
-    //   return this.$store.getters.processorId.ProcessorId;
-    // },
-    // fieldFnName() {
-    //   return 'Processor ID';
-    // }
+
   },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const responseProcessor = await axios.get('/api/v1/user/processor');
-    await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
+    const {data: {data: processorData}} = await axios.get('/api/v1/user/processor');
+    await this.$store.dispatch('userProcessorIds', processorData);
     this.isShowingCamera = false;
-    // console.log(responseProcessor.data.data.length)
-    // console.log(this.$store.getters.processorId.ProcessorId)
-
-    // let rows = [];
-    // for (let i = 0; i < rows.length; i++) {
-    //   // console.log(row[i]);
-    //   this.processorList[i] =   new processor(
-    //       i,
-    //       '151181d81w8a6d1a84dwa81d8ad1aw81d',
-    //   )
-    // }
-    // console.log(rows);
-    // // console.log(row);
-    // this.rows = [
-    //   {
-    //     id: 1,
-    //     name: "John",
-    //     Processor_Id: this.$store.getters.processorId.ProcessorId,
-    //     createdAt: '',
-    //     btn_Action: 0.03343
-    //   }
-    // ];
+    const userAllProcessors = processorData.map((item, i) => ({
+      id: i,
+      name: `processorID #${i}`,
+      Processor_Id: item,
+      btn_Action: ''
+    }))
+    await this.$store.dispatch('userAllProcessor', userAllProcessors);
+    this.rows = this.$store.getters.userAllProcessor;
 
   },
   computed: {
-    // filteredList() {
-    //   return this.processorList.filter(processor => {
-    //     return processor.processorId.includes(this.search)
-    //   })
-    // },
+
     ...mapGetters(['processorId', 'userProcessorIds'])
   },
 }
 
-// class processor {
-//   constructor(id, processorId,) {
-//     this.id = id;
-//     this.processorId = processorId;
-//   }
-// }
 </script>
 
 <style scoped>
