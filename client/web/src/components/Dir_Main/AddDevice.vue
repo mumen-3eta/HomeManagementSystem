@@ -4,10 +4,15 @@
     <section class="section section__mTop">
       <header class="section__header">
         <h2 class="section__title">Processor</h2>
-        <div class="section__control">
-          <button class="section__button  focus--box-shadow" type="button">
-            <i class="fas fa-cog"></i>
-          </button>
+        <div class="section__control-s">
+          <!--    solve this problem by (get request API)      -->
+          <!--          <div class="search">-->
+          <!--            <button class=" search__button focus&#45;&#45;box-shadow" type="button">-->
+          <!--              <i class="fas fa-search"></i>-->
+          <!--            </button>-->
+          <!--            <input v-model.trim="search" class="search__input focus&#45;&#45;box-shadow" type="search">-->
+          <!--          </div>-->
+
           <button class="section__button section__button--painted focus--box-shadow" type="button"
                   @click.prevent="OpenProcessorId">
             <i class="fas fa-plus"></i>
@@ -40,6 +45,64 @@
           </a>
         </li>
       </ul>
+      <!--      &lt;!&ndash;      test filter &ndash;&gt;-->
+      <!--      <ul class="project">-->
+      <!--        <li v-for="(processor,index) in filteredList" v-bind:key="index"-->
+      <!--            class="project__item">-->
+      <!--          <a class="project__link focus&#45;&#45;box-shadow" href="#">-->
+      <!--            <div class="project__wrapper">-->
+      <!--              <div class="project__element project__icon">-->
+      <!--                <div class="icon icon&#45;&#45;viking">-->
+      <!--                  <i class="fas fa-desktop"></i>-->
+      <!--                </div>-->
+      <!--              </div>-->
+      <!--              <div class="project__element project__inform">-->
+      <!--                <span class="project__inform-name">Processor # {{ ++index }}</span>-->
+      <!--              </div>-->
+      <!--              <div class="project__element project__inform">-->
+      <!--                <span class="project__inform-name font__sizeXl">{{ processor.processorId }}</span>-->
+      <!--              </div>-->
+
+      <!--              <div class="project__element project__setting">-->
+      <!--                <button class="setting focus&#45;&#45;box-shadow" type="button" @click.prevent="deleteProcessorID(processorId)">-->
+      <!--                  <i class="fas fa-trash-alt"></i>-->
+      <!--                </button>-->
+      <!--              </div>-->
+      <!--            </div>-->
+      <!--          </a>-->
+      <!--        </li>-->
+      <!--      </ul>-->
+      <!--      &lt;!&ndash;      end filter&ndash;&gt;-->
+
+      <!--      <div class="project">-->
+      <!--        <vue-good-table-->
+      <!--            :columns="columns"-->
+      <!--            :pagination-options="{-->
+      <!--              enabled: true,-->
+      <!--              mode: 'records',-->
+      <!--              perPage: 5,-->
+      <!--              position: 'bottom',-->
+      <!--              perPageDropdown: [5, 7, 9],-->
+      <!--              dropdownAllowAll: false,-->
+      <!--              setCurrentPage: 1,-->
+      <!--              nextLabel: 'next',-->
+      <!--              prevLabel: 'prev',-->
+      <!--              rowsPerPageLabel: 'Rows per page',-->
+      <!--              ofLabel: 'of',-->
+      <!--              pageLabel: 'page', // for 'pages' mode-->
+      <!--              allLabel: 'All',-->
+      <!--            }"-->
+      <!--            :rows="rows"-->
+      <!--            :search-options=" {-->
+      <!--              enabled: true,-->
+      <!--              skipDiacritics: true,-->
+      <!--              placeholder: 'Search this table',-->
+      <!--            }">-->
+      <!--          <div slot="table-actions">-->
+      <!--            <button class="btn btn-secondary">Scan For Search</button>-->
+      <!--          </div>-->
+      <!--        </vue-good-table>-->
+      <!--      </div>-->
     </section><!-- End SECTION -->
 
     <!--    modal Add Processor id  -->
@@ -91,6 +154,43 @@ export default {
       errorProcessorID: null,
       isShowingCamera: false,
       isShowingWait: true,
+      search: null,
+      // processorList: [
+      //   new processor(
+      //       '1',
+      //       this.$store.getters.processorId.ProcessorId,
+      //   ),
+      // ],
+      // columns: [
+      //   {
+      //     label: 'ID',
+      //     field: 'id',
+      //     type: 'string',
+      //   },
+      //   {
+      //     label: 'Name',
+      //     field: 'name',
+      //     type: 'string',
+      //   },
+      //   {
+      //     label: 'Processor ID',
+      //     field: 'Processor_Id',
+      //     type: 'string',
+      //   },
+      //   // {
+      //   //   label: 'Created On',
+      //   //   field: 'createdAt',
+      //   //   type: 'date',
+      //   //   dateInputFormat: 'yyyy-MM-dd',
+      //   //   dateOutputFormat: 'MMM do yy',
+      //   // },
+      //   {
+      //     label: 'Action',
+      //     field: 'btn_Action',
+      //     type: 'string',
+      //   },
+      // ],
+      // rows: [],
     }
   },
   methods: {
@@ -200,17 +300,58 @@ export default {
       const responseProcessor = await axios.get('/api/v1/user/processor');
       await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
     },
+    // fieldFn() {
+    //   return this.$store.getters.processorId.ProcessorId;
+    // },
+    // fieldFnName() {
+    //   return 'Processor ID';
+    // }
   },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const responseProcessor = await axios.get('/api/v1/user/processor');
     await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
     this.isShowingCamera = false;
+    // console.log(responseProcessor.data.data.length)
+    // console.log(this.$store.getters.processorId.ProcessorId)
+
+    // let rows = [];
+    // for (let i = 0; i < rows.length; i++) {
+    //   // console.log(row[i]);
+    //   this.processorList[i] =   new processor(
+    //       i,
+    //       '151181d81w8a6d1a84dwa81d8ad1aw81d',
+    //   )
+    // }
+    // console.log(rows);
+    // // console.log(row);
+    // this.rows = [
+    //   {
+    //     id: 1,
+    //     name: "John",
+    //     Processor_Id: this.$store.getters.processorId.ProcessorId,
+    //     createdAt: '',
+    //     btn_Action: 0.03343
+    //   }
+    // ];
+
   },
   computed: {
+    // filteredList() {
+    //   return this.processorList.filter(processor => {
+    //     return processor.processorId.includes(this.search)
+    //   })
+    // },
     ...mapGetters(['processorId', 'userProcessorIds'])
   },
 }
+
+// class processor {
+//   constructor(id, processorId,) {
+//     this.id = id;
+//     this.processorId = processorId;
+//   }
+// }
 </script>
 
 <style scoped>

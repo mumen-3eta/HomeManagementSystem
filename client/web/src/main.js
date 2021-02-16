@@ -10,8 +10,12 @@ import '@/animateCss'
 import '@/sweetalert2'
 import vModal from 'vue-js-modal'
 import VueQrcodeReader from 'vue-qrcode-reader'
+import VueGoodTablePlugin from 'vue-good-table';
 
+// import the styles
+import 'vue-good-table/dist/vue-good-table.css'
 
+Vue.use(VueGoodTablePlugin);
 Vue.use(vModal)
 Vue.use(VueQrcodeReader)
 Vue.use(Vuelidate)
