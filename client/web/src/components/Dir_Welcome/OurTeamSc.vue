@@ -11,31 +11,33 @@
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/osama.jpg">
             </div>
-            <h3 class="Member__Team-name">Osama Younis</h3>
-            <p class="Member__Team-job">BackEnd Developer</p>
-            <div class="Social_media-main">
-              <ul class="Social_media-ul">
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="https://www.facebook.com/Osama.w.you/" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="https://github.com/Osama-you" target="_blank">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </li>
-              </ul>
+            <div class="Member__Team--group">
+              <h3 class="Member__Team-name">Osama Younis</h3>
+              <p class="Member__Team-job">BackEnd Developer</p>
+              <div class="Social_media-main">
+                <ul class="Social_media-ul">
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="https://www.facebook.com/Osama.w.you/" target="_blank">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="https://github.com/Osama-you" target="_blank">
+                      <i class="fab fa-github"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -45,32 +47,34 @@
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/AboObada.jpg">
             </div>
-            <h3 class="Member__Team-name">Ahmed Iqtifan</h3>
-            <p class="Member__Team-job">HardWar Developer</p>
-            <div class="Social_media-main">
-              <ul class="Social_media-ul">
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="https://www.facebook.com/profile.php?id=100003143624009"
-                     target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </li>
-              </ul>
+            <div class="Member__Team--group">
+              <h3 class="Member__Team-name">Ahmed Iqtifan</h3>
+              <p class="Member__Team-job">HardWar Developer</p>
+              <div class="Social_media-main">
+                <ul class="Social_media-ul">
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="https://www.facebook.com/profile.php?id=100003143624009"
+                       target="_blank">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-github"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -80,31 +84,33 @@
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/A7medQeshta.jpg">
             </div>
-            <h3 class="Member__Team-name">Ahmed Qeshta</h3>
-            <p class="Member__Team-job">FrontEnd Developer</p>
-            <div class="Social_media-main">
-              <ul class="Social_media-ul">
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="https://www.facebook.com/A7medQeshta" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="https://github.com/AhmedQeshta" target="_blank">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </li>
-              </ul>
+            <div class="Member__Team--group">
+              <h3 class="Member__Team-name">Ahmed Qeshta</h3>
+              <p class="Member__Team-job">FrontEnd Developer</p>
+              <div class="Social_media-main">
+                <ul class="Social_media-ul">
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="https://www.facebook.com/A7medQeshta" target="_blank">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="https://github.com/AhmedQeshta" target="_blank">
+                      <i class="fab fa-github"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
@@ -114,31 +120,33 @@
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/Alaa.png">
             </div>
-            <h3 class="Member__Team-name">Alaa Shurrab</h3>
-            <p class="Member__Team-job">BackEnd Developer</p>
-            <div class="Social_media-main">
-              <ul class="Social_media-ul">
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="https://www.facebook.com/alaa.shurrab.39" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="https://github.com/AlaaShurrab" target="_blank">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </li>
-              </ul>
+            <div class="Member__Team--group">
+              <h3 class="Member__Team-name">Alaa Shurrab</h3>
+              <p class="Member__Team-job">BackEnd Developer</p>
+              <div class="Social_media-main">
+                <ul class="Social_media-ul">
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="https://www.facebook.com/alaa.shurrab.39" target="_blank">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="https://github.com/AlaaShurrab" target="_blank">
+                      <i class="fab fa-github"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <!--  -->
@@ -148,31 +156,33 @@
               <img alt="image team member" class="Member__img"
                    src="@/assets/img/welcomePage/imgTeam/mumen.jpg">
             </div>
-            <h3 class="Member__Team-name">Mumen Abu Aita</h3>
-            <p class="Member__Team-job">Android Developer</p>
-            <div class="Social_media-main">
-              <ul class="Social_media-ul">
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="https://www.facebook.com/Mumen.Aita" target="_blank">
-                    <i class="fab fa-facebook-f"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-twitter"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="#">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-                <li class="Social_media-list">
-                  <a class="Social_media-link" href="https://github.com/mumen-3eta" target="_blank">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </li>
-              </ul>
+            <div class="Member__Team--group">
+              <h3 class="Member__Team-name">Mumen Abu Aita</h3>
+              <p class="Member__Team-job">Android Developer</p>
+              <div class="Social_media-main">
+                <ul class="Social_media-ul">
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="https://www.facebook.com/Mumen.Aita" target="_blank">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="#">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                  </li>
+                  <li class="Social_media-list">
+                    <a class="Social_media-link" href="https://github.com/mumen-3eta" target="_blank">
+                      <i class="fab fa-github"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 

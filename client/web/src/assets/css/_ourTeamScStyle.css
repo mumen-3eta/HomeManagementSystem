@@ -35,7 +35,7 @@
     margin: 0 auto 3.5rem auto;
     padding: 2.5rem;
     transition: all .3s ease;
-    transform: rotate(-2deg);
+    transform: rotate(-5deg);
 }
 
 .Member__Team {
@@ -43,21 +43,55 @@
     flex-direction: column;
     transition: all 0.3s ease;
     background-color: var(--bg_Member_team);
-    width: 80%;
-    border-radius: 5px;
+    width: 85%;
+    /*border-radius: 5px;*/
     box-shadow: 2px 2px 5px 0 var(--MemberTeam_box-shadow);
-    margin: 2rem;
+    margin: 2rem auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
 }
 
 .Member__Team-img {
     width: 100%;
     margin: 0 auto;
     transition: all 0.3s ease;
+    border-radius: 50%;
 }
 
+.Member__Team--group {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+    position: absolute;
+    bottom: 0;
+    left: -340px;
+    background-color: rgba(43, 74, 74, 0.25);
+    transition: all ease 0.5s;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.Member__Team:hover .Member__Team--group {
+    width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    background-color: rgba(35, 57, 57, 0.7);
+    left: 0;
+    opacity: 1;
+}
+
+
 .Member__img {
-    border-radius: 5px 5px 0 0;
+    width: 100%;
+    /*border-radius: 5px 5px 0 0;*/
     transition: all 0.3s ease;
+    border-radius: 50%;
 }
 
 .Member__Team-name {
@@ -141,6 +175,9 @@
 }
 
 /* dot style */
+.owl-dots {
+    transform: rotate(5deg);
+}
 
 .owl-theme .owl-dots .owl-dot span {
     background: var(--color__linkHover);
