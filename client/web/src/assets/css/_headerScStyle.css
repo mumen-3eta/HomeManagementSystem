@@ -14,9 +14,9 @@ p {
     height: 95vh;
     width: 100%;
     background-image: url("../img/welcomePage/overlay_BG.png"), url("../img/welcomePage/andyone--WW8jBak7bo-unsplash.jpg");
-    background-position: center, center;
-    background-repeat: no-repeat, no-repeat;
-    background-size: cover, cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     background-color: transparent;
     display: flex;
     justify-content: center;
@@ -31,12 +31,11 @@ p {
 .container__headerSc .owl-dots {
     position: absolute;
     left: calc(50% - 4rem);
-    bottom: 3rem;
+    bottom: -2rem;
 }
 
 .container__headerSc .container__headerSc-CarouselGroup {
     width: 100%;
-    padding-top: 8rem;
 }
 
 .container__headerSc .container__headerSc-group {
@@ -146,10 +145,6 @@ p {
 
 
 @media (max-width: 1400px) {
-    .container__headerSc .container__headerSc-CarouselGroup {
-        width: 100%;
-        padding-top: 5rem;
-    }
 
     .container__headerSc-group .headerSc-group_1 .headerSc-group_1-title {
         width: 100%;
@@ -165,6 +160,12 @@ p {
         width: 85%;
         height: 85%;
         margin: 0 auto;
+    }
+
+    .container__headerSc .owl-dots {
+        position: absolute;
+        left: calc(50% - 4rem);
+        bottom: -4rem;
     }
 }
 
@@ -209,6 +210,13 @@ p {
         justify-self: center;
         text-align: center;
         margin: 0 auto;
+        padding: 7rem 0;
+    }
+
+    .container__headerSc .owl-dots {
+        position: absolute;
+        left: calc(50% - 4rem);
+        bottom: 4rem;
     }
 
     .container__headerSc-CarouselGroup .container__headerSc-group .headerSc-group_1 {
