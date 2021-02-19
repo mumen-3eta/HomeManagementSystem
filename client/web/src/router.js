@@ -9,6 +9,7 @@ import newLoginPage from "@/Pages/Site/newLoginPage";
 import newRegisterPage from "@/Pages/Site/newRegisterPage";
 import AdminDashBoardPanelPage from "@/Pages/Admin/AdminDashBoardPanelPage";
 import AddDevicePage from "@/Pages/Main/AddDevicePage";
+import AddControllerPage from "@/Pages/Main/AddControllerPage";
 
 Vue.use(Router)
 
@@ -112,6 +113,25 @@ export default new Router({
             path: '/v2/main/device/add',
             name: "AddDevicePage",
             component: AddDevicePage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/device/create/controller/:controller_id',
+            name: "AddControllerPage",
+            component: AddControllerPage,
             // must be login
             beforeEnter: (to, from, next) => {
                 if (!store.getters['TokenUser']) {
