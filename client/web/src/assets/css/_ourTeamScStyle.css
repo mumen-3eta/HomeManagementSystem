@@ -35,7 +35,7 @@
     margin: 0 auto 3.5rem auto;
     padding: 2.5rem;
     transition: all .3s ease;
-    transform: rotate(-5deg);
+    /*transform: rotate(-2deg);*/
 }
 
 .Member__Team {
@@ -43,7 +43,7 @@
     flex-direction: column;
     transition: all 0.3s ease;
     background-color: var(--bg_Member_team);
-    width: 85%;
+    width: 70%;
     /*border-radius: 5px;*/
     box-shadow: 2px 2px 5px 0 var(--MemberTeam_box-shadow);
     margin: 2rem auto;
@@ -67,10 +67,11 @@
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    padding-bottom: 2rem;
+    padding-bottom: 2.5rem;
     position: absolute;
     bottom: 0;
-    left: -340px;
+    left: 0;
+    /*left: -340px;*/
     background-color: rgba(43, 74, 74, 0.25);
     transition: all ease 0.5s;
     border-radius: 50%;
@@ -82,7 +83,7 @@
     margin: 0 auto;
     position: absolute;
     background-color: rgba(35, 57, 57, 0.7);
-    left: 0;
+    /*left: 0;*/
     opacity: 1;
 }
 
@@ -175,9 +176,9 @@
 }
 
 /* dot style */
-.owl-dots {
-    transform: rotate(5deg);
-}
+/*.container__ourTeamSc .owl-dots {*/
+/*    transform: rotate(5deg);*/
+/*}*/
 
 .owl-theme .owl-dots .owl-dot span {
     background: var(--color__linkHover);
