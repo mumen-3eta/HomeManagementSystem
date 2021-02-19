@@ -239,14 +239,32 @@
     width: 20%;
 }
 
+.btn_actionGroup {
+    display: flex;
+    justify-items: center;
+    justify-content: start;
+    align-items: start;
+}
+
 .btn_deleted {
     background-color: #d90d0d;
+    color: white;
+    border-radius: 5px;
+    margin-left: 1rem;
+}
+
+.btn_AddController {
+    background-color: #0d9fd9;
     color: white;
     border-radius: 5px;
 }
 
 .btn_deleted:hover {
     background-color: #a90707;
+}
+
+.btn_AddController:hover {
+    background-color: #0979a5;
 }
 
 @media (max-width: 1029px) {
