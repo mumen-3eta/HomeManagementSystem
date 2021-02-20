@@ -179,7 +179,8 @@ router.put('/controller/location', async (req, res, next) => {
 
 router.delete('/controller/location', async (req, res, next) => {
     try {
-        await ControllerType.ControllerLocation({_id: locationId});
+        const {locationId} = req.body;
+        await ControllerType.findOneAndDelete({_id: locationId});
 
         res.json({
             title: 'Controller location delete Successful',
