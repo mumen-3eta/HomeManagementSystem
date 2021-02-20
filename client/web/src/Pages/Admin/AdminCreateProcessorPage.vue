@@ -7,7 +7,7 @@
       <HeaderMain/>
       <!--   ********** body content can change it here *****************-->
       <div class="container_Admin_CreateDevice">
-        <h2>Create Device</h2>
+        <h2>Create Processor</h2>
         <div class="btn-group_Generate">
           <button class="btn btn-secondary" @click.prevent="generateId">Generate Id Processor</button>
           <button class="btn btn-danger" @click.prevent="clearGenerateId">Clear</button>
@@ -52,7 +52,7 @@ import {mapGetters} from "vuex";
 import QrcodeVue from 'vue-qrcode';
 
 export default {
-  name: "AdminDashBoardPanelPage",
+  name: "AdminCreateProcessorPage",
   components: {
     HeaderMain, AsideMain, NavMain,
     QrcodeVue,
@@ -60,9 +60,6 @@ export default {
   data() {
     return {
       processor_Id: null,
-      options: {
-        flat: false,
-      }
     }
   },
   methods: {
@@ -130,5 +127,5 @@ export default {
 </script>
 
 <style scoped>
-@import "../../assets/css/_AdminDashBoardPanelPageStyle.css";
+@import "../../assets/css/_AdminCreateProcessorPageStyle.css";
 </style>

@@ -7,9 +7,10 @@ import MainHomePage from "@/Pages/Main/MainHomePage";
 import MainProfilePage from "@/Pages/Main/MainProfilePage";
 import newLoginPage from "@/Pages/Site/newLoginPage";
 import newRegisterPage from "@/Pages/Site/newRegisterPage";
-import AdminDashBoardPanelPage from "@/Pages/Admin/AdminDashBoardPanelPage";
 import AddDevicePage from "@/Pages/Main/AddDevicePage";
 import AddControllerPage from "@/Pages/Main/AddControllerPage";
+import AdminCreateProcessorPage from "@/Pages/Admin/AdminCreateProcessorPage";
+import AdminCreateControllerPage from "@/Pages/Admin/AdminCreateControllerPage";
 
 Vue.use(Router)
 
@@ -150,9 +151,28 @@ export default new Router({
 
         /* Main Admin || email:mainadmin@hmsy.test || password : mainadmin@hmsy.test */
         {
-            path: '/v2/main/admin',
-            name: "AdminDashBoardPanelPage",
-            component: AdminDashBoardPanelPage,
+            path: '/v2/main/admin/create/processor',
+            name: "AdminCreateProcessorPage",
+            component: AdminCreateProcessorPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (!store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/admin/create/controller',
+            name: "AdminCreateControllerPage",
+            component: AdminCreateControllerPage,
             // must be login
             beforeEnter: (to, from, next) => {
                 if (!store.getters['TokenUser']) {
