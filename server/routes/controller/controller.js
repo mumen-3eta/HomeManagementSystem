@@ -48,7 +48,7 @@ router.put('/user/controller', authenticate, async (req, res, next) => {
 
         // check if he the owner
         const data = await UserController.findOneAndUpdate(
-            {_id: userControllerID},
+            {_id: req.body.userControllerID},
             req.body,
             {upsert: true, new: true}
         );
