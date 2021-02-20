@@ -68,7 +68,7 @@ router.delete('/user/controller', authenticate, async (req, res, next) => {
         //{userControllerID}
 
         // check if he the owner
-
+        const {userControllerID} = req.body;
         await UserController.findByIdAndDelete({
             _id: userControllerID,
         });
