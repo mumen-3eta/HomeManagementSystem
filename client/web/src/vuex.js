@@ -9,6 +9,7 @@ const state = {
     TokenUser: null,
     deviceInfoAdd: [],
     processorId: null,
+    controllerId: null,
     userProcessorIds: null,
     userAllProcessor: [],
 };
@@ -35,6 +36,9 @@ const store = new Vuex.Store({
         processorId: (state) => {
             return state.processorId;
         },
+        controllerId: (state) => {
+            return state.controllerId;
+        },
         userProcessorIds: (state) => {
             return state.userProcessorIds;
         },
@@ -54,6 +58,9 @@ const store = new Vuex.Store({
         },
         processorId(context, processorId) {
             context.commit('processorId', processorId);
+        },
+        controllerId(context, controllerId) {
+            context.commit('controllerId', controllerId);
         },
 
         userProcessorIds(context, userProcessorIds) {
@@ -75,6 +82,9 @@ const store = new Vuex.Store({
         },
         processorId(state, processorId) {
             state.processorId = processorId;
+        },
+        controllerId(state, controllerId) {
+            state.controllerId = controllerId;
         },
 
         userProcessorIds(state, userProcessorIds) {

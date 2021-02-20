@@ -17,10 +17,19 @@
           </router-link>
         </li>
         <li v-if="user.basicInfo.isAdmin"
-            :class="['nav__item',this.$route.path === '/v2/main/admin' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/admin'}" aria-label="heart" class="nav__link focus--box-shadow"
+            :class="['nav__item',this.$route.path === '/v2/main/admin/create/processor' ? 'nav__item--isActive':'']">
+          <router-link :to="{path:'/v2/main/admin/create/processor'}" aria-label="heart"
+                       class="nav__link focus--box-shadow"
                        role="menuitem">
             <i class="fas fa-laptop-medical nav__icon"></i>
+          </router-link>
+        </li>
+        <li v-if="user.basicInfo.isAdmin"
+            :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller' ? 'nav__item--isActive':'']">
+          <router-link :to="{path:'/v2/main/admin/create/controller'}" aria-label="heart"
+                       class="nav__link focus--box-shadow"
+                       role="menuitem">
+            <i class="fas fa-laptop nav__icon"></i>
           </router-link>
         </li>
         <li class="nav__item">

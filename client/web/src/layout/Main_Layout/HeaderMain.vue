@@ -21,16 +21,16 @@
                 <p class="profile__menu-nameTitle"> Profile </p>
               </router-link>
             </li>
-            <li class="profile__menu-li">
-              <router-link class="profile__menu-link" to="#">
-                <i class="fas fa-bell profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">notifications </p>
+            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+              <router-link :to="{path:'/v2/main/admin/create/processor'}" class="profile__menu-link">
+                <i class="fas fa-laptop-medical profile__menu-icon"></i>
+                <p class="profile__menu-nameTitle">Create Processor</p>
               </router-link>
             </li>
             <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
-              <router-link :to="{path:'/v2/main/admin'}" class="profile__menu-link">
+              <router-link :to="{path:'/v2/main/admin/create/controller'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">Create device</p>
+                <p class="profile__menu-nameTitle">Create Controller</p>
               </router-link>
             </li>
             <li v-if="!user.basicInfo.isAdmin" class="profile__menu-li">
@@ -96,8 +96,10 @@ export default {
 
 .profile__menu {
   position: absolute;
-  left: -2.1rem;
-  width: calc(100% + 2.1rem);
+  left: -4.5rem;
+  width: calc(100% + 4.5rem);
+  max-width: calc(100% + 4.5rem);
+  min-width: calc(100% + 4.5rem);
   height: 12.74rem;
   background-color: white;
   z-index: 999;
@@ -115,8 +117,10 @@ export default {
 @media (max-width: 769px) {
   .profile__menu {
     width: 13.65rem;
+    max-width: 20.65rem;
+    min-width: 20.65rem;
     top: 3.71rem;
-    left: -9rem;
+    left: -16rem;
     border-radius: 10px 0 10px 10px;
   }
 }
