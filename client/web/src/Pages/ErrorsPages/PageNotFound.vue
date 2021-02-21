@@ -1,19 +1,20 @@
 <template>
-    <div class="content__404">
-      <img class="content__body-404  " src="https://media.giphy.com/media/UoeaPqYrimha6rdTFV/giphy.gif" alt="">
-      <h2 class="text-center  content__body-404 p-5"> Not Found | <a href="javascript:void(0)" @click.prevent="$router.go(-1)"> Go back </a></h2>
-    </div>
+  <div class="content__404">
+    <img alt="" class="content__body-404  " src="https://media.giphy.com/media/UoeaPqYrimha6rdTFV/giphy.gif">
+    <h2 class="text-center  content__body-404 p-5"> Not Found | <a href="javascript:void(0)"
+                                                                   @click.prevent="$router.go(-1)"> Go back </a></h2>
+  </div>
 </template>
 
 <script>
 export default {
-name: "PageNotFound"
+  name: "PageNotFound"
 }
 </script>
 
 
 <style scoped>
-.content__404{
+.content__404 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -25,30 +26,35 @@ name: "PageNotFound"
   -webkit-box-align: center;
   -ms-flex-align: center;
   text-align: center;
-  width: 80%;
   min-height: 100vh;
   margin: 0 auto;
-  /*padding-top: 100px;*/
+  background: linear-gradient(103.72deg, #f1f1f1 0%, #f5f5f5 105.3%) no-repeat;
+  width: 100%;
 }
+
 .content__body-404 {
   position: relative;
   text-align: center;
   width: 50%;
   margin: 10px auto;
-  background: linear-gradient(103.72deg, #45A0F4 0%, #68DFA6 105.3%) no-repeat/cover center;
+  color: #21a7a4;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  -webkit-box-shadow: 1px 1px 8px 1px #abeecd;
-  box-shadow: 1px 1px 8px 1px #abeecd;
   border-radius: 10px;
 }
 
-/*.content__404 h2{*/
-/*  font-size: 10px;*/
-/*}*/
+a {
+  color: #21a7a4;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: #578557;
+}
+
 
 @media only screen and (max-width: 800px) {
-  .content__404{
+  .content__404 {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -63,26 +69,25 @@ name: "PageNotFound"
     width: 100%;
     min-height: 100vh;
     margin: 0 auto;
-    /*padding-top: 100px;*/
+    background: linear-gradient(103.72deg, #f1f1f1 0%, #f5f5f5 105.3%) no-repeat;
   }
+
   .content__body-404 {
     position: relative;
     text-align: center;
     width: 50%;
     margin: 10px auto;
-    background: linear-gradient(103.72deg, #45A0F4 0%, #68DFA6 105.3%) no-repeat/cover center;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    -webkit-box-shadow: 1px 1px 8px 1px #abeecd;
-    box-shadow: 1px 1px 8px 1px #abeecd;
     border-radius: 10px;
     padding: 0;
   }
-  .content__404 h2{
+
+  .content__404 h2 {
     font-size: 19px;
     width: 90%;
   }
-  .content__404 img{
+
+  .content__404 img {
     width: 90%;
     height: auto;
   }
