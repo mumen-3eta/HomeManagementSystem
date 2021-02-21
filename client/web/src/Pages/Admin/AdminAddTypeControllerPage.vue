@@ -68,7 +68,7 @@
              @before-open="CloseTypeControllerModal">
         <i class="fas-closeBTN fas fa-times" @click.prevent="CloseTypeControllerModal"></i>
         <div class="container__AddProcessorID">
-          <h2>{{ !edited ? "Add New Type for Controller" : `Edit type name: "${NameTypeController}"` }}</h2>
+          <h2>{{ !edited ? "Add New Type for Controller" : `Edit type name: "${EditInfo.Name_Type}"` }}</h2>
           <div class="input-group__AddProcessorID">
             <label for="input_ProcessorID">Type Name</label>
             <input id="input_ProcessorID" v-model.trim="NameTypeController" required type="text">
@@ -110,6 +110,7 @@ export default {
       edited: false,
       EditInfo: {
         Type_id: null,
+        Name_Type: null,
       },
       columns: [
         {
@@ -147,6 +148,8 @@ export default {
       this.errorLabel = null
       this.NameTypeController = null;
       this.edited = false;
+      this.EditInfo.Type_id = null;
+      this.EditInfo.Name_Type = null;
     },
     async addTypeController() {
       let NameTypeController = this.NameTypeController;
@@ -231,6 +234,7 @@ export default {
       this.edited = true;
       this.NameTypeController = Name_Type;
       this.EditInfo.Type_id = typeController_id;
+      this.EditInfo.Name_Type = Name_Type;
 
     },
     async SaveChangeEdited() {
