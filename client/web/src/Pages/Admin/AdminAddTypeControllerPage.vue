@@ -68,7 +68,7 @@
              @before-open="CloseTypeControllerModal">
         <i class="fas-closeBTN fas fa-times" @click.prevent="CloseTypeControllerModal"></i>
         <div class="container__AddProcessorID">
-          <h2>Add New Type for Controller</h2>
+          <h2>{{ !edited ? "Add New Type for Controller" : `Edit type name: "${NameTypeController}"` }}</h2>
           <div class="input-group__AddProcessorID">
             <label for="input_ProcessorID">Type Name</label>
             <input id="input_ProcessorID" v-model.trim="NameTypeController" required type="text">
