@@ -12,6 +12,9 @@ const state = {
     controllerId: null,
     userProcessorIds: null,
     userAllProcessor: [],
+    NewTypeController: null,
+    allTypeController: null,
+
 };
 
 const store = new Vuex.Store({
@@ -42,6 +45,12 @@ const store = new Vuex.Store({
         userProcessorIds: (state) => {
             return state.userProcessorIds;
         },
+        NewTypeController: (state) => {
+            return state.NewTypeController;
+        },
+        allTypeController: (state) => {
+            return state.allTypeController;
+        },
     },
     actions: {
         user(context, user) {
@@ -66,6 +75,12 @@ const store = new Vuex.Store({
         userProcessorIds(context, userProcessorIds) {
             context.commit('userProcessorIds', userProcessorIds);
         },
+        NewTypeController(context, NewTypeController) {
+            context.commit('NewTypeController', NewTypeController);
+        },
+        allTypeController(context, allTypeController) {
+            context.commit('allTypeController', allTypeController);
+        },
     },
     mutations: {
         user(state, user) {
@@ -89,7 +104,14 @@ const store = new Vuex.Store({
 
         userProcessorIds(state, userProcessorIds) {
             state.userProcessorIds = userProcessorIds;
-        }
+        },
+
+        NewTypeController(state, NewTypeController) {
+            state.NewTypeController = NewTypeController;
+        },
+        allTypeController(state, allTypeController) {
+            state.allTypeController = allTypeController;
+        },
     }
 
 });
