@@ -336,7 +336,6 @@ export default {
 
   },
   computed: {
-
     ...mapGetters(['processorId', 'userProcessorIds'])
   },
 }
