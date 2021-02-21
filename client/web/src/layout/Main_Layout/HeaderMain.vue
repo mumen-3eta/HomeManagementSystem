@@ -33,6 +33,18 @@
                 <p class="profile__menu-nameTitle">Create Controller</p>
               </router-link>
             </li>
+            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+              <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="profile__menu-link">
+                <i class="fas fa-cubes profile__menu-icon"></i>
+                <p class="profile__menu-nameTitle">Add Type Controller</p>
+              </router-link>
+            </li>
+            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+              <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="profile__menu-link">
+                <i class="fas fa-map-marker-alt profile__menu-icon"></i>
+                <p class="profile__menu-nameTitle">Add Location Controller</p>
+              </router-link>
+            </li>
             <li v-if="!user.basicInfo.isAdmin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/device/add'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
@@ -96,11 +108,11 @@ export default {
 
 .profile__menu {
   position: absolute;
-  left: -4.5rem;
-  width: calc(100% + 4.5rem);
-  max-width: calc(100% + 4.5rem);
-  min-width: calc(100% + 4.5rem);
-  height: 12.74rem;
+  left: -8.5rem;
+  width: calc(100% + 8.5rem);
+  max-width: calc(100% + 8.5rem);
+  min-width: calc(100% + 8.5rem);
+  height: auto;
   background-color: white;
   z-index: 999;
   box-shadow: 1px 1px 4px #9d9c9c;

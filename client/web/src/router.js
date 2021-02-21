@@ -11,6 +11,8 @@ import AddDevicePage from "@/Pages/Main/AddDevicePage";
 import AddControllerPage from "@/Pages/Main/AddControllerPage";
 import AdminCreateProcessorPage from "@/Pages/Admin/AdminCreateProcessorPage";
 import AdminCreateControllerPage from "@/Pages/Admin/AdminCreateControllerPage";
+import AdminAddTypeControllerPage from "@/Pages/Admin/AdminAddTypeControllerPage";
+import AdminAddLocationControllerPage from "@/Pages/Admin/AdminAddLocationControllerPage";
 
 Vue.use(Router)
 
@@ -173,6 +175,44 @@ export default new Router({
             path: '/v2/main/admin/create/controller',
             name: "AdminCreateControllerPage",
             component: AdminCreateControllerPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (!store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/admin/create/controller/type',
+            name: "AdminAddTypeControllerPage",
+            component: AdminAddTypeControllerPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (!store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/admin/create/controller/location',
+            name: "AdminAddLocationControllerPage",
+            component: AdminAddLocationControllerPage,
             // must be login
             beforeEnter: (to, from, next) => {
                 if (!store.getters['TokenUser']) {
