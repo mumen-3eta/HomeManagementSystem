@@ -14,6 +14,8 @@ const state = {
     userAllProcessor: [],
     NewTypeController: null,
     allTypeController: null,
+    NewLocationController: null,
+    allLocationController: null,
 
 };
 
@@ -51,6 +53,12 @@ const store = new Vuex.Store({
         allTypeController: (state) => {
             return state.allTypeController;
         },
+        NewLocationController: (state) => {
+            return state.NewLocationController;
+        },
+        allLocationController: (state) => {
+            return state.allLocationController;
+        },
     },
     actions: {
         user(context, user) {
@@ -80,6 +88,12 @@ const store = new Vuex.Store({
         },
         allTypeController(context, allTypeController) {
             context.commit('allTypeController', allTypeController);
+        },
+        NewLocationController(context, NewLocationController) {
+            context.commit('NewLocationController', NewLocationController);
+        },
+        allLocationController(context, allLocationController) {
+            context.commit('allLocationController', allLocationController);
         },
     },
     mutations: {
@@ -111,6 +125,12 @@ const store = new Vuex.Store({
         },
         allTypeController(state, allTypeController) {
             state.allTypeController = allTypeController;
+        },
+        NewLocationController(state, NewLocationController) {
+            state.NewLocationController = NewLocationController;
+        },
+        allLocationController(state, allLocationController) {
+            state.allLocationController = allLocationController;
         },
     }
 
