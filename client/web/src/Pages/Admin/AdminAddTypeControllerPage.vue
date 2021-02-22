@@ -140,9 +140,11 @@ export default {
     }
   },
   methods: {
+    //open modal
     OpenTypeControllerModal() {
       this.$modal.show('AddNewTypeController')
     },
+    //close modal
     CloseTypeControllerModal() {
       this.$modal.hide('AddNewTypeController')
       this.errorLabel = null
@@ -151,6 +153,8 @@ export default {
       this.EditInfo.Type_id = null;
       this.EditInfo.Name_Type = null;
     },
+    //End open modal
+    /*** Add Type ***/
     async addTypeController() {
       let NameTypeController = this.NameTypeController;
       if (NameTypeController) {
@@ -188,6 +192,7 @@ export default {
       }
 
     },
+    /*** Delete Type ***/
     async deleteTypeController(typeController_id, Name_Type) {
       this.$swal.fire({
         title: 'Are you sure?',
@@ -205,7 +210,7 @@ export default {
             icon: 'success',
             title: 'Delete Type Controller, Successfully',
             toast: false,
-            text: "ProcessorID \"" + typeController_id + "\"",
+            text: "TypeID \"" + typeController_id + "\"",
             showConfirmButton: false,
             timer: 1500
           })
@@ -225,10 +230,12 @@ export default {
       await this.$store.dispatch('allTypeController', All_Type_Controller);
       this.rows = this.$store.getters.allTypeController;
     },
+    /*** btn Clear Type ***/
     ClearTypeController() {
       this.label = null;
       this.errorLabel = null
     },
+    /*** Edit Type ***/
     editTypeController(typeController_id, Name_Type) {
       this.$modal.show('AddNewTypeController')
       this.edited = true;
