@@ -19,10 +19,12 @@
                 <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="processorId">Sorry , some
                   thing error
                 </qrcode-vue>
+
                 <div v-if="processorId">
                   <label for="ProcessorIDInput" hidden></label>
                   <input id="ProcessorIDInput" class="InputForCopy" v-bind:value="processorId"/>
                 </div>
+                
               </div>
             </div>
             <div class="btn-group_Generate-2">
