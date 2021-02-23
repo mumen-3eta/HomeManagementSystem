@@ -132,7 +132,7 @@ export default new Router({
             }
         },
         {
-            path: '/v2/main/device/create/controller/:controller_id',
+            path: '/v2/main/device/create/controller/:processor_id',
             name: "AddControllerPage",
             component: AddControllerPage,
             // must be login

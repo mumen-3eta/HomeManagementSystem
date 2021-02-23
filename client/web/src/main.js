@@ -11,9 +11,12 @@ import '@/sweetalert2'
 import vModal from 'vue-js-modal'
 import VueQrcodeReader from 'vue-qrcode-reader'
 import VueGoodTablePlugin from 'vue-good-table';
-
+import vSelect from 'vue-select'
 // import the styles
 import 'vue-good-table/dist/vue-good-table.css'
+import 'vue-select/dist/vue-select.css';
+
+Vue.component('v-select', vSelect)
 
 Vue.use(VueGoodTablePlugin);
 Vue.use(vModal)

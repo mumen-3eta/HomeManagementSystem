@@ -1,0 +1,147 @@
+.Main__Section-AddControllerUser {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+
+.Main__Section-AddControllerUser h2 {
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+}
+
+.Main__Section-AddControllerUser .btn-info {
+    color: white;
+    background-color: #0d9fd9;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+}
+
+.Main__Section-AddControllerUser .btn-danger {
+    color: white;
+    background-color: #d90d47;
+    border-radius: 8px;
+    font-size: 1.2rem;
+}
+
+.Main__Section-AddControllerUser .SubMain__Section-AddControllerUser {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin-bottom: 1.85rem;
+}
+
+.Main__Section-AddControllerUser .SubMain__Section-AddControllerUser .input-group__AddControllerUser {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 1.5rem;
+}
+
+.Main__Section-AddControllerUser .SubMain__Section-AddControllerUser .input-group__AddControllerUser .input__BTN-group__AddControllerUser {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    margin-right: 1.5rem;
+}
+
+
+.Main__Section-AddControllerUser .SubMain__Section-AddControllerUser .input-group__AddControllerUser .input__BTN-group__AddControllerUser input {
+    width: 80%;
+    margin-right: 0.5rem;
+}
+
+.Main__Section-AddControllerUser .SubMain__Section-AddControllerUser .input-group__AddControllerUser .input__BTN-group__AddControllerUser button {
+    width: 20%;
+    font-size: 1.2rem;
+    padding: 0;
+    border-radius: 8px;
+}
+
+
+.Main__Section-AddControllerUser .SubMain__Section-AddControllerUser .input-group__AddControllerUser label {
+    font-size: 1.35rem;
+}
+
+.Main__Section-AddControllerUser .SubMain__Section-AddControllerUser .input-group__AddControllerUser input#NameControllerUser,
+.Main__Section-AddControllerUser .SubMain__Section-AddControllerUser .input-group__AddControllerUser input#ControllerID {
+    font-size: 1.35rem;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    border: 1px #6c9192 solid;
+    border-radius: 8px;
+}
+
+.input-group__AddControllerUser input:focus,
+.input-group__AddControllerUser input:active,
+.input-group__AddControllerUser select:focus,
+.input-group__AddControllerUser select:active {
+    outline: none;
+}
+
+.input-group__AddControllerUser input::placeholder {
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.37);
+}
+
+.Main__Section-AddControllerUser .SubMain__Section-AddControllerUser .input-group__AddControllerUser input {
+    font-size: 1.35rem;
+    height: 2.1rem;
+    padding: 0 0.5rem;
+    border: 1px #6c9192 solid;
+    border-radius: 8px;
+}
+
+.input-group__AddControllerUser .vs__dropdown-toggle {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: flex;
+    padding: 0 0 4px;
+    background: white;
+    white-space: normal;
+    border-radius: 10px;
+    position: relative;
+}
+
+.input-group__AddControllerUser .vs__actions {
+    display: flex;
+    align-items: center;
+    padding: 4px 6px 0 3px;
+    position: absolute;
+    top: 30%;
+    right: 10px;
+    z-index: 9999;
+}
+
+.input-group__AddControllerUser .vs__clear {
+    position: absolute;
+    top: 5%;
+    right: 20px;
+    z-index: 9999;
+}
+
+
+@media (max-width: 650px) {
+    .Main__Section-AddControllerUser .SubMain__Section-AddControllerUser {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+    }
+
+    .Main__Section-AddControllerUser .SubMain__Section-AddControllerUser .input-group__AddControllerUser {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.1rem;
+    }
+}
