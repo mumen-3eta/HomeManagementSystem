@@ -19,7 +19,10 @@
                 <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="processorId">Sorry , some
                   thing error
                 </qrcode-vue>
-                <p v-if="processorId">{{ processorId }}</p>
+                <div v-if="processorId">
+                  <label for="ProcessorIDInput" hidden></label>
+                  <input id="ProcessorIDInput" class="InputForCopy" v-bind:value="processorId"/>
+                </div>
               </div>
             </div>
             <div class="btn-group_Generate-2">
@@ -30,10 +33,6 @@
             </div>
           </div>
           <canvas id="canvas" hidden></canvas>
-          <div hidden>
-            <label for="ProcessorIDInput" hidden></label>
-            <input id="ProcessorIDInput" disabled hidden v-bind:value="processorId"/>
-          </div>
         </div>
       </div>
     </main><!-- End Main -->
@@ -128,4 +127,13 @@ export default {
 
 <style scoped>
 @import "../../assets/css/_AdminCreateProcessorPageStyle.css";
+
+.InputForCopy {
+  width: 100%;
+  text-align: center;
+  color: black;
+  background: none;
+  border: none;
+  margin-top: 0.5rem
+}
 </style>
