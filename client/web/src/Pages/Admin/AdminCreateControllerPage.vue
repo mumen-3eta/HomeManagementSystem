@@ -20,11 +20,16 @@
                   some
                   thing error
                 </qrcode-vue>
-                <p v-if="controllerId">{{ controllerId }}</p>
+                <div v-if="controllerId">
+                  <label for="ControllerIDInput" hidden></label>
+                  <input id="ControllerIDInput" class="InputForCopy"
+                         style=""
+                         v-bind:value="controllerId"/>
+                </div>
               </div>
             </div>
             <div class="btn-group_Generate-2">
-              <button class="btn btn-secondary" @click.prevent="copyTextControllerId">Copy Processor Id</button>
+              <button class="btn btn-secondary" @click.prevent="copyTextControllerId">Copy Controller Id</button>
               <button id="DownloadsAsImage" class="btn btn-primary"
                       @click.prevent="downloadsControllerIdAsImage(controllerId)">
                 Downloads as image
@@ -32,10 +37,7 @@
             </div>
           </div>
           <canvas id="canvas" hidden></canvas>
-          <div hidden>
-            <label for="ProcessorIDInput" hidden></label>
-            <input id="ProcessorIDInput" disabled hidden v-bind:value="controllerId"/>
-          </div>
+
         </div>
       </div>
     </main><!-- End Main -->
@@ -66,14 +68,14 @@ export default {
   methods: {
     async generateControllerId() {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const processorId = await axios.post('/api/v1/controller');
-      await this.$store.dispatch('controllerId', processorId.data.controllerId);
+      const controllerId = await axios.post('/api/v1/controller');
+      await this.$store.dispatch('controllerId', controllerId.data.controllerId);
       this.$swal.fire({
         position: 'center',
         icon: 'success',
         title: 'Create Controller ID',
         toast: false,
-        text: processorId.data.controllerId,
+        text: controllerId.data.controllerId,
         showConfirmButton: false,
         timer: 1500
       })
@@ -93,7 +95,7 @@ export default {
       await this.$store.dispatch('controllerId', null);
     },
     copyTextControllerId() {
-      let copyText = document.getElementById("ProcessorIDInput");
+      let copyText = document.getElementById("ControllerIDInput");
       copyText.select();
       document.execCommand("copy");
       this.$swal.fire({
@@ -106,13 +108,13 @@ export default {
         timer: 1500
       })
     },
-    downloadsControllerIdAsImage(processorId) {
+    downloadsControllerIdAsImage(controllerId) {
       const image = document.getElementById('svg_element').src;
       let imageSplit_1 = image.split(';')[0];
       let imageExtension = imageSplit_1.split('/')[1];
       let a = document.createElement('a');
       a.href = image;
-      a.download = `ProcessorID_${processorId}.${imageExtension}`;
+      a.download = `ControllerID_${controllerId}.${imageExtension}`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -129,4 +131,13 @@ export default {
 
 <style scoped>
 @import "../../assets/css/_AdminCreateContorllerPageStyle.css";
+
+.InputForCopy {
+  width: 100%;
+  text-align: center;
+  color: black;
+  background: none;
+  border: none;
+  margin-top: 0.5rem
+}
 </style>
