@@ -79,7 +79,16 @@ export default {
       await this.$store.dispatch('TokenUser', null);
       await this.$store.dispatch('deviceInfoAdd', null);
       await this.$store.dispatch('processorId', null);
+      await this.$store.dispatch('controllerId', null);
       await this.$store.dispatch('userProcessorIds', null);
+      await this.$store.dispatch('userAllProcessor', null);
+      await this.$store.dispatch('NewTypeController', null);
+      await this.$store.dispatch('allTypeController', null);
+      await this.$store.dispatch('NewLocationController', null);
+      await this.$store.dispatch('allLocationController', null);
+      await this.$store.dispatch('TypeControllerData', null);
+      await this.$store.dispatch('LocationControllerData', null);
+      await this.$store.dispatch('NewControllerData', null);
       await this.$router.push('/v2/login');
     }
   },

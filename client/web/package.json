@@ -27,6 +27,7 @@
     "vue-qrcode": "^0.3.5",
     "vue-qrcode-reader": "^2.3.16",
     "vue-router": "^3.4.8",
+    "vue-select": "^3.11.2",
     "vue-spinner": "^1.0.4",
     "vue-sweetalert2": "^4.1.1",
     "vuelidate": "^0.7.6",

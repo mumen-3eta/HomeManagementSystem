@@ -24,7 +24,7 @@
                   <label for="ProcessorIDInput" hidden></label>
                   <input id="ProcessorIDInput" class="InputForCopy" v-bind:value="processorId"/>
                 </div>
-                
+
               </div>
             </div>
             <div class="btn-group_Generate-2">

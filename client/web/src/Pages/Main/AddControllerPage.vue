@@ -18,7 +18,6 @@
 import HeaderMain from "@/layout/Main_Layout/HeaderMain";
 import AsideMain from "@/layout/Main_Layout/AsideMain";
 import NavMain from "@/layout/Main_Layout/NavMain";
-
 import AddController from "@/components/Dir_Main/AddController";
 
 export default {
