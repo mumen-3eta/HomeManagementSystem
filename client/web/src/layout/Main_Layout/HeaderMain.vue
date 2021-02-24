@@ -1,4 +1,5 @@
 <template>
+
   <header class="header">
     <div class="header__wrapper">
       <form action="" class="search">
@@ -62,6 +63,7 @@
       </div>
     </div>
   </header><!-- End HEADER -->
+  
 </template>
 
 <script>
