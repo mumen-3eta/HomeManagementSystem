@@ -116,14 +116,14 @@
     position: absolute;
     top: 30%;
     right: 10px;
-    z-index: 9999;
+    z-index: 9;
 }
 
 .input-group__AddControllerUser .vs__clear {
     position: absolute;
     top: 5%;
     right: 20px;
-    z-index: 9999;
+    z-index: 9;
 }
 
 
