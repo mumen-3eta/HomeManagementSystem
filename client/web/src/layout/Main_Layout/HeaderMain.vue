@@ -1,4 +1,5 @@
 <template>
+
   <header class="header">
     <div class="header__wrapper">
       <form action="" class="search">
@@ -7,8 +8,8 @@
         </button>
         <input class="search__input focus--box-shadow" placeholder="Search ..." type="search">
       </form>
-      <div class="profile">
-        <button id="btn_Profile" class="profile__button" type="button">
+      <div v-on-clickaway="CloseDropMenu" class="profile">
+        <button id="btn_Profile" class="profile__button" type="button" @click.prevent="OpenDropMenu">
           <span v-if="user.basicInfo.userName" class="profile__name"><i
               class="fas fa-caret-down"></i>{{ user.basicInfo.userName }}</span>
           <img v-if="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image" class="profile__img">
@@ -62,14 +63,17 @@
       </div>
     </div>
   </header><!-- End HEADER -->
+  
 </template>
 
 <script>
 import axios from "axios";
 import {mapGetters} from "vuex";
+import {mixin as clickAway} from "vue-clickaway";
 
 export default {
   name: "HeaderMain",
+  mixins: [clickAway],
   methods: {
     async handleClick() {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
@@ -90,16 +94,23 @@ export default {
       await this.$store.dispatch('LocationControllerData', null);
       await this.$store.dispatch('NewControllerData', null);
       await this.$router.push('/v2/login');
-    }
+    },
+    OpenDropMenu() {
+      document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
+      document.getElementById("profile__menu").classList.toggle("profile__menu-open");
+    },
+    CloseDropMenu() {
+      document.getElementById("btn_Profile").classList.remove("profile__menu-open");
+      document.getElementById("profile__menu").classList.remove("profile__menu-open");
+    },
   },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const user = await axios.get('/api/v1/users/profile');
     await this.$store.dispatch('user', user.data.data);
-    document.getElementById("btn_Profile").addEventListener("click", function () {
-      document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
-      document.getElementById("profile__menu").classList.toggle("profile__menu-open");
-    });
+    // document.getElementById("btn_Profile").addEventListener("click", function () {
+    //
+    // });
   },
   computed: {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
