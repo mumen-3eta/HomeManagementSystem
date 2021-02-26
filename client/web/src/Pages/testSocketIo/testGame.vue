@@ -28,7 +28,6 @@ export default {
   },
   created() {
     this.socket = io('http://localhost:3001');
-
   },
   mounted() {
     this.context = this.$refs.game.getContext("2d");

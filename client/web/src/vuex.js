@@ -19,6 +19,7 @@ const state = {
     TypeControllerData: null,
     LocationControllerData: null,
     NewControllerData: null,
+    allMessages: null,
 
 };
 
@@ -71,6 +72,9 @@ const store = new Vuex.Store({
         NewControllerData: (state) => {
             return state.NewControllerData;
         },
+        allMessages: (state) => {
+            return state.allMessages;
+        },
     },
     actions: {
         user(context, user) {
@@ -115,6 +119,9 @@ const store = new Vuex.Store({
         },
         NewControllerData(context, NewControllerData) {
             context.commit('NewControllerData', NewControllerData);
+        },
+        allMessages(context, allMessages) {
+            context.commit('allMessages', allMessages);
         },
     },
     mutations: {
@@ -161,6 +168,9 @@ const store = new Vuex.Store({
         },
         NewControllerData(state, NewControllerData) {
             state.NewControllerData = NewControllerData;
+        },
+        allMessages(state, allMessages) {
+            state.allMessages = allMessages;
         },
     }
 

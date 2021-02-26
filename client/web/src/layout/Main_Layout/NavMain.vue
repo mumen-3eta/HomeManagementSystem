@@ -52,6 +52,14 @@
             <i class="fas fa-map-marker-alt nav__icon"></i>
           </router-link>
         </li>
+        <li v-if="user.basicInfo.isAdmin"
+            :class="['nav__item',this.$route.path === '/v2/main/admin/all/messages' ? 'nav__item--isActive':'']"
+            aria-label="All Messages">
+          <router-link :to="{path:'/v2/main/admin/all/messages'}" class="nav__link focus--box-shadow"
+                       role="menuitem">
+            <i class="far fa-comment-dots nav__icon"></i>
+          </router-link>
+        </li>
         <li :class="['nav__item',this.$route.path === '/v2/main/profile' ? 'nav__item--isActive':'']"
             aria-label="Profile">
           <router-link :to="{path:'/v2/main/profile'}" class="nav__link focus--box-shadow"
