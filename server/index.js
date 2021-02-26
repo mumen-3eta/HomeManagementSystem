@@ -38,6 +38,10 @@ SocketIo.on("connection", socket => {
                 break;
         }
     })
+    socket.on("all_messages", data => {
+        SocketIo.emit("all_messages", data);
+        // socket.broadcast.emit("all_messages", data);
+    })
 });
 
 Http.listen(3001, () => {

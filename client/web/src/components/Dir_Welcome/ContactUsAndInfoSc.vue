@@ -58,10 +58,13 @@
 </template>
 
 <script>
+import io from "socket.io-client";
+
 export default {
   name: "ContactUsAndInfoSc",
   data() {
     return {
+      socket: null,
       Email: null,
       Subject: null,
       Message: null,
@@ -123,6 +126,8 @@ export default {
         }
       }
       if (this.Email || this.Subject || this.Message) {
+        /* Email , Subject , Message*/
+        this.socket.emit("all_messages", {email: this.Email, subject: this.Subject, message: this.Message});
         // section Api for send message
         // try {
         //    code..
@@ -152,6 +157,9 @@ export default {
       document.getElementById("lab_MsgInputContact").style.backgroundColor = "";
       document.getElementById("lab_MsgInputContact").classList.remove("AddMoved");
     },
+  },
+  created() {
+    this.socket = io('http://localhost:3001');
   },
   mounted() {
     const input1 = document.getElementById("EmailInputContact");
