@@ -3,7 +3,7 @@
     <div class="container__ourTeamSc">
       <h2 v-animate-onscroll="'animated fadeIn'" class="container__ourTeamSc-title">Our Team</h2>
       <div class="main__ourTeamSc">
-        <carousel :autoplay="true" :dots="true" :nav="false"
+        <carousel :autoplay="true" :autoplaySpeed="1000" :dots="true" :nav="false"
                   :responsive="{0:{items:1},600:{items:2},1200:{items:3},1800:{items:4}}">
           <!--      member 1 - osama      -->
           <div v-animate-onscroll="'animated fadeIn fadeInUp'" class="Member__Team">

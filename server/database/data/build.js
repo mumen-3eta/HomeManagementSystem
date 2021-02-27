@@ -9,4 +9,5 @@ const dbBuild = () => {
   }
   return connection.query(sql);
 };
+
 module.exports = dbBuild;

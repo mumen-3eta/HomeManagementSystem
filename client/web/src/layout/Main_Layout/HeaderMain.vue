@@ -1,4 +1,5 @@
 <template>
+
   <header class="header">
     <div class="header__wrapper">
       <form action="" class="search">
@@ -7,8 +8,8 @@
         </button>
         <input class="search__input focus--box-shadow" placeholder="Search ..." type="search">
       </form>
-      <div class="profile">
-        <button id="btn_Profile" class="profile__button" type="button">
+      <div v-on-clickaway="CloseDropMenu" class="profile">
+        <button id="btn_Profile" class="profile__button" type="button" @click.prevent="OpenDropMenu">
           <span v-if="user.basicInfo.userName" class="profile__name"><i
               class="fas fa-caret-down"></i>{{ user.basicInfo.userName }}</span>
           <img v-if="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image" class="profile__img">
@@ -21,16 +22,28 @@
                 <p class="profile__menu-nameTitle"> Profile </p>
               </router-link>
             </li>
-            <li class="profile__menu-li">
-              <router-link class="profile__menu-link" to="#">
-                <i class="fas fa-bell profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">notifications </p>
+            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+              <router-link :to="{path:'/v2/main/admin/create/processor'}" class="profile__menu-link">
+                <i class="fas fa-laptop-medical profile__menu-icon"></i>
+                <p class="profile__menu-nameTitle">Create Processor</p>
               </router-link>
             </li>
             <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
-              <router-link :to="{path:'/v2/main/admin'}" class="profile__menu-link">
+              <router-link :to="{path:'/v2/main/admin/create/controller'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">Create device</p>
+                <p class="profile__menu-nameTitle">Create Controller</p>
+              </router-link>
+            </li>
+            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+              <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="profile__menu-link">
+                <i class="fas fa-cubes profile__menu-icon"></i>
+                <p class="profile__menu-nameTitle">Add Type Controller</p>
+              </router-link>
+            </li>
+            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+              <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="profile__menu-link">
+                <i class="fas fa-map-marker-alt profile__menu-icon"></i>
+                <p class="profile__menu-nameTitle">Add Location Controller</p>
               </router-link>
             </li>
             <li v-if="!user.basicInfo.isAdmin" class="profile__menu-li">
@@ -50,14 +63,17 @@
       </div>
     </div>
   </header><!-- End HEADER -->
+  
 </template>
 
 <script>
 import axios from "axios";
 import {mapGetters} from "vuex";
+import {mixin as clickAway} from "vue-clickaway";
 
 export default {
   name: "HeaderMain",
+  mixins: [clickAway],
   methods: {
     async handleClick() {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
@@ -67,18 +83,34 @@ export default {
       await this.$store.dispatch('TokenUser', null);
       await this.$store.dispatch('deviceInfoAdd', null);
       await this.$store.dispatch('processorId', null);
+      await this.$store.dispatch('controllerId', null);
       await this.$store.dispatch('userProcessorIds', null);
+      await this.$store.dispatch('userAllProcessor', null);
+      await this.$store.dispatch('NewTypeController', null);
+      await this.$store.dispatch('allTypeController', null);
+      await this.$store.dispatch('NewLocationController', null);
+      await this.$store.dispatch('allLocationController', null);
+      await this.$store.dispatch('TypeControllerData', null);
+      await this.$store.dispatch('LocationControllerData', null);
+      await this.$store.dispatch('NewControllerData', null);
       await this.$router.push('/v2/login');
-    }
+    },
+    OpenDropMenu() {
+      document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
+      document.getElementById("profile__menu").classList.toggle("profile__menu-open");
+    },
+    CloseDropMenu() {
+      document.getElementById("btn_Profile").classList.remove("profile__menu-open");
+      document.getElementById("profile__menu").classList.remove("profile__menu-open");
+    },
   },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const user = await axios.get('/api/v1/users/profile');
     await this.$store.dispatch('user', user.data.data);
-    document.getElementById("btn_Profile").addEventListener("click", function () {
-      document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
-      document.getElementById("profile__menu").classList.toggle("profile__menu-open");
-    });
+    // document.getElementById("btn_Profile").addEventListener("click", function () {
+    //
+    // });
   },
   computed: {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
@@ -96,9 +128,11 @@ export default {
 
 .profile__menu {
   position: absolute;
-  left: -2.1rem;
-  width: calc(100% + 2.1rem);
-  height: 12.74rem;
+  left: -8.5rem;
+  width: calc(100% + 8.5rem);
+  max-width: calc(100% + 8.5rem);
+  min-width: calc(100% + 8.5rem);
+  height: auto;
   background-color: white;
   z-index: 999;
   box-shadow: 1px 1px 4px #9d9c9c;
@@ -115,8 +149,10 @@ export default {
 @media (max-width: 769px) {
   .profile__menu {
     width: 13.65rem;
+    max-width: 20.65rem;
+    min-width: 20.65rem;
     top: 3.71rem;
-    left: -9rem;
+    left: -16rem;
     border-radius: 10px 0 10px 10px;
   }
 }

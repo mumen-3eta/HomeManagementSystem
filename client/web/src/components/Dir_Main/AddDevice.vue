@@ -46,11 +46,14 @@
                   }">
           <div slot="table-actions" class="btn_searchScan"></div>
           <template slot="table-row" slot-scope="props">
-              <span v-if="props.column.field === 'btn_Action'">
-                  <!--       not work yet           -->
-                <button class="btn_deleted" @click.prevent="deleteProcessorID(props.row.Processor_Id)"><i
-                    class="fas fa-trash-alt"></i> Delete</button>
-              </span>
+            <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
+              <router-link :to="{path:'/v2/main/device/create/controller/' + props.row.Processor_Id}">
+                <button class="btn_AddController"><i class="fas fa-plus"></i> Add Controller</button>
+              </router-link>
+              <button class="btn_deleted" @click.prevent="deleteProcessorID(props.row.Processor_Id)"><i
+                  class="fas fa-trash-alt"></i> Delete
+              </button>
+            </div>
             <span v-else>
                 {{ props.formattedRow[props.column.field] }}
               </span>
@@ -154,7 +157,7 @@ export default {
         {
           label: 'Action',
           field: 'btn_Action',
-          type: 'number',
+          type: 'string',
           sortable: false,
         },
       ],
@@ -333,7 +336,6 @@ export default {
 
   },
   computed: {
-
     ...mapGetters(['processorId', 'userProcessorIds'])
   },
 }

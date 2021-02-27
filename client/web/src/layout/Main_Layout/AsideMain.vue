@@ -31,7 +31,7 @@
         <!--          <span class="statistics__entry-quantity">68</span>-->
         <!--        </li>-->
       </ul>
-      <div class="banner">
+      <div v-if="!user.basicInfo.isAdmin" class="banner">
         <h3 class="banner__title">Premium access</h3>
         <p class="banner__description">Create Teams without limit</p>
         <button class="banner__button" type="button">Get Premium Access</button>

@@ -44,7 +44,6 @@ export default {
   z-index: calc(99 * 999);
   display: flex;
   justify-content: center;
-  align-items: first;
 }
 
 .mainLoader {

@@ -7,8 +7,14 @@ import MainHomePage from "@/Pages/Main/MainHomePage";
 import MainProfilePage from "@/Pages/Main/MainProfilePage";
 import newLoginPage from "@/Pages/Site/newLoginPage";
 import newRegisterPage from "@/Pages/Site/newRegisterPage";
-import AdminDashBoardPanelPage from "@/Pages/Admin/AdminDashBoardPanelPage";
 import AddDevicePage from "@/Pages/Main/AddDevicePage";
+import AddControllerPage from "@/Pages/Main/AddControllerPage";
+import AdminCreateProcessorPage from "@/Pages/Admin/AdminCreateProcessorPage";
+import AdminCreateControllerPage from "@/Pages/Admin/AdminCreateControllerPage";
+import AdminAddTypeControllerPage from "@/Pages/Admin/AdminAddTypeControllerPage";
+import AdminAddLocationControllerPage from "@/Pages/Admin/AdminAddLocationControllerPage";
+import testGame from "@/Pages/testSocketIo/testGame";
+import AdminMessagesPage from "@/Pages/Admin/AdminMessagesPage";
 
 Vue.use(Router)
 
@@ -16,6 +22,7 @@ export default new Router({
     mode: 'history',
     routes: [
         {path: '/', name: "WelcomePage", component: WelcomePage},
+        {path: '/game', name: "testGame", component: testGame},
         // {
         //     path: '/mainPage/DeviceInfo/:Device_id',
         //     name: "DeviceInfo",
@@ -127,12 +134,107 @@ export default new Router({
                 next()
             }
         },
+        {
+            path: '/v2/main/device/create/controller/:processor_id',
+            name: "AddControllerPage",
+            component: AddControllerPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
 
         /* Main Admin || email:mainadmin@hmsy.test || password : mainadmin@hmsy.test */
         {
-            path: '/v2/main/admin',
-            name: "AdminDashBoardPanelPage",
-            component: AdminDashBoardPanelPage,
+            path: '/v2/main/admin/create/processor',
+            name: "AdminCreateProcessorPage",
+            component: AdminCreateProcessorPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (!store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/admin/create/controller',
+            name: "AdminCreateControllerPage",
+            component: AdminCreateControllerPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (!store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/admin/create/controller/type',
+            name: "AdminAddTypeControllerPage",
+            component: AdminAddTypeControllerPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (!store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/admin/create/controller/location',
+            name: "AdminAddLocationControllerPage",
+            component: AdminAddLocationControllerPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (!store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/admin/all/messages',
+            name: "AdminMessagesPage",
+            component: AdminMessagesPage,
             // must be login
             beforeEnter: (to, from, next) => {
                 if (!store.getters['TokenUser']) {
