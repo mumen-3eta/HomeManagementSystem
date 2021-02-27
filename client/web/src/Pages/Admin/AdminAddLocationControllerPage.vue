@@ -96,6 +96,7 @@ import AsideMain from "@/layout/Main_Layout/AsideMain";
 import NavMain from "@/layout/Main_Layout/NavMain";
 import axios from "axios";
 import {mapGetters} from "vuex";
+import io from "socket.io-client";
 
 export default {
   name: "AdminAddLocationControllerPage",
@@ -104,6 +105,7 @@ export default {
   },
   data() {
     return {
+      socket: null,
       NameLocationController: null,
       errorNameLocationController: null,
       edited: false,
@@ -176,9 +178,13 @@ export default {
           locationId: item.locationId,
           btn_Action: ''
         }))
-        await this.$store.dispatch('allLocationController', All_Location_Controller);
 
-        this.rows = this.$store.getters.allLocationController;
+        this.socket.emit("all_Location_Controller", All_Location_Controller);
+        this.socket.on("all_Location_Controller_server", (data) => {
+          this.$store.dispatch('allLocationController', data);
+          this.rows = this.$store.getters.allLocationController;
+        });
+
         this.CloseLocationControllerModal();
         this.$swal.fire({
           position: 'center',
@@ -223,9 +229,12 @@ export default {
           locationId: item.locationId,
           btn_Action: ''
         }))
-        await this.$store.dispatch('allLocationController', All_Location_Controller);
+        this.socket.emit("all_Location_Controller", All_Location_Controller);
+        this.socket.on("all_Location_Controller_server", (data) => {
+          this.$store.dispatch('allLocationController', data);
+          this.rows = this.$store.getters.allLocationController;
+        });
 
-        this.rows = this.$store.getters.allLocationController;
         this.CloseLocationControllerModal();
         this.$swal.fire({
           position: 'center',
@@ -280,9 +289,12 @@ export default {
         locationId: item.locationId,
         btn_Action: ''
       }))
-      await this.$store.dispatch('allLocationController', All_Location_Controller);
+      this.socket.emit("all_Location_Controller", All_Location_Controller);
+      this.socket.on("all_Location_Controller_server", (data) => {
+        this.$store.dispatch('allLocationController', data);
+        this.rows = this.$store.getters.allLocationController;
+      });
 
-      this.rows = this.$store.getters.allLocationController;
     },
   },
   computed: {
@@ -297,8 +309,14 @@ export default {
       locationId: item.locationId,
       btn_Action: ''
     }))
-    await this.$store.dispatch('allLocationController', All_Location_Controller);
-    this.rows = this.$store.getters.allLocationController;
+    this.socket.emit("all_Location_Controller", All_Location_Controller);
+    this.socket.on("all_Location_Controller_server", (data) => {
+      this.$store.dispatch('allLocationController', data);
+      this.rows = this.$store.getters.allLocationController;
+    });
+  },
+  created() {
+    this.socket = io('http://localhost:3001');
   },
 }
 </script>

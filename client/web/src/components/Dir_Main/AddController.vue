@@ -12,9 +12,10 @@
       </div>
       <div class="input-group__AddControllerUser">
         <label for="TypeController">Type Controller : {{ typeController_id ? typeController_id.label : '' }}</label>
-        <v-select id="TypeController" v-model.trim="typeController_id"
-                  :options="$store.state.TypeControllerData"
-                  :value="$store.state.TypeControllerData"></v-select>
+        <div @click.prevent="getAllTypeController">
+          <v-select id="TypeController" v-model.trim="typeController_id" :options="$store.state.TypeControllerData"
+                    :value="$store.state.TypeControllerData"></v-select>
+        </div>
       </div>
     </div>
     <div class="SubMain__Section-AddControllerUser">
@@ -29,9 +30,12 @@
       <div class="input-group__AddControllerUser">
         <label for="LocationController">Location Controller :
           {{ locationController_id ? locationController_id.label : '' }}</label>
-        <v-select id="LocationController" v-model.trim="locationController_id"
-                  :options="$store.state.LocationControllerData"
-                  :value="$store.state.LocationControllerData"></v-select>
+        <div @click.prevent="getAllLocationController">
+          <v-select id="LocationController" v-model.trim="locationController_id"
+                    :options="$store.state.LocationControllerData"
+                    :value="$store.state.LocationControllerData"></v-select>
+        </div>
+
       </div>
     </div>
     <div>
@@ -61,6 +65,7 @@
 <script>
 import {mapGetters} from "vuex";
 import axios from "axios";
+import io from "socket.io-client";
 
 export default {
   name: "AddController",
@@ -146,20 +151,30 @@ export default {
       this.locationController_id = null;
       this.isShowingCamera = false;
       this.isShowingWait = true;
+      this.getAllTypeController();
+      this.getAllLocationController();
     },
 
     /*** Get All Type Controller ***/
     async getAllTypeController() {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
       const {data: {data: TypeControllerData}} = await axios.get('/api/v1/controller/type');
-      await this.$store.dispatch('TypeControllerData', TypeControllerData);
+      this.socket.emit("user_TypeControllerData", TypeControllerData);
+      this.socket.on("user_TypeControllerData_server", (data) => {
+        this.$store.dispatch('TypeControllerData', data);
+      });
+      // await this.$store.dispatch('TypeControllerData', TypeControllerData);
     },
 
     /*** Get All Location Controller ***/
     async getAllLocationController() {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
       const {data: {data: LocationControllerData}} = await axios.get('/api/v1/controller/location');
-      await this.$store.dispatch('LocationControllerData', LocationControllerData);
+      this.socket.emit("user_LocationControllerData", LocationControllerData);
+      this.socket.on("user_LocationControllerData_server", (data) => {
+        this.$store.dispatch('LocationControllerData', data);
+      });
+      // await this.$store.dispatch('LocationControllerData', LocationControllerData);
     }
   },
   beforeMount() {
@@ -168,6 +183,9 @@ export default {
   },
   computed: {
     ...mapGetters(['TypeControllerData', 'LocationControllerData'])
+  },
+  created() {
+    this.socket = io('http://localhost:3001');
   },
 }
 </script>

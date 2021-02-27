@@ -104,7 +104,7 @@ export default {
   },
   mounted() {
     // reserve event that sent from server
-    this.socket.on("all_messages", (data) => {
+    this.socket.on("all_messages_server", (data) => {
       /*
       * create route in api (create/message)
       * take (email,subject,message)

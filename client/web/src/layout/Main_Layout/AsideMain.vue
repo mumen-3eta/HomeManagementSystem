@@ -48,10 +48,16 @@ export default {
   name: "AsideMain",
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const user = await axios.get('/api/v1/users/profile');
-    await this.$store.dispatch('user', user.data.data);
-    const responseProcessor = await axios.get('/api/v1/user/processor');
-    await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
+    const {data: {data: user_profileData}} = await axios.get('/api/v1/users/profile');
+    this.socket.emit("user_profileData", user_profileData);
+    this.socket.on("user_profileData_server", (data) => {
+      this.$store.dispatch('user', data);
+    });
+    const {data: {data: responseProcessor}} = await axios.get('/api/v1/user/processor');
+    this.socket.emit("user_All_Processor", responseProcessor);
+    this.socket.on("user_All_Processor_server", (data) => {
+      this.$store.dispatch('userProcessorIds', data);
+    });
   },
   computed: {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser', 'userProcessorIds'])

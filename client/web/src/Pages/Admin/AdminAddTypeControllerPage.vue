@@ -97,6 +97,7 @@ import AsideMain from "@/layout/Main_Layout/AsideMain";
 import NavMain from "@/layout/Main_Layout/NavMain";
 import axios from "axios";
 import {mapGetters} from "vuex";
+import io from "socket.io-client";
 
 export default {
   name: "AdminAddTypeControllerPage",
@@ -105,6 +106,7 @@ export default {
   },
   data() {
     return {
+      socket: null,
       NameTypeController: null,
       errorLabel: null,
       edited: false,
@@ -171,9 +173,14 @@ export default {
           labelId: item.labelId,
           btn_Action: ''
         }))
-        await this.$store.dispatch('allTypeController', All_Type_Controller);
+        this.socket.emit("all_Type_Controller", All_Type_Controller);
+        this.socket.on("all_Type_Controller_server", (data) => {
+          this.$store.dispatch('allTypeController', data);
+          this.rows = this.$store.getters.allTypeController;
+        });
+        // await this.$store.dispatch('allTypeController', All_Type_Controller);
 
-        this.rows = this.$store.getters.allTypeController;
+        // this.rows = this.$store.getters.allTypeController;
         this.$modal.hide('AddNewTypeController')
         this.$swal.fire({
           position: 'center',
@@ -227,8 +234,13 @@ export default {
         labelId: item.labelId,
         btn_Action: ''
       }))
-      await this.$store.dispatch('allTypeController', All_Type_Controller);
-      this.rows = this.$store.getters.allTypeController;
+      this.socket.emit("all_Type_Controller", All_Type_Controller);
+      this.socket.on("all_Type_Controller_server", (data) => {
+        this.$store.dispatch('allTypeController', data);
+        this.rows = this.$store.getters.allTypeController;
+      });
+      // await this.$store.dispatch('allTypeController', All_Type_Controller);
+      // this.rows = this.$store.getters.allTypeController;
     },
     /*** btn Clear Type ***/
     ClearTypeController() {
@@ -261,9 +273,14 @@ export default {
           labelId: item.labelId,
           btn_Action: ''
         }))
-        await this.$store.dispatch('allTypeController', All_Type_Controller);
-
-        this.rows = this.$store.getters.allTypeController;
+        this.socket.emit("all_Type_Controller", All_Type_Controller);
+        this.socket.on("all_Type_Controller_server", (data) => {
+          this.$store.dispatch('allTypeController', data);
+          this.rows = this.$store.getters.allTypeController;
+        });
+        // await this.$store.dispatch('allTypeController', All_Type_Controller);
+        //
+        // this.rows = this.$store.getters.allTypeController;
         this.$modal.hide('AddNewTypeController')
         this.$swal.fire({
           position: 'center',
@@ -284,6 +301,9 @@ export default {
     },
 
   },
+  created() {
+    this.socket = io('http://localhost:3001');
+  },
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const {data: {data: allTypeController}} = await axios.get('/api/v1/controller/type');
@@ -293,8 +313,13 @@ export default {
       labelId: item.labelId,
       btn_Action: ''
     }))
-    await this.$store.dispatch('allTypeController', All_Type_Controller);
-    this.rows = this.$store.getters.allTypeController;
+    this.socket.emit("all_Type_Controller", All_Type_Controller);
+    this.socket.on("all_Type_Controller_server", (data) => {
+      this.$store.dispatch('allTypeController', data);
+      this.rows = this.$store.getters.allTypeController;
+    });
+    // await this.$store.dispatch('allTypeController', All_Type_Controller);
+    // this.rows = this.$store.getters.allTypeController;
   },
   computed: {
     ...mapGetters(['NewTypeController', 'allTypeController'])
