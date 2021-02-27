@@ -13,7 +13,6 @@ import AdminCreateProcessorPage from "@/Pages/Admin/AdminCreateProcessorPage";
 import AdminCreateControllerPage from "@/Pages/Admin/AdminCreateControllerPage";
 import AdminAddTypeControllerPage from "@/Pages/Admin/AdminAddTypeControllerPage";
 import AdminAddLocationControllerPage from "@/Pages/Admin/AdminAddLocationControllerPage";
-import testGame from "@/Pages/testSocketIo/testGame";
 import AdminMessagesPage from "@/Pages/Admin/AdminMessagesPage";
 
 Vue.use(Router)
@@ -22,7 +21,6 @@ export default new Router({
     mode: 'history',
     routes: [
         {path: '/', name: "WelcomePage", component: WelcomePage},
-        {path: '/game', name: "testGame", component: testGame},
         // {
         //     path: '/mainPage/DeviceInfo/:Device_id',
         //     name: "DeviceInfo",
