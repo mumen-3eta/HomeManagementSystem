@@ -50,6 +50,12 @@
               <router-link :to="{path:'/v2/main/device/create/controller/' + props.row.Processor_Id}">
                 <button class="btn_AddController"><i class="fas fa-plus"></i> Add Controller</button>
               </router-link>
+              <router-link :to="{path:'/v2/main/device/all/controller/' + props.row.Processor_Id}">
+                <button class="btn_Show">
+                  <i class="fas fa-eye"></i>
+                  Controller
+                </button>
+              </router-link>
               <button class="btn_deleted" @click.prevent="deleteProcessorID(props.row.Processor_Id)"><i
                   class="fas fa-trash-alt"></i> Delete
               </button>

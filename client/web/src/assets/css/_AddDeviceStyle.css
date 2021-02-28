@@ -253,6 +253,66 @@
     margin-left: 1rem;
 }
 
+.btn_Edit {
+    background-color: #0d92d9;
+    color: white;
+    border-radius: 5px;
+    margin-left: 1rem;
+}
+
+.btn_Show {
+    background-color: #ecab0e;
+    color: white;
+    border-radius: 5px;
+    margin-left: 0.5rem;
+}
+
+.btn_Status {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-self: center;
+    justify-items: center;
+    height: 40px;
+    margin-left: 0.5rem;
+}
+
+.form-check-input {
+    width: 1.7em;
+    height: 1.5em;
+    margin-top: .25em;
+    vertical-align: top;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid rgba(0, 0, 0, .25);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+.form-check-input:focus {
+    outline: none;
+}
+
+.form-switch .form-check-input {
+    width: 2.5em;
+    /* margin-left: -2.5em; */
+    border-radius: 2em;
+}
+
+.form-check-input:checked {
+    background-color: #1aa24b;
+    border-color: #209d0a;
+    outline: none;
+}
+
 .btn_AddController {
     background-color: #0d9fd9;
     color: white;
@@ -261,6 +321,14 @@
 
 .btn_deleted:hover {
     background-color: #a90707;
+}
+
+.btn_Edit:hover {
+    background-color: #0b75ab;
+}
+
+.btn_Show:hover {
+    background-color: #c18e0c;
 }
 
 .btn_AddController:hover {
