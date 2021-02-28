@@ -42,6 +42,7 @@
       <button class="btn btn-info" @click.prevent="CreateControllerForUser">Create</button>
       <button class="btn btn-danger" @click.prevent="ClearAllDataController">Clear</button>
     </div>
+    <AllController/>
     <!--    modal Search Processor id  -->
     <modal :resizable="false" :width="650" height="auto" name="ScanControllerId" @closed="CloseScanModalControllerID"
            @before-open="CloseScanModalControllerID">
@@ -59,6 +60,7 @@
       </div>
     </modal>
     <!--   End modal Search Processor id  -->
+
   </section>
 </template>
 
@@ -66,9 +68,11 @@
 import {mapGetters} from "vuex";
 import axios from "axios";
 import io from "socket.io-client";
+import AllController from "@/components/Dir_Main/AllController";
 
 export default {
   name: "AddController",
+  components: {AllController},
   data() {
     return {
       ProcessorID: this.$route.params.processor_id,
@@ -78,6 +82,52 @@ export default {
       locationController_id: null,
       isShowingCamera: false,
       isShowingWait: true,
+      searchTerm: null,
+      Status: false,
+      columns: [
+        {
+          label: 'ID',
+          field: 'id',
+          type: 'string',
+        },
+        {
+          label: 'Name',
+          field: 'name',
+          type: 'string',
+        },
+        {
+          label: 'Controller ID',
+          field: 'Controller_Id',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'Action',
+          field: 'btn_Action',
+          type: 'string',
+          sortable: false,
+        },
+      ],
+      rows: [
+        {
+          id: "1",
+          name: "Controller #1",
+          Controller_Id: "185w5158d6wa185w6418fe15fe",
+          btn_Action: "",
+        },
+        {
+          id: "2",
+          name: "Controller #2",
+          Controller_Id: "185185dw6d35181d86418fe15fe",
+          btn_Action: "",
+        },
+        {
+          id: "3",
+          name: "Controller #3",
+          Controller_Id: "185w51d418wdwa3w6418fe15fe",
+          btn_Action: "",
+        },
+      ],
     }
   },
   methods: {
@@ -175,7 +225,9 @@ export default {
         this.$store.dispatch('LocationControllerData', data);
       });
       // await this.$store.dispatch('LocationControllerData', LocationControllerData);
-    }
+    },
+
+
   },
   beforeMount() {
     this.getAllTypeController();

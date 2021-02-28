@@ -14,6 +14,7 @@ import AdminCreateControllerPage from "@/Pages/Admin/AdminCreateControllerPage";
 import AdminAddTypeControllerPage from "@/Pages/Admin/AdminAddTypeControllerPage";
 import AdminAddLocationControllerPage from "@/Pages/Admin/AdminAddLocationControllerPage";
 import AdminMessagesPage from "@/Pages/Admin/AdminMessagesPage";
+import AllControllerPage from "@/Pages/Main/AllControllerPage";
 
 Vue.use(Router)
 
@@ -136,6 +137,25 @@ export default new Router({
             path: '/v2/main/device/create/controller/:processor_id',
             name: "AddControllerPage",
             component: AddControllerPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/device/all/controller/:processor_id',
+            name: "AllControllerPage",
+            component: AllControllerPage,
             // must be login
             beforeEnter: (to, from, next) => {
                 if (!store.getters['TokenUser']) {
