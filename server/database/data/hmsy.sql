@@ -1,6 +1,6 @@
 BEGIN;
 
-DROP TABLE IF EXISTS CAzSCADE;
+DROP TABLE IF EXISTS users,processor_production,user_processor,controller_type,controller_production,controller_location,user_controller CASCADE;
 
 CREATE TABLE users(
   id SERIAL PRIMARY KEY,
@@ -13,35 +13,35 @@ CREATE TABLE users(
   mobile VARCHAR(14),
   is_admin BOOLEAN DEFAULT false,
   create_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 -- processor
-CREATE TABLE  processor_production(
+CREATE TABLE processor_production(
   id SERIAL PRIMARY KEY,
   create_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 CREATE TABLE user_processor(
   id SERIAL PRIMARY KEY,
-  processor_id INTEGER REFERENCES processor_production(id)  NOT NULL
+  processor_id INTEGER REFERENCES processor_production(id)  NOT NULL,
   user_id INTEGER REFERENCES users(id) NOT NULL
-)
+);
 
 -- Controller
 CREATE TABLE controller_type(
   id SERIAL PRIMARY KEY,
   label VARCHAR(50) NOT NULL
-)
+);
 
 CREATE TABLE controller_production(
   id SERIAL PRIMARY KEY,
   create_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 CREATE TABLE controller_location(
   id SERIAL PRIMARY KEY,
   label VARCHAR(50) NOT NULL
-)
+);
 
 CREATE TABLE user_controller(
   id SERIAL PRIMARY KEY,
@@ -52,6 +52,6 @@ CREATE TABLE user_controller(
   location_id INTEGER	REFERENCES controller_location(id),
   controller_id INTEGER	REFERENCES controller_production(id),
   create_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
-)
+);
 
 COMMIT;

@@ -3,16 +3,20 @@ const {
   UserController,
   ControllerType,
   ControllerLocation,
-  ControllerProduction,
+  // ControllerProduction,
 } = require('../../models/controller');
+const {
+  createControllerProduction,
+} = require('../../database/queries/controller');
 const { boomify } = require('../../utils');
 const { authenticate } = require('../../middleware/authenticate');
 
 // creat controller as an admin
 router.post('/controller', async (req, res, next) => {
   try {
-    const controller = new ControllerProduction();
-    const { _id: controllerId } = await controller.save();
+    // const controller = new ControllerProduction();
+    // const { _id: controllerId } = await controller.save();
+    const { rows: controllerId } = createControllerProduction();
 
     res.json({
       title: 'controller Production add Successful',
@@ -26,7 +30,7 @@ router.post('/controller', async (req, res, next) => {
 // update controller as a user
 router.post('/user/controller', authenticate, async (req, res, next) => {
   try {
-    //{name,ProcessorId,typeId,locationId,controllerId}
+    // {name,ProcessorId,typeId,locationId,controllerId}
 
     // check if he the owner
 
@@ -44,7 +48,7 @@ router.post('/user/controller', authenticate, async (req, res, next) => {
 //
 router.put('/user/controller', authenticate, async (req, res, next) => {
   try {
-    //{userControllerID,name,ProcessorId,typeId,locationId,controllerId}
+    // {userControllerID,name,ProcessorId,typeId,locationId,controllerId}
 
     // check if he the owner
     const data = await UserController.findOneAndUpdate(
@@ -65,7 +69,7 @@ router.put('/user/controller', authenticate, async (req, res, next) => {
 // delet
 router.delete('/user/controller', authenticate, async (req, res, next) => {
   try {
-    //{userControllerID}
+    // {userControllerID}
 
     // check if he the owner
 
