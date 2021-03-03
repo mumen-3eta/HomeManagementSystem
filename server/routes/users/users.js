@@ -7,7 +7,7 @@ const {
   signIn,
   getUserDataById,
   deleteUser,
-} = require('../../database/queries/users');
+} = require('../../database/queries');
 // const User = require('../../models/user');
 const Session = require('../../models/session');
 const { authenticate } = require('../../middleware/authenticate');
@@ -35,7 +35,7 @@ router.post('/register', async (req, res, next) => {
     // const persistedUser = await user.save();
     // const userId = persistedUser._id;
 
-    const userId = await signUp(userData);
+    const { rows: userId } = await signUp(userData);
 
     const session = await initSession(userId);
 
@@ -83,7 +83,7 @@ router.post('/login', async (req, res, next) => {
       });
     }
     // const user = await User.findOne({ 'basicInfo.email': email });
-    const user = await signIn(email);
+    const { rows: user } = await signIn(email);
     if (!user) {
       throw new Error();
     }
@@ -136,7 +136,7 @@ router.get('/me', authenticate, async (req, res, next) => {
     //   }
     // );
     // delete user.basicInfo.createdAt;
-    const user = await getUserDataById(userId);
+    const { rows: user } = await getUserDataById(userId);
     res.json({
       title: 'Authentication successful',
       detail: 'Successfully authenticated user',

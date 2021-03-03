@@ -28,14 +28,14 @@ CREATE TABLE user_processor(
 );
 
 -- Controller
-CREATE TABLE controller_type(
-  id SERIAL PRIMARY KEY,
-  label VARCHAR(50) NOT NULL
-);
-
 CREATE TABLE controller_production(
   id SERIAL PRIMARY KEY,
   create_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE controller_type(
+  id SERIAL PRIMARY KEY,
+  label VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE controller_location(

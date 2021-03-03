@@ -1,0 +1,53 @@
+const {
+  signUp,
+  signIn,
+  getUserDataById,
+  deleteUser,
+  getAllUserData,
+  updateUserData,
+} = require('./users');
+const {
+  createProcessorProduction,
+  connectProcessorUser,
+  getProcessorConnectionByUserId,
+  deleteProcessorConnection,
+} = require('./processor');
+const {
+  createControllerProduction,
+  connectControllerProcessor,
+  updateUserControllerData,
+  deleteControllerConnection,
+  addControllerType,
+  getControllerType,
+  updateControllerType,
+  deleteControllerType,
+  addControllerLocation,
+  getControllerLocation,
+  updateControllerLocation,
+  deleteControllerLocation,
+} = require('./controller');
+
+module.exports = {
+  signUp,
+  signIn,
+  getUserDataById,
+  deleteUser,
+  getAllUserData,
+  updateUserData,
+  createProcessorProduction,
+  connectProcessorUser,
+  getProcessorConnectionByUserId,
+  deleteProcessorConnection,
+  createControllerProduction,
+  connectControllerProcessor,
+  updateUserControllerData,
+  deleteControllerConnection,
+  addControllerType,
+  getControllerType,
+  updateControllerType,
+  deleteControllerType,
+  addControllerLocation,
+  getControllerLocation,
+  updateControllerLocation,
+  deleteControllerLocation,
+};
