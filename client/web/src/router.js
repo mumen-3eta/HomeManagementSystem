@@ -15,6 +15,7 @@ import AdminAddTypeControllerPage from "@/Pages/Admin/AdminAddTypeControllerPage
 import AdminAddLocationControllerPage from "@/Pages/Admin/AdminAddLocationControllerPage";
 import AdminMessagesPage from "@/Pages/Admin/AdminMessagesPage";
 import AllControllerPage from "@/Pages/Main/AllControllerPage";
+import ControllerForProcessorPage from "@/Pages/Main/ControllerForProcessorPage";
 
 Vue.use(Router)
 
@@ -22,42 +23,6 @@ export default new Router({
     mode: 'history',
     routes: [
         {path: '/', name: "WelcomePage", component: WelcomePage},
-        // {
-        //     path: '/mainPage/DeviceInfo/:Device_id',
-        //     name: "DeviceInfo",
-        //     component: DeviceInfo,
-        //     // must be login
-        //     beforeEnter: (to, from, next) => {
-        //         // if (localStorage.getItem('token') == null){
-        //         if (!store.getters['TokenUser']) {
-        //             return next({
-        //                 name: "LoginPage"
-        //             })
-        //         }
-        //         // }
-        //
-        //         next()
-        //     }
-        // },// need delete it
-        // {
-        //     path: '/mainPage/DeviceInfo/:Device_id/edit',
-        //     name: "EditDeviceInfo",
-        //     component: EditInfoDevice,
-        //     // must be login
-        //     beforeEnter: (to, from, next) => {
-        //         // if (localStorage.getItem('token') == null){
-        //         if (!store.getters['TokenUser']) {
-        //             return next({
-        //                 name: "LoginPage"
-        //             })
-        //         }
-        //         // }
-        //         next()
-        //     }
-        // },// need delete it
-
-
-        // new Code here
         {
             path: '/v2/login',
             name: "newLoginPage",
@@ -156,6 +121,25 @@ export default new Router({
             path: '/v2/main/device/all/controller/:processor_id',
             name: "AllControllerPage",
             component: AllControllerPage,
+            // must be login
+            beforeEnter: (to, from, next) => {
+                if (!store.getters['TokenUser']) {
+                    return next({
+                        name: "newRegisterPage"
+                    })
+                }
+                if (store.getters['user'].basicInfo.isAdmin) {
+                    return next({
+                        name: "MainHomePage"
+                    })
+                }
+                next()
+            }
+        },
+        {
+            path: '/v2/main/device/processor/:processor_id/controller/:controller_id',
+            name: "ControllerForProcessorPage",
+            component: ControllerForProcessorPage,
             // must be login
             beforeEnter: (to, from, next) => {
                 if (!store.getters['TokenUser']) {

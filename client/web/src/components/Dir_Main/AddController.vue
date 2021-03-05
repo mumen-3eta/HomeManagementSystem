@@ -42,6 +42,7 @@
       <button class="btn btn-info" @click.prevent="CreateControllerForUser">Create</button>
       <button class="btn btn-danger" @click.prevent="ClearAllDataController">Clear</button>
     </div>
+    <hr class="mt-3">
     <AllController/>
     <!--    modal Search Processor id  -->
     <modal :resizable="false" :width="650" height="auto" name="ScanControllerId" @closed="CloseScanModalControllerID"
