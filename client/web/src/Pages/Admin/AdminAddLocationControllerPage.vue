@@ -1,26 +1,21 @@
 <template>
   <div class="wrapper">
-    <!--    nav here -->
-    <NavMain/>
-    <main class="main">
-      <!--      header hear -->
-      <HeaderMain/>
-      <!--   ********** body content can change it here *****************-->
-      <div class="container_Admin_AddLocationController">
-        <section class="container_Admin_btnSectionGroup">
-          <header class="section__header">
-            <h2 class="section__title">Add Location Controller</h2>
-            <div class="section__control-s">
-              <button class="section__button section__button--painted focus--box-shadow" type="button"
-                      @click.prevent="OpenLocationControllerModal">
-                <i class="fas fa-plus"></i>
-              </button>
-            </div>
-          </header>
-          <div class="project my-3 mx-auto p-2 position-relative">
-            <vue-good-table
-                :columns="columns"
-                :pagination-options="{
+    <!--   ********** body content can change it here *****************-->
+    <div class="container_Admin_AddLocationController">
+      <section class="container_Admin_btnSectionGroup">
+        <header class="section__header">
+          <h2 class="section__title">Add Location Controller</h2>
+          <div class="section__control-s">
+            <button class="section__button section__button--painted focus--box-shadow" type="button"
+                    @click.prevent="OpenLocationControllerModal">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </header>
+        <div class="project my-3 mx-auto p-2 position-relative">
+          <vue-good-table
+              :columns="columns"
+              :pagination-options="{
                     enabled: true,
                     mode: 'records',
                     perPage: 5,
@@ -35,74 +30,64 @@
                     pageLabel: 'page', // for 'pages' mode
                     allLabel: 'All',
                   }"
-                :rows="rows"
-                :search-options=" {
+              :rows="rows"
+              :search-options=" {
                     enabled: true,
                     skipDiacritics: true,
                     placeholder: 'Search this table'
                   }">
-              <div slot="table-actions" class="btn_searchScan"></div>
-              <template slot="table-row" slot-scope="props">
-                <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-                  <button class="btn_AddController"
-                          @click.prevent="editLocationController(props.row.locationId,props.row.nameLocation)"><i
-                      class="fas fa-edit"></i> Edit
-                  </button>
-                  <button class="btn_deleted"
-                          @click.prevent="deleteTypeController(props.row.locationId,props.row.nameLocation)"><i
-                      class="fas fa-trash-alt"></i> Delete
-                  </button>
-                </div>
-                <span v-else>
+            <div slot="table-actions" class="btn_searchScan"></div>
+            <template slot="table-row" slot-scope="props">
+              <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
+                <button class="btn_AddController"
+                        @click.prevent="editLocationController(props.row.locationId,props.row.nameLocation)"><i
+                    class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn_deleted"
+                        @click.prevent="deleteTypeController(props.row.locationId,props.row.nameLocation)"><i
+                    class="fas fa-trash-alt"></i> Delete
+                </button>
+              </div>
+              <span v-else>
                 {{ props.formattedRow[props.column.field] }}
               </span>
-              </template>
-            </vue-good-table>
+            </template>
+          </vue-good-table>
+        </div>
+      </section>
+    </div>
+    <!--    modal Add type for Controller  -->
+    <modal :resizable="false" :width="650" height="auto" name="AddNewLocationController"
+           @closed="CloseLocationControllerModal"
+           @before-open="CloseLocationControllerModal">
+      <i class="fas-closeBTN fas fa-times" @click.prevent="CloseLocationControllerModal"></i>
+      <div class="container__AddProcessorID">
+        <h2>{{ !edited ? "Add New Location for Controller" : `Edit Location name: "${EditInfo.Name_Location}"` }}</h2>
+        <div class="input-group__AddProcessorID">
+          <label for="input_ProcessorID">Location Name</label>
+          <input id="input_ProcessorID" v-model.trim="NameLocationController" required type="text">
+          <p v-if="errorNameLocationController" class="error_style pb-2">{{ errorNameLocationController }}</p>
+          <div v-if="!edited" class="btn-group__AddProcessorID">
+            <button class="btn btn-secondary" @click.prevent="addLocationController">Add Location Controller</button>
+            <button class="btn btn-danger" @click.prevent="ClearLocationController">Clear</button>
           </div>
-        </section>
-      </div>
-      <!--    modal Add type for Controller  -->
-      <modal :resizable="false" :width="650" height="auto" name="AddNewLocationController"
-             @closed="CloseLocationControllerModal"
-             @before-open="CloseLocationControllerModal">
-        <i class="fas-closeBTN fas fa-times" @click.prevent="CloseLocationControllerModal"></i>
-        <div class="container__AddProcessorID">
-          <h2>{{ !edited ? "Add New Location for Controller" : `Edit Location name: "${EditInfo.Name_Location}"` }}</h2>
-          <div class="input-group__AddProcessorID">
-            <label for="input_ProcessorID">Location Name</label>
-            <input id="input_ProcessorID" v-model.trim="NameLocationController" required type="text">
-            <p v-if="errorNameLocationController" class="error_style pb-2">{{ errorNameLocationController }}</p>
-            <div v-if="!edited" class="btn-group__AddProcessorID">
-              <button class="btn btn-secondary" @click.prevent="addLocationController">Add Location Controller</button>
-              <button class="btn btn-danger" @click.prevent="ClearLocationController">Clear</button>
-            </div>
-            <div v-if="edited" class="btn-group__AddProcessorID">
-              <button class="btn btn-secondary" @click.prevent="SaveChangeLocation">Save Change</button>
-            </div>
+          <div v-if="edited" class="btn-group__AddProcessorID">
+            <button class="btn btn-secondary" @click.prevent="SaveChangeLocation">Save Change</button>
           </div>
         </div>
-      </modal>
-      <!--   End modal  Add type for Controller   -->
-    </main><!-- End Main -->
-    <!--    aside here -->
-    <AsideMain/>
+      </div>
+    </modal>
 
   </div>
 </template>
 
 <script>
-import HeaderMain from "@/layout/Main_Layout/HeaderMain";
-import AsideMain from "@/layout/Main_Layout/AsideMain";
-import NavMain from "@/layout/Main_Layout/NavMain";
 import axios from "axios";
 import {mapGetters} from "vuex";
 import io from "socket.io-client";
 
 export default {
   name: "AdminAddLocationControllerPage",
-  components: {
-    HeaderMain, AsideMain, NavMain,
-  },
   data() {
     return {
       socket: null,
