@@ -1,27 +1,22 @@
 <template>
   <div class="wrapper">
-    <!--    nav here -->
-    <NavMain/>
-    <main class="main">
-      <!--      header hear -->
-      <HeaderMain/>
-      <!--   ********** body content can change it here *****************-->
-      <div class="container_Admin_AddTypeController">
-        <section class="container_Admin_btnSectionGroup">
-          <header class="section__header">
-            <h2 class="section__title">Add Type Controller</h2>
-            <div class="section__control-s">
-              <button class="section__button section__button--painted focus--box-shadow" type="button"
-                      @click.prevent="OpenTypeControllerModal">
-                <i class="fas fa-plus"></i>
-              </button>
-            </div>
-          </header>
+    <!--   ********** body content can change it here *****************-->
+    <div class="container_Admin_AddTypeController">
+      <section class="container_Admin_btnSectionGroup">
+        <header class="section__header">
+          <h2 class="section__title">Add Type Controller</h2>
+          <div class="section__control-s">
+            <button class="section__button section__button--painted focus--box-shadow" type="button"
+                    @click.prevent="OpenTypeControllerModal">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </header>
 
-          <div class="project my-3 mx-auto p-2 position-relative">
-            <vue-good-table
-                :columns="columns"
-                :pagination-options="{
+        <div class="project my-3 mx-auto p-2 position-relative">
+          <vue-good-table
+              :columns="columns"
+              :pagination-options="{
                     enabled: true,
                     mode: 'records',
                     perPage: 5,
@@ -36,74 +31,65 @@
                     pageLabel: 'page', // for 'pages' mode
                     allLabel: 'All',
                   }"
-                :rows="rows"
-                :search-options=" {
+              :rows="rows"
+              :search-options=" {
                     enabled: true,
                     skipDiacritics: true,
                     placeholder: 'Search this table'
                   }">
-              <div slot="table-actions" class="btn_searchScan"></div>
-              <template slot="table-row" slot-scope="props">
-                <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-                  <button class="btn_AddController"
-                          @click.prevent="editTypeController(props.row.labelId,props.row.nameType)"><i
-                      class="fas fa-edit"></i> Edit
-                  </button>
-                  <button class="btn_deleted"
-                          @click.prevent="deleteTypeController(props.row.labelId,props.row.nameType)"><i
-                      class="fas fa-trash-alt"></i> Delete
-                  </button>
-                </div>
-                <span v-else>
+            <div slot="table-actions" class="btn_searchScan"></div>
+            <template slot="table-row" slot-scope="props">
+              <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
+                <button class="btn_AddController"
+                        @click.prevent="editTypeController(props.row.labelId,props.row.nameType)"><i
+                    class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn_deleted"
+                        @click.prevent="deleteTypeController(props.row.labelId,props.row.nameType)"><i
+                    class="fas fa-trash-alt"></i> Delete
+                </button>
+              </div>
+              <span v-else>
                 {{ props.formattedRow[props.column.field] }}
               </span>
-              </template>
-            </vue-good-table>
+            </template>
+          </vue-good-table>
+        </div>
+      </section>
+    </div>
+    <!--    modal Add type for Controller  -->
+    <modal :resizable="false" :width="650" height="auto" name="AddNewTypeController"
+           @closed="CloseTypeControllerModal"
+           @before-open="CloseTypeControllerModal">
+      <i class="fas-closeBTN fas fa-times" @click.prevent="CloseTypeControllerModal"></i>
+      <div class="container__AddProcessorID">
+        <h2>{{ !edited ? "Add New Type for Controller" : `Edit type name: "${EditInfo.Name_Type}"` }}</h2>
+        <div class="input-group__AddProcessorID">
+          <label for="input_ProcessorID">Type Name</label>
+          <input id="input_ProcessorID" v-model.trim="NameTypeController" required type="text">
+          <p v-if="errorLabel" class="error_style pb-2">{{ errorLabel }}</p>
+          <div v-if="!edited" class="btn-group__AddProcessorID">
+            <button class="btn btn-secondary" @click.prevent="addTypeController">Add Type Controller</button>
+            <button class="btn btn-danger" @click.prevent="ClearTypeController">Clear</button>
           </div>
-        </section>
-      </div>
-      <!--    modal Add type for Controller  -->
-      <modal :resizable="false" :width="650" height="auto" name="AddNewTypeController"
-             @closed="CloseTypeControllerModal"
-             @before-open="CloseTypeControllerModal">
-        <i class="fas-closeBTN fas fa-times" @click.prevent="CloseTypeControllerModal"></i>
-        <div class="container__AddProcessorID">
-          <h2>{{ !edited ? "Add New Type for Controller" : `Edit type name: "${EditInfo.Name_Type}"` }}</h2>
-          <div class="input-group__AddProcessorID">
-            <label for="input_ProcessorID">Type Name</label>
-            <input id="input_ProcessorID" v-model.trim="NameTypeController" required type="text">
-            <p v-if="errorLabel" class="error_style pb-2">{{ errorLabel }}</p>
-            <div v-if="!edited" class="btn-group__AddProcessorID">
-              <button class="btn btn-secondary" @click.prevent="addTypeController">Add Type Controller</button>
-              <button class="btn btn-danger" @click.prevent="ClearTypeController">Clear</button>
-            </div>
-            <div v-if="edited" class="btn-group__AddProcessorID">
-              <button class="btn btn-secondary" @click.prevent="SaveChangeEdited">Save Change</button>
-            </div>
+          <div v-if="edited" class="btn-group__AddProcessorID">
+            <button class="btn btn-secondary" @click.prevent="SaveChangeEdited">Save Change</button>
           </div>
         </div>
-      </modal>
-      <!--   End modal  Add type for Controller   -->
-    </main><!-- End Main -->
-    <!--    aside here -->
-    <AsideMain/>
+      </div>
+    </modal>
+    <!--   End modal  Add type for Controller   -->
 
   </div>
 </template>
 
 <script>
-import HeaderMain from "@/layout/Main_Layout/HeaderMain";
-import AsideMain from "@/layout/Main_Layout/AsideMain";
-import NavMain from "@/layout/Main_Layout/NavMain";
 import axios from "axios";
 import {mapGetters} from "vuex";
 import io from "socket.io-client";
 
 export default {
   name: "AdminAddTypeControllerPage",
-  components: {
-    HeaderMain, AsideMain, NavMain,
-  },
   data() {
     return {
       socket: null,

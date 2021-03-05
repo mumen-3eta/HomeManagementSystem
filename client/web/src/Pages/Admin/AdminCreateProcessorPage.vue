@@ -1,53 +1,41 @@
 <template>
   <div class="wrapper">
-    <!--    nav here -->
-    <NavMain/>
-    <main class="main">
-      <!--      header hear -->
-      <HeaderMain/>
-      <!--   ********** body content can change it here *****************-->
-      <div class="container_Admin_CreateDevice">
-        <h2>Create Processor</h2>
-        <div class="btn-group_Generate">
-          <button class="btn btn-secondary" @click.prevent="generateId">Generate Id Processor</button>
-          <button class="btn btn-danger" @click.prevent="clearGenerateId">Clear</button>
-        </div>
-        <div class="container__DeviceId">
-          <div v-if="processorId" class="container__processor_Id">
-            <div class="svg_Generator">
-              <div>
-                <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="processorId">Sorry , some
-                  thing error
-                </qrcode-vue>
+    <!--   ********** body content can change it here *****************-->
+    <div class="container_Admin_CreateDevice">
+      <h2>Create Processor</h2>
+      <div class="btn-group_Generate">
+        <button class="btn btn-secondary" @click.prevent="generateId">Generate Id Processor</button>
+        <button class="btn btn-danger" @click.prevent="clearGenerateId">Clear</button>
+      </div>
+      <div class="container__DeviceId">
+        <div v-if="processorId" class="container__processor_Id">
+          <div class="svg_Generator">
+            <div>
+              <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="processorId">Sorry , some
+                thing error
+              </qrcode-vue>
 
-                <div v-if="processorId">
-                  <label for="ProcessorIDInput" hidden></label>
-                  <input id="ProcessorIDInput" class="InputForCopy" v-bind:value="processorId"/>
-                </div>
-
+              <div v-if="processorId">
+                <label for="ProcessorIDInput" hidden></label>
+                <input id="ProcessorIDInput" class="InputForCopy" v-bind:value="processorId"/>
               </div>
-            </div>
-            <div class="btn-group_Generate-2">
-              <button class="btn btn-secondary" @click.prevent="copyText">Copy Processor Id</button>
-              <button id="DownloadsAsImage" class="btn btn-primary" @click.prevent="downloadsAsImage(processorId)">
-                Downloads as image
-              </button>
+
             </div>
           </div>
-          <canvas id="canvas" hidden></canvas>
+          <div class="btn-group_Generate-2">
+            <button class="btn btn-secondary" @click.prevent="copyText">Copy Processor Id</button>
+            <button id="DownloadsAsImage" class="btn btn-primary" @click.prevent="downloadsAsImage(processorId)">
+              Downloads as image
+            </button>
+          </div>
         </div>
+        <canvas id="canvas" hidden></canvas>
       </div>
-    </main><!-- End Main -->
-    <!--    aside here -->
-    <AsideMain/>
-
+    </div>
   </div>
 </template>
 
 <script>
-import HeaderMain from "@/layout/Main_Layout/HeaderMain";
-import AsideMain from "@/layout/Main_Layout/AsideMain";
-import NavMain from "@/layout/Main_Layout/NavMain";
 import axios from "axios";
 import {mapGetters} from "vuex";
 import QrcodeVue from 'vue-qrcode';
@@ -55,7 +43,6 @@ import QrcodeVue from 'vue-qrcode';
 export default {
   name: "AdminCreateProcessorPage",
   components: {
-    HeaderMain, AsideMain, NavMain,
     QrcodeVue,
   },
   data() {
