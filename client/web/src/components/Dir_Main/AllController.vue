@@ -1,6 +1,5 @@
 <template>
   <div>
-    <hr class="mt-3">
     <h2>All Controller : {{ $route.params.processor_id }}</h2>
     <div class="SubMain__Section-AllController my-3 mx-auto p-2 position-relative">
       <div class="search_group">
@@ -37,9 +36,13 @@
         <div slot="table-actions" class="btn_searchScan"></div>
         <template slot="table-row" slot-scope="props">
           <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-            <button class="btn_Show">
-              <i class="fas fa-eye"></i>
-            </button>
+            <!--            :to="{path:'/v2/main/device/create/controller/' + props.row.Processor_Id}-->
+            <router-link
+                :to="{path:'/v2/main/device/processor/' + $route.params.processor_id + '/controller/' + props.row.Controller_Id }">
+              <button class="btn_Show">
+                <i class="fas fa-eye"></i>
+              </button>
+            </router-link>
             <button class="btn_Edit">
               <i class="fas fa-edit"></i>
             </button>

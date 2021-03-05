@@ -215,6 +215,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped >
+/* @import "../../assets/sass/AskedQuestionSc.scss"; */
 @import "../../assets/css/_askedQuestionScStyle.css";
 </style>
