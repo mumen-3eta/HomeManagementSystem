@@ -1,84 +1,88 @@
 const router = require('express').Router();
 const {
-    UserController,
-    ControllerType,
-    ControllerLocation,
-    ControllerProduction,
+  UserController,
+  ControllerType,
+  ControllerLocation,
+  // ControllerProduction,
 } = require('../../models/controller');
-const {boomify} = require('../../utils');
-const {authenticate} = require('../../middleware/authenticate');
+const {
+  createControllerProduction,
+} = require('../../database/queries/controller');
+const { boomify } = require('../../utils');
+const { authenticate } = require('../../middleware/authenticate');
 
 // creat controller as an admin
 router.post('/controller', async (req, res, next) => {
-    try {
-        const controller = new ControllerProduction();
-        const {_id: controllerId} = await controller.save();
+  try {
+    // const controller = new ControllerProduction();
+    // const { _id: controllerId } = await controller.save();
+    const { rows: controllerId } = createControllerProduction();
 
-        res.json({
-            title: 'controller Production add Successful',
-            controllerId,
-        });
-    } catch (err) {
-        next(boomify(400, 'controller Production add Error', err.message));
-    }
+    res.json({
+      title: 'controller Production add Successful',
+      controllerId,
+    });
+  } catch (err) {
+    next(boomify(400, 'controller Production add Error', err.message));
+  }
 });
 
 // update controller as a user
 router.post('/user/controller', authenticate, async (req, res, next) => {
-    try {
-        //{name,ProcessorId,typeId,locationId,controllerId}
+  try {
+    // {name,ProcessorId,typeId,locationId,controllerId}
 
-        // check if he the owner
+    // check if he the owner
 
-        const userController = new UserController(req.body);
-        const data = await userController.save();
-        res.json({
-            title: 'controller add Successful',
-            data,
-        });
-    } catch (err) {
-        next(boomify(400, 'controller Production add Error', err.message));
-    }
+    const userController = new UserController(req.body);
+    const data = await userController.save();
+    res.json({
+      title: 'controller add Successful',
+      data,
+    });
+  } catch (err) {
+    next(boomify(400, 'controller Production add Error', err.message));
+  }
 });
 
 //
 router.put('/user/controller', authenticate, async (req, res, next) => {
-    try {
-        //{userControllerID,name,ProcessorId,typeId,locationId,controllerId}
+  try {
+    // {userControllerID,name,ProcessorId,typeId,locationId,controllerId}
 
-        // check if he the owner
-        const data = await UserController.findOneAndUpdate(
-            {_id: req.body.userControllerID},
-            req.body,
-            {upsert: true, new: true}
-        );
+    // check if he the owner
+    const data = await UserController.findOneAndUpdate(
+      { _id: userControllerID },
+      req.body,
+      { upsert: true, new: true }
+    );
 
-        res.json({
-            title: 'controller add Successful',
-            data,
-        });
-    } catch (err) {
-        next(boomify(400, 'controller Production add Error', err.message));
-    }
+    res.json({
+      title: 'controller add Successful',
+      data,
+    });
+  } catch (err) {
+    next(boomify(400, 'controller Production add Error', err.message));
+  }
 });
 
 // delet
 router.delete('/user/controller', authenticate, async (req, res, next) => {
-    try {
-        //{userControllerID}
+  try {
+    // {userControllerID}
 
-        // check if he the owner
-        const {userControllerID} = req.body;
-        await UserController.findByIdAndDelete({
-            _id: userControllerID,
-        });
+    // check if he the owner
 
-        res.json({
-            title: 'User Controller delete Successful',
-        });
-    } catch (err) {
-        next(boomify(400, 'User Controller add Error', err.message));
-    }
+    await UserController.findByIdAndDelete({
+      _id: userControllerID,
+    });
+
+    res.json({
+      title: 'User Controller delete Successful',
+    });
+  } catch (err) {
+    next(boomify(400, 'User Controller add Error', err.message));
+  }
 });
 
 // ** type **

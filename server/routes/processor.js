@@ -1,12 +1,19 @@
 const router = require('express').Router();
-const { Processor, ProcessorProduction } = require('../models/processor');
+const {
+  createProcessorProduction,
+  connectProcessorUser,
+  getProcessorConnectionByUserId,
+  deleteProcessorConnection,
+} = require('../database/queries/processor');
+// const { Processor, ProcessorProduction } = require('../models/processor');
 const { authenticate } = require('../middleware/authenticate');
 const { boomify } = require('../utils');
 
 router.post('/processor/create', async (req, res, next) => {
   try {
-    const newProcessor = new ProcessorProduction();
-    const { _id: processorId } = await newProcessor.save();
+    // const newProcessor = new ProcessorProduction();
+    // const { _id: processorId } = await newProcessor.save();
+    const { rows: processorId } = await createProcessorProduction;
 
     res.json({
       title: 'processor Production add Successful',
@@ -21,8 +28,12 @@ router.post('/user/processor', authenticate, async (req, res, next) => {
   try {
     const { userId } = req.session;
 
-    const processor = new Processor({ ...req.body, userId });
-    const data = await processor.save();
+    // const processor = new Processor({ ...req.body, userId });
+    // const data = await processor.save();
+    const { rows: data } = await connectProcessorUser(
+      userId,
+      req.body.processorId
+    );
     res.json({
       title: 'processor add Successful',
       data,
@@ -32,11 +43,12 @@ router.post('/user/processor', authenticate, async (req, res, next) => {
   }
 });
 
+// eslint-disable-next-line consistent-return
 router.get('/user/processor', authenticate, async (req, res, next) => {
   try {
     const { userId } = req.session;
 
-    const data = await Processor.find({ userId });
+    const { rows: data } = await getProcessorConnectionByUserId(userId);
 
     return res.json({
       data: data.map((item) => item.ProcessorId),
@@ -51,7 +63,8 @@ router.delete('/user/processor', authenticate, async (req, res, next) => {
     const { userId } = req.session;
     const { ProcessorId } = req.body;
 
-    await Processor.findOneAndDelete({ userId, ProcessorId });
+    // await Processor.findOneAndDelete({ userId, ProcessorId });
+    await deleteProcessorConnection(userId, ProcessorId);
 
     res.json({
       title: 'processor delete Successful',

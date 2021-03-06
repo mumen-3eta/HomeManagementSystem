@@ -10,6 +10,13 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": false,
   "files.eol": "\n",
-  "cSpell.words": ["Rawdaty"],
+  "cSpell.words": [
+    "Rawdaty",
+    "boomify",
+    "csrf",
+    "hmsydev",
+    "hmsyuser",
+    "postgres"
+  ],
   "prettier.singleQuote": true
 }
