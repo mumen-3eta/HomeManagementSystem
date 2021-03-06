@@ -1,8 +1,7 @@
-const { boomify } = require('../../utils');
+const boom = require('@hapi/boom');
 
-const clientError = (req, res) => {
-  const errorMessage = boomify(404, 'Not Found', 'The page is not found');
-  res.status(404).json(errorMessage);
+const clientError = (req, res, next) => {
+  next(boom.notFound());
 };
 
 module.exports = clientError;

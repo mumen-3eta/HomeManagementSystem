@@ -6,7 +6,6 @@ const {
   deleteProcessorConnection,
 } = require('../database/queries');
 // const { Processor, ProcessorProduction } = require('../models/processor');
-const { authenticate } = require('../middleware/authenticate');
 const { boomify } = require('../utils');
 
 router.post('/processor/create', async (req, res, next) => {

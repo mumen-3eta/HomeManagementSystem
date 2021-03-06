@@ -1,4 +1,4 @@
-const { connection } = require('../../data/index');
+const { connection } = require('../../data');
 
 const getUserDataById = (id) => {
   const sql = {
