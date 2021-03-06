@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
   try {
     const { userId } = req.session;
     // const data = await User.findById({ _id: userId });
-    const data = await getAllUserData(userId);
+    const { rows: data } = await getAllUserData(userId);
     delete data.basicInfo.createdAt;
     res.json({ statusCode: 200, data });
   } catch (err) {
@@ -27,7 +27,7 @@ router.post('/', csrfCheck, async (req, res, next) => {
     //   { $set: req.body },
     //   { upsert: true, new: true }
     // );
-    const data = await updateUserData(userId, req.body);
+    const { rows: data } = await updateUserData(userId, req.body);
     console.log(data);
     res.status(200).json({
       statusCode: 200,
