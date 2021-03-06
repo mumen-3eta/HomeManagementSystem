@@ -1,9 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 const router = require('express').Router();
+
+const { getAllProfileData, updateProfileData } = require('../../controllers');
 // const User = require('../../models/user');
-const { boomify } = require('../../utils');
-const { csrfCheck } = require('../../middleware/csrfCheck');
-const { getAllUserData, updateUserData } = require('../../database/queries');
+// const { boomify } = require('../../utils');
+// const { csrfCheck } = require('../../middleware/csrfCheck');
+// const { getAllUserData, updateUserData } = require('../../database/queries');
+
+router.get('/', getAllProfileData);
+router.put('/', updateProfileData);
 
 // router.get('/', async (req, res, next) => {
 //   try {

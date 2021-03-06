@@ -1,11 +1,13 @@
 const createProcessorProduction = require('./createProcessorProduction');
 const connectProcessorUser = require('./connectProcessorUser');
 const getProcessorConnectionByUserId = require('./getProcessorConnectionByUserId');
-const deleteProcessorConnection = require('./deleteProcessorConnection');
+const getProcessorByProcessorId = require('./getProcessorByProcessorId');
+const deleteProcessorConnectionData = require('./deleteProcessorConnection');
 
 module.exports = {
   createProcessorProduction,
   connectProcessorUser,
   getProcessorConnectionByUserId,
-  deleteProcessorConnection,
+  getProcessorByProcessorId,
+  deleteProcessorConnectionData,
 };

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const sign = (payload) =>
   new Promise((resolve, reject) => {
-    jwt.sign(payload, process.env.SECRET, (err, token) => {
+    jwt.sign(payload, process.env.SECRET_TOKEN, (err, token) => {
       if (err) {
         return reject(err);
       }
@@ -12,7 +12,7 @@ const sign = (payload) =>
 
 const verify = (token) =>
   new Promise((resolve, reject) => {
-    jwt.verify(token, process.env.SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_TOKEN, (err, decoded) => {
       if (err) {
         return reject(err);
       }

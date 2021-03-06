@@ -1,5 +1,5 @@
 const registerUser = require('./registerUser');
-const checkIdByEmail = require('./checkIdByEmail');
+const checkIdByEmailOrUserName = require('./checkIdByEmailOrUserName');
 const getUserDataById = require('./getUserDataById');
 const deleteUserById = require('./deleteUserById');
 const getAllUserData = require('./getAllUserData');
@@ -7,7 +7,7 @@ const updateUserData = require('./updateUserData');
 
 module.exports = {
   registerUser,
-  checkIdByEmail,
+  checkIdByEmailOrUserName,
   getUserDataById,
   deleteUserById,
   getAllUserData,
