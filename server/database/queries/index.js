@@ -24,10 +24,13 @@ const {
   getControllerType,
   updateControllerType,
   deleteControllerType,
+  getAllControllerType,
   addControllerLocation,
   getControllerLocation,
   updateControllerLocation,
   deleteControllerLocation,
+  getAllControllerLocation,
+  getControllerLocationByLabel,
 } = require('./controller');
 
 module.exports = {
@@ -52,8 +55,11 @@ module.exports = {
   getControllerType,
   updateControllerType,
   deleteControllerType,
+  getAllControllerType,
   addControllerLocation,
   getControllerLocation,
   updateControllerLocation,
   deleteControllerLocation,
+  getAllControllerLocation,
+  getControllerLocationByLabel,
 };

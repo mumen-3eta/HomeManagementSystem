@@ -5,6 +5,7 @@ const {
   addControllerTypeLabel,
   updateControllerTypeLabel,
   deleteControllerTypeLabel,
+  getAllControllerTypes,
 } = require('../../controllers');
 // const {
 //   addControllerTypeLabel,
@@ -16,7 +17,7 @@ const {
 router.post('/', addControllerTypeLabel);
 router.put('/', updateControllerTypeLabel);
 router.delete('/', deleteControllerTypeLabel);
-// router.get('/', getProcessorConnection);
+router.get('/', getAllControllerTypes);
 // router.put('/', connectProcessorToUser);
 
 // router.post('/', async (req, res, next) => {

@@ -1,15 +1,15 @@
 const router = require('express').Router();
 
-router.post('/', (req, res, next) => {
+const {
+  addControllerLocationLabel,
+  updateControllerLocationLabel,
+  deleteControllerLocationLabel,
+  getAllControllerLocations,
+} = require('../../controllers');
 
-});
-
-router.put('/', (req, res, next) => {
-
-});
-
-router.delete('/', (req, res, next) => {
-
-});
+router.post('/', addControllerLocationLabel);
+router.put('/', updateControllerLocationLabel);
+router.delete('/', deleteControllerLocationLabel);
+router.get('/', getAllControllerLocations);
 
 module.exports = router;

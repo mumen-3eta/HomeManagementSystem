@@ -3,6 +3,7 @@ const updateControllerType = require('./updateControllerType');
 const getControllerTypeByLabel = require('./getControllerTypeByLabel');
 const deleteControllerType = require('./deleteControllerType');
 const getControllerType = require('./getControllerType');
+const getAllControllerType = require('./getAllControllerType');
 
 module.exports = {
   addControllerType,
@@ -10,4 +11,5 @@ module.exports = {
   getControllerTypeByLabel,
   updateControllerType,
   deleteControllerType,
+  getAllControllerType,
 };

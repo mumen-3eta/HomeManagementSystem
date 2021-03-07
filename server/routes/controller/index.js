@@ -1,11 +1,11 @@
 const router = require('express').Router();
 
 const controllerRoute = require('./controller');
-// const locationRoute = require('./location');
 const typeRoute = require('./type');
+const locationRoute = require('./location');
 
 router.use('/', controllerRoute);
 router.use('/type', typeRoute);
-// router.use('/location', locationRoute);locationRoute
+router.use('/location', locationRoute);
 
 module.exports = router;

@@ -21,6 +21,11 @@ const {
   addControllerTypeLabel,
   updateControllerTypeLabel,
   deleteControllerTypeLabel,
+  getAllControllerTypes,
+  addControllerLocationLabel,
+  updateControllerLocationLabel,
+  deleteControllerLocationLabel,
+  getAllControllerLocations,
 } = require('./Controller');
 
 const { swaggerServe, swaggerSetup } = require('./swagger');
@@ -42,6 +47,11 @@ module.exports = {
   addControllerTypeLabel,
   updateControllerTypeLabel,
   deleteControllerTypeLabel,
+  getAllControllerTypes,
+  addControllerLocationLabel,
+  updateControllerLocationLabel,
+  deleteControllerLocationLabel,
+  getAllControllerLocations,
   // createControllerForProduction,
   swaggerServe,
   swaggerSetup,

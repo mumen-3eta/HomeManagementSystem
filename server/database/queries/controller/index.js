@@ -10,12 +10,15 @@ const {
   getControllerTypeByLabel,
   updateControllerType,
   deleteControllerType,
+  getAllControllerType,
 } = require('./controllerType');
 const {
   addControllerLocation,
   getControllerLocation,
   updateControllerLocation,
   deleteControllerLocation,
+  getAllControllerLocation,
+  getControllerLocationByLabel,
 } = require('./controllerLocation');
 
 module.exports = {
@@ -29,8 +32,11 @@ module.exports = {
   getControllerTypeByLabel,
   updateControllerType,
   deleteControllerType,
+  getAllControllerType,
   addControllerLocation,
   getControllerLocation,
   updateControllerLocation,
   deleteControllerLocation,
+  getAllControllerLocation,
+  getControllerLocationByLabel,
 };
