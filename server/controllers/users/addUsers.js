@@ -36,10 +36,10 @@ const addUsers = async (req, res, next) => {
     const hashedPassword = await hash(password, 10);
 
     const {
-      rows: [{ id: userId }],
+      rows: [{ id: userId, is_admin: isAdmin }],
     } = await registerUser({ userName, email, password: hashedPassword });
 
-    const token = await sign({ userId });
+    const token = await sign({ userId, isAdmin });
     return res
       .cookie('token', token, {
         httpOnly: true,

@@ -14,8 +14,8 @@ const {
 } = require('../controllers');
 
 router.post('/create', createProcessorForProduction);
-router.post('/connection', connectProcessorToUser);
 router.get('/connection', getProcessorConnection);
+router.post('/connection', connectProcessorToUser);
 router.delete('/connection', deleteProcessorConnection);
 
 // router.delete('/user/processor', authenticate, async (req, res, next) => {

@@ -7,11 +7,10 @@ const authUser = async (req, res, next) => {
     const { userId } = req;
     const {
       rows: [user],
-    } = await getUserDataById(userId);
+    } = await getUserDataById({ userId });
     if (!user) {
       return next(boom.conflict("The user isn't exist"));
     }
-
     return res.status(200).json({
       title: 'Authentication',
       detail: 'Successfully authenticated user',

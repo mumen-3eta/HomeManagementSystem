@@ -1,7 +1,7 @@
 const { connection } = require('../../data/index');
 
 const checkIdByEmailOrUserName = ({ email, userName }) => {
-  let text = 'SELECT id, password FROM users where ';
+  let text = 'SELECT id, password, is_admin FROM users where ';
   const values = [];
   if (email) {
     values.push(email);

@@ -1,6 +1,23 @@
 const router = require('express').Router();
-const { ControllerType } = require('../../models/processor');
-const { boomify } = require('../../utils');
+// const { ControllerType } = require('../../models/processor');
+// const { boomify } = require('../../utils');const {
+const {
+  addControllerTypeLabel,
+  updateControllerTypeLabel,
+  deleteControllerTypeLabel,
+} = require('../../controllers');
+// const {
+//   addControllerTypeLabel,
+//   //   connectProcessorToUser,
+//   //   getProcessorConnection,
+//   //   deleteProcessorConnection,
+// } = require('../controller');
+
+router.post('/', addControllerTypeLabel);
+router.put('/', updateControllerTypeLabel);
+router.delete('/', deleteControllerTypeLabel);
+// router.get('/', getProcessorConnection);
+// router.put('/', connectProcessorToUser);
 
 // router.post('/', async (req, res, next) => {
 //   try {

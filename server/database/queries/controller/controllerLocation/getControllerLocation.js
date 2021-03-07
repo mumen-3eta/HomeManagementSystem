@@ -1,9 +1,9 @@
 const { connection } = require('../../../data');
 
-const getControllerLocation = (id) => {
+const getControllerLocation = ({ locationId }) => {
   const sql = {
-    text: 'select * from controller_location;',
-    values: [id],
+    text: 'select * from controller_location where id = $1 ;',
+    values: [locationId],
   };
   return connection.query(sql);
 };

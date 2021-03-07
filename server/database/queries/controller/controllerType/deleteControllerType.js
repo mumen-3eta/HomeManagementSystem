@@ -1,9 +1,9 @@
 const { connection } = require('../../../data');
 
-const deleteControllerType = (id) => {
+const deleteControllerType = ({ typeId }) => {
   const sql = {
     text: 'delete from controller_type where id = $1;',
-    values: [id],
+    values: [typeId],
   };
   return connection.query(sql);
 };

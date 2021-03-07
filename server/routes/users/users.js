@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { addUsers, login, authUser } = require('../../controllers');
+const { verifyUser } = require('../../middleware/authentication');
 // Ex: {userName, email, password}
 router.post('/register', addUsers);
 router.post('/login', login);
-router.get('/me', authUser);
+router.get('/me', verifyUser, authUser);
 // router.post('/register', async (req, res, next) => {
 //   try {
 //     const { userName, email, password } = req.body;

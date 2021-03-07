@@ -35,12 +35,12 @@ CREATE TABLE controller_production(
 
 CREATE TABLE controller_type(
   id SERIAL PRIMARY KEY,
-  label VARCHAR(50) NOT NULL
+  label VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE controller_location(
   id SERIAL PRIMARY KEY,
-  label VARCHAR(50) NOT NULL
+  label VARCHAR(50) NOT NULL UNIQUE
 );
 
 CREATE TABLE user_controller(

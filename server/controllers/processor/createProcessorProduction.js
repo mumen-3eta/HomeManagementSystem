@@ -12,11 +12,7 @@ const createProcessorForProduction = async (req, res, next) => {
       newProcessor,
     });
   } catch (error) {
-    return next(
-      error.name === 'ValidationError'
-        ? boom.badRequest(error.errors)
-        : boom.badImplementation(error)
-    );
+    return next(boom.badImplementation(error));
   }
 };
 
