@@ -1,8 +1,9 @@
 const router = require('express').Router();
-const { addUsers } = require('../../controllers');
+const { addUsers, login, authUser } = require('../../controllers');
 // Ex: {userName, email, password}
 router.post('/register', addUsers);
-
+router.post('/login', login);
+router.get('/me', authUser);
 // router.post('/register', async (req, res, next) => {
 //   try {
 //     const { userName, email, password } = req.body;

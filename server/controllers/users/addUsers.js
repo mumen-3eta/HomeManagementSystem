@@ -1,8 +1,11 @@
 const boom = require('@hapi/boom');
 const { hash } = require('bcrypt');
 
-const registerUserSchema = require('../../utils/validation');
-const { checkIdByEmail, registerUser } = require('../../database/queries');
+const { registerUserSchema } = require('../../utils/validation');
+const {
+  checkIdByEmailOrUserName,
+  registerUser,
+} = require('../../database/queries');
 const { sign } = require('../../utils/jwt');
 
 const addUsers = async (req, res, next) => {
@@ -14,26 +17,36 @@ const addUsers = async (req, res, next) => {
       }
     );
 
+    // console.log(user);
     const {
-      rows: [user],
-    } = await checkIdByEmail({ email });
-    if (user) {
-      return next(boom.conflict('The email is already exists'));
+      rows: [userByEmail],
+    } = await checkIdByEmailOrUserName({ email });
+
+    if (userByEmail) {
+      return next(boom.conflict('The email already exists'));
+    }
+
+    const {
+      rows: [userByUserName],
+    } = await checkIdByEmailOrUserName({ userName });
+
+    if (userByUserName) {
+      return next(boom.conflict('The userName already exists'));
     }
     const hashedPassword = await hash(password, 10);
 
-    const { rows: data } = await registerUser(userName, email, hashedPassword);
-    const { id: userId } = data;
+    const {
+      rows: [{ id: userId }],
+    } = await registerUser({ userName, email, password: hashedPassword });
 
     const token = await sign({ userId });
     return res
       .cookie('token', token, {
-        maxAge: 1000 * 60 * 60 * 24 * 7 * 10,
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
       })
       .status(201)
-      .send({
+      .json({
         title: 'User Registration',
         detail: 'Successfully registered new user',
       });

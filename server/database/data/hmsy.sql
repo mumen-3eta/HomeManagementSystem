@@ -4,8 +4,8 @@ DROP TABLE IF EXISTS users,processor_production,user_processor,controller_type,c
 
 CREATE TABLE users(
   id SERIAL PRIMARY KEY,
-  user_name VARCHAR(50) NOT NULL,
-  email VARCHAR(50) NOT NULL,
+  user_name VARCHAR(50) NOT NULL UNIQUE,
+  email VARCHAR(50) NOT NULL UNIQUE,
   password TEXT NOT NULL,
   first_name VARCHAR(50),
   last_name VARCHAR(50),

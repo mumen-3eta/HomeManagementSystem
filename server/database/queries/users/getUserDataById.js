@@ -1,9 +1,9 @@
 const { connection } = require('../../data');
 
-const getUserDataById = (id) => {
+const getUserDataById = ({ userId }) => {
   const sql = {
     text: 'SELECT email, userName, image, isAdmin FROM users where id = $1 ;',
-    values: [id],
+    values: [userId],
   };
   return connection.query(sql);
 };
