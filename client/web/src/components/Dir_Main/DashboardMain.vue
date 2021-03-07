@@ -10,23 +10,36 @@
       </header>
       <!--   for Admin user     -->
       <ul v-if="TokenUser && user.basicInfo.isAdmin" class="team">
-        <li class="team__item">
-          <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="team__link focus--box-shadow">
+        <li v-for="(DashboardInfoADMIN,i) in DashboardInfoCardForADMIN" :key="i" class="team__item">
+          <router-link :to="{path:DashboardInfoADMIN.Path}" class="team__link focus--box-shadow">
             <div class="team__header">
               <ul class="photo">
-                <li class="photo__item photo__item-bg1Color">
+                <li :class="DashboardInfoADMIN.ClassColorBorder">
                   <span class="photo__substrate">
-                    <svg height="30" style=" fill:#000000;" viewBox="0 0 172 172"
-                         width="35" x="0px"
-                         xmlns="http://www.w3.org/2000/svg"
-                         y="0px"><g fill="none" fill-rule="nonzero" font-family="none" font-size="none"
-                                    font-weight="none" stroke="none" stroke-dasharray=""
-                                    stroke-dashoffset="0" stroke-linecap="butt" stroke-linejoin="miter"
-                                    stroke-miterlimit="10" stroke-width="1" style="mix-blend-mode: normal"
-                                    text-anchor="none"><path d="M0,172v-172h172v172z"
-                                                             fill="none"></path><g
-                        fill="#ffffff"><path
-                        d="M27.52,13.76c-7.60562,0 -13.76,6.15438 -13.76,13.76v30.96h6.88v-30.96c0,-4.09844 2.78156,-6.88 6.88,-6.88h116.96c4.09844,0 6.88,2.78156 6.88,6.88v51.6h6.88v-51.6c0,-7.60562 -6.15437,-13.76 -13.76,-13.76zM30.315,27.52c-1.63937,0.30906 -2.82187,1.76031 -2.795,3.44v27.52h6.88v-24.08h103.2v44.72h6.88v-48.16c0,-1.89469 -1.54531,-3.44 -3.44,-3.44h-110.08c-0.1075,0 -0.215,0 -0.3225,0c-0.1075,0 -0.215,0 -0.3225,0zM6.88,61.92c-1.80062,0 -3.64156,0.63156 -4.945,1.935c-1.30344,1.30344 -1.935,3.14438 -1.935,4.945v82.56c0,1.80063 0.63156,3.64156 1.935,4.945c1.30344,1.30344 3.14438,1.935 4.945,1.935h65.36c1.80063,0 3.64156,-0.63156 4.945,-1.935c1.30344,-1.30344 1.935,-3.14437 1.935,-4.945v-82.56c0,-1.80062 -0.63156,-3.64156 -1.935,-4.945c-1.30344,-1.30344 -3.14437,-1.935 -4.945,-1.935zM6.88,68.8h65.36v82.56h-65.36zM13.115,72.24c-1.63937,0.30906 -2.82187,1.76031 -2.795,3.44v61.92c0,1.89469 1.54531,3.44 3.44,3.44h51.6c1.89469,0 3.44,-1.54531 3.44,-3.44v-61.92c0,-1.89469 -1.54531,-3.44 -3.44,-3.44h-51.6c-0.1075,0 -0.215,0 -0.3225,0c-0.1075,0 -0.215,0 -0.3225,0zM17.2,79.12h44.72v55.04h-44.72zM127.28,82.56c-1.80062,0 -3.64156,0.63156 -4.945,1.935c-1.30344,1.30344 -1.935,3.14438 -1.935,4.945v61.92c0,1.80063 0.63156,3.64156 1.935,4.945c1.30344,1.30344 3.14438,1.935 4.945,1.935h37.84c1.80063,0 3.64156,-0.63156 4.945,-1.935c1.30344,-1.30344 1.935,-3.14437 1.935,-4.945v-61.92c0,-1.80062 -0.63156,-3.64156 -1.935,-4.945c-1.30344,-1.30344 -3.14437,-1.935 -4.945,-1.935zM127.28,89.44h37.84v61.92h-37.84zM133.515,92.88c-1.63937,0.30906 -2.82187,1.76031 -2.795,3.44v41.28c0,1.89469 1.54531,3.44 3.44,3.44h24.08c1.89469,0 3.44,-1.54531 3.44,-3.44v-41.28c0,-1.89469 -1.54531,-3.44 -3.44,-3.44h-24.08c-0.1075,0 -0.215,0 -0.3225,0c-0.1075,0 -0.215,0 -0.3225,0zM137.6,99.76h17.2v34.4h-17.2zM82.56,110.08v6.88h34.4v-6.88zM99.76,120.4v17.2h17.2v-6.88h-10.32v-3.44h10.32v-6.88zM82.56,141.04v6.88h34.4v-6.88zM39.56,142.76c-1.89469,0 -3.44,1.54531 -3.44,3.44c0,1.89469 1.54531,3.44 3.44,3.44c1.89469,0 3.44,-1.54531 3.44,-3.44c0,-1.89469 -1.54531,-3.44 -3.44,-3.44zM146.2,142.76c-1.89469,0 -3.44,1.54531 -3.44,3.44c0,1.89469 1.54531,3.44 3.44,3.44c1.89469,0 3.44,-1.54531 3.44,-3.44c0,-1.89469 -1.54531,-3.44 -3.44,-3.44z"></path></g></g></svg>
+                       <svg :height="DashboardInfoADMIN.SVG.height" :style="DashboardInfoADMIN.SVG.Style"
+                            :viewBox="DashboardInfoADMIN.SVG.viewBox"
+                            :width="DashboardInfoADMIN.SVG.width" :x="DashboardInfoADMIN.SVG.x"
+                            :xmlns="DashboardInfoADMIN.SVG.xmlns"
+                            :y="DashboardInfoADMIN.SVG.y">
+                         <g :fill="DashboardInfoADMIN.SVG.Fill_1" :fill-rule="DashboardInfoADMIN.SVG.fill_rule"
+                            :font-family="DashboardInfoADMIN.SVG.font_family"
+                            :font-size="DashboardInfoADMIN.SVG.font_size"
+                            :font-weight="DashboardInfoADMIN.SVG.font_weight" :stroke="DashboardInfoADMIN.SVG.stroke"
+                            :stroke-dasharray="DashboardInfoADMIN.SVG.stroke_dasharray"
+                            :stroke-dashoffset="DashboardInfoADMIN.SVG.stroke_dashoffset"
+                            :stroke-linecap="DashboardInfoADMIN.SVG.stroke_linecap"
+                            :stroke-linejoin="DashboardInfoADMIN.SVG.stroke_linejoin"
+                            :stroke-miterlimit="DashboardInfoADMIN.SVG.stroke_miterlimit"
+                            :stroke-width="DashboardInfoADMIN.SVG.stroke_width"
+                            :style="DashboardInfoADMIN.SVG.Style_mix" :text-anchor="DashboardInfoADMIN.SVG.text_anchor">
+                           <path :d="DashboardInfoADMIN.SVG.d_1" :fill="DashboardInfoADMIN.SVG.Fill_2">
+                           </path>
+                           <g :fill="DashboardInfoADMIN.SVG.Fill_3">
+                             <path
+                                 :d="DashboardInfoADMIN.SVG.d_2"></path>
+                           </g>
+                         </g>
+                       </svg>
                   </span>
                 </li>
               </ul>
@@ -35,95 +48,44 @@
               </button>
             </div>
             <div class="team__inform">
-              <p class="team__name">Number Type</p>
-              <p v-if="TokenUser && allTypeController" class="team__name">{{ allTypeController.length }}</p>
+              <p class="team__name">{{ DashboardInfoADMIN.TitleCard }}</p>
+              <p v-if="TokenUser && userProcessorIds" class="team__name">{{ DashboardInfoADMIN.Number }}</p>
             </div>
           </router-link>
-        </li>
-        <li class="team__item">
-          <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="team__link focus--box-shadow">
-            <div class="team__header">
-              <ul class="photo">
-                <li class="photo__item photo__item-bg2Color">
-                  <span class="photo__substrate">
-                    <svg height="35" style=" fill:#000000;" viewBox="0 0 172 172"
-                         width="35" x="0px"
-                         xmlns="http://www.w3.org/2000/svg"
-                         y="0px">
-                      <g fill="none" fill-rule="nonzero" font-family="none" font-size="none"
-                         font-weight="none" stroke="none" stroke-dasharray="" stroke-dashoffset="0"
-                         stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
-                         stroke-width="1" style="mix-blend-mode: normal" text-anchor="none">
-                          <path d="M0,172v-172h172v172z" fill="none"></path>
-                          <g fill="#ffffff">
-                            <path
-                                d="M18.8125,1.34375c-9.675,0 -17.46875,7.79375 -17.46875,17.46875v39.77447c0,9.1375 6.85417,17.06668 15.8573,17.87293c6.04688,0.5375 11.5552,-2.0172 15.04895,-6.3172c0.80625,0.94062 1.74688,1.88177 2.6875,2.55365v46.8974c0,2.28437 1.74688,4.03125 4.03125,4.03125h31.9823c2.55312,0 4.43438,-2.28437 4.03125,-4.70312c-3.225,-16.52813 1.61145,-34.2651 14.37708,-47.1651c0.67188,-0.67187 1.34375,-1.2099 2.01563,-1.88178c1.6125,-1.34375 1.7474,-3.7625 0.53803,-5.375c-1.075,-1.47812 -1.74793,-3.35937 -1.74793,-5.375v-33.32605c0,-2.15 -1.61093,-4.16458 -3.76093,-4.29895c-2.28437,-0.13437 -4.30157,1.74687 -4.30157,4.03125v33.32605c0,4.8375 -3.49322,9.00208 -8.19635,9.67395c-5.77813,0.67188 -10.75,-3.7625 -10.75,-9.40625v-33.32605c0,-2.15 -1.61355,-4.16458 -3.76355,-4.29895c-2.28438,-0.13437 -4.29895,1.74687 -4.29895,4.03125v33.32605c0,4.8375 -3.49322,9.00208 -8.19635,9.67395c-5.64375,0.67188 -10.61615,-3.7625 -10.61615,-9.40625v-13.1698c0,-2.15 -1.61355,-4.16458 -3.76355,-4.29895c-2.28438,-0.13437 -4.29895,1.74687 -4.29895,4.03125v13.1698c0,4.8375 -3.49322,9.00208 -8.19635,9.67395c-5.64375,0.67188 -10.61615,-3.7625 -10.61615,-9.40625v-40.3125c0,-5.24062 4.16563,-9.40625 9.40625,-9.40625h134.375c5.24062,0 9.40625,4.16563 9.40625,9.40625v40.3125c0,2.01563 -0.67292,3.89635 -1.74792,5.50885c-1.20937,1.74688 -1.07448,4.03125 0.53802,5.375c1.74687,1.6125 4.4349,1.34323 5.91302,-0.53802c2.15,-2.95625 3.49323,-6.5828 3.49323,-10.47968v-40.17865c-0.13438,-9.675 -7.9276,-17.46875 -17.6026,-17.46875zM32.25,21.5c-2.2264,0 -4.03125,1.80485 -4.03125,4.03125c0,2.2264 1.80485,4.03125 4.03125,4.03125c2.2264,0 4.03125,-1.80485 4.03125,-4.03125c0,-2.2264 -1.80485,-4.03125 -4.03125,-4.03125zM112.6073,21.5c-2.15,0.13438 -3.76355,2.01458 -3.76355,4.29895v28.35522c0,2.55313 2.41822,4.4328 4.83697,3.76093c1.88125,-0.40313 3.22553,-2.01615 3.22553,-3.8974v-28.48645c0,-2.28438 -1.8802,-4.16562 -4.29895,-4.03125zM140.0177,21.5c-2.28438,-0.13437 -4.29895,1.74687 -4.29895,4.03125v6.71875v21.7677c0,1.88125 1.34427,3.49427 3.22552,3.8974c2.55312,0.5375 4.83698,-1.34427 4.83698,-3.8974v-21.7677v-6.45105c0,-2.15 -1.61355,-4.16458 -3.76355,-4.29895zM126.24426,64.53412c-11.35469,0 -22.70885,4.33202 -31.37604,12.99921c-17.2,17.2 -17.20052,45.42085 0.13385,62.62085l28.62292,28.75415c0.80625,0.80625 1.74635,1.2099 2.82135,1.2099c1.075,0 2.14948,-0.40365 2.82135,-1.2099l28.35522,-28.6203c17.33438,-17.33437 17.33438,-45.42032 0,-62.7547c-8.66719,-8.66719 -20.02397,-12.99921 -31.37866,-12.99921zM19.0802,81.96875c-2.28438,-0.13438 -4.29895,1.74688 -4.29895,4.03125v56.4375h-9.13855c-2.15,0 -4.16458,1.61355 -4.29895,3.76355c-0.13437,2.28438 1.74687,4.29895 4.03125,4.29895h79.01355c3.49375,0 5.23958,-4.16563 2.9552,-6.71875l-0.13385,-0.13385c-0.80625,-0.80625 -1.74845,-1.2099 -2.95782,-1.2099h-61.40833v-56.1698c0,-2.28438 -1.61355,-4.16458 -3.76355,-4.29895zM126.3125,94.73438c7.39063,0 13.4375,6.04688 13.4375,13.4375c0,7.39063 -6.04687,13.4375 -13.4375,13.4375c-7.39062,0 -13.4375,-6.04687 -13.4375,-13.4375c0,-7.39062 6.04688,-13.4375 13.4375,-13.4375zM166.625,142.4375c-2.2264,0 -4.03125,1.80485 -4.03125,4.03125c0,2.2264 1.80485,4.03125 4.03125,4.03125c2.2264,0 4.03125,-1.80485 4.03125,-4.03125c0,-2.2264 -1.80485,-4.03125 -4.03125,-4.03125zM32.25,162.59375c-2.28438,0 -4.03125,1.74687 -4.03125,4.03125c0,2.28438 1.74687,4.03125 4.03125,4.03125h67.1875c2.28437,0 4.03125,-1.74687 4.03125,-4.03125c0,-2.28438 -1.74688,-4.03125 -4.03125,-4.03125zM153.1875,162.59375c-2.28438,0 -4.03125,1.74687 -4.03125,4.03125c0,2.28438 1.74687,4.03125 4.03125,4.03125h13.4375c2.28438,0 4.03125,-1.74687 4.03125,-4.03125c0,-2.28438 -1.74687,-4.03125 -4.03125,-4.03125z">
-                            </path>
-                          </g>
-                      </g>
-                    </svg>
-                  </span>
-                </li>
-              </ul>
-              <button class="setting setting--absolute foucs--box-shadow" type="button">
-                <i class="fa fa-ellipsis-v"></i>
-              </button>
-            </div>
-            <div class="team__inform">
-              <p class="team__name">Number Location</p>
-              <p v-if="TokenUser && allLocationController" class="team__name">{{ allLocationController.length }}</p>
-            </div>
-          </router-link>
-        </li>
-        <li class="team__item">
-          <a class="team__link focus--box-shadow" href="">
-            <div class="team__header">
-              <ul class="photo">
-                <li class="photo__item photo__item-bg3Color">
-                  <span class="photo__substrate">
-                   <svg height="30" style=" fill:#000000;" viewBox="0 0 172 172"
-                        width="30" x="0px"
-                        xmlns="http://www.w3.org/2000/svg"
-                        y="0px"><g fill="none" fill-rule="nonzero" font-family="none" font-size="none"
-                                   font-weight="none" stroke="none" stroke-dasharray=""
-                                   stroke-dashoffset="0" stroke-linecap="butt" stroke-linejoin="miter"
-                                   stroke-miterlimit="10" stroke-width="1" style="mix-blend-mode: normal"
-                                   text-anchor="none"><path d="M0,172v-172h172v172z"
-                                                            fill="none"></path><g
-                       fill="#ffffff"><path
-                       d="M54.13073,17.2c-31.2524,0.53893 -34.44622,22.21004 -28.17396,47.09844c-1.21547,0.69947 -3.21443,2.91979 -2.7099,6.86432c0.94027,7.35587 4.12925,9.21786 6.15885,9.37266c0.774,6.86853 8.1476,15.65272 10.7276,16.93125v11.46667c-5.73333,17.2 -40.13333,0 -40.13333,45.86667h68.8c0,-20.34187 11.40611,-29.10285 20.91771,-34.14245c-8.93253,-3.1304 -18.18291,-3.51982 -20.91771,-11.72422v-11.46667c2.58,-1.27853 9.94787,-10.05725 10.72761,-16.92005c0.45867,-1.62253 0.81745,-7.42717 0.81745,-8.73437c0,-7.16093 -0.10508,-21.96189 4.37839,-33.54896c-1.5652,-7.78587 -5.65665,-14.35224 -14.42292,-15.21797c-2.34493,-3.88147 -8.35526,-5.84531 -16.16979,-5.84531zM126.8388,22.93333c-6.44427,0 -11.42188,5.73333 -11.42188,5.73333c-36.93413,0 -16.43066,62.79917 -27.27812,71.82344c0,0 5.76746,8.54401 26.52786,8.54401v7.31224c-5.73333,15.52013 -34.4,9.78698 -34.4,38.45364h91.73333c0,-28.66667 -28.66667,-22.93351 -34.4,-38.45364v-7.37943c20.8636,0 25.69922,-8.26406 25.69922,-8.26406c-11.6788,-9.58613 8.69532,-77.76953 -36.46042,-77.76953z"></path></g></g></svg>
-                  </span>
-                </li>
-              </ul>
-              <button class="setting setting--absolute foucs--box-shadow" type="button">
-                <i class="fa fa-ellipsis-v"></i>
-              </button>
-            </div>
-            <div class="team__inform">
-              <p class="team__name">Number User</p>
-              <p class="team__name">??????</p>
-            </div>
-          </a>
         </li>
       </ul>
       <!--   for default user     -->
       <ul v-if="TokenUser && !user.basicInfo.isAdmin" class="team">
-        <li class="team__item">
-          <router-link :to="{path:'/v2/main/device/add'}" class="team__link focus--box-shadow">
+        <li v-for="(DashboardInfo,index) in DashboardInfoCard" :key="index" class="team__item">
+          <router-link :to="{path:DashboardInfo.Path}" class="team__link focus--box-shadow">
             <div class="team__header">
               <ul class="photo">
-                <li class="photo__item photo__item-bg1Color">
+                <li :class="DashboardInfo.ClassColorBorder">
                   <span class="photo__substrate">
-                       <svg height="30" style=" fill:#000000;" viewBox="0 0 172 172"
-                            width="30" x="0px"
-                            xmlns="http://www.w3.org/2000/svg"
-                            y="0px"><g fill="none" fill-rule="nonzero" font-family="none" font-size="none"
-                                       font-weight="none" stroke="none"
-                                       stroke-dasharray="" stroke-dashoffset="0" stroke-linecap="butt"
-                                       stroke-linejoin="miter" stroke-miterlimit="10" stroke-width="1"
-                                       style="mix-blend-mode: normal" text-anchor="none"><path
-                           d="M0,172v-172h172v172z" fill="none"></path><g fill="#ffffff"><path
-                           d="M45.6875,10.75c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-13.4375c-7.41162,0 -13.4375,6.02588 -13.4375,13.4375v8.0625h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v8.0625c0,7.41162 6.02588,13.4375 13.4375,13.4375h13.4375v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h13.4375c7.41162,0 13.4375,-6.02588 13.4375,-13.4375v-8.0625h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-8.0625c0,-7.41162 -6.02588,-13.4375 -13.4375,-13.4375h-13.4375v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM29.5625,26.875h112.875c4.44067,0 8.0625,3.62183 8.0625,8.0625v102.125c0,4.44067 -3.62183,8.0625 -8.0625,8.0625h-112.875c-4.44067,0 -8.0625,-3.62183 -8.0625,-8.0625v-102.125c0,-4.44067 3.62183,-8.0625 8.0625,-8.0625zM37.625,37.625c-2.96045,0 -5.375,2.41455 -5.375,5.375v86c0,2.96045 2.41455,5.375 5.375,5.375h96.75c2.96045,0 5.375,-2.41455 5.375,-5.375v-86c0,-2.96045 -2.41455,-5.375 -5.375,-5.375zM37.625,43h96.75v86h-96.75zM56.4375,53.75c-2.06811,0 -4.12573,0.78735 -5.70044,2.36206c-3.14941,3.14941 -3.14941,8.25147 0,11.40088c1.57471,1.57471 3.63233,2.36206 5.70044,2.36206c2.06811,0 4.12573,-0.78735 5.70044,-2.36206c3.14941,-3.14941 3.14941,-8.25147 0,-11.40088c-1.57471,-1.57471 -3.63233,-2.36206 -5.70044,-2.36206zM56.4375,59.125c0.69287,0 1.37524,0.26245 1.90015,0.78735c1.0498,1.0498 1.0498,2.75049 0,3.80029c-1.0498,1.0498 -2.75049,1.0498 -3.80029,0c-1.0498,-1.0498 -1.0498,-2.75049 0,-3.80029c0.5249,-0.5249 1.20728,-0.78735 1.90015,-0.78735zM67.1875,80.625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h43c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM67.1875,91.375c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h13.4375c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM91.375,91.375c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h5.375c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM45.6875,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM59.125,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM72.5625,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM86,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM99.4375,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM112.875,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM126.3125,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875z"></path></g></g></svg>
+                       <svg :height="DashboardInfo.SVG.height" :style="DashboardInfo.SVG.Style"
+                            :viewBox="DashboardInfo.SVG.viewBox"
+                            :width="DashboardInfo.SVG.width" :x="DashboardInfo.SVG.x"
+                            :xmlns="DashboardInfo.SVG.xmlns"
+                            :y="DashboardInfo.SVG.y">
+                         <g :fill="DashboardInfo.SVG.Fill_1" :fill-rule="DashboardInfo.SVG.fill_rule"
+                            :font-family="DashboardInfo.SVG.font_family"
+                            :font-size="DashboardInfo.SVG.font_size"
+                            :font-weight="DashboardInfo.SVG.font_weight" :stroke="DashboardInfo.SVG.stroke"
+                            :stroke-dasharray="DashboardInfo.SVG.stroke_dasharray"
+                            :stroke-dashoffset="DashboardInfo.SVG.stroke_dashoffset"
+                            :stroke-linecap="DashboardInfo.SVG.stroke_linecap"
+                            :stroke-linejoin="DashboardInfo.SVG.stroke_linejoin"
+                            :stroke-miterlimit="DashboardInfo.SVG.stroke_miterlimit"
+                            :stroke-width="DashboardInfo.SVG.stroke_width"
+                            :style="DashboardInfo.SVG.Style_mix" :text-anchor="DashboardInfo.SVG.text_anchor">
+                           <path :d="DashboardInfo.SVG.d_1" :fill="DashboardInfo.SVG.Fill_2">
+                           </path>
+                           <g :fill="DashboardInfo.SVG.Fill_3">
+                             <path
+                                 :d="DashboardInfo.SVG.d_2"></path>
+                           </g>
+                         </g>
+                       </svg>
                   </span>
                 </li>
               </ul>
@@ -132,57 +94,18 @@
               </button>
             </div>
             <div class="team__inform">
-              <p class="team__name">Number Processor</p>
-              <p v-if="TokenUser && userProcessorIds" class="team__name">{{ userProcessorIds.length }}</p>
+              <p class="team__name">{{ DashboardInfo.TitleCard }}</p>
+              <p v-if="TokenUser && userProcessorIds" class="team__name">{{ DashboardInfo.Number }}</p>
             </div>
           </router-link>
-        </li>
-        <li class="team__item">
-          <a class="team__link focus--box-shadow">
-            <div class="team__header">
-              <ul class="photo">
-                <li class="photo__item photo__item-bg2Color">
-                  <span class="photo__substrate">
-                       <!--         SVG , Width 30           -->
-                  </span>
-                </li>
-              </ul>
-              <button class="setting setting--absolute foucs--box-shadow" type="button">
-                <i class="fa fa-ellipsis-v"></i>
-              </button>
-            </div>
-            <div class="team__inform">
-              <p class="team__name">???</p>
-              <p class="team__name">????</p>
-            </div>
-          </a>
-        </li>
-        <li class="team__item">
-          <a class="team__link focus--box-shadow">
-            <div class="team__header">
-              <ul class="photo">
-                <li class="photo__item photo__item-bg3Color">
-                  <span class="photo__substrate">
-                       <!--         SVG , Width 30           -->
-                  </span>
-                </li>
-              </ul>
-              <button class="setting setting--absolute foucs--box-shadow" type="button">
-                <i class="fa fa-ellipsis-v"></i>
-              </button>
-            </div>
-            <div class="team__inform">
-              <p class="team__name">???</p>
-              <p class="team__name">????</p>
-            </div>
-          </a>
         </li>
       </ul>
     </section><!-- End SECTION -->
     <!--   section number 2     -->
-    <section class="section section__mTop">
+    <!--  For user  -->
+    <section v-if="TokenUser && !user.basicInfo.isAdmin" class="section section__mTop">
       <header class="section__header">
-        <h2 class="section__title">Project</h2>
+        <h2 class="section__title">All Controller</h2>
         <div class="section__control">
           <button class="section__button  focus--box-shadow" type="button">
             <i class="fas fa-cog"></i>
@@ -235,40 +158,22 @@
             </div>
           </a>
         </li>
-        <li class="project__item">
-          <a class="project__link focus--box-shadow" href="">
-            <div class="project__wrapper">
-              <div class="project__element project__icon">
-                <div class="icon icon--rajah">
-                  <i class="far fa-handshake"></i>
-                </div>
-              </div>
-              <div class="project__element project__inform">
-                <span class="project__inform-name">Product presentation</span>
-              </div>
-              <div class="project__element project__photo">
-                <ul class="photo">
-                  <li class="photo__item">
-                                                <span class="photo__substrate">
-                                                    <img alt="team photo" src="@/assets/img/MainHomePage/user.jpg">
-                                                </span>
-                  </li>
-                </ul>
-              </div>
-              <div class="project__element project__date">
-                <time class="date" datetime="2020-05-05T10:00:00">05 May, 2020</time>
-              </div>
-              <div class="project__element project__status">
-                <span class="status status--published">Published</span>
-              </div>
-              <div class="project__element project__setting">
-                <button class="setting setting--rotate focus--box-shadow" type="button">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-              </div>
-            </div>
-          </a>
-        </li>
+      </ul>
+    </section><!-- End SECTION -->
+
+    <section v-if="TokenUser && !user.basicInfo.isAdmin" class="section section__mTop">
+      <header class="section__header">
+        <h2 class="section__title">Favorite Controller</h2>
+        <div class="section__control">
+          <button class="section__button  focus--box-shadow" type="button">
+            <i class="fas fa-cog"></i>
+          </button>
+          <button class="section__button section__button--painted focus--box-shadow" type="button">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </header>
+      <ul class="project">
         <li class="project__item">
           <a class="project__link focus--box-shadow" href="">
             <div class="project__wrapper">
@@ -283,73 +188,13 @@
               <div class="project__element project__photo">
                 <ul class="photo">
                   <li class="photo__item">
-                                                <span class="photo__substrate">
-                                                    <img alt="team photo" src="@/assets/img/MainHomePage/user.jpg">
-                                                </span>
+                    <span class="photo__substrate">+2</span>
                   </li>
-                </ul>
-              </div>
-              <div class="project__element project__date">
-                <time class="date" datetime="2020-05-05T10:00:00">05 May, 2020</time>
-              </div>
-              <div class="project__element project__status">
-                <span class="status status--in-work">in Work</span>
-              </div>
-              <div class="project__element project__setting">
-                <button class="setting setting--rotate focus--box-shadow" type="button">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-              </div>
-            </div>
-          </a>
-        </li>
-        <li class="project__item">
-          <a class="project__link focus--box-shadow" href="">
-            <div class="project__wrapper">
-              <div class="project__element project__icon">
-                <div class="icon icon--rajah">
-                  <i class="far fa-handshake"></i>
-                </div>
-              </div>
-              <div class="project__element project__inform">
-                <span class="project__inform-name">Product presentation</span>
-              </div>
-              <div class="project__element project__photo">
-                <ul class="photo">
                   <li class="photo__item">
                                                 <span class="photo__substrate">
                                                     <img alt="team photo" src="@/assets/img/MainHomePage/user.jpg">
                                                 </span>
                   </li>
-                </ul>
-              </div>
-              <div class="project__element project__date">
-                <time class="date" datetime="2020-05-05T10:00:00">05 May, 2020</time>
-              </div>
-              <div class="project__element project__status">
-                <span class="status status--published">Published</span>
-              </div>
-              <div class="project__element project__setting">
-                <button class="setting setting--rotate focus--box-shadow" type="button">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-              </div>
-            </div>
-          </a>
-        </li>
-        <li class="project__item">
-          <a class="project__link focus--box-shadow" href="">
-            <div class="project__wrapper">
-              <div class="project__element project__icon">
-                <div class="icon icon--viking">
-                  <i class="far fa-handshake"></i>
-                </div>
-              </div>
-              <div class="project__element project__inform">
-                <span class="project__inform-name">Product presentation</span>
-              </div>
-              <div class="project__element project__photo">
-                <ul class="photo">
                   <li class="photo__item">
                                                 <span class="photo__substrate">
                                                     <img alt="team photo" src="@/assets/img/MainHomePage/user.jpg">
@@ -373,6 +218,24 @@
         </li>
       </ul>
     </section><!-- End SECTION -->
+
+    <!--  For Admin   -->
+    <section v-if="TokenUser && user.basicInfo.isAdmin" class="section section__mTop">
+      <header class="section__header">
+        <h2 class="section__title">Un Know </h2>
+        <div class="section__control">
+          <button class="section__button  focus--box-shadow" type="button">
+            <i class="fas fa-cog"></i>
+          </button>
+          <button class="section__button section__button--painted focus--box-shadow" type="button">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </header>
+      <!--    Start hear  -->
+
+      <!--   End hear   -->
+    </section><!-- End SECTION -->
   </div>
 </template>
 
@@ -384,7 +247,211 @@ import io from "socket.io-client";
 export default {
   name: "DashboardMain",
   data() {
-    return {socket: null}
+    return {
+      socket: null,
+      DashboardInfoCard: [
+        {
+          Path: '/v2/main/device/add',
+          ClassColorBorder: 'photo__item photo__item-bg1Color',
+          TitleCard: 'Number Processor',
+          Number: this.$store.getters.userProcessorIds.length,
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M45.6875,10.75c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-13.4375c-7.41162,0 -13.4375,6.02588 -13.4375,13.4375v8.0625h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v8.0625c0,7.41162 6.02588,13.4375 13.4375,13.4375h13.4375v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h13.4375c7.41162,0 13.4375,-6.02588 13.4375,-13.4375v-8.0625h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-8.0625c0,-7.41162 -6.02588,-13.4375 -13.4375,-13.4375h-13.4375v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM29.5625,26.875h112.875c4.44067,0 8.0625,3.62183 8.0625,8.0625v102.125c0,4.44067 -3.62183,8.0625 -8.0625,8.0625h-112.875c-4.44067,0 -8.0625,-3.62183 -8.0625,-8.0625v-102.125c0,-4.44067 3.62183,-8.0625 8.0625,-8.0625zM37.625,37.625c-2.96045,0 -5.375,2.41455 -5.375,5.375v86c0,2.96045 2.41455,5.375 5.375,5.375h96.75c2.96045,0 5.375,-2.41455 5.375,-5.375v-86c0,-2.96045 -2.41455,-5.375 -5.375,-5.375zM37.625,43h96.75v86h-96.75zM56.4375,53.75c-2.06811,0 -4.12573,0.78735 -5.70044,2.36206c-3.14941,3.14941 -3.14941,8.25147 0,11.40088c1.57471,1.57471 3.63233,2.36206 5.70044,2.36206c2.06811,0 4.12573,-0.78735 5.70044,-2.36206c3.14941,-3.14941 3.14941,-8.25147 0,-11.40088c-1.57471,-1.57471 -3.63233,-2.36206 -5.70044,-2.36206zM56.4375,59.125c0.69287,0 1.37524,0.26245 1.90015,0.78735c1.0498,1.0498 1.0498,2.75049 0,3.80029c-1.0498,1.0498 -2.75049,1.0498 -3.80029,0c-1.0498,-1.0498 -1.0498,-2.75049 0,-3.80029c0.5249,-0.5249 1.20728,-0.78735 1.90015,-0.78735zM67.1875,80.625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h43c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM67.1875,91.375c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h13.4375c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM91.375,91.375c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h5.375c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM45.6875,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM59.125,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM72.5625,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM86,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM99.4375,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM112.875,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM126.3125,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875z',
+          },
+        },
+        {
+          Path: '/v2/main/device/add',
+          ClassColorBorder: 'photo__item photo__item-bg2Color',
+          TitleCard: 'Number Controller',
+          Number: '6',
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M27.95,23.65c-4.72832,0 -8.6,3.87168 -8.6,8.6v73.1c0,1.57051 0.46191,3.03184 1.20938,4.3h-9.80937v6.45c0,5.9125 4.8375,10.75 10.75,10.75h23.65v21.5c0,3.53574 2.91426,6.45 6.45,6.45h30.1c3.53574,0 6.45,-2.91426 6.45,-6.45v-4.3h45.15c3.53574,0 6.45,-2.91426 6.45,-6.45v-10.75h10.75c5.9125,0 10.75,-4.8375 10.75,-10.75v-6.45h-9.80938c0.74746,-1.26816 1.20938,-2.72949 1.20938,-4.3v-73.1c0,-4.72832 -3.87168,-8.6 -8.6,-8.6zM27.95,27.95h116.1c2.40195,0 4.3,1.89805 4.3,4.3v73.1c0,2.40195 -1.89805,4.3 -4.3,4.3h-4.3v-43c0,-3.53574 -2.91426,-6.45 -6.45,-6.45h-51.6c-3.53574,0 -6.45,2.91426 -6.45,6.45v21.5h-23.65c-3.53574,0 -6.45,2.91426 -6.45,6.45v15.05h-17.2c-2.40195,0 -4.3,-1.89805 -4.3,-4.3v-73.1c0,-2.40195 1.89805,-4.3 4.3,-4.3zM34.4,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM43,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM51.6,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM60.2,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM68.8,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM77.4,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM86,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM94.6,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM103.2,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM111.8,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM120.4,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM129,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM137.6,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,45.15c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM137.6,45.15c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,53.75c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM137.6,53.75c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,62.35c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM81.7,64.5h51.6c1.21777,0 2.15,0.93223 2.15,2.15v70.95c0,1.21777 -0.93223,2.15 -2.15,2.15h-45.15v-45.15c0,-3.53574 -2.91426,-6.45 -6.45,-6.45h-2.15v-21.5c0,-1.21777 0.93223,-2.15 2.15,-2.15zM34.4,70.95c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,79.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,88.15c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM51.6,92.45h30.1c1.21777,0 2.15,0.93223 2.15,2.15v53.75c0,1.21777 -0.93223,2.15 -2.15,2.15h-30.1c-1.21777,0 -2.15,-0.93223 -2.15,-2.15v-53.75c0,-1.21777 0.93223,-2.15 2.15,-2.15zM34.4,96.75c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM15.05,113.95h30.1v8.6h-23.65c-3.58613,0 -6.45,-2.86387 -6.45,-6.45zM139.75,113.95h17.2v2.15c0,3.58613 -2.86387,6.45 -6.45,6.45h-10.75zM107.5,131.15c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM66.65,141.9c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15z',
+          },
+        },
+        {
+          Path: '/v2/main/device/add',
+          ClassColorBorder: 'photo__item photo__item-bg3Color',
+          TitleCard: 'Favorite Controller',
+          Number: '0',
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M24.08,13.76c-5.6587,0 -10.32,4.6613 -10.32,10.32v13.45765c-0.12882,0.62781 -3.44,16.81185 -3.44,26.10235c0,4.74256 0.91525,9.28297 3.42656,12.90672c0.00458,0.00661 0.00885,0.01356 0.01344,0.02015v71.35313c0,5.68976 4.63024,10.32 10.32,10.32h82.62047c-2.42176,-2.07432 -4.77999,-4.36192 -6.94719,-6.88h-75.67328c-1.89544,0 -3.44,-1.54112 -3.44,-3.44v-66.22672c1.58576,0.55025 3.3132,0.86672 5.16,0.86672c4.59416,0 8.77956,-1.69639 12.04,-4.42765c3.26044,2.73126 7.44584,4.42765 12.04,4.42765c4.59416,0 8.77956,-1.69639 12.04,-4.42765c3.26044,2.73126 7.44584,4.42765 12.04,4.42765c4.72586,0 8.74254,-2.10804 12.04,-4.9786c3.29746,2.87056 7.31414,4.9786 12.04,4.9786c4.72586,0 8.74266,-2.10697 12.04,-4.9786c3.29734,2.87163 7.31414,4.9786 12.04,4.9786c4.59123,0 8.78079,-1.69224 12.04,-4.42094c3.25921,2.7287 7.44877,4.42094 12.04,4.42094c1.8468,0 3.57424,-0.31647 5.16,-0.86672v14.71406c2.37704,0.1376 4.68872,0.52186 6.88,1.18922v-21.02969c0.00459,-0.0066 0.00886,-0.01355 0.01344,-0.02015c2.51132,-3.62374 3.42656,-8.16416 3.42656,-12.90672c0,-9.2905 -3.31118,-25.47454 -3.44,-26.10235v-13.45765c0,-5.6587 -4.6613,-10.32 -10.32,-10.32zM24.08,20.64h123.84c1.9437,0 3.44,1.4963 3.44,3.44v10.32h-40.70219c-0.37149,-0.0614 -0.75054,-0.0614 -1.12203,0h-22.95797c-0.37149,-0.0614 -0.75054,-0.0614 -1.12203,0h-23.005c-0.19315,-0.03228 -0.3887,-0.04802 -0.58453,-0.04703c-0.16665,0.00361 -0.33282,0.01933 -0.49719,0.04703h-40.72906v-10.32c0,-1.9437 1.4963,-3.44 3.44,-3.44zM27.52,24.08c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM37.84,24.08c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM48.16,24.08c-1.89986,0 -3.44,1.54014 -3.44,3.44c0,1.89986 1.54014,3.44 3.44,3.44c1.89986,0 3.44,-1.54014 3.44,-3.44c0,-1.89986 -1.54014,-3.44 -3.44,-3.44zM20.20328,41.28h14.19672v30.59047c-2.19826,2.31776 -5.17671,3.80953 -8.6,3.80953c-3.34441,0 -5.02466,-1.07788 -6.39625,-3.05703c-1.37159,-1.97915 -2.20375,-5.17712 -2.20375,-8.98297c0,-6.78558 2.41479,-19.22465 3.00328,-22.36zM41.28,41.28h17.2v30.59047c-2.19826,2.31776 -5.17671,3.80953 -8.6,3.80953c-3.42329,0 -6.40174,-1.49178 -8.6,-3.80953zM65.36,41.28h17.2v30.44265c-2.20371,2.35713 -5.14372,3.95735 -8.6,3.95735c-3.45628,0 -6.39629,-1.60022 -8.6,-3.95735zM89.44,41.28h17.2v30.44265c-2.20055,2.3552 -5.14372,3.95735 -8.6,3.95735c-3.45628,0 -6.39629,-1.60022 -8.6,-3.95735zM113.52,41.28h17.2v30.44265c-2.20055,2.3552 -5.14372,3.95735 -8.6,3.95735c-3.45628,0 -6.39945,-1.60215 -8.6,-3.95735zM137.6,41.28h14.19672c0.58849,3.13535 3.00328,15.57442 3.00328,22.36c0,3.80584 -0.83216,7.00382 -2.20375,8.98297c-1.37159,1.97916 -3.05184,3.05703 -6.39625,3.05703c-3.42329,0 -6.40455,-1.49337 -8.6,-3.80953zM118.68,103.2c-12.384,0 -22.36,9.97735 -22.36,22.01735c0,18.92 17.19731,30.27334 28.20531,37.49734c3.096,2.064 5.50937,3.44 7.22937,5.16l2.06266,1.72l2.06265,-1.72c1.72,-1.376 4.47065,-3.096 7.22265,-5.16c11.696,-7.568 28.89735,-18.57734 28.89735,-37.49734c0,-12.04 -9.976,-22.01735 -22.36,-22.01735c-5.848,0 -11.352,2.41069 -15.48,6.19469c-4.128,-3.784 -9.632,-6.19469 -15.48,-6.19469zM118.68,110.08c5.16,0 9.62931,2.408 12.72531,6.88l2.75469,4.12531l2.75469,-4.12531c2.752,-4.128 7.56531,-6.88 12.72531,-6.88c8.6,0 15.48,6.88135 15.48,15.13735c0,15.136 -14.45069,24.76531 -25.11469,31.64531c-2.408,1.376 -4.12531,2.75066 -5.84531,3.78266c-1.72,-1.376 -3.43731,-2.40666 -5.84531,-3.78266c-10.664,-6.88 -25.11469,-16.50931 -25.11469,-31.64531c0,-8.256 6.88,-15.13735 15.48,-15.13735z',
+          },
+        },
+      ],
+      DashboardInfoCardForADMIN: [
+        {
+          Path: '/v2/main/admin/create/controller/type',
+          ClassColorBorder: 'photo__item photo__item-bg1Color',
+          TitleCard: 'Number Type',
+          Number: this.$store.getters.allTypeController.length,
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M27.52,13.76c-7.60562,0 -13.76,6.15438 -13.76,13.76v30.96h6.88v-30.96c0,-4.09844 2.78156,-6.88 6.88,-6.88h116.96c4.09844,0 6.88,2.78156 6.88,6.88v51.6h6.88v-51.6c0,-7.60562 -6.15437,-13.76 -13.76,-13.76zM30.315,27.52c-1.63937,0.30906 -2.82187,1.76031 -2.795,3.44v27.52h6.88v-24.08h103.2v44.72h6.88v-48.16c0,-1.89469 -1.54531,-3.44 -3.44,-3.44h-110.08c-0.1075,0 -0.215,0 -0.3225,0c-0.1075,0 -0.215,0 -0.3225,0zM6.88,61.92c-1.80062,0 -3.64156,0.63156 -4.945,1.935c-1.30344,1.30344 -1.935,3.14438 -1.935,4.945v82.56c0,1.80063 0.63156,3.64156 1.935,4.945c1.30344,1.30344 3.14438,1.935 4.945,1.935h65.36c1.80063,0 3.64156,-0.63156 4.945,-1.935c1.30344,-1.30344 1.935,-3.14437 1.935,-4.945v-82.56c0,-1.80062 -0.63156,-3.64156 -1.935,-4.945c-1.30344,-1.30344 -3.14437,-1.935 -4.945,-1.935zM6.88,68.8h65.36v82.56h-65.36zM13.115,72.24c-1.63937,0.30906 -2.82187,1.76031 -2.795,3.44v61.92c0,1.89469 1.54531,3.44 3.44,3.44h51.6c1.89469,0 3.44,-1.54531 3.44,-3.44v-61.92c0,-1.89469 -1.54531,-3.44 -3.44,-3.44h-51.6c-0.1075,0 -0.215,0 -0.3225,0c-0.1075,0 -0.215,0 -0.3225,0zM17.2,79.12h44.72v55.04h-44.72zM127.28,82.56c-1.80062,0 -3.64156,0.63156 -4.945,1.935c-1.30344,1.30344 -1.935,3.14438 -1.935,4.945v61.92c0,1.80063 0.63156,3.64156 1.935,4.945c1.30344,1.30344 3.14438,1.935 4.945,1.935h37.84c1.80063,0 3.64156,-0.63156 4.945,-1.935c1.30344,-1.30344 1.935,-3.14437 1.935,-4.945v-61.92c0,-1.80062 -0.63156,-3.64156 -1.935,-4.945c-1.30344,-1.30344 -3.14437,-1.935 -4.945,-1.935zM127.28,89.44h37.84v61.92h-37.84zM133.515,92.88c-1.63937,0.30906 -2.82187,1.76031 -2.795,3.44v41.28c0,1.89469 1.54531,3.44 3.44,3.44h24.08c1.89469,0 3.44,-1.54531 3.44,-3.44v-41.28c0,-1.89469 -1.54531,-3.44 -3.44,-3.44h-24.08c-0.1075,0 -0.215,0 -0.3225,0c-0.1075,0 -0.215,0 -0.3225,0zM137.6,99.76h17.2v34.4h-17.2zM82.56,110.08v6.88h34.4v-6.88zM99.76,120.4v17.2h17.2v-6.88h-10.32v-3.44h10.32v-6.88zM82.56,141.04v6.88h34.4v-6.88zM39.56,142.76c-1.89469,0 -3.44,1.54531 -3.44,3.44c0,1.89469 1.54531,3.44 3.44,3.44c1.89469,0 3.44,-1.54531 3.44,-3.44c0,-1.89469 -1.54531,-3.44 -3.44,-3.44zM146.2,142.76c-1.89469,0 -3.44,1.54531 -3.44,3.44c0,1.89469 1.54531,3.44 3.44,3.44c1.89469,0 3.44,-1.54531 3.44,-3.44c0,-1.89469 -1.54531,-3.44 -3.44,-3.44z',
+          },
+        },
+        {
+          Path: '/v2/main/admin/create/controller/location',
+          ClassColorBorder: 'photo__item photo__item-bg2Color',
+          TitleCard: 'Number Location',
+          Number: this.$store.getters.allLocationController.length,
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M18.8125,1.34375c-9.675,0 -17.46875,7.79375 -17.46875,17.46875v39.77447c0,9.1375 6.85417,17.06668 15.8573,17.87293c6.04688,0.5375 11.5552,-2.0172 15.04895,-6.3172c0.80625,0.94062 1.74688,1.88177 2.6875,2.55365v46.8974c0,2.28437 1.74688,4.03125 4.03125,4.03125h31.9823c2.55312,0 4.43438,-2.28437 4.03125,-4.70312c-3.225,-16.52813 1.61145,-34.2651 14.37708,-47.1651c0.67188,-0.67187 1.34375,-1.2099 2.01563,-1.88178c1.6125,-1.34375 1.7474,-3.7625 0.53803,-5.375c-1.075,-1.47812 -1.74793,-3.35937 -1.74793,-5.375v-33.32605c0,-2.15 -1.61093,-4.16458 -3.76093,-4.29895c-2.28437,-0.13437 -4.30157,1.74687 -4.30157,4.03125v33.32605c0,4.8375 -3.49322,9.00208 -8.19635,9.67395c-5.77813,0.67188 -10.75,-3.7625 -10.75,-9.40625v-33.32605c0,-2.15 -1.61355,-4.16458 -3.76355,-4.29895c-2.28438,-0.13437 -4.29895,1.74687 -4.29895,4.03125v33.32605c0,4.8375 -3.49322,9.00208 -8.19635,9.67395c-5.64375,0.67188 -10.61615,-3.7625 -10.61615,-9.40625v-13.1698c0,-2.15 -1.61355,-4.16458 -3.76355,-4.29895c-2.28438,-0.13437 -4.29895,1.74687 -4.29895,4.03125v13.1698c0,4.8375 -3.49322,9.00208 -8.19635,9.67395c-5.64375,0.67188 -10.61615,-3.7625 -10.61615,-9.40625v-40.3125c0,-5.24062 4.16563,-9.40625 9.40625,-9.40625h134.375c5.24062,0 9.40625,4.16563 9.40625,9.40625v40.3125c0,2.01563 -0.67292,3.89635 -1.74792,5.50885c-1.20937,1.74688 -1.07448,4.03125 0.53802,5.375c1.74687,1.6125 4.4349,1.34323 5.91302,-0.53802c2.15,-2.95625 3.49323,-6.5828 3.49323,-10.47968v-40.17865c-0.13438,-9.675 -7.9276,-17.46875 -17.6026,-17.46875zM32.25,21.5c-2.2264,0 -4.03125,1.80485 -4.03125,4.03125c0,2.2264 1.80485,4.03125 4.03125,4.03125c2.2264,0 4.03125,-1.80485 4.03125,-4.03125c0,-2.2264 -1.80485,-4.03125 -4.03125,-4.03125zM112.6073,21.5c-2.15,0.13438 -3.76355,2.01458 -3.76355,4.29895v28.35522c0,2.55313 2.41822,4.4328 4.83697,3.76093c1.88125,-0.40313 3.22553,-2.01615 3.22553,-3.8974v-28.48645c0,-2.28438 -1.8802,-4.16562 -4.29895,-4.03125zM140.0177,21.5c-2.28438,-0.13437 -4.29895,1.74687 -4.29895,4.03125v6.71875v21.7677c0,1.88125 1.34427,3.49427 3.22552,3.8974c2.55312,0.5375 4.83698,-1.34427 4.83698,-3.8974v-21.7677v-6.45105c0,-2.15 -1.61355,-4.16458 -3.76355,-4.29895zM126.24426,64.53412c-11.35469,0 -22.70885,4.33202 -31.37604,12.99921c-17.2,17.2 -17.20052,45.42085 0.13385,62.62085l28.62292,28.75415c0.80625,0.80625 1.74635,1.2099 2.82135,1.2099c1.075,0 2.14948,-0.40365 2.82135,-1.2099l28.35522,-28.6203c17.33438,-17.33437 17.33438,-45.42032 0,-62.7547c-8.66719,-8.66719 -20.02397,-12.99921 -31.37866,-12.99921zM19.0802,81.96875c-2.28438,-0.13438 -4.29895,1.74688 -4.29895,4.03125v56.4375h-9.13855c-2.15,0 -4.16458,1.61355 -4.29895,3.76355c-0.13437,2.28438 1.74687,4.29895 4.03125,4.29895h79.01355c3.49375,0 5.23958,-4.16563 2.9552,-6.71875l-0.13385,-0.13385c-0.80625,-0.80625 -1.74845,-1.2099 -2.95782,-1.2099h-61.40833v-56.1698c0,-2.28438 -1.61355,-4.16458 -3.76355,-4.29895zM126.3125,94.73438c7.39063,0 13.4375,6.04688 13.4375,13.4375c0,7.39063 -6.04687,13.4375 -13.4375,13.4375c-7.39062,0 -13.4375,-6.04687 -13.4375,-13.4375c0,-7.39062 6.04688,-13.4375 13.4375,-13.4375zM166.625,142.4375c-2.2264,0 -4.03125,1.80485 -4.03125,4.03125c0,2.2264 1.80485,4.03125 4.03125,4.03125c2.2264,0 4.03125,-1.80485 4.03125,-4.03125c0,-2.2264 -1.80485,-4.03125 -4.03125,-4.03125zM32.25,162.59375c-2.28438,0 -4.03125,1.74687 -4.03125,4.03125c0,2.28438 1.74687,4.03125 4.03125,4.03125h67.1875c2.28437,0 4.03125,-1.74687 4.03125,-4.03125c0,-2.28438 -1.74688,-4.03125 -4.03125,-4.03125zM153.1875,162.59375c-2.28438,0 -4.03125,1.74687 -4.03125,4.03125c0,2.28438 1.74687,4.03125 4.03125,4.03125h13.4375c2.28438,0 4.03125,-1.74687 4.03125,-4.03125c0,-2.28438 -1.74687,-4.03125 -4.03125,-4.03125z',
+          },
+        },
+        {
+          Path: '#',
+          ClassColorBorder: 'photo__item photo__item-bg3Color',
+          TitleCard: 'Number User',
+          Number: '20',
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M54.13073,17.2c-31.2524,0.53893 -34.44622,22.21004 -28.17396,47.09844c-1.21547,0.69947 -3.21443,2.91979 -2.7099,6.86432c0.94027,7.35587 4.12925,9.21786 6.15885,9.37266c0.774,6.86853 8.1476,15.65272 10.7276,16.93125v11.46667c-5.73333,17.2 -40.13333,0 -40.13333,45.86667h68.8c0,-20.34187 11.40611,-29.10285 20.91771,-34.14245c-8.93253,-3.1304 -18.18291,-3.51982 -20.91771,-11.72422v-11.46667c2.58,-1.27853 9.94787,-10.05725 10.72761,-16.92005c0.45867,-1.62253 0.81745,-7.42717 0.81745,-8.73437c0,-7.16093 -0.10508,-21.96189 4.37839,-33.54896c-1.5652,-7.78587 -5.65665,-14.35224 -14.42292,-15.21797c-2.34493,-3.88147 -8.35526,-5.84531 -16.16979,-5.84531zM126.8388,22.93333c-6.44427,0 -11.42188,5.73333 -11.42188,5.73333c-36.93413,0 -16.43066,62.79917 -27.27812,71.82344c0,0 5.76746,8.54401 26.52786,8.54401v7.31224c-5.73333,15.52013 -34.4,9.78698 -34.4,38.45364h91.73333c0,-28.66667 -28.66667,-22.93351 -34.4,-38.45364v-7.37943c20.8636,0 25.69922,-8.26406 25.69922,-8.26406c-11.6788,-9.58613 8.69532,-77.76953 -36.46042,-77.76953z',
+          },
+        },
+      ],
+    }
   },
   methods: {
     async GetAllType() {
@@ -399,6 +466,7 @@ export default {
       this.socket.emit("all_Type_Controller", All_Type_Controller);
       this.socket.on("all_Type_Controller_server", (data) => {
         this.$store.dispatch('allTypeController', data);
+        this.DashboardInfoCardForADMIN[0].Number = this.$store.getters.allTypeController.length;
       });
 
     },
@@ -414,6 +482,7 @@ export default {
       this.socket.emit("all_Location_Controller", All_Location_Controller);
       this.socket.on("all_Location_Controller_server", (data) => {
         this.$store.dispatch('allLocationController', data);
+        this.DashboardInfoCardForADMIN[1].Number = this.$store.getters.allLocationController.length;
       });
       // await this.$store.dispatch('allLocationController', All_Location_Controller);
     },
@@ -422,6 +491,7 @@ export default {
       this.socket.emit("user_All_Processor", responseProcessor);
       this.socket.on("user_All_Processor_server", (data) => {
         this.$store.dispatch('userProcessorIds', data);
+        this.DashboardInfoCard[0].Number = this.$store.getters.userProcessorIds.length;
       });
       // await this.$store.dispatch('userProcessorIds', responseProcessor);
     },
