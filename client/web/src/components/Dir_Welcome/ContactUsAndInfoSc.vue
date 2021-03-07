@@ -4,25 +4,17 @@
       <div class="container__infoBox-shadow"></div>
       <div v-animate-onscroll.repeat="'animated fadeIn'" class="contactUs-main__section ">
         <div v-animate-onscroll.repeat="'animated fadeInUp'" class="contactus__title">
-          <h2 class="contactus__title-h">Contact the Pied Piper team</h2>
+          <h2 class="contactus__title-h">{{ SiteContactUsInfo.MainTitle }}</h2>
         </div>
         <div class="contactUs__info">
           <div v-animate-onscroll.repeat="'animated fadeIn fadeInLeft'" class="information__Section">
-            <h3 class="information__Section-title">Let's talk about the future of the internet</h3>
-            <p class="information__Section-p">We're here to answer your questions and discuss the decentralized future
-              of the internet.</p>
+            <h3 class="information__Section-title">{{ SiteContactUsInfo.SectionTitle }}</h3>
+            <p class="information__Section-p">{{ SiteContactUsInfo.SectionBody }}</p>
             <ul class="container__contactInfo">
-              <li class="container-contactUs__list">
-                <i class="fas fa-map-marker-alt"></i>
-                <p class="container-contactUs__p">Pied Piper HQ - 59 Silicon Av.</p>
-              </li>
-              <li class="container-contactUs__list">
-                <i class="fas fa-phone-volume"></i>
-                <p class="container-contactUs__p">555-333-555</p>
-              </li>
-              <li class="container-contactUs__list">
-                <i class="fas fa-envelope"></i>
-                <p class="container-contactUs__p">pay-the-piper@piedpiper.com</p>
+              <li v-for="(content , index) in SiteContactUsInfo.ContactUsList" :key="index"
+                  class="container-contactUs__list">
+                <i :class="content.Type"></i>
+                <p class="container-contactUs__p">{{ content.BodyContent }}</p>
               </li>
             </ul>
 
@@ -73,6 +65,16 @@ export default {
         errorSubject: null,
         errorMessage: null,
       },
+      SiteContactUsInfo: {
+        MainTitle: 'Contact the Pied Piper team',
+        SectionTitle: 'Let\'s talk about the future of the internet',
+        SectionBody: 'We\'re here to answer your questions and discuss the decentralized future of the internet.',
+        ContactUsList: [
+          {Type: 'fas fa-map-marker-alt', BodyContent: 'Palestine - Gaza Strep',},
+          {Type: 'fas fa-phone-volume', BodyContent: '+970-XXX-XXX-XXX',},
+          {Type: 'fas fa-envelope', BodyContent: 'info_HMSy@HMSy.com',},
+        ],
+      }
     }
   },
   methods: {

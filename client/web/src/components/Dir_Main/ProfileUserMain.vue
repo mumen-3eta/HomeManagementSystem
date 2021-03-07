@@ -420,7 +420,8 @@ export default {
     this.socket.on("user_profileData_server", (data) => {
       this.$store.dispatch('user', data);
     });
-    // await this.$store.dispatch('user', user.data.data);
+  },
+  mounted() {
     const Base_Info = document.getElementById('Base_Info');
     const Login_Info = document.getElementById('Login_Info');
     const bodyBaseInfo = document.getElementById('bodyBaseInfo');
@@ -563,7 +564,6 @@ export default {
     function SlidDown(input, nameClass) {
       input.classList.remove(nameClass);
     }
-
   },
   computed: {
     ...mapGetters(['user', 'TokenUser'])
