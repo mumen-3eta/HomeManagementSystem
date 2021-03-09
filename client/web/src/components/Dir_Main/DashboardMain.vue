@@ -9,7 +9,7 @@
           {{ user.basicInfo.userName }}</h2>
       </header>
       <!--   for Admin user     -->
-      <ul v-if="TokenUser && user.basicInfo.isAdmin" class="team">
+      <ul v-if="user.basicInfo.isAdmin" class="team">
         <li v-for="(DashboardInfoADMIN,i) in DashboardInfoCardForADMIN" :key="i" class="team__item">
           <router-link :to="{path:DashboardInfoADMIN.Path}" class="team__link focus--box-shadow">
             <div class="team__header">
@@ -55,7 +55,7 @@
         </li>
       </ul>
       <!--   for default user     -->
-      <ul v-if="TokenUser && !user.basicInfo.isAdmin" class="team">
+      <ul v-if="!user.basicInfo.isAdmin" class="team">
         <li v-for="(DashboardInfo,index) in DashboardInfoCard" :key="index" class="team__item">
           <router-link :to="{path:DashboardInfo.Path}" class="team__link focus--box-shadow">
             <div class="team__header">
@@ -95,7 +95,7 @@
             </div>
             <div class="team__inform">
               <p class="team__name">{{ DashboardInfo.TitleCard }}</p>
-              <p v-if="TokenUser && userProcessorIds" class="team__name">{{ DashboardInfo.Number }}</p>
+              <p class="team__name">{{ DashboardInfo.Number }}</p>
             </div>
           </router-link>
         </li>
@@ -103,124 +103,52 @@
     </section><!-- End SECTION -->
     <!--   section number 2     -->
     <!--  For user  -->
-    <section v-if="TokenUser && !user.basicInfo.isAdmin" class="section section__mTop">
-      <header class="section__header">
-        <h2 class="section__title">All Controller</h2>
-        <div class="section__control">
-          <button class="section__button  focus--box-shadow" type="button">
-            <i class="fas fa-cog"></i>
-          </button>
-          <button class="section__button section__button--painted focus--box-shadow" type="button">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-      </header>
-      <ul class="project">
-        <li class="project__item">
-          <a class="project__link focus--box-shadow" href="">
-            <div class="project__wrapper">
-              <div class="project__element project__icon">
-                <div class="icon icon--viking">
-                  <i class="far fa-handshake"></i>
-                </div>
-              </div>
-              <div class="project__element project__inform">
-                <span class="project__inform-name">Product presentation</span>
-              </div>
-              <div class="project__element project__photo">
-                <ul class="photo">
-                  <li class="photo__item">
-                    <span class="photo__substrate">+2</span>
-                  </li>
-                  <li class="photo__item">
-                                                <span class="photo__substrate">
-                                                    <img alt="team photo" src="@/assets/img/MainHomePage/user.jpg">
-                                                </span>
-                  </li>
-                  <li class="photo__item">
-                                                <span class="photo__substrate">
-                                                    <img alt="team photo" src="@/assets/img/MainHomePage/user.jpg">
-                                                </span>
-                  </li>
-                </ul>
-              </div>
-              <div class="project__element project__date">
-                <time class="date" datetime="2020-05-05T10:00:00">05 May, 2020</time>
-              </div>
-              <div class="project__element project__status">
-                <span class="status status--published">Published</span>
-              </div>
-              <div class="project__element project__setting">
-                <button class="setting setting--rotate focus--box-shadow" type="button">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </section><!-- End SECTION -->
-
-    <section v-if="TokenUser && !user.basicInfo.isAdmin" class="section section__mTop">
+    <section v-if=" !user.basicInfo.isAdmin" class="section section__mTop">
       <header class="section__header">
         <h2 class="section__title">Favorite Controller</h2>
-        <div class="section__control">
-          <button class="section__button  focus--box-shadow" type="button">
-            <i class="fas fa-cog"></i>
-          </button>
+        <div class="section__control-search">
+          <div class="searchInput">
+            <label for="SearchID"></label>
+            <input id="SearchID" v-model="search" type="search">
+          </div>
           <button class="section__button section__button--painted focus--box-shadow" type="button">
-            <i class="fas fa-plus"></i>
+            <i class="fa fa-search"></i>
           </button>
         </div>
       </header>
-      <ul class="project">
-        <li class="project__item">
-          <a class="project__link focus--box-shadow" href="">
-            <div class="project__wrapper">
-              <div class="project__element project__icon">
-                <div class="icon icon--viking">
-                  <i class="far fa-handshake"></i>
+      <div class="Main__Card_FavoriteController">
+        <div v-for="(Controller , index) in filteredList" :key="index" class="Card_container">
+          <ul class="card_ListData">
+            <li class="card_item">{{ Controller.ControllerName }}</li>
+            <li class="card_item">{{ Controller.LocationController }}</li>
+            <li class="card_item">{{ Controller.TypeController }}</li>
+            <li class="card_item">
+              <button class="btn_Edit">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn_deleted">
+                <i class="fa fa-trash-alt"></i>
+              </button>
+              <button :class="[ Controller.Status  ? 'btn_Star-Favorite' : 'btn_Star' ]"
+                      @click.prevent="ChangeFavorite(index)">
+                <i :class="[Controller.Status ? 'fas fa-star' : 'far fa-star' ]"></i>
+              </button>
+              <div class="btn_Status">
+                <div class="form-check form-switch">
+                  <label for="flexSwitchCheckChecked"></label>
+                  <input id="flexSwitchCheckChecked" :checked="Controller.IsActive ? 'checked' : '' "
+                         class="form-check-input"
+                         type="checkbox">
                 </div>
               </div>
-              <div class="project__element project__inform">
-                <span class="project__inform-name">Product presentation</span>
-              </div>
-              <div class="project__element project__photo">
-                <ul class="photo">
-                  <li class="photo__item">
-                    <span class="photo__substrate">+2</span>
-                  </li>
-                  <li class="photo__item">
-                                                <span class="photo__substrate">
-                                                    <img alt="team photo" src="@/assets/img/MainHomePage/user.jpg">
-                                                </span>
-                  </li>
-                  <li class="photo__item">
-                                                <span class="photo__substrate">
-                                                    <img alt="team photo" src="@/assets/img/MainHomePage/user.jpg">
-                                                </span>
-                  </li>
-                </ul>
-              </div>
-              <div class="project__element project__date">
-                <time class="date" datetime="2020-05-05T10:00:00">05 May, 2020</time>
-              </div>
-              <div class="project__element project__status">
-                <span class="status status--published">Published</span>
-              </div>
-              <div class="project__element project__setting">
-                <button class="setting setting--rotate focus--box-shadow" type="button">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-              </div>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </section><!-- End SECTION -->
 
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section><!-- End SECTION -->
     <!--  For Admin   -->
-    <section v-if="TokenUser && user.basicInfo.isAdmin" class="section section__mTop">
+    <section v-if=" user.basicInfo.isAdmin" class="section section__mTop">
       <header class="section__header">
         <h2 class="section__title">Un Know </h2>
         <div class="section__control">
@@ -248,13 +176,14 @@ export default {
   name: "DashboardMain",
   data() {
     return {
-      socket: null,
+      socket: '',
+      search: '',
       DashboardInfoCard: [
         {
           Path: '/v2/main/device/add',
           ClassColorBorder: 'photo__item photo__item-bg1Color',
           TitleCard: 'Number Processor',
-          Number: this.$store.getters.userProcessorIds.length,
+          Number: this.$store.getters.userProcessorIds ? this.$store.getters.userProcessorIds.length : '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -287,7 +216,7 @@ export default {
           Path: '/v2/main/device/add',
           ClassColorBorder: 'photo__item photo__item-bg2Color',
           TitleCard: 'Number Controller',
-          Number: '6',
+          Number: '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -451,6 +380,43 @@ export default {
           },
         },
       ],
+      ListCardController: [
+        {
+          ControllerName: 'Controller Name #1',
+          LocationController: 'Location Controller #1',
+          TypeController: 'Type Controller #1',
+          Status: false,
+          IsActive: false
+        },
+        {
+          ControllerName: 'Controller Name #2',
+          LocationController: 'Location Controller #2',
+          TypeController: 'Type Controller #2',
+          Status: true,
+          IsActive: true
+        },
+        {
+          ControllerName: 'Controller Name #3',
+          LocationController: 'Location Controller #3',
+          TypeController: 'Type Controller #3',
+          Status: false,
+          IsActive: false
+        },
+        {
+          ControllerName: 'Controller Name #4',
+          LocationController: 'Location Controller #4',
+          TypeController: 'Type Controller #4',
+          Status: true,
+          IsActive: true
+        },
+        {
+          ControllerName: 'Controller Name #5',
+          LocationController: 'Location Controller #5',
+          TypeController: 'Type Controller #5',
+          Status: false,
+          IsActive: false
+        },
+      ],
     }
   },
   methods: {
@@ -466,7 +432,12 @@ export default {
       this.socket.emit("all_Type_Controller", All_Type_Controller);
       this.socket.on("all_Type_Controller_server", (data) => {
         this.$store.dispatch('allTypeController', data);
-        this.DashboardInfoCardForADMIN[0].Number = this.$store.getters.allTypeController.length;
+        if (this.$store.getters.allLocationController) {
+          this.DashboardInfoCardForADMIN[0].Number = this.$store.getters.allTypeController.length;
+        } else {
+          this.DashboardInfoCardForADMIN[0].Number = '0';
+        }
+
       });
 
     },
@@ -482,7 +453,11 @@ export default {
       this.socket.emit("all_Location_Controller", All_Location_Controller);
       this.socket.on("all_Location_Controller_server", (data) => {
         this.$store.dispatch('allLocationController', data);
-        this.DashboardInfoCardForADMIN[1].Number = this.$store.getters.allLocationController.length;
+        if (this.$store.getters.allLocationController) {
+          this.DashboardInfoCardForADMIN[1].Number = this.$store.getters.allLocationController.length;
+        } else {
+          this.DashboardInfoCardForADMIN[1].Number = '0';
+        }
       });
       // await this.$store.dispatch('allLocationController', All_Location_Controller);
     },
@@ -491,9 +466,16 @@ export default {
       this.socket.emit("user_All_Processor", responseProcessor);
       this.socket.on("user_All_Processor_server", (data) => {
         this.$store.dispatch('userProcessorIds', data);
-        this.DashboardInfoCard[0].Number = this.$store.getters.userProcessorIds.length;
+        if (this.$store.getters.userProcessorIds) {
+          this.DashboardInfoCard[0].Number = this.$store.getters.userProcessorIds.length;
+        } else {
+          this.DashboardInfoCard[0].Number = '0';
+        }
       });
       // await this.$store.dispatch('userProcessorIds', responseProcessor);
+    },
+    ChangeFavorite(id) {
+      this.ListCardController[id].Status = !this.ListCardController[id].Status;
     },
   },
   async beforeMount() {
@@ -505,13 +487,173 @@ export default {
     this.socket = io('http://localhost:3001');
   },
   computed: {
-    ...mapGetters(['user', 'TokenUser', 'allTypeController', 'allLocationController', 'userProcessorIds'])
+    ...mapGetters(['user', 'TokenUser', 'allTypeController', 'allLocationController', 'userProcessorIds']),
+    filteredList() {
+      return this.ListCardController.filter(post => {
+        return post.ControllerName.toLowerCase().includes(this.search.toLowerCase())
+      })
+    }
   },
 
 
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+section {
+  .section__header {
+    width: 100%;
 
+    .section__title {
+      width: 100%;
+    }
+
+    .section__control-search {
+      display: flex;
+      width: 100%;
+
+      .section__title {
+        width: 100%;
+      }
+
+      .searchInput {
+        width: 100%;
+
+        input {
+          padding: 0.85rem 0.6rem;
+          font-size: 1.25rem;
+          border: none;
+          width: 100%;
+          border-radius: 10px 0 0 10px;
+
+          &:focus {
+            outline: none;
+
+          }
+        }
+      }
+
+      .section__button {
+        margin: 0;
+        border-radius: 0 10px 10px 0;
+        color: white;
+      }
+    }
+  }
+
+  .Main__Card_FavoriteController {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    padding: 0.25rem 0;
+    margin: 0 auto;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+
+
+    .Card_container {
+      width: 340px;
+      height: auto;
+      display: flex;
+      //flex-wrap: wrap;
+      //flex-grow: 1;
+      flex-direction: column;
+      padding: 1.9rem 0;
+      margin: 0.4rem;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 2px 2px 2px 2px #dbcbbe;
+
+      .card_ListData {
+        .card_item {
+          font-size: 1.2rem;
+          margin: 0.25rem auto;
+          padding: 0.25rem 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          justify-items: center;
+          text-align: center;
+
+          &:last-child {
+            margin-top: 1.5rem;
+          }
+
+          .btn_Star {
+            margin-left: 1rem;
+            background-color: #c6c6c6;
+            color: white;
+            border-radius: 5px;
+            font-size: 1.2rem;
+          }
+
+          .btn_Star-Favorite {
+            margin-left: 1rem;
+            background-color: #f1f1f1;
+            color: white;
+            border-radius: 5px;
+            font-size: 1.2rem;
+
+            .fas {
+              &.fa-star {
+                color: #efbf15;
+              }
+            }
+
+          }
+        }
+
+      }
+    }
+  }
+}
+
+button {
+  padding: 0.6rem;
+  border: 0;
+  cursor: pointer;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+@media screen and (max-width: 410px) {
+  section {
+    .section__header {
+      width: 100%;
+
+      .section__title {
+        width: 100%;
+        font-size: 1.1rem;
+      }
+
+      .section__control-search {
+        display: flex;
+        width: 85%;
+
+        .section__title {
+          width: 100%;
+        }
+
+        .searchInput {
+          width: 100%;
+
+          input {
+            padding: 0.5rem 0.6rem;
+            font-size: 1.25rem;
+            border: none;
+            width: 100%;
+
+            &:focus {
+              outline: none;
+            }
+          }
+        }
+
+        .section__button {
+          padding: 0.5rem 0.6rem;
+        }
+      }
+    }
+  }
+}
 </style>

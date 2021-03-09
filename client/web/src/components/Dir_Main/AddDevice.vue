@@ -132,11 +132,11 @@ export default {
   name: "AddDevice",
   data() {
     return {
-      Processor_ID: null,
-      errorProcessorID: null,
+      Processor_ID: '',
+      errorProcessorID: '',
       isShowingCamera: false,
       isShowingWait: true,
-      searchTerm: null,
+      searchTerm: '',
       columns: [
         {
           label: 'ID',

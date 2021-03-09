@@ -53,7 +53,7 @@ export default {
   name: "AdminMessagesPage",
   data() {
     return {
-      socket: null,
+      socket: '',
       NowMessages: [],
       columns: [
         {
