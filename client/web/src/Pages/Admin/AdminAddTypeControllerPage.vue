@@ -92,13 +92,13 @@ export default {
   name: "AdminAddTypeControllerPage",
   data() {
     return {
-      socket: null,
-      NameTypeController: null,
-      errorLabel: null,
+      socket: '',
+      NameTypeController: '',
+      errorLabel: '',
       edited: false,
       EditInfo: {
-        Type_id: null,
-        Name_Type: null,
+        Type_id: '',
+        Name_Type: '',
       },
       columns: [
         {

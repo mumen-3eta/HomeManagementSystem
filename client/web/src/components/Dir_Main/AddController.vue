@@ -77,13 +77,13 @@ export default {
   data() {
     return {
       ProcessorID: this.$route.params.processor_id,
-      ControllerID: null,
-      NameControllerUser: null,
-      typeController_id: null,
-      locationController_id: null,
+      ControllerID: '',
+      NameControllerUser: '',
+      typeController_id: '',
+      locationController_id: '',
       isShowingCamera: false,
       isShowingWait: true,
-      searchTerm: null,
+      searchTerm: '',
       Status: false,
       columns: [
         {

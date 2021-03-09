@@ -90,13 +90,13 @@ export default {
   name: "AdminAddLocationControllerPage",
   data() {
     return {
-      socket: null,
-      NameLocationController: null,
-      errorNameLocationController: null,
+      socket: '',
+      NameLocationController: '',
+      errorNameLocationController: '',
       edited: false,
       EditInfo: {
-        Location_id: null,
-        Name_Location: null,
+        Location_id: '',
+        Name_Location: '',
       },
       columns: [
         {

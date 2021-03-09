@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      processor_Id: null,
+      processor_Id: '',
     }
   },
   methods: {

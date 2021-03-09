@@ -58,13 +58,13 @@ export default {
   components: {},
   data() {
     return {
-      userName: null,
-      Email: null,
-      Password: null,
+      userName: '',
+      Email: '',
+      Password: '',
       errors: {
-        errorUserName: null,
-        errorEmail: null,
-        errorPassword: null,
+        errorUserName: '',
+        errorEmail: '',
+        errorPassword: '',
       },
     }
   },

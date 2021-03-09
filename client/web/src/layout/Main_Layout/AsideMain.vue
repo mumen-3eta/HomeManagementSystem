@@ -24,7 +24,7 @@
         </li>
         <li v-if="!user.basicInfo.isAdmin" class="statistics__entry">
           <a class="statistics__entry-description" href="">Controller</a>
-          <span class="statistics__entry-quantity">6</span>
+          <span class="statistics__entry-quantity">0</span>
         </li>
         <!--        <li class="statistics__entry">-->
         <!--          <a class="statistics__entry-description" href="">Feedback</a>-->

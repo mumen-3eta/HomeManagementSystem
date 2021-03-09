@@ -48,7 +48,7 @@ export default {
   name: "AdminCreateControllerPage",
   data() {
     return {
-      processor_Id: null,
+      processor_Id: '',
     }
   },
   components: {
