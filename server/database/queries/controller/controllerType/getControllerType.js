@@ -1,9 +1,9 @@
 const { connection } = require('../../../data');
 
-const getControllerType = (id) => {
+const getControllerType = ({ typeId }) => {
   const sql = {
-    text: 'select * from controller_type;',
-    values: [id],
+    text: 'select * from controller_type where id = $1;',
+    values: [typeId],
   };
   return connection.query(sql);
 };

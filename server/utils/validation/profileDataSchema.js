@@ -1,4 +1,4 @@
-const { object, string, number } = require('yup');
+const { object, string, number, boolean } = require('yup');
 
 const registerUserSchema = object({
   userName: string().min(5).max(20),
@@ -8,6 +8,7 @@ const registerUserSchema = object({
   lastName: string().min(1).max(20),
   image: string(),
   mobile: number().min(10).max(15),
+  isAdmin: boolean(),
 });
 
 module.exports = registerUserSchema;

@@ -4,9 +4,7 @@ const { getProcessorConnectionByUserId } = require('../../database/queries');
 
 const getProcessorConnection = async (req, res, next) => {
   try {
-    // dont forget to un comment the next line later---------------------------------------------------
-    // const { userId } = req;
-    const userId = 1;
+    const { userId } = req;
 
     const { rows: connectionData } = await getProcessorConnectionByUserId({
       userId,

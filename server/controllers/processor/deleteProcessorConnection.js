@@ -4,10 +4,8 @@ const { deleteProcessorConnectionData } = require('../../database/queries');
 
 const deleteProcessorConnection = async (req, res, next) => {
   try {
-    //   what about admin*****************************************
-    // dont forget to un comment the next line later---------------------------------------------------
-    // const { userId } = req;
-    const userId = 1;
+    const { userId } = req;
+
     const { processorId } = req.body;
 
     await deleteProcessorConnectionData({

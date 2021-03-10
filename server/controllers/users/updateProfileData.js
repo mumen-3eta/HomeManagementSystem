@@ -1,10 +1,7 @@
 const boom = require('@hapi/boom');
 const { hash } = require('bcrypt');
 
-const {
-  //   registerUserSchema,
-  profileDataSchema,
-} = require('../../utils/validation');
+const { profileDataSchema } = require('../../utils/validation');
 const {
   updateUserData,
   checkIdByEmailOrUserName,
@@ -12,42 +9,39 @@ const {
 
 const updateProfileData = async (req, res, next) => {
   try {
-    // dont forget to un comment the next line later---------------------------------------------------
-    // const { userId } = req;
-    const userId = 1;
+    const { userId } = req;
 
-    const { userName, email, password } = await profileDataSchema.validate(
-      req.body,
-      {
-        abortEarly: false,
-      }
-    );
+    const validateData = await profileDataSchema.validate(req.body, {
+      abortEarly: false,
+    });
 
-    if (email) {
+    if (validateData.email) {
       const {
         rows: [userByEmail],
-      } = await checkIdByEmailOrUserName({ email });
+      } = await checkIdByEmailOrUserName({ email: validateData.email });
 
       if (userByEmail) {
         return next(boom.conflict('The email already exists'));
       }
     }
 
-    if (userName) {
+    if (validateData.userName) {
       const {
         rows: [userByUserName],
-      } = await checkIdByEmailOrUserName({ userName });
+      } = await checkIdByEmailOrUserName({ userName: validateData.userName });
 
       if (userByUserName) {
         return next(boom.conflict('The userName already exists'));
       }
     }
-    if (password) {
-      const hashedPassword = await hash(password, 10);
+    if (validateData.password) {
+      const hashedPassword = await hash(validateData.password, 10);
       req.body.password = hashedPassword;
     }
 
-    const { rows: profileData } = await updateUserData({
+    const {
+      rows: [profileData],
+    } = await updateUserData({
       ...req.body,
       userId,
     });
@@ -55,7 +49,17 @@ const updateProfileData = async (req, res, next) => {
     return res.status(201).json({
       title: 'User profile data update',
       detail: 'Data Successfully updated',
-      profileData,
+      profileData: [
+        {
+          userName: profileData.user_name,
+          firstName: profileData.first_name,
+          lastName: profileData.last_name,
+          email: profileData.email,
+          image: profileData.image,
+          mobile: profileData.mobile,
+          isAdmin: profileData.is_admin,
+        },
+      ],
     });
   } catch (error) {
     return next(

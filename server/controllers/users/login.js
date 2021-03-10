@@ -21,13 +21,13 @@ const Login = async (req, res, next) => {
       return next(boom.unauthorized('Invalid Email/Password'));
     }
 
-    const { id: userId, password: userPassword } = user;
+    const { id: userId, password: userPassword, is_admin: isAdmin } = user;
     const hashedPassword = await compare(password, userPassword);
 
     if (!hashedPassword) {
       return next(boom.unauthorized('Invalid Email/Password'));
     }
-    const token = await sign({ userId });
+    const token = await sign({ userId, isAdmin });
     return res
       .cookie('token', token, {
         httpOnly: true,

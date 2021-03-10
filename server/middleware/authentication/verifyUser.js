@@ -1,19 +1,19 @@
 const boom = require('@hapi/boom');
 
-const getUserDataById = require('../../database/queries');
+const { getUserDataById } = require('../../database/queries');
 const { verify } = require('../../utils/jwt');
 
 const verifyUser = async (req, res, next) => {
   const { token } = req.cookies;
-  if (token) {
+  if (!token) {
     return next(boom.unauthorized());
   }
   try {
     const { userId, isAdmin } = await verify(token);
     const {
-      rows: { is_admin: isAdminUser },
+      rows: [{ is_admin: isAdminUser }],
     } = await getUserDataById({ userId });
-    if (!isAdminUser && isAdmin === isAdminUser) {
+    if (isAdmin !== isAdminUser) {
       res.clearCookie('token');
       return next(boom.unauthorized());
     }

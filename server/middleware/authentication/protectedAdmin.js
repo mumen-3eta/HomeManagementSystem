@@ -8,9 +8,7 @@ const protectedAdmin = async (req, res, next) => {
   try {
     const { isAdmin } = await verify(token);
     if (!isAdmin) {
-      next(
-        boom(401, 'Unauthorized Error', "Unauthenticated, your aren't admin")
-      );
+      next(boom.unauthorized("Unauthenticated, your aren't admin"));
     }
     next();
   } catch (error) {

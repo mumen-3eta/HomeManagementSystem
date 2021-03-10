@@ -7,9 +7,7 @@ const {
 
 const createProcessorForProduction = async (req, res, next) => {
   try {
-    // dont forget to un comment the next line later---------------------------------------------------
-    // const { userId } = req;
-    const userId = 1;
+    const { userId } = req;
 
     const { processorId } = req.body;
     const {

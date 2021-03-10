@@ -4,9 +4,7 @@ const { getAllUserData } = require('../../database/queries');
 
 const getAllProfileData = async (req, res, next) => {
   try {
-    // dont forget to un comment the next line later---------------------------------------------------
-    // const { userId } = req;
-    const userId = 1;
+    const { userId } = req;
     const { rows: profileData } = await getAllUserData({ userId });
 
     return res.status(201).json({
