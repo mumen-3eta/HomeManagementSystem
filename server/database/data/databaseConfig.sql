@@ -1,3 +1,4 @@
+-- psql -U postgres
 CREATE DATABASE hmsydev;
 CREATE USER hmsyuser WITH superuser password '123456';
 ALTER DATABASE hmsydev OWNER TO hmsyuser;
