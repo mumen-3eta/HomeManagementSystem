@@ -17,20 +17,28 @@
           </ul>
         </div>
         <div v-if="!TokenUser" class="nav_btn_items">
-          <button class="nav__items-btn" type="button">
-            <router-link class="nav_link-btn" to="/v2/login">Login</router-link>
-          </button>
-          <button class="nav__items-btn" type="button">
-            <router-link class="nav_link-btn" to="/v2/register">SigUp</router-link>
-          </button>
+          <router-link class="nav_link-btn" to="/v2/login">
+            <button class="nav__items-btn nav__items-btnFirst" type="button">
+              Login
+            </button>
+          </router-link>
+          <router-link class="nav_link-btn" to="/v2/register">
+            <button class="nav__items-btn" type="button">
+              SigUp
+            </button>
+          </router-link>
         </div>
         <div v-if="TokenUser" class="nav_btn_items">
-          <button class="nav__items-btn" type="button" @click.prevent="handleClick">
-            <a class="nav_link-btn">logout</a>
-          </button>
-          <button class="nav__items-btn" type="button">
-            <router-link class="nav_link-btn" to="/v2/main/home">Dashboard</router-link>
-          </button>
+          <a class="nav_link-btn">
+            <button class="nav__items-btn nav__items-btnFirst" type="button" @click.prevent="handleClick">
+              logout
+            </button>
+          </a>
+          <router-link class="nav_link-btn" to="/v2/main/home">
+            <button class="nav__items-btn" type="button">
+              Dashboard
+            </button>
+          </router-link>
         </div>
         <div id="btn_menu_open" class="fas__menu-btn">
           <i class="fas fa-bars menu-btn"></i>
@@ -52,20 +60,28 @@
 
         <div class="nav__element-min">
           <div v-if="!TokenUser">
-            <button class="nav__items-btn" type="button">
-              <router-link class="nav_link-btn" to="/v2/login">Login</router-link>
-            </button>
-            <button class="nav__items-btn" type="button">
-              <router-link class="nav_link-btn" to="/v2/register">SigUp</router-link>
-            </button>
+            <router-link class="nav_link-btn nav__items-btnFirst" to="/v2/login">
+              <button class="nav__items-btn" type="button">
+                Login
+              </button>
+            </router-link>
+            <router-link class="nav_link-btn" to="/v2/register">
+              <button class="nav__items-btn" type="button">
+                SigUp
+              </button>
+            </router-link>
           </div>
           <div v-if="TokenUser">
-            <button class="nav__items-btn" type="button" @click.prevent="handleClick">
-              <a class="nav_link-btn">logout</a>
-            </button>
+            <a class="nav_link-btn">
+              <button class="nav__items-btn nav__items-btnFirst" type="button" @click.prevent="handleClick">
+                logout
+              </button>
+            </a>
 
             <router-link class="nav_link-btn" to="/v2/main/home">
-              <button class="nav__items-btn" type="button">Dashboard</button>
+              <button class="nav__items-btn" type="button">
+                Dashboard
+              </button>
             </router-link>
 
           </div>

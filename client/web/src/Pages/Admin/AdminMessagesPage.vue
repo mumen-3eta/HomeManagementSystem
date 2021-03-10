@@ -1,19 +1,14 @@
 <template>
   <div class="wrapper">
-    <!--    nav here -->
-    <NavMain/>
-    <main class="main">
-      <!--      header hear -->
-      <HeaderMain/>
-      <!--   ********** body content can change it here *****************-->
-      <div class="container_Admin_AddLocationController">
-        <header class="section__header">
-          <h2 class="section__title">Messages</h2>
-        </header>
-        <div class="project my-3 mx-auto p-2 position-relative">
-          <vue-good-table
-              :columns="columns"
-              :pagination-options="{
+    <!--   ********** body content can change it here *****************-->
+    <div class="container_Admin_AddLocationController">
+      <header class="section__header">
+        <h2 class="section__title">Messages</h2>
+      </header>
+      <div class="project my-3 mx-auto p-2 position-relative">
+        <vue-good-table
+            :columns="columns"
+            :pagination-options="{
                     enabled: true,
                     mode: 'records',
                     perPage: 5,
@@ -28,36 +23,28 @@
                     pageLabel: 'page', // for 'pages' mode
                     allLabel: 'All',
                   }"
-              :rows="rows"
-              :search-options=" {
+            :rows="rows"
+            :search-options=" {
                     enabled: true,
                     skipDiacritics: true,
                     placeholder: 'Search this table'
                   }">
-            <div slot="table-actions" class="btn_searchScan"></div>
-            <template slot="table-row" slot-scope="props">
-              <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-                <button class="btn_deleted"><i class="fas fa-trash-alt"></i> Delete</button>
-              </div>
-              <span v-else>
+          <div slot="table-actions" class="btn_searchScan"></div>
+          <template slot="table-row" slot-scope="props">
+            <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
+              <button class="btn_deleted"><i class="fas fa-trash-alt"></i> Delete</button>
+            </div>
+            <span v-else>
                 {{ props.formattedRow[props.column.field] }}
               </span>
-            </template>
-          </vue-good-table>
-        </div>
+          </template>
+        </vue-good-table>
       </div>
-
-    </main><!-- End Main -->
-    <!--    aside here -->
-    <AsideMain/>
-
+    </div>
   </div>
 </template>
 
 <script>
-import HeaderMain from "@/layout/Main_Layout/HeaderMain";
-import AsideMain from "@/layout/Main_Layout/AsideMain";
-import NavMain from "@/layout/Main_Layout/NavMain";
 import io from "socket.io-client";
 
 import {mapGetters} from "vuex";
@@ -66,7 +53,7 @@ export default {
   name: "AdminMessagesPage",
   data() {
     return {
-      socket: null,
+      socket: '',
       NowMessages: [],
       columns: [
         {
@@ -96,15 +83,12 @@ export default {
       rows: this.$store.getters.allMessages,
     }
   },
-  components: {
-    HeaderMain, AsideMain, NavMain,
-  },
   created() {
     this.socket = io('http://localhost:3001');
   },
   mounted() {
     // reserve event that sent from server
-    this.socket.on("all_messages", (data) => {
+    this.socket.on("all_messages_server", (data) => {
       /*
       * create route in api (create/message)
       * take (email,subject,message)

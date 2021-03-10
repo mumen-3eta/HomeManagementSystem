@@ -1,56 +1,45 @@
 <template>
   <div class="wrapper">
-    <!--    nav here -->
-    <NavMain/>
-    <main class="main">
-      <!--      header hear -->
-      <HeaderMain/>
-      <!--   ********** body content can change it here *****************-->
-      <div class="container_Admin_CreateController">
-        <h2>Create Controller</h2>
-        <div class="btn-group_Generate">
-          <button class="btn btn-secondary" @click.prevent="generateControllerId">Generate Id Controller</button>
-          <button class="btn btn-danger" @click.prevent="clearGenerateControllerId">Clear</button>
-        </div>
-        <div class="container__DeviceId">
-          <div v-if="controllerId" class="container__processor_Id">
-            <div class="svg_Generator">
-              <div>
-                <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="controllerId">Sorry ,
-                  some
-                  thing error
-                </qrcode-vue>
-                <div v-if="controllerId">
-                  <label for="ControllerIDInput" hidden></label>
-                  <input id="ControllerIDInput" class="InputForCopy"
-                         style=""
-                         v-bind:value="controllerId"/>
-                </div>
+    <!--   ********** body content can change it here *****************-->
+    <div class="container_Admin_CreateController">
+      <h2>Create Controller</h2>
+      <div class="btn-group_Generate">
+        <button class="btn btn-secondary" @click.prevent="generateControllerId">Generate Id Controller</button>
+        <button class="btn btn-danger" @click.prevent="clearGenerateControllerId">Clear</button>
+      </div>
+      <div class="container__DeviceId">
+        <div v-if="controllerId" class="container__processor_Id">
+          <div class="svg_Generator">
+            <div>
+              <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="controllerId">Sorry ,
+                some
+                thing error
+              </qrcode-vue>
+              <div v-if="controllerId">
+                <label for="ControllerIDInput" hidden></label>
+                <input id="ControllerIDInput" class="InputForCopy"
+                       style=""
+                       v-bind:value="controllerId"/>
               </div>
             </div>
-            <div class="btn-group_Generate-2">
-              <button class="btn btn-secondary" @click.prevent="copyTextControllerId">Copy Controller Id</button>
-              <button id="DownloadsAsImage" class="btn btn-primary"
-                      @click.prevent="downloadsControllerIdAsImage(controllerId)">
-                Downloads as image
-              </button>
-            </div>
           </div>
-          <canvas id="canvas" hidden></canvas>
-
+          <div class="btn-group_Generate-2">
+            <button class="btn btn-secondary" @click.prevent="copyTextControllerId">Copy Controller Id</button>
+            <button id="DownloadsAsImage" class="btn btn-primary"
+                    @click.prevent="downloadsControllerIdAsImage(controllerId)">
+              Downloads as image
+            </button>
+          </div>
         </div>
-      </div>
-    </main><!-- End Main -->
-    <!--    aside here -->
-    <AsideMain/>
+        <canvas id="canvas" hidden></canvas>
 
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HeaderMain from "@/layout/Main_Layout/HeaderMain";
-import AsideMain from "@/layout/Main_Layout/AsideMain";
-import NavMain from "@/layout/Main_Layout/NavMain";
+
 import axios from "axios";
 import {mapGetters} from "vuex";
 import QrcodeVue from 'vue-qrcode';
@@ -59,11 +48,11 @@ export default {
   name: "AdminCreateControllerPage",
   data() {
     return {
-      processor_Id: null,
+      processor_Id: '',
     }
   },
   components: {
-    HeaderMain, AsideMain, NavMain, QrcodeVue
+    QrcodeVue
   },
   methods: {
     async generateControllerId() {

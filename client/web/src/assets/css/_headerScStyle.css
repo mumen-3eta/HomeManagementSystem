@@ -85,6 +85,7 @@ p {
     border-radius: 5px;
     padding: 0.625rem 1.25rem;
     border: 2px solid var(--green-700-v1);
+    color: var(--white_color);
 }
 
 .headerSc-group_1 .headerSc-group_1-btn .headerSc-group_1-link-btn {
@@ -97,6 +98,7 @@ p {
     .container__headerSc-group .headerSc-group_1 .headerSc-group_1-btn:hover {
         background-color: var(--white_color);
         border: 2px solid var(--white_color);
+        color: var(--green-700-v1);
     }
 
     .container__headerSc-group .headerSc-group_1 .headerSc-group_1-btn:hover .headerSc-group_1-link-btn {

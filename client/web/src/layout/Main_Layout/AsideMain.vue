@@ -17,20 +17,6 @@
         <h1 v-show="user.basicInfo.userName" class="profile-main__name">{{ user.basicInfo.userName }}</h1>
         <h6 v-show="user.basicInfo.email" class="profile-main__name">{{ user.basicInfo.email }}</h6>
       </div>
-      <ul class="statistics">
-        <li v-if="!user.basicInfo.isAdmin" class="statistics__entry">
-          <a class="statistics__entry-description" href="">Processor Id</a>
-          <span class="statistics__entry-quantity">{{ this.$store.getters.userProcessorIds.length }}</span>
-        </li>
-        <li v-if="!user.basicInfo.isAdmin" class="statistics__entry">
-          <a class="statistics__entry-description" href="">Controller</a>
-          <span class="statistics__entry-quantity">6</span>
-        </li>
-        <!--        <li class="statistics__entry">-->
-        <!--          <a class="statistics__entry-description" href="">Feedback</a>-->
-        <!--          <span class="statistics__entry-quantity">68</span>-->
-        <!--        </li>-->
-      </ul>
       <div v-if="!user.basicInfo.isAdmin" class="banner">
         <h3 class="banner__title">Premium access</h3>
         <p class="banner__description">Create Teams without limit</p>
@@ -43,15 +29,28 @@
 <script>
 import axios from "axios";
 import {mapGetters} from "vuex";
+import io from "socket.io-client";
 
 export default {
   name: "AsideMain",
-  async beforeMount() {
-    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const user = await axios.get('/api/v1/users/profile');
-    await this.$store.dispatch('user', user.data.data);
-    const responseProcessor = await axios.get('/api/v1/user/processor');
-    await this.$store.dispatch('userProcessorIds', responseProcessor.data.data);
+  methods: {
+
+    async GetProfileUser() {
+      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+      const {data: {data: user_profileData}} = await axios.get('/api/v1/users/profile');
+      await this.$store.dispatch('user', user_profileData);
+      // this.socket.emit("user_profileData", user_profileData);
+      // this.socket.on("user_profileData_server", (data) => {
+      //   this.$store.dispatch('user', data);
+      // });
+    },
+  },
+  beforeMount() {
+    this.GetProfileUser();
+  },
+  created() {
+    this.socket = io('http://localhost:3001');
+    this.GetProfileUser();
   },
   computed: {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser', 'userProcessorIds'])

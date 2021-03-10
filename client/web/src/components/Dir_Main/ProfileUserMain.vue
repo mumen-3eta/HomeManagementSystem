@@ -116,6 +116,7 @@ import axios from "axios";
 import {mapGetters} from "vuex";
 import firebase from 'firebase/app';
 import 'firebase/storage';
+import io from "socket.io-client";
 
 export default {
   name: "ProfileUserMain",
@@ -128,32 +129,33 @@ export default {
           lastName: this.$store.getters.user.profileInfo.lastName,
           image: this.$store.getters.user.profileInfo.image,
           error: {
-            mobile: null,
-            firstName: null,
-            lastName: null,
-            image: null,
+            mobile: '',
+            firstName: '',
+            lastName: '',
+            image: '',
           }
         },
         basicInfo: {
-          currentPassword: null,
-          newPassword: null,
+          currentPassword: '',
+          newPassword: '',
           userName: this.$store.getters.user.basicInfo.userName,
           error: {
-            currentPassword: null,
-            newPassword: null,
-            userName: null,
+            currentPassword: '',
+            newPassword: '',
+            userName: '',
           }
         },
       },
-      picture: null,
-      imageLoading: null,
-      imageName: null,
-      pictureSize: null,
-      pictureSizeKB: null,
-      pictureSizeUnit: null,
-      imageData: null,
+      picture: '',
+      imageLoading: '',
+      imageName: '',
+      pictureSize: '',
+      pictureSizeKB: '',
+      pictureSizeUnit: '',
+      imageData: '',
       uploadValue: 0,
-      errors: null,
+      errors: '',
+      socket: '',
 
     }
   },
@@ -289,7 +291,11 @@ export default {
           image: URL
         }
       });
-      await this.$store.dispatch('user', user.data.data);
+      this.socket.emit("user_profileData", user.data.data);
+      this.socket.on("user_profileData_server", (data) => {
+        this.$store.dispatch('user', data);
+      });
+      // await this.$store.dispatch('user', user.data.data);
     },
     OnDeleteImage(deletedImage) {
       deletedImage.delete().then(() => {
@@ -327,7 +333,15 @@ export default {
             image: this.$store.getters.user.profileInfo.image
           }
         });
-        await this.$store.dispatch('user', user.data.data);
+        this.socket.emit("user_profileData", user.data.data);
+        this.socket.on("user_profileData_server", (data) => {
+          this.$store.dispatch('user', data);
+          this.mobile = this.$store.getters.user.profileInfo.mobile;
+          this.firstName = this.$store.getters.user.profileInfo.firstName;
+          this.lastName = this.$store.getters.user.profileInfo.lastName;
+          this.image = this.$store.getters.user.profileInfo.image;
+        });
+        // await this.$store.dispatch('user', user.data.data);
         this.$swal.fire({
           position: 'center',
           icon: 'success',
@@ -370,7 +384,12 @@ export default {
             isAdmin: false,
           }
         });
-        await this.$store.dispatch('user', user.data.data);
+        this.socket.emit("user_profileData", user.data.data);
+        this.socket.on("user_profileData_server", (data) => {
+          this.$store.dispatch('user', data);
+          this.userName = this.$store.getters.user.basicInfo.userName;
+        });
+        // await this.$store.dispatch('user', user.data.data);
         this.$swal.fire({
           position: 'center',
           icon: 'success',
@@ -397,7 +416,12 @@ export default {
   async beforeMount() {
     axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
     const user = await axios.get('/api/v1/users/profile');
-    await this.$store.dispatch('user', user.data.data);
+    this.socket.emit("user_profileData", user.data.data);
+    this.socket.on("user_profileData_server", (data) => {
+      this.$store.dispatch('user', data);
+    });
+  },
+  mounted() {
     const Base_Info = document.getElementById('Base_Info');
     const Login_Info = document.getElementById('Login_Info');
     const bodyBaseInfo = document.getElementById('bodyBaseInfo');
@@ -540,10 +564,12 @@ export default {
     function SlidDown(input, nameClass) {
       input.classList.remove(nameClass);
     }
-
   },
   computed: {
     ...mapGetters(['user', 'TokenUser'])
+  },
+  created() {
+    this.socket = io('http://localhost:3001');
   },
 }
 </script>

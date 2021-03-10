@@ -52,11 +52,11 @@ export default {
   components: {},
   data() {
     return {
-      userNameOrEmail: null,
-      Password: null,
+      userNameOrEmail: '',
+      Password: '',
       errors: {
-        errorUserNameOrEmail: null,
-        errorPassword: null,
+        errorUserNameOrEmail: '',
+        errorPassword: '',
       },
     }
   },

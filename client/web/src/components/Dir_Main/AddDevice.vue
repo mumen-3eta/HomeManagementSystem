@@ -50,6 +50,12 @@
               <router-link :to="{path:'/v2/main/device/create/controller/' + props.row.Processor_Id}">
                 <button class="btn_AddController"><i class="fas fa-plus"></i> Add Controller</button>
               </router-link>
+              <router-link :to="{path:'/v2/main/device/all/controller/' + props.row.Processor_Id}">
+                <button class="btn_Show">
+                  <i class="fas fa-eye"></i>
+                  Controller
+                </button>
+              </router-link>
               <button class="btn_deleted" @click.prevent="deleteProcessorID(props.row.Processor_Id)"><i
                   class="fas fa-trash-alt"></i> Delete
               </button>
@@ -120,16 +126,17 @@
 
 import axios from "axios";
 import {mapGetters} from "vuex";
+import io from "socket.io-client";
 
 export default {
   name: "AddDevice",
   data() {
     return {
-      Processor_ID: null,
-      errorProcessorID: null,
+      Processor_ID: '',
+      errorProcessorID: '',
       isShowingCamera: false,
       isShowingWait: true,
-      searchTerm: null,
+      searchTerm: '',
       columns: [
         {
           label: 'ID',
@@ -218,8 +225,13 @@ export default {
           Processor_Id: item,
           btn_Action: ''
         }))
-        await this.$store.dispatch('userAllProcessor', userAllProcessors);
-        this.rows = this.$store.getters.userAllProcessor;
+        this.socket.emit("user_All_Processor", userAllProcessors);
+        this.socket.on("user_All_Processor_server", (data) => {
+          this.$store.dispatch('userAllProcessor', data);
+          this.rows = this.$store.getters.userAllProcessor;
+        });
+        // await this.$store.dispatch('userAllProcessor', userAllProcessors);
+        // this.rows = this.$store.getters.userAllProcessor;
         this.$modal.hide('AddNewProcessorId')
         this.$swal.fire({
           position: 'center',
@@ -315,8 +327,13 @@ export default {
         Processor_Id: item,
         btn_Action: ''
       }))
-      await this.$store.dispatch('userAllProcessor', userAllProcessors);
-      this.rows = this.$store.getters.userAllProcessor;
+      this.socket.emit("user_All_Processor", userAllProcessors);
+      this.socket.on("user_All_Processor_server", (data) => {
+        this.$store.dispatch('userAllProcessor', data);
+        this.rows = this.$store.getters.userAllProcessor;
+      });
+      // await this.$store.dispatch('userAllProcessor', userAllProcessors);
+      // this.rows = this.$store.getters.userAllProcessor;
     },
 
   },
@@ -331,12 +348,20 @@ export default {
       Processor_Id: item,
       btn_Action: ''
     }))
-    await this.$store.dispatch('userAllProcessor', userAllProcessors);
-    this.rows = this.$store.getters.userAllProcessor;
+    this.socket.emit("user_All_Processor", userAllProcessors);
+    this.socket.on("user_All_Processor_server", (data) => {
+      this.$store.dispatch('userAllProcessor', data);
+      this.rows = this.$store.getters.userAllProcessor;
+    });
+    // await this.$store.dispatch('userAllProcessor', userAllProcessors);
+    // this.rows = this.$store.getters.userAllProcessor;
 
   },
   computed: {
     ...mapGetters(['processorId', 'userProcessorIds'])
+  },
+  created() {
+    this.socket = io('http://localhost:3001');
   },
 }
 

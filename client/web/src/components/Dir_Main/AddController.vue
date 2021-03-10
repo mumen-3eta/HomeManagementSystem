@@ -12,9 +12,10 @@
       </div>
       <div class="input-group__AddControllerUser">
         <label for="TypeController">Type Controller : {{ typeController_id ? typeController_id.label : '' }}</label>
-        <v-select id="TypeController" v-model.trim="typeController_id"
-                  :options="$store.state.TypeControllerData"
-                  :value="$store.state.TypeControllerData"></v-select>
+        <div @click.prevent="getAllTypeController">
+          <v-select id="TypeController" v-model.trim="typeController_id" :options="$store.state.TypeControllerData"
+                    :value="$store.state.TypeControllerData"></v-select>
+        </div>
       </div>
     </div>
     <div class="SubMain__Section-AddControllerUser">
@@ -29,15 +30,20 @@
       <div class="input-group__AddControllerUser">
         <label for="LocationController">Location Controller :
           {{ locationController_id ? locationController_id.label : '' }}</label>
-        <v-select id="LocationController" v-model.trim="locationController_id"
-                  :options="$store.state.LocationControllerData"
-                  :value="$store.state.LocationControllerData"></v-select>
+        <div @click.prevent="getAllLocationController">
+          <v-select id="LocationController" v-model.trim="locationController_id"
+                    :options="$store.state.LocationControllerData"
+                    :value="$store.state.LocationControllerData"></v-select>
+        </div>
+
       </div>
     </div>
     <div>
       <button class="btn btn-info" @click.prevent="CreateControllerForUser">Create</button>
       <button class="btn btn-danger" @click.prevent="ClearAllDataController">Clear</button>
     </div>
+    <hr class="mt-3">
+    <AllController/>
     <!--    modal Search Processor id  -->
     <modal :resizable="false" :width="650" height="auto" name="ScanControllerId" @closed="CloseScanModalControllerID"
            @before-open="CloseScanModalControllerID">
@@ -55,24 +61,74 @@
       </div>
     </modal>
     <!--   End modal Search Processor id  -->
+
   </section>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
 import axios from "axios";
+import io from "socket.io-client";
+import AllController from "@/components/Dir_Main/AllController";
 
 export default {
   name: "AddController",
+  components: {AllController},
   data() {
     return {
       ProcessorID: this.$route.params.processor_id,
-      ControllerID: null,
-      NameControllerUser: null,
-      typeController_id: null,
-      locationController_id: null,
+      ControllerID: '',
+      NameControllerUser: '',
+      typeController_id: '',
+      locationController_id: '',
       isShowingCamera: false,
       isShowingWait: true,
+      searchTerm: '',
+      Status: false,
+      columns: [
+        {
+          label: 'ID',
+          field: 'id',
+          type: 'string',
+        },
+        {
+          label: 'Name',
+          field: 'name',
+          type: 'string',
+        },
+        {
+          label: 'Controller ID',
+          field: 'Controller_Id',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'Action',
+          field: 'btn_Action',
+          type: 'string',
+          sortable: false,
+        },
+      ],
+      rows: [
+        {
+          id: "1",
+          name: "Controller #1",
+          Controller_Id: "185w5158d6wa185w6418fe15fe",
+          btn_Action: "",
+        },
+        {
+          id: "2",
+          name: "Controller #2",
+          Controller_Id: "185185dw6d35181d86418fe15fe",
+          btn_Action: "",
+        },
+        {
+          id: "3",
+          name: "Controller #3",
+          Controller_Id: "185w51d418wdwa3w6418fe15fe",
+          btn_Action: "",
+        },
+      ],
     }
   },
   methods: {
@@ -146,21 +202,33 @@ export default {
       this.locationController_id = null;
       this.isShowingCamera = false;
       this.isShowingWait = true;
+      this.getAllTypeController();
+      this.getAllLocationController();
     },
 
     /*** Get All Type Controller ***/
     async getAllTypeController() {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
       const {data: {data: TypeControllerData}} = await axios.get('/api/v1/controller/type');
-      await this.$store.dispatch('TypeControllerData', TypeControllerData);
+      this.socket.emit("user_TypeControllerData", TypeControllerData);
+      this.socket.on("user_TypeControllerData_server", (data) => {
+        this.$store.dispatch('TypeControllerData', data);
+      });
+      // await this.$store.dispatch('TypeControllerData', TypeControllerData);
     },
 
     /*** Get All Location Controller ***/
     async getAllLocationController() {
       axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
       const {data: {data: LocationControllerData}} = await axios.get('/api/v1/controller/location');
-      await this.$store.dispatch('LocationControllerData', LocationControllerData);
-    }
+      this.socket.emit("user_LocationControllerData", LocationControllerData);
+      this.socket.on("user_LocationControllerData_server", (data) => {
+        this.$store.dispatch('LocationControllerData', data);
+      });
+      // await this.$store.dispatch('LocationControllerData', LocationControllerData);
+    },
+
+
   },
   beforeMount() {
     this.getAllTypeController();
@@ -168,6 +236,9 @@ export default {
   },
   computed: {
     ...mapGetters(['TypeControllerData', 'LocationControllerData'])
+  },
+  created() {
+    this.socket = io('http://localhost:3001');
   },
 }
 </script>
