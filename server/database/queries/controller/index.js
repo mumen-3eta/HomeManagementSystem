@@ -3,6 +3,8 @@ const connectControllerProcessor = require('./connectControllerProcessor');
 const updateUserControllerData = require('./updateUserControllerData');
 const deleteControllerConnection = require('./deleteControllerConnection');
 const getControllerByControllerId = require('./getControllerByControllerId');
+const getControllerByProcessorId = require('./getControllerByProcessorId');
+const getControllerByUserId = require('./getControllerByUserId');
 
 const {
   addControllerType,
@@ -27,6 +29,8 @@ module.exports = {
   updateUserControllerData,
   deleteControllerConnection,
   getControllerByControllerId,
+  getControllerByProcessorId,
+  getControllerByUserId,
   addControllerType,
   getControllerType,
   getControllerTypeByLabel,

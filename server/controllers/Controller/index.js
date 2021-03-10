@@ -1,6 +1,9 @@
 const {
   createControllerForProduction,
   connectControllerToProcessor,
+  getAllProcessorControllers,
+  getAllUserControllers,
+  deleteControllerConnection,
 } = require('./unit');
 
 const {
@@ -19,6 +22,9 @@ const {
 module.exports = {
   createControllerForProduction,
   connectControllerToProcessor,
+  getAllProcessorControllers,
+  getAllUserControllers,
+  deleteControllerConnection,
   addControllerTypeLabel,
   updateControllerTypeLabel,
   deleteControllerTypeLabel,
