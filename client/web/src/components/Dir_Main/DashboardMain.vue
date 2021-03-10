@@ -284,7 +284,7 @@ export default {
           Path: '/v2/main/admin/create/controller/type',
           ClassColorBorder: 'photo__item photo__item-bg1Color',
           TitleCard: 'Number Type',
-          Number: this.$store.getters.allTypeController.length,
+          Number: this.$store.getters.allTypeController ? this.$store.getters.allTypeController.length : '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -317,7 +317,7 @@ export default {
           Path: '/v2/main/admin/create/controller/location',
           ClassColorBorder: 'photo__item photo__item-bg2Color',
           TitleCard: 'Number Location',
-          Number: this.$store.getters.allLocationController.length,
+          Number: this.$store.getters.allLocationController ? this.$store.getters.allLocationController.length : '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -432,13 +432,13 @@ export default {
       this.socket.emit("all_Type_Controller", All_Type_Controller);
       this.socket.on("all_Type_Controller_server", (data) => {
         this.$store.dispatch('allTypeController', data);
-        if (this.$store.getters.allLocationController) {
-          this.DashboardInfoCardForADMIN[0].Number = this.$store.getters.allTypeController.length;
-        } else {
-          this.DashboardInfoCardForADMIN[0].Number = '0';
-        }
 
       });
+      if (this.$store.getters.allLocationController) {
+        this.DashboardInfoCardForADMIN[0].Number = this.$store.getters.allTypeController.length;
+      } else {
+        this.DashboardInfoCardForADMIN[0].Number = '0';
+      }
 
     },
     async GetAllLocation() {
@@ -453,12 +453,12 @@ export default {
       this.socket.emit("all_Location_Controller", All_Location_Controller);
       this.socket.on("all_Location_Controller_server", (data) => {
         this.$store.dispatch('allLocationController', data);
-        if (this.$store.getters.allLocationController) {
-          this.DashboardInfoCardForADMIN[1].Number = this.$store.getters.allLocationController.length;
-        } else {
-          this.DashboardInfoCardForADMIN[1].Number = '0';
-        }
       });
+      if (this.$store.getters.allLocationController) {
+        this.DashboardInfoCardForADMIN[1].Number = this.$store.getters.allLocationController.length;
+      } else {
+        this.DashboardInfoCardForADMIN[1].Number = '0';
+      }
       // await this.$store.dispatch('allLocationController', All_Location_Controller);
     },
     async GetAllProcessorUser() {
@@ -466,12 +466,12 @@ export default {
       this.socket.emit("user_All_Processor", responseProcessor);
       this.socket.on("user_All_Processor_server", (data) => {
         this.$store.dispatch('userProcessorIds', data);
-        if (this.$store.getters.userProcessorIds) {
-          this.DashboardInfoCard[0].Number = this.$store.getters.userProcessorIds.length;
-        } else {
-          this.DashboardInfoCard[0].Number = '0';
-        }
       });
+      if (this.$store.getters.userProcessorIds) {
+        this.DashboardInfoCard[0].Number = this.$store.getters.userProcessorIds.length;
+      } else {
+        this.DashboardInfoCard[0].Number = '0';
+      }
       // await this.$store.dispatch('userProcessorIds', responseProcessor);
     },
     ChangeFavorite(id) {
@@ -485,6 +485,9 @@ export default {
   },
   created() {
     this.socket = io('http://localhost:3001');
+    this.GetAllType();
+    this.GetAllLocation();
+    this.GetAllProcessorUser();
   },
   computed: {
     ...mapGetters(['user', 'TokenUser', 'allTypeController', 'allLocationController', 'userProcessorIds']),
