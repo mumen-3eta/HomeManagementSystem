@@ -3,7 +3,7 @@
     <div v-if="TokenUser && user.basicInfo.isAdmin">
       <AdminDashboardPage v-if="TokenUser && user.basicInfo.isAdmin"/>
     </div>
-    <div v-if="TokenUser && user.basicInfo.isAdmin">
+    <div v-if="TokenUser && !user.basicInfo.isAdmin">
       <UserDashboard v-if="TokenUser && !user.basicInfo.isAdmin"/>
     </div>
 
