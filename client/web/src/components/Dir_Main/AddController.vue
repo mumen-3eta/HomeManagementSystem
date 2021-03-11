@@ -13,8 +13,10 @@
       <div class="input-group__AddControllerUser">
         <label for="TypeController">Type Controller : {{ typeController_id ? typeController_id.label : '' }}</label>
         <div @click.prevent="getAllTypeController">
-          <v-select id="TypeController" v-model.trim="typeController_id" :options="$store.state.TypeControllerData"
-                    :value="$store.state.TypeControllerData"></v-select>
+          <!--          $store.state.TypeControllerData-->
+          <v-select id="TypeController" v-model.trim="typeController_id"
+                    :options="$store.getters.TypeControllerData ? $store.getters.TypeControllerData : 'Not Have Type yet'"
+                    :value="$store.getters.TypeControllerData ? $store.getters.TypeControllerData : ''"></v-select>
         </div>
       </div>
     </div>
@@ -32,8 +34,8 @@
           {{ locationController_id ? locationController_id.label : '' }}</label>
         <div @click.prevent="getAllLocationController">
           <v-select id="LocationController" v-model.trim="locationController_id"
-                    :options="$store.state.LocationControllerData"
-                    :value="$store.state.LocationControllerData"></v-select>
+                    :options="$store.state.LocationControllerData ? $store.state.LocationControllerData : 'Not Have location yet'"
+                    :value="$store.state.LocationControllerData ? $store.state.LocationControllerData : ''"></v-select>
         </div>
 
       </div>

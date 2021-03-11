@@ -106,5 +106,12 @@ li[aria-label]:hover:after {
     top: -75%;
   }
 }
+
+.nav {
+  position: fixed;
+  z-index: 9999;
+  /*margin: -2rem 0.8rem 0 0.8rem;*/
+}
+
 </style>
 

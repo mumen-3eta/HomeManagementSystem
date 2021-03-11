@@ -61,7 +61,7 @@
         <div class="section__control-search">
           <div class="searchInput">
             <label for="SearchID"></label>
-            <input id="SearchID" v-model="search" placeholder="Search by name Or Location or Type" type="search">
+            <input id="SearchID" v-model="search" placeholder="Search by name Or Type" type="search">
           </div>
           <button class="section__button section__button--painted focus--box-shadow" type="button">
             <i class="fa fa-search"></i>
@@ -69,18 +69,17 @@
         </div>
       </header>
       <div class="Main__Card_FavoriteController">
-        <div v-for="(Controller , index) in filteredList" :key="index" class="Card_container">
+        <div v-for="(Controller , index) in filteredList" v-show="Controller.Status" :key="index"
+             class="Card_container">
           <ul class="card_ListData">
-            <li class="card_item">{{ Controller.ControllerName }}</li>
-            <li class="card_item">{{ Controller.LocationController }}</li>
-            <li class="card_item">{{ Controller.TypeController }}</li>
-            <li class="card_item">
-              <button class="btn_Edit">
-                <i class="fa fa-edit"></i>
-              </button>
-              <button class="btn_deleted">
-                <i class="fa fa-trash-alt"></i>
-              </button>
+            <router-link :to="{path : Controller.Path}">
+              <li class="card_item">
+                <i :class="[ Controller.IsActive  ? 'desktop_isActive' : '' , 'fas fa-desktop' ]"></i>
+              </li>
+              <li class="card_item">{{ Controller.ControllerName }}</li>
+              <li class="card_item">{{ Controller.TypeController }}</li>
+            </router-link>
+            <li class="card_item card_itemBTN">
               <button :class="[ Controller.Status  ? 'btn_Star-Favorite' : 'btn_Star' ]"
                       @click.prevent="ChangeFavorite(index)">
                 <i :class="[Controller.Status ? 'fas fa-star' : 'far fa-star' ]"></i>
@@ -90,12 +89,60 @@
                   <label for="flexSwitchCheckChecked"></label>
                   <input id="flexSwitchCheckChecked" :checked="Controller.IsActive ? 'checked' : '' "
                          class="form-check-input"
-                         type="checkbox">
+                         type="checkbox"
+                         @change.prevent="ChangeActivation(index)"
+                  >
                 </div>
               </div>
-
             </li>
           </ul>
+
+        </div>
+      </div>
+    </section><!-- End SECTION -->
+
+    <section class="section section__mTop">
+      <header class="section__header">
+        <h2 class="section__title">All Controller</h2>
+        <div class="section__control-search">
+          <div class="searchInput">
+            <label for="SearchID2"></label>
+            <input id="SearchID2" v-model="search2" placeholder="Search by name Or Type" type="search">
+          </div>
+          <button class="section__button section__button--painted focus--box-shadow" type="button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </header>
+      <div class="Main__Card_FavoriteController">
+        <div v-for="(Controller , i) in filteredList2" :key="i"
+             class="Card_container">
+          <ul class="card_ListData">
+            <router-link :to="{path : Controller.Path}">
+              <li class="card_item">
+                <i :class="[ Controller.IsActive  ? 'desktop_isActive' : '' , 'fas fa-desktop' ]"></i>
+              </li>
+              <li class="card_item">{{ Controller.ControllerName }}</li>
+              <li class="card_item">{{ Controller.TypeController }}</li>
+            </router-link>
+            <li class="card_item card_itemBTN">
+              <button :class="[ Controller.Status  ? 'btn_Star-Favorite' : 'btn_Star' ]"
+                      @click.prevent="ChangeFavorite(i)">
+                <i :class="[Controller.Status ? 'fas fa-star' : 'far fa-star' ]"></i>
+              </button>
+              <div class="btn_Status">
+                <div class="form-check form-switch">
+                  <label for="flexSwitchCheckChecked2"></label>
+                  <input id="flexSwitchCheckChecked2" :checked="Controller.IsActive ? 'checked' : '' "
+                         class="form-check-input"
+                         type="checkbox"
+                         @change.prevent="ChangeActivation(i)"
+                  >
+                </div>
+              </div>
+            </li>
+          </ul>
+
         </div>
       </div>
     </section><!-- End SECTION -->
@@ -114,6 +161,7 @@ export default {
     return {
       socket: '',
       search: '',
+      search2: '',
       DashboardInfoCard: [
         {
           Path: '/v2/main/device/add',
@@ -218,44 +266,44 @@ export default {
       ListCardController: [
         {
           ControllerName: 'Controller Name #1',
-          LocationController: 'Location Controller #11',
           TypeController: 'Type Controller #111',
+          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
           Status: false,
           IsActive: false
         },
         {
           ControllerName: 'Controller Name #2',
-          LocationController: 'Location Controller #22',
           TypeController: 'Type Controller #222',
+          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
           Status: true,
           IsActive: true
         },
         {
           ControllerName: 'Controller Name #2',
-          LocationController: 'Location Controller #2',
           TypeController: 'Type Controller #2',
+          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
           Status: true,
           IsActive: true
         },
         {
           ControllerName: 'Controller Name #3',
-          LocationController: 'Location Controller #3',
           TypeController: 'Type Controller #3',
+          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
           Status: false,
           IsActive: false
         },
         {
           ControllerName: 'Controller Name #4',
-          LocationController: 'Location Controller #4',
           TypeController: 'Type Controller #4',
+          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
           Status: true,
           IsActive: true
         },
         {
           ControllerName: 'Controller Name #5',
-          LocationController: 'Location Controller #5',
           TypeController: 'Type Controller #5',
-          Status: false,
+          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
+          Status: true,
           IsActive: false
         },
       ],
@@ -278,6 +326,9 @@ export default {
     ChangeFavorite(id) {
       this.ListCardController[id].Status = !this.ListCardController[id].Status;
     },
+    ChangeActivation(id) {
+      this.ListCardController[id].IsActive = !this.ListCardController[id].IsActive;
+    },
   },
   async beforeMount() {
     await this.GetAllProcessorUser();
@@ -290,14 +341,25 @@ export default {
     ...mapGetters(['user', 'TokenUser', 'userProcessorIds']),
     filteredList() {
       return this.ListCardController.filter(post => {
-        return post.ControllerName.toLowerCase().includes(this.search.toLowerCase()) || post.LocationController.toLowerCase().includes(this.search.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search.toLowerCase())
+        return post.ControllerName.toLowerCase().includes(this.search.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search.toLowerCase())
       })
-    }
+    },
+    filteredList2() {
+      return this.ListCardController.filter(post => {
+        return post.ControllerName.toLowerCase().includes(this.search2.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search2.toLowerCase())
+      })
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
+a {
+  &:hover {
+    color: black;
+  }
+}
+
 section {
   .section__header {
     width: 100%;
@@ -362,6 +424,7 @@ section {
       background-color: white;
       border-radius: 15px;
       box-shadow: 2px 2px 2px 2px #dbcbbe;
+      position: relative;
 
       .card_ListData {
         .card_item {
@@ -374,8 +437,14 @@ section {
           justify-items: center;
           text-align: center;
 
-          &:last-child {
-            margin-top: 1.5rem;
+          &.card_itemBTN {
+            display: flex;
+            justify-content: space-between;
+            justify-items: center;
+            width: 95%;
+            position: absolute;
+            top: 10px;
+            z-index: 999;
           }
 
           .btn_Star {
@@ -385,6 +454,19 @@ section {
             border-radius: 5px;
             font-size: 1.2rem;
           }
+
+          .fas {
+            &.fa-desktop {
+              font-size: 10rem;
+              color: #556764;
+            }
+
+            &.desktop_isActive {
+              font-size: 10rem;
+              color: #359f84;
+            }
+          }
+
 
           .btn_Star-Favorite {
             margin-left: 1rem;
@@ -398,7 +480,6 @@ section {
                 color: #efbf15;
               }
             }
-
           }
         }
 
