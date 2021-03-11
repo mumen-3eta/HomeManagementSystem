@@ -6,6 +6,7 @@ const {
   login,
   getAllProfileData,
   updateProfileData,
+  logout,
 } = require('./users');
 
 const {
@@ -55,4 +56,5 @@ module.exports = {
   // createControllerForProduction,
   swaggerServe,
   swaggerSetup,
+  logout,
 };
