@@ -109,7 +109,7 @@ li[aria-label]:hover:after {
 
 .nav {
   position: fixed;
-  z-index: 9999;
+  z-index: 9;
   /*margin: -2rem 0.8rem 0 0.8rem;*/
 }
 
