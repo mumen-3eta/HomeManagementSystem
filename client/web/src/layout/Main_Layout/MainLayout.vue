@@ -2,7 +2,7 @@
   <div class="wrapper">
     <!--    nav here -->
     <NavMain/>
-    <main class="main">
+    <main class="main margin-left_5">
       <!--      header hear -->
       <HeaderMain/>
       <!--   ********** body content can change it here *****************-->
@@ -30,4 +30,14 @@ export default {
 <style scoped>
 @import "../../assets/css/ClearStyle/normalize.css";
 @import "../../assets/css/Pages_Style/MainHomePage.css";
+
+.margin-left_5 {
+  margin-left: 7rem;
+}
+
+@media (max-width: 1200px) {
+  .margin-left_5 {
+    margin-left: 1.5rem;
+  }
+}
 </style>
