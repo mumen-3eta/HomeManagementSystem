@@ -4,17 +4,23 @@
       <div class="profile__Main-containerInfo">
         <div class="profile__Main-Info">
           <div>
-            <img v-show="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image"
-                 class="p__Main-image">
+            <!--            v-show="user.profileInfo.image"-->
+            <!--            :src="user.profileInfo.image"-->
+            <img alt="profile image" class="p__Main-image"
+                 src="">
           </div>
-          <h3 v-show="user.profileInfo.firstName && user.profileInfo.lastName">{{ user.profileInfo.firstName }}
-            {{ user.profileInfo.lastName }}</h3>
-          <div v-show="user.basicInfo.userName" class="profile__Main-InfoSpan">
+          <!--          v-show="user.profileInfo.firstName && user.profileInfo.lastName"-->
+          <h3>name</h3>
+          <!--          v-show="user.basicInfo.userName"-->
+          <div class="profile__Main-InfoSpan">
             <i class="fa fa-quote-left"></i>
-            <p> {{ user.basicInfo.userName }}</p>
+            <!--            {{ user.basicInfo.userName }}-->
+            <p> user name</p>
             <i class="fa fa-quote-right"></i>
           </div>
-          <h6 v-show="user.basicInfo.email">{{ user.basicInfo.email }}</h6>
+          <!--          v-show="user.basicInfo.email"-->
+          <!--          {{ user.basicInfo.email }}-->
+          <h6> user email</h6>
         </div>
       </div>
       <div class="profile__Main-containerEditInfo">
@@ -124,10 +130,10 @@ export default {
     return {
       userData: {
         profileInfo: {
-          mobile: this.$store.getters.user.profileInfo.mobile,
-          firstName: this.$store.getters.user.profileInfo.firstName,
-          lastName: this.$store.getters.user.profileInfo.lastName,
-          image: this.$store.getters.user.profileInfo.image,
+          mobile: '',
+          firstName: '',
+          lastName: '',
+          image: '',
           error: {
             mobile: '',
             firstName: '',
@@ -138,7 +144,7 @@ export default {
         basicInfo: {
           currentPassword: '',
           newPassword: '',
-          userName: this.$store.getters.user.basicInfo.userName,
+          userName: '',
           error: {
             currentPassword: '',
             newPassword: '',
@@ -414,12 +420,11 @@ export default {
     },
   },
   async beforeMount() {
-    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const user = await axios.get('/api/v1/users/profile');
-    this.socket.emit("user_profileData", user.data.data);
-    this.socket.on("user_profileData_server", (data) => {
-      this.$store.dispatch('user', data);
-    });
+    // const user = await axios.get('/api/v1/users/profile');
+    // this.socket.emit("user_profileData", user.data.data);
+    // this.socket.on("user_profileData_server", (data) => {
+    //   this.$store.dispatch('user', data);
+    // });
   },
   mounted() {
     const Base_Info = document.getElementById('Base_Info');

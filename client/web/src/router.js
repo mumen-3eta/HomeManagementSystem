@@ -96,11 +96,11 @@ export default new Router({
                                 name: "newRegisterPage"
                             })
                         }
-                        if (store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
-                            })
-                        }
+                        // if (store.getters['user'].basicInfo.isAdmin) {
+                        //     return next({
+                        //         name: "MainHomePage"
+                        //     })
+                        // }
                         next()
                     }
                 },
@@ -115,11 +115,11 @@ export default new Router({
                                 name: "newRegisterPage"
                             })
                         }
-                        if (store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
-                            })
-                        }
+                        // if (store.getters['user'].basicInfo.isAdmin) {
+                        //     return next({
+                        //         name: "MainHomePage"
+                        //     })
+                        // }
                         next()
                     }
                 },
@@ -134,11 +134,11 @@ export default new Router({
                                 name: "newRegisterPage"
                             })
                         }
-                        if (store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
-                            })
-                        }
+                        // if (store.getters['user'].basicInfo.isAdmin) {
+                        //     return next({
+                        //         name: "MainHomePage"
+                        //     })
+                        // }
                         next()
                     }
                 },
@@ -153,11 +153,11 @@ export default new Router({
                                 name: "newRegisterPage"
                             })
                         }
-                        if (store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
-                            })
-                        }
+                        // if (store.getters['user'].basicInfo.isAdmin) {
+                        //     return next({
+                        //         name: "MainHomePage"
+                        //     })
+                        // }
                         next()
                     }
                 },
@@ -174,11 +174,11 @@ export default new Router({
                                 name: "newRegisterPage"
                             })
                         }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
-                            })
-                        }
+                        // if (!store.getters['user'].basicInfo.isAdmin) {
+                        //     return next({
+                        //         name: "MainHomePage"
+                        //     })
+                        // }
                         next()
                     }
                 },
@@ -193,11 +193,11 @@ export default new Router({
                                 name: "newRegisterPage"
                             })
                         }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
-                            })
-                        }
+                        // if (!store.getters['user'].basicInfo.isAdmin) {
+                        //     return next({
+                        //         name: "MainHomePage"
+                        //     })
+                        // }
                         next()
                     }
                 },
@@ -212,11 +212,11 @@ export default new Router({
                                 name: "newRegisterPage"
                             })
                         }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
-                            })
-                        }
+                        // if (!store.getters['user'].basicInfo.isAdmin) {
+                        //     return next({
+                        //         name: "MainHomePage"
+                        //     })
+                        // }
                         next()
                     }
                 },
@@ -231,11 +231,11 @@ export default new Router({
                                 name: "newRegisterPage"
                             })
                         }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
-                            })
-                        }
+                        // if (!store.getters['user'].basicInfo.isAdmin) {
+                        //     return next({
+                        //         name: "MainHomePage"
+                        //     })
+                        // }
                         next()
                     }
                 },
@@ -250,11 +250,11 @@ export default new Router({
                                 name: "newRegisterPage"
                             })
                         }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
-                            })
-                        }
+                        // if (!store.getters['user'].basicInfo.isAdmin) {
+                        //     return next({
+                        //         name: "MainHomePage"
+                        //     })
+                        // }
                         next()
                     }
                 },

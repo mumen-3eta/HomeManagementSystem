@@ -90,8 +90,10 @@ export default {
           email: this.userNameOrEmail,
           password: this.Password
         });
-        localStorage.setItem('csrfToken', response.data.csrfToken);
         await this.$store.dispatch('TokenUser', response.data);
+        const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
+        await this.$store.dispatch('user', userInfo);
+        console.log(userInfo)
         await this.$router.push('/v2/main/home');
       } catch (e) {
         this.errors.errorUserNameOrEmail = 'Invalid Email/Password' || e.msg || e.message;

@@ -46,11 +46,11 @@ CREATE TABLE controller_location(
 CREATE TABLE user_controller(
   id SERIAL PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
-  status BOOLEAN  DEFAULT false,
-  processor_id INTEGER	REFERENCES user_processor(id) NOT NULL,
-  typeId INTEGER	REFERENCES controller_type(id),
-  location_id INTEGER	REFERENCES controller_location(id),
-  controller_id INTEGER	REFERENCES controller_production(id),
+  status BOOLEAN DEFAULT false,
+  processor_id INTEGER REFERENCES user_processor(id) NOT NULL,
+  typeId INTEGER REFERENCES controller_type(id),
+  location_id INTEGER REFERENCES controller_location(id),
+  controller_id INTEGER REFERENCES controller_production(id),
   create_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

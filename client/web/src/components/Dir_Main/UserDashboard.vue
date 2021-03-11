@@ -3,7 +3,8 @@
     <!--   section number 1     -->
     <section class="section">
       <header class="section__header">
-        <h2 class="section__title">DashBoard | {{ user.basicInfo.userName }}</h2>
+        <!--        {{ user.basicInfo.userName }}-->
+        <h2 class="section__title">DashBoard | user??</h2>
       </header>
       <!--   for default user     -->
       <ul class="team">

@@ -10,9 +10,14 @@
       </form>
       <div v-on-clickaway="CloseDropMenu" class="profile">
         <button id="btn_Profile" class="profile__button" type="button" @click.prevent="OpenDropMenu">
-          <span v-if="user.basicInfo.userName" class="profile__name"><i
-              class="fas fa-caret-down"></i>{{ user.basicInfo.userName }}</span>
-          <img v-if="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image" class="profile__img">
+          <!--          v-if="user.basicInfo.userName"-->
+          <span class="profile__name">
+<!--              {{ user.basicInfo.userName }}-->
+            <i
+                class="fas fa-caret-down"></i>test</span>
+          <!--          v-if="user.profileInfo.image"-->
+          <!--          :src="user.profileInfo.image"-->
+          <img alt="profile image" class="profile__img" src="">
         </button>
         <div id="profile__menu" class="profile__menu">
           <ul class="profile__menu-ul">
@@ -22,31 +27,36 @@
                 <p class="profile__menu-nameTitle"> Profile </p>
               </router-link>
             </li>
-            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+            <!--            v-if="user.basicInfo.isAdmin"-->
+            <li class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/processor'}" class="profile__menu-link">
                 <i class="fas fa-laptop-medical profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Create Processor</p>
               </router-link>
             </li>
-            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+            <!--            v-if="user.basicInfo.isAdmin"-->
+            <li class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Create Controller</p>
               </router-link>
             </li>
-            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+            <!--            v-if="user.basicInfo.isAdmin"-->
+            <li class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="profile__menu-link">
                 <i class="fas fa-cubes profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Add Type Controller</p>
               </router-link>
             </li>
-            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+            <!--            v-if="user.basicInfo.isAdmin"-->
+            <li class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="profile__menu-link">
                 <i class="fas fa-map-marker-alt profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Add Location Controller</p>
               </router-link>
             </li>
-            <li v-if="!user.basicInfo.isAdmin" class="profile__menu-li">
+            <!--            v-if="!user.basicInfo.isAdmin"-->
+            <li class="profile__menu-li">
               <router-link :to="{path:'/v2/main/device/add'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">my device</p>
@@ -105,12 +115,9 @@ export default {
     },
   },
   async beforeMount() {
-    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const user = await axios.get('/api/v1/users/profile');
-    await this.$store.dispatch('user', user.data.data);
-    // document.getElementById("btn_Profile").addEventListener("click", function () {
-    //
-    // });
+    // const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
+    // await this.$store.dispatch('user', userInfo);
+    // console.log(userInfo)
   },
   computed: {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])

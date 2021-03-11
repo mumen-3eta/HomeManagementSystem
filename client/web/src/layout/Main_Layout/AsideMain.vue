@@ -11,13 +11,20 @@
         </button>
       </div>
       <div class="profile-main">
-        <div v-show="user.profileInfo.image" class="profile-main__setting focus--box-shadow" type="button">
-          <img :src="user.profileInfo.image" alt="profile image user" class="profile-main__photo">
+        <!--        v-show="user.profileInfo.image"-->
+        <div class="profile-main__setting focus--box-shadow" type="button">
+          <!--          :src="user.profileInfo.image" -->
+          <img alt="profile image user" class="profile-main__photo" src="">
         </div>
-        <h1 v-show="user.basicInfo.userName" class="profile-main__name">{{ user.basicInfo.userName }}</h1>
-        <h6 v-show="user.basicInfo.email" class="profile-main__name">{{ user.basicInfo.email }}</h6>
+        <!--        v-show="user.basicInfo.userName"-->
+        <!--        {{ user.basicInfo.userName }}-->
+        <h1 class="profile-main__name">test</h1>
+        <!--        v-show="user.basicInfo.email"-->
+        <!--        {{ user.basicInfo.email }}-->
+        <h6 class="profile-main__name"></h6>
       </div>
-      <div v-if="!user.basicInfo.isAdmin" class="banner">
+      <!--      v-if="!user.basicInfo.isAdmin"-->
+      <div class="banner">
         <h3 class="banner__title">Premium access</h3>
         <p class="banner__description">Create Teams without limit</p>
         <button class="banner__button" type="button">Get Premium Access</button>
@@ -27,7 +34,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import {mapGetters} from "vuex";
 import io from "socket.io-client";
 
@@ -36,9 +43,8 @@ export default {
   methods: {
 
     async GetProfileUser() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const {data: {data: user_profileData}} = await axios.get('/api/v1/users/profile');
-      await this.$store.dispatch('user', user_profileData);
+      // const {data: {data: user_profileData}} = await axios.get('/api/v1/users/profile');
+      // await this.$store.dispatch('user', user_profileData);
       // this.socket.emit("user_profileData", user_profileData);
       // this.socket.on("user_profileData_server", (data) => {
       //   this.$store.dispatch('user', data);

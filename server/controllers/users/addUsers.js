@@ -49,6 +49,7 @@ const addUsers = async (req, res, next) => {
       .json({
         title: 'User Registration',
         detail: 'Successfully registered new user',
+        token,
       });
   } catch (error) {
     return next(

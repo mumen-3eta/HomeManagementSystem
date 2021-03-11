@@ -107,8 +107,10 @@ export default {
         this.errors.errorUserName = null;
         this.errors.errorEmail = null;
         this.errors.errorPassword = null;
-        localStorage.setItem('csrfToken', re.data.csrfToken);
         await this.$store.dispatch('TokenUser', re.data);
+        const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
+        await this.$store.dispatch('user', userInfo);
+        console.log(userInfo)
         await this.$router.push('/v2/main/home');
       } catch (e) {
         this.errors.errorEmail = e.msg || e.message;

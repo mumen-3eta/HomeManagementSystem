@@ -3,8 +3,9 @@
     <!--   section number 1     -->
     <section class="section">
       <header class="section__header">
-        <h2 v-if="TokenUser && user.basicInfo.isAdmin" class="section__title">Admin DashBoard |
-          {{ user.basicInfo.userName }}</h2>
+        <!--        v-if="TokenUser && user.basicInfo.isAdmin"-->
+        <!--         {{ user.basicInfo.userName }}-->
+        <h2 class="section__title">Admin DashBoard | admin</h2>
       </header>
       <!--   for Admin user     -->
       <ul class="team">

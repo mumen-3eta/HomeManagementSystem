@@ -37,6 +37,7 @@ const Login = async (req, res, next) => {
       .send({
         title: 'User login',
         detail: 'Successfully loged-in ',
+        token,
       });
   } catch (error) {
     return next(
