@@ -4,23 +4,20 @@
       <div class="profile__Main-containerInfo">
         <div class="profile__Main-Info">
           <div>
-            <!--            v-show="user.profileInfo.image"-->
-            <!--            :src="user.profileInfo.image"-->
-            <img alt="profile image" class="p__Main-image"
-                 src="">
+            <img :src="userProfile.image ? userProfile.image : 'https://img.icons8.com/metro/500/000000/user-male.png'"
+                 alt="profile image"
+                 class="p__Main-image">
           </div>
-          <!--          v-show="user.profileInfo.firstName && user.profileInfo.lastName"-->
-          <h3>name</h3>
-          <!--          v-show="user.basicInfo.userName"-->
-          <div class="profile__Main-InfoSpan">
+
+          <h3 v-if="userProfile.first_name && userProfile.last_name">{{ userProfile.first_name }}
+            {{ userProfile.last_name }}</h3>
+
+          <div v-if="userProfile.user_name" class="profile__Main-InfoSpan">
             <i class="fa fa-quote-left"></i>
-            <!--            {{ user.basicInfo.userName }}-->
-            <p> user name</p>
+            <p v-text="userProfile.user_name"></p>
             <i class="fa fa-quote-right"></i>
           </div>
-          <!--          v-show="user.basicInfo.email"-->
-          <!--          {{ user.basicInfo.email }}-->
-          <h6> user email</h6>
+          <h6 v-if="userProfile.email" v-text="userProfile.email"></h6>
         </div>
       </div>
       <div class="profile__Main-containerEditInfo">
@@ -166,29 +163,11 @@ export default {
     }
   },
   methods: {
+    /*** Refs for input file ***/
     onPickImage() {
       this.$refs.imageInput.click()
     },
-    onCancelImage() {
-      const input = this.$refs.imageInput;
-      const files = input.files;
-      if (files && files[0]) {
-        const reader = new FileReader;
-        reader.onload = () => {
-          this.imageLoading = null;
-          this.imageName = null
-          this.pictureSize = null;
-          this.pictureSizeKB = null;
-          this.pictureSizeUnit = null;
-          this.imageData = null;
-          this.picture = null;
-          this.uploadValue = 0;
-          this.errors = null;
-        };
-        reader.readAsDataURL(files[0]);
-        this.$emit('input', files[0])
-      }
-    },
+    /*** Image Preview ***/
     previewImage(event) {
       this.uploadValue = 0;
       this.pictureSize = (event.target.files[0].size);
@@ -217,7 +196,10 @@ export default {
         }
       }
     },
+
+    /*** up load image to FireBase Storage ***/
     async onUploadImage() {
+      /*** Alert Swal.fire ***/
       let timerInterval
       this.$swal.fire({
         title: 'Image is Upload now',
@@ -244,8 +226,8 @@ export default {
           console.log('I was closed by the timer')
         }
       })
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const getUser = await axios.get('/api/v1/users/profile');
+      const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+
       this.picture = null;
       const D = new Date();
       const Year = D.getFullYear();
@@ -263,18 +245,19 @@ export default {
         storageRef.snapshot.ref.getDownloadURL().then((url) => {
           this.picture = url;
           // Delete old Image
-          let isUserImage = getUser.data.data.profileInfo.image.split("?");
-          if (isUserImage[0].toString() !== "https://ui-avatars.com/api/") {
-            let FromURL = getUser.data.data.profileInfo.image;
-            // console.log(firebase.storage().refFromURL(FromURL))
-            if (FromURL) {
-              let oldRefFromURL = firebase.storage().refFromURL(FromURL);
-              if (oldRefFromURL) {
-                this.OnDeleteImage(oldRefFromURL); // to delete old
+          if (userProfile[0].image) {
+            let isUserImage = userProfile[0].image.split("?");
+            if (isUserImage[0].toString() !== "https://ui-avatars.com/api/") {
+              let FromURL = userProfile[0].image;
+              if (FromURL) {
+                let oldRefFromURL = firebase.storage().refFromURL(FromURL);
+                if (oldRefFromURL) {
+                  this.OnDeleteImage(oldRefFromURL); // to delete old
+                }
               }
             }
           }
-          //End test
+          /*** End DELETE ***/
           this.storeImageInDB(url);
           this.$swal.fire({
             position: 'center',
@@ -289,19 +272,14 @@ export default {
       this.onCancelImage();
     },
     async storeImageInDB(URL) {
-      const user = await axios.post('/api/v1/users/profile', {
-        profileInfo: {
-          firstName: this.$store.getters.user.profileInfo.firstName,
-          lastName: this.$store.getters.user.profileInfo.lastName,
-          mobile: this.$store.getters.user.profileInfo.mobile,
-          image: URL
-        }
+      // const {data: {profileData: userProfile}} =
+      await axios.put('/api/v1/users/profile', {
+        image: URL
       });
-      this.socket.emit("user_profileData", user.data.data);
-      this.socket.on("user_profileData_server", (data) => {
-        this.$store.dispatch('user', data);
-      });
-      // await this.$store.dispatch('user', user.data.data);
+
+      const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+      await this.$store.dispatch('userProfile', userProfile[0]);
+      console.log(userProfile[0])
     },
     OnDeleteImage(deletedImage) {
       deletedImage.delete().then(() => {
@@ -311,6 +289,7 @@ export default {
       });
     },
 
+    //*** need Edit  ***//
     //  OnUpdateBodyInfo
     async OnUpdateBodyInfo() {
       if (this.userData.profileInfo.mobile
@@ -407,6 +386,30 @@ export default {
         this.EmptyFromInfoLogin();//empty form
       }
     },
+    //*** End need Edit  ***//
+
+    /*** Btn Cancel Image To Delete image from Preview ***/
+    onCancelImage() {
+      const input = this.$refs.imageInput;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader;
+        reader.onload = () => {
+          this.imageLoading = null;
+          this.imageName = null
+          this.pictureSize = null;
+          this.pictureSizeKB = null;
+          this.pictureSizeUnit = null;
+          this.imageData = null;
+          this.picture = null;
+          this.uploadValue = 0;
+          this.errors = null;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit('input', files[0])
+      }
+    },
+    /*** Empty Form ***/
     EmptyFromInfoLogin() {
       this.userData.basicInfo.currentPassword = null;
       this.userData.basicInfo.newPassword = null;
@@ -419,12 +422,8 @@ export default {
       document.getElementById("newPasswordInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
     },
   },
-  async beforeMount() {
-    // const user = await axios.get('/api/v1/users/profile');
-    // this.socket.emit("user_profileData", user.data.data);
-    // this.socket.on("user_profileData_server", (data) => {
-    //   this.$store.dispatch('user', data);
-    // });
+  created() {
+    this.socket = io('http://localhost:3001');
   },
   mounted() {
     const Base_Info = document.getElementById('Base_Info');
@@ -454,37 +453,37 @@ export default {
     const labelInput2 = document.getElementById("lastNameInputLabel");
     const input3 = document.getElementById("mobileInput");
     const labelInput3 = document.getElementById("mobileInputLabel");
-    const input4 = document.getElementById("userNameInput");
-    const labelInput4 = document.getElementById("userNameInputLabel");
+    // const input4 = document.getElementById("userNameInput");
+    // const labelInput4 = document.getElementById("userNameInputLabel");
 
-    if (this.$store.getters.user.profileInfo.lastName) {
-      SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
-      input1.style.borderBottom = "2px solid #219D9D";
-    } else {
-      SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
-      input1.style.borderBottom = "";
-    }
-    if (this.$store.getters.user.profileInfo.firstName) {
-      SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
-      input2.style.borderBottom = "2px solid #219D9D";
-    } else {
-      SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
-      input2.style.borderBottom = "";
-    }
-    if (this.$store.getters.user.profileInfo.mobile) {
-      SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
-      input3.style.borderBottom = "2px solid #219D9D";
-    } else {
-      SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
-      input3.style.borderBottom = "";
-    }
-    if (this.$store.getters.user.basicInfo.userName) {
-      SlidUp(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
-      input4.style.borderBottom = "2px solid #219D9D";
-    } else {
-      SlidDown(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
-      input4.style.borderBottom = "";
-    }
+    // if (this.$store.getters.user.profileInfo.lastName) {
+    //   SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+    //   input1.style.borderBottom = "2px solid #219D9D";
+    // } else {
+    //   SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+    //   input1.style.borderBottom = "";
+    // }
+    // if (this.$store.getters.user.profileInfo.firstName) {
+    //   SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+    //   input2.style.borderBottom = "2px solid #219D9D";
+    // } else {
+    //   SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+    //   input2.style.borderBottom = "";
+    // }
+    // if (this.$store.getters.user.profileInfo.mobile) {
+    //   SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+    //   input3.style.borderBottom = "2px solid #219D9D";
+    // } else {
+    //   SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+    //   input3.style.borderBottom = "";
+    // }
+    // if (this.$store.getters.user.basicInfo.userName) {
+    //   SlidUp(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
+    //   input4.style.borderBottom = "2px solid #219D9D";
+    // } else {
+    //   SlidDown(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
+    //   input4.style.borderBottom = "";
+    // }
 
     input1.addEventListener("focusin", function () {
       SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
@@ -571,10 +570,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user', 'TokenUser'])
-  },
-  created() {
-    this.socket = io('http://localhost:3001');
+    ...mapGetters(['user', 'userProfile'])
   },
 }
 </script>

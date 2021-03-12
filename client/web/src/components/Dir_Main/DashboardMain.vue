@@ -1,14 +1,11 @@
 <template>
   <div>
-    <!--    v-if="TokenUser && user.basicInfo.isAdmin"-->
-    <div>
-      <!--          v-if="TokenUser && user.basicInfo.isAdmin"-->
-      <AdminDashboardPage/>
+    <div v-if="user.isAdmin">
+      <AdminDashboardPage v-if="user.isAdmin"/>
     </div>
-    <!--    v-if="TokenUser && !user.basicInfo.isAdmin"-->
-    <div>
-      <!--       v-if="TokenUser && !user.basicInfo.isAdmin"-->
-      <UserDashboard/>
+
+    <div v-if="!user.isAdmin">
+      <UserDashboard v-if="!user.isAdmin"/>
     </div>
 
   </div>
@@ -26,7 +23,7 @@ export default {
     AdminDashboardPage
   },
   computed: {
-    ...mapGetters(['user', 'TokenUser']),
+    ...mapGetters(['user']),
   },
 }
 </script>

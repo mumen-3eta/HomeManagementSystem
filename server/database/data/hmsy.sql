@@ -9,8 +9,8 @@ CREATE TABLE users(
   password TEXT NOT NULL,
   first_name VARCHAR(50),
   last_name VARCHAR(50),
-  image VARCHAR(50),
-  mobile VARCHAR(14),
+  image VARCHAR(255),
+  mobile VARCHAR(15),
   is_admin BOOLEAN DEFAULT false,
   create_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

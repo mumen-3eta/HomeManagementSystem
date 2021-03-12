@@ -54,11 +54,10 @@ export default new Router({
         },
         {
             path: '/v2/main/home',
-            name: "MainLayout",
             component: MainLayout,
             children: [
                 {
-                    path: '/',
+                    path: '',
                     name: "DashboardMain",
                     component: DashboardMain,
                     // must be login

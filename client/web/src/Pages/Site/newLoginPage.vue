@@ -93,14 +93,13 @@ export default {
         await this.$store.dispatch('TokenUser', response.data);
         const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
         await this.$store.dispatch('user', userInfo);
-        console.log(userInfo)
+        const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+        await this.$store.dispatch('userProfile', userProfile[0]);
         await this.$router.push('/v2/main/home');
       } catch (e) {
-        this.errors.errorUserNameOrEmail = 'Invalid Email/Password' || e.msg || e.message;
+        this.errors.errorUserNameOrEmail = 'Invalid Email/Password';
         return false;
       }
-
-
     },
   },
   mounted() {

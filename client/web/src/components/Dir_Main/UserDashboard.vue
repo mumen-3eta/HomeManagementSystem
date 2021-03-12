@@ -2,9 +2,8 @@
   <div>
     <!--   section number 1     -->
     <section class="section">
-      <header class="section__header">
-        <!--        {{ user.basicInfo.userName }}-->
-        <h2 class="section__title">DashBoard | user??</h2>
+      <header v-if="userProfile.user_name" class="section__header">
+        <h2 class="section__title">DashBoard | {{ userProfile.user_name }}</h2>
       </header>
       <!--   for default user     -->
       <ul class="team">
@@ -152,7 +151,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import io from "socket.io-client";
 import {mapGetters} from "vuex";
 
@@ -168,7 +166,7 @@ export default {
           Path: '/v2/main/device/add',
           ClassColorBorder: 'photo__item photo__item-bg1Color',
           TitleCard: 'Number Processor',
-          Number: this.$store.getters.userProcessorIds ? this.$store.getters.userProcessorIds.length : '0',
+          Number: '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -311,19 +309,19 @@ export default {
     }
   },
   methods: {
-    async GetAllProcessorUser() {
-      const {data: {data: responseProcessor}} = await axios.get('/api/v1/user/processor');
-      this.socket.emit("user_All_Processor", responseProcessor);
-      this.socket.on("user_All_Processor_server", (data) => {
-        this.$store.dispatch('userProcessorIds', data);
-      });
-      if (this.$store.getters.userProcessorIds) {
-        this.DashboardInfoCard[0].Number = this.$store.getters.userProcessorIds.length;
-      } else {
-        this.DashboardInfoCard[0].Number = '0';
-      }
-      // await this.$store.dispatch('userProcessorIds', responseProcessor);
-    },
+    // async GetAllProcessorUser() {
+    //   const {data: {data: responseProcessor}} = await axios.get('/api/v1/user/processor');
+    //   this.socket.emit("user_All_Processor", responseProcessor);
+    //   this.socket.on("user_All_Processor_server", (data) => {
+    //     this.$store.dispatch('userProcessorIds', data);
+    //   });
+    //   if (this.$store.getters.userProcessorIds) {
+    //     this.DashboardInfoCard[0].Number = this.$store.getters.userProcessorIds.length;
+    //   } else {
+    //     this.DashboardInfoCard[0].Number = '0';
+    //   }
+    //   // await this.$store.dispatch('userProcessorIds', responseProcessor);
+    // },
     ChangeFavorite(id) {
       this.ListCardController[id].Status = !this.ListCardController[id].Status;
     },
@@ -332,14 +330,14 @@ export default {
     },
   },
   async beforeMount() {
-    await this.GetAllProcessorUser();
+    // await this.GetAllProcessorUser();
   },
   created() {
     this.socket = io('http://localhost:3001');
-    this.GetAllProcessorUser();
+    // this.GetAllProcessorUser();
   },
   computed: {
-    ...mapGetters(['user', 'TokenUser', 'userProcessorIds']),
+    ...mapGetters(['user', 'userProfile']),
     filteredList() {
       return this.ListCardController.filter(post => {
         return post.ControllerName.toLowerCase().includes(this.search.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search.toLowerCase())

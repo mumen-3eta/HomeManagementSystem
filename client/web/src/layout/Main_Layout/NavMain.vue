@@ -2,6 +2,7 @@
   <div class="div__nav">
     <nav class="nav">
       <ul class="nav__list" role="menubar">
+        <!--   For All     -->
         <li :class="['nav__item',this.$route.path === '/v2/main/home' ? 'nav__item--isActive':'']"
             aria-label="Main Home">
           <router-link :to="{path:'/v2/main/home'}" class="nav__link focus--box-shadow"
@@ -9,38 +10,41 @@
             <i class="fas fa-home nav__icon"></i>
           </router-link>
         </li>
-        <!--        v-if="!user.basicInfo.isAdmin"-->
-        <li
-            :class="['nav__item',this.$route.path === '/v2/main/device/add' ? 'nav__item--isActive':'']"
-            aria-label="Add Main Device">
-          <router-link :to="{path:'/v2/main/device/add'}" class="nav__link focus--box-shadow"
-                       role="menuitem">
-            <i class="far fa-desktop nav__icon"></i>
-
+        <li :class="['nav__item',this.$route.path === '/v2/main/profile' ? 'nav__item--isActive':'']"
+            aria-label="Profile">
+          <router-link :to="{path:'/v2/main/profile'}" class="nav__link focus--box-shadow" role="menuitem">
+            <i class="fas fa-user-tie nav__icon"></i>
           </router-link>
         </li>
-        <!--        v-if="user.basicInfo.isAdmin"-->
-        <li
+        <!--  End  For All     -->
+
+        <!--   For user     -->
+        <li v-if="!user.isAdmin"
+            :class="['nav__item',this.$route.path === '/v2/main/device/add' ? 'nav__item--isActive':'']"
+            aria-label="Add Main Device">
+          <router-link :to="{path:'/v2/main/device/add'}" class="nav__link focus--box-shadow" role="menuitem">
+            <i class="far fa-desktop nav__icon"></i>
+          </router-link>
+        </li>
+        <!--  End  For user    -->
+        <!--   For Admin     -->
+        <li v-if="user.isAdmin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/processor' ? 'nav__item--isActive':'']"
             aria-label="Add Processor">
           <router-link :to="{path:'/v2/main/admin/create/processor'}" aria-label="heart"
-                       class="nav__link focus--box-shadow"
-                       role="menuitem">
+                       class="nav__link focus--box-shadow" role="menuitem">
             <i class="fas fa-laptop-medical nav__icon"></i>
           </router-link>
         </li>
-        <!--        v-if="user.basicInfo.isAdmin"-->
-        <li
+        <li v-if="user.isAdmin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller' ? 'nav__item--isActive':'']"
             aria-label="Add Controller">
           <router-link :to="{path:'/v2/main/admin/create/controller'}" aria-label="heart"
-                       class="nav__link focus--box-shadow"
-                       role="menuitem">
+                       class="nav__link focus--box-shadow" role="menuitem">
             <i class="fas fa-laptop nav__icon"></i>
           </router-link>
         </li>
-        <!--        v-if="user.basicInfo.isAdmin"-->
-        <li
+        <li v-if="user.isAdmin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller/type' ? 'nav__item--isActive':'']"
             aria-label="Add Type Controller">
           <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="nav__link focus--box-shadow"
@@ -48,8 +52,7 @@
             <i class="fas fa-cubes nav__icon"></i>
           </router-link>
         </li>
-        <!--        v-if="user.basicInfo.isAdmin"-->
-        <li
+        <li v-if="user.isAdmin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller/location' ? 'nav__item--isActive':'']"
             aria-label="Add Location Controller">
           <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="nav__link focus--box-shadow"
@@ -57,22 +60,14 @@
             <i class="fas fa-map-marker-alt nav__icon"></i>
           </router-link>
         </li>
-        <!--        v-if="user.basicInfo.isAdmin"-->
-        <li
+        <li v-if="user.isAdmin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/all/messages' ? 'nav__item--isActive':'']"
             aria-label="All Messages">
-          <router-link :to="{path:'/v2/main/admin/all/messages'}" class="nav__link focus--box-shadow"
-                       role="menuitem">
+          <router-link :to="{path:'/v2/main/admin/all/messages'}" class="nav__link focus--box-shadow" role="menuitem">
             <i class="far fa-comment-dots nav__icon"></i>
           </router-link>
         </li>
-        <li :class="['nav__item',this.$route.path === '/v2/main/profile' ? 'nav__item--isActive':'']"
-            aria-label="Profile">
-          <router-link :to="{path:'/v2/main/profile'}" class="nav__link focus--box-shadow"
-                       role="menuitem">
-            <i class="fas fa-user-tie nav__icon"></i>
-          </router-link>
-        </li>
+        <!--  End  For Admin    -->
       </ul>
     </nav><!-- End NAV -->
   </div>
@@ -84,7 +79,7 @@ import {mapGetters} from "vuex";
 export default {
   name: "NavMain",
   computed: {
-    ...mapGetters(['user', 'TokenUser'])
+    ...mapGetters(['user'])
   },
 }
 </script>

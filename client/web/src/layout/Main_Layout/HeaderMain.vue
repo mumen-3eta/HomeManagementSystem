@@ -9,15 +9,13 @@
         <input class="search__input focus--box-shadow" placeholder="Search ..." type="search">
       </form>
       <div v-on-clickaway="CloseDropMenu" class="profile">
-        <button id="btn_Profile" class="profile__button" type="button" @click.prevent="OpenDropMenu">
-          <!--          v-if="user.basicInfo.userName"-->
-          <span class="profile__name">
-<!--              {{ user.basicInfo.userName }}-->
-            <i
-                class="fas fa-caret-down"></i>test</span>
-          <!--          v-if="user.profileInfo.image"-->
-          <!--          :src="user.profileInfo.image"-->
-          <img alt="profile image" class="profile__img" src="">
+        <button id="btn_Profile" class="profile__button" type="button"
+                @click.prevent="OpenDropMenu">
+          <span v-if="userProfile.user_name" class="profile__name">
+            <i class="fas fa-caret-down"></i>{{ userProfile.user_name }}</span>
+          <img :src="userProfile.image ? userProfile.image : 'https://img.icons8.com/metro/500/000000/user-male.png' "
+               alt="profile image"
+               class="profile__img">
         </button>
         <div id="profile__menu" class="profile__menu">
           <ul class="profile__menu-ul">
@@ -27,36 +25,31 @@
                 <p class="profile__menu-nameTitle"> Profile </p>
               </router-link>
             </li>
-            <!--            v-if="user.basicInfo.isAdmin"-->
-            <li class="profile__menu-li">
+            <li v-if="user.isAdmin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/processor'}" class="profile__menu-link">
                 <i class="fas fa-laptop-medical profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Create Processor</p>
               </router-link>
             </li>
-            <!--            v-if="user.basicInfo.isAdmin"-->
-            <li class="profile__menu-li">
+            <li v-if="user.isAdmin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Create Controller</p>
               </router-link>
             </li>
-            <!--            v-if="user.basicInfo.isAdmin"-->
-            <li class="profile__menu-li">
+            <li v-if="user.isAdmin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="profile__menu-link">
                 <i class="fas fa-cubes profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Add Type Controller</p>
               </router-link>
             </li>
-            <!--            v-if="user.basicInfo.isAdmin"-->
-            <li class="profile__menu-li">
+            <li v-if="user.isAdmin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="profile__menu-link">
                 <i class="fas fa-map-marker-alt profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Add Location Controller</p>
               </router-link>
             </li>
-            <!--            v-if="!user.basicInfo.isAdmin"-->
-            <li class="profile__menu-li">
+            <li v-if="!user.isAdmin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/device/add'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">my device</p>
@@ -86,11 +79,10 @@ export default {
   mixins: [clickAway],
   methods: {
     async handleClick() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
       await axios.put('/api/v1/users/logout');
-      localStorage.removeItem('csrfToken');
       await this.$store.dispatch('user', null);
       await this.$store.dispatch('TokenUser', null);
+      await this.$store.dispatch('userProfile', null);
       await this.$store.dispatch('deviceInfoAdd', null);
       await this.$store.dispatch('processorId', null);
       await this.$store.dispatch('controllerId', null);
@@ -115,12 +107,10 @@ export default {
     },
   },
   async beforeMount() {
-    // const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
-    // await this.$store.dispatch('user', userInfo);
-    // console.log(userInfo)
+
   },
   computed: {
-    ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
+    ...mapGetters(['user', 'userProfile'])
   },
 }
 </script>
