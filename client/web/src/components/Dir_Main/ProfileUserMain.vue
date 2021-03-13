@@ -80,7 +80,7 @@
                 <form @submit.prevent="OnUpdateBodyInfoLogin">
                   <div class="profile__bodyInfo-group">
                     <label id="userNameInputLabel" class="profile__bodyInfo-groupLabel"
-                           for="userNameInput">User Name</label>
+                           for="userNameInput">User Name <sup class="badge bg-secondary">New</sup></label>
                     <input id="userNameInput" v-model.trim="userData.basicInfo.userName"
                            class="profile__bodyInfo-groupInput"
                            type="text">
@@ -128,8 +128,8 @@ export default {
       userData: {
         profileInfo: {
           mobile: '',
-          firstName: '',
-          lastName: '',
+          firstName: this.$store.getters.userProfile.first_name ? this.$store.getters.userProfile.first_name : '',
+          lastName: this.$store.getters.userProfile.last_name ? this.$store.getters.userProfile.last_name : '',
           image: '',
           error: {
             mobile: '',
@@ -226,7 +226,6 @@ export default {
           console.log('I was closed by the timer')
         }
       })
-      const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
 
       this.picture = null;
       const D = new Date();
@@ -245,10 +244,11 @@ export default {
         storageRef.snapshot.ref.getDownloadURL().then((url) => {
           this.picture = url;
           // Delete old Image
-          if (userProfile[0].image) {
-            let isUserImage = userProfile[0].image.split("?");
+          let UserImage = this.$store.getters.userProfile.image;
+          if (UserImage) {
+            let isUserImage = UserImage.split("?");
             if (isUserImage[0].toString() !== "https://ui-avatars.com/api/") {
-              let FromURL = userProfile[0].image;
+              let FromURL = UserImage;
               if (FromURL) {
                 let oldRefFromURL = firebase.storage().refFromURL(FromURL);
                 if (oldRefFromURL) {
@@ -271,15 +271,11 @@ export default {
       })
       this.onCancelImage();
     },
+    /*** store image method ***/
     async storeImageInDB(URL) {
-      // const {data: {profileData: userProfile}} =
-      await axios.put('/api/v1/users/profile', {
-        image: URL
-      });
-
+      await axios.put('/api/v1/users/profile', {image: URL});
       const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
       await this.$store.dispatch('userProfile', userProfile[0]);
-      console.log(userProfile[0])
     },
     OnDeleteImage(deletedImage) {
       deletedImage.delete().then(() => {
@@ -289,17 +285,16 @@ export default {
       });
     },
 
-    //*** need Edit  ***//
+
     //  OnUpdateBodyInfo
     async OnUpdateBodyInfo() {
-      if (this.userData.profileInfo.mobile
-          && this.userData.profileInfo.firstName
-          && this.userData.profileInfo.lastName) {
-        // section Api for send message
-        let mobile = this.userData.profileInfo.mobile;
-        if (mobile) {
+      let FirstName = this.userData.profileInfo.firstName;
+      let LastName = this.userData.profileInfo.lastName;
+      let Mobile = this.userData.profileInfo.mobile;
+      if (FirstName || LastName || Mobile) {
+        if (Mobile) {
           let mobileRegex = /^[0-9]+$/;
-          let CheckMobile = mobileRegex.test(mobile);//true or false
+          let CheckMobile = mobileRegex.test(Mobile);//true or false
           if (!CheckMobile) {
             this.userData.profileInfo.error.mobile = "Sorry! User mobile Faild, must be number";
             setTimeout(() => {
@@ -309,23 +304,33 @@ export default {
           }
         }
 
-        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const user = await axios.post('/api/v1/users/profile', {
-          profileInfo: {
-            firstName: this.userData.profileInfo.firstName,
-            lastName: this.userData.profileInfo.lastName,
-            mobile: this.userData.profileInfo.mobile,
-            image: this.$store.getters.user.profileInfo.image
-          }
+        await axios.put('/api/v1/users/profile', {
+          firstName: FirstName ? FirstName : this.$store.getters.userProfile.first_name,
+          lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
+          // mobile: Mobile ? Mobile : this.$store.getters.userProfile.mobile, /* 😪 Error Hear ☠️ 🆘 🔞 ' error: "mobile must be less than or equal to 15" not work correctly '*/
         });
-        this.socket.emit("user_profileData", user.data.data);
-        this.socket.on("user_profileData_server", (data) => {
-          this.$store.dispatch('user', data);
-          this.mobile = this.$store.getters.user.profileInfo.mobile;
-          this.firstName = this.$store.getters.user.profileInfo.firstName;
-          this.lastName = this.$store.getters.user.profileInfo.lastName;
-          this.image = this.$store.getters.user.profileInfo.image;
-        });
+
+        const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+        await this.$store.dispatch('userProfile', userProfile[0]);
+        FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
+        LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
+        Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+        // const user = await axios.post('/api/v1/users/profile', {
+        //   profileInfo: {
+        //     firstName: this.userData.profileInfo.firstName,
+        //     lastName: this.userData.profileInfo.lastName,
+        //     mobile: this.userData.profileInfo.mobile,
+        //     image: this.$store.getters.user.profileInfo.image
+        //   }
+        // });
+        // this.socket.emit("user_profileData", user.data.data);
+        // this.socket.on("user_profileData_server", (data) => {
+        //   this.$store.dispatch('user', data);
+        //   this.mobile = this.$store.getters.user.profileInfo.mobile;
+        //   this.firstName = this.$store.getters.user.profileInfo.firstName;
+        //   this.lastName = this.$store.getters.user.profileInfo.lastName;
+        //   this.image = this.$store.getters.user.profileInfo.image;
+        // });
         // await this.$store.dispatch('user', user.data.data);
         this.$swal.fire({
           position: 'center',
@@ -335,17 +340,27 @@ export default {
           showConfirmButton: false,
           timer: 1500
         })
+      } else {
+        this.userData.profileInfo.error.mobile = "Sorry! User mobile Faild, is Required";
+        this.userData.profileInfo.error.firstName = "Sorry! User first Name Faild, is Required";
+        this.userData.profileInfo.error.lastName = "Sorry! User last Name Faild, is Required";
+        setTimeout(() => {
+          this.userData.profileInfo.error.mobile = '';
+          this.userData.profileInfo.error.firstName = '';
+          this.userData.profileInfo.error.lastName = '';
+        }, 3000);
       }
     },
     //  OnUpdateBodyInfoLogin
     async OnUpdateBodyInfoLogin() {
-      if (this.userData.basicInfo.currentPassword
-          && this.userData.basicInfo.newPassword
-          && this.userData.basicInfo.userName) {
-        let userName = this.userData.basicInfo.userName;
-        if (userName) {
+      let UserName = this.userData.basicInfo.userName;
+      let CurrentPassword = this.userData.basicInfo.currentPassword;
+      let NewPassword = this.userData.basicInfo.newPassword;
+      if (CurrentPassword || NewPassword || UserName) {
+
+        if (UserName) {
           let usernameRegex = /^[a-zA-Z0-9]+$/;
-          let CheckUserName = usernameRegex.test(userName);//true or false
+          let CheckUserName = usernameRegex.test(UserName);//true or false
           if (!CheckUserName) {
             this.userData.basicInfo.error.userName = "Sorry! User Name Faild, must be (a-z) and (0-1) and ignored space";
             setTimeout(() => {
@@ -353,27 +368,26 @@ export default {
             }, 3000);
             return false;
           }
+
+          await axios.put('/api/v1/users/profile', {
+            userName: UserName,
+          });
         }
-        /***
-         *** section Api for send message
-         *** need check for api can't update password and can update email solve this problem
-         *** for api not hear ..
-         *** ***/
-        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const user = await axios.post('/api/v1/users/profile', {
-          basicInfo: {
-            userName: this.userData.basicInfo.userName,
-            email: this.$store.getters.user.basicInfo.email,
-            // currentPassword: this.userData.basicInfo.currentPassword,
-            Password: this.userData.basicInfo.newPassword,
-            isAdmin: false,
-          }
-        });
-        this.socket.emit("user_profileData", user.data.data);
-        this.socket.on("user_profileData_server", (data) => {
-          this.$store.dispatch('user', data);
-          this.userName = this.$store.getters.user.basicInfo.userName;
-        });
+        if (CurrentPassword && NewPassword) {
+          await axios.put('/api/v1/users/profile', {
+            password: NewPassword,
+          });
+        }
+
+        const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+        await this.$store.dispatch('userProfile', userProfile[0]);
+
+
+        // this.socket.emit("user_profileData", user.data.data);
+        // this.socket.on("user_profileData_server", (data) => {
+        //   this.$store.dispatch('user', data);
+        //   this.userName = this.$store.getters.user.basicInfo.userName;
+        // });
         // await this.$store.dispatch('user', user.data.data);
         this.$swal.fire({
           position: 'center',
@@ -384,9 +398,16 @@ export default {
           timer: 1500
         })
         this.EmptyFromInfoLogin();//empty form
+      } else {
+        this.userData.basicInfo.error.userName = "Sorry! User user Name Faild, is Required";
+        this.userData.basicInfo.error.newPassword = "Sorry! User Password Faild, is Required";
+        setTimeout(() => {
+          this.userData.basicInfo.error.userName = '';
+          this.userData.basicInfo.error.newPassword = '';
+        }, 3000);
       }
     },
-    //*** End need Edit  ***//
+
 
     /*** Btn Cancel Image To Delete image from Preview ***/
     onCancelImage() {
@@ -456,28 +477,28 @@ export default {
     // const input4 = document.getElementById("userNameInput");
     // const labelInput4 = document.getElementById("userNameInputLabel");
 
-    // if (this.$store.getters.user.profileInfo.lastName) {
-    //   SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
-    //   input1.style.borderBottom = "2px solid #219D9D";
-    // } else {
-    //   SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
-    //   input1.style.borderBottom = "";
-    // }
-    // if (this.$store.getters.user.profileInfo.firstName) {
-    //   SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
-    //   input2.style.borderBottom = "2px solid #219D9D";
-    // } else {
-    //   SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
-    //   input2.style.borderBottom = "";
-    // }
-    // if (this.$store.getters.user.profileInfo.mobile) {
-    //   SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
-    //   input3.style.borderBottom = "2px solid #219D9D";
-    // } else {
-    //   SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
-    //   input3.style.borderBottom = "";
-    // }
-    // if (this.$store.getters.user.basicInfo.userName) {
+    if (this.$store.getters.userProfile.last_name) {
+      SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+      input1.style.borderBottom = "2px solid #219D9D";
+    } else {
+      SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
+      input1.style.borderBottom = "";
+    }
+    if (this.$store.getters.userProfile.first_name) {
+      SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+      input2.style.borderBottom = "2px solid #219D9D";
+    } else {
+      SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
+      input2.style.borderBottom = "";
+    }
+    if (this.$store.getters.userProfile.mobile) {
+      SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+      input3.style.borderBottom = "2px solid #219D9D";
+    } else {
+      SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
+      input3.style.borderBottom = "";
+    }
+    // if (this.$store.getters.userProfile.user_name) {
     //   SlidUp(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
     //   input4.style.borderBottom = "2px solid #219D9D";
     // } else {
