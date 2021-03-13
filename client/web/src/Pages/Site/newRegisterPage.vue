@@ -91,25 +91,26 @@ export default {
           return false;
         }
       }
-      try {
-        const re = await axios.post('/api/v1/users/register', {
-          userName: this.userName,
-          email: this.Email,
-          password: this.Password,
-        });
+
+      await axios.post('/api/v1/users/register', {
+        userName: this.userName,
+        email: this.Email,
+        password: this.Password,
+      }).then(async (response) => {
         this.errors.errorUserName = null;
         this.errors.errorEmail = null;
         this.errors.errorPassword = null;
-        await this.$store.dispatch('TokenUser', re.data);
+        await this.$store.dispatch('TokenUser', response.data);
         const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
         await this.$store.dispatch('user', userInfo);
         const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
         await this.$store.dispatch('userProfile', userProfile[0]);
         await this.$router.push('/v2/main/home');
-      } catch (e) {
+      }).catch(() => {
         this.errors.ErrorEmailOrUserName = "Email/username is already taken";
         return false;
-      }
+      });
+
 
     },
 

@@ -13,6 +13,8 @@
     </main><!-- End Main -->
     <!--    aside here -->
     <AsideMain/>
+    <!--    btn up -->
+    <UpButton/>
   </div>
 </template>
 
@@ -20,10 +22,29 @@
 import NavMain from "@/layout/Main_Layout/NavMain";
 import HeaderMain from "@/layout/Main_Layout/HeaderMain";
 import AsideMain from "@/layout/Main_Layout/AsideMain";
+import UpButton from "@/components/Dir_UpButton/UpButton";
 
 export default {
   name: "MainLayout",
-  components: {HeaderMain, AsideMain, NavMain},
+  components: {UpButton, HeaderMain, AsideMain, NavMain},
+  mounted() {
+    window.onscroll = function () {
+      scrollFunction();
+    };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+        document.getElementById("up_Button").style.display = "block";
+      } else {
+        document.getElementById("up_Button").style.display = "none";
+      }
+    }
+
+    document.getElementById("up_Button").addEventListener("click", function () {
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    });
+  }
 }
 </script>
 

@@ -100,29 +100,40 @@ export default {
   name: "Nav-Bar",
   methods: {
     async handleClick() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      await axios.put('/api/v1/users/logout');
-      localStorage.removeItem('csrfToken');
-      await this.$store.dispatch('user', null);
-      await this.$store.dispatch('TokenUser', null);
-      await this.$store.dispatch('deviceInfoAdd', null);
-      await this.$store.dispatch('processorId', null);
-      await this.$store.dispatch('controllerId', null);
-      await this.$store.dispatch('userProcessorIds', null);
-      await this.$store.dispatch('userAllProcessor', null);
-      await this.$store.dispatch('NewTypeController', null);
-      await this.$store.dispatch('allTypeController', null);
-      await this.$store.dispatch('NewLocationController', null);
-      await this.$store.dispatch('allLocationController', null);
-      await this.$store.dispatch('TypeControllerData', null);
-      await this.$store.dispatch('LocationControllerData', null);
-      await this.$store.dispatch('NewControllerData', null);
+      await axios.put('/api/v1/users/logout').then(async () => {
+        await this.$store.dispatch('user', null);
+        await this.$store.dispatch('TokenUser', null);
+        await this.$store.dispatch('deviceInfoAdd', null);
+        await this.$store.dispatch('processorId', null);
+        await this.$store.dispatch('controllerId', null);
+        await this.$store.dispatch('userProcessorIds', null);
+        await this.$store.dispatch('userAllProcessor', null);
+        await this.$store.dispatch('NewTypeController', null);
+        await this.$store.dispatch('allTypeController', null);
+        await this.$store.dispatch('NewLocationController', null);
+        await this.$store.dispatch('allLocationController', null);
+        await this.$store.dispatch('TypeControllerData', null);
+        await this.$store.dispatch('LocationControllerData', null);
+        await this.$store.dispatch('NewControllerData', null);
 
-      await this.$router.push('/v2/login');
+        await this.$router.push('/v2/login');
+
+      }).catch((e) => {
+        console.log(e)
+      });
+
     }
   },
   computed: {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
+  },
+  async beforeCreate() {
+    await axios.get('/api/v1/users/me').then(async (res) => {
+      await this.$store.dispatch('TokenUser', res.data.user);
+    }).catch(async () => {
+      console.log("unauthenticated")
+      await this.$store.dispatch('TokenUser', null);
+    });
   },
   mounted() {
     // menu open and close

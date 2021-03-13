@@ -63,11 +63,13 @@ export default {
   methods: {
     async checkForm() {
       let UserNameOrEmail = this.userNameOrEmail;
+      /* Check input userName or Email*/
       if (UserNameOrEmail) {
         let usernameRegex = /^[a-zA-Z0-9]+$/;
         let EmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         let CheckUserName = usernameRegex.test(UserNameOrEmail);//true or false
         let CheckEmail = EmailRegex.test(UserNameOrEmail);//true or false
+        /* this condition to Check if username Or Email not input correctly 👺  */
         if (!CheckEmail && !CheckUserName) {
           this.errors.errorUserNameOrEmail = "Sorry! Email Faild, must be (@) and (.) and ignored space";
           setTimeout(() => {
@@ -110,49 +112,14 @@ export default {
         }
 
       } else {
+        /* if not Input userName And Email  👽  */
         this.errors.errorUserNameOrEmail = "Sorry! User Name Faild oR Password  is Required ";
         setTimeout(() => {
           this.errors.errorUserNameOrEmail = null;
+
         }, 3000);
         return false;
       }
-      // if (UserNameOrEmail) {
-      //   let usernameRegex = /^[a-zA-Z0-9]+$/;
-      //   let CheckUserName = usernameRegex.test(UserNameOrEmail);//true or false
-      //   if (!CheckUserName) {
-      //     this.errors.errorUserName = "Sorry! User Name Faild, must be (a-z) and (0-1) and ignored space";
-      //     setTimeout(() => {
-      //       this.errors.errorUserName = null;
-      //     }, 3000);
-      //     return false;
-      //   }
-      // }
-      // if (UserNameOrEmail) {
-      //   let EmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      //   let CheckEmail = EmailRegex.test(UserNameOrEmail);//true or false
-      //   if (!CheckEmail) {
-      //     this.errors.errorEmail = "Sorry! Email Faild, must be (@) and (.) and ignored space";
-      //     setTimeout(() => {
-      //       this.errors.errorEmail = null;
-      //     }, 3000);
-      //     return false;
-      //   }
-      // }
-      // await axios.post('/api/v1/users/login', {
-      //   email: this.userNameOrEmail,
-      //   userName: this.userNameOrEmail,
-      //   password: this.Password
-      // }).then(async (response) => {
-      //   await this.$store.dispatch('TokenUser', response.data);
-      //   const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
-      //   await this.$store.dispatch('user', userInfo);
-      //   const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-      //   await this.$store.dispatch('userProfile', userProfile[0]);
-      //   await this.$router.push('/v2/main/home');
-      // }).catch(() => {
-      //   this.errors.errorUserNameOrEmail = 'Invalid Email/Password';
-      //   return false;
-      // });
 
     },
   },

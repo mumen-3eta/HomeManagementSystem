@@ -308,13 +308,32 @@ export default {
           firstName: FirstName ? FirstName : this.$store.getters.userProfile.first_name,
           lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
           // mobile: Mobile ? Mobile : this.$store.getters.userProfile.mobile, /* 😪 Error Hear ☠️ 🆘 🔞 ' error: "mobile must be less than or equal to 15" not work correctly '*/
+        }).then(async () => {
+          const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+          await this.$store.dispatch('userProfile', userProfile[0]);
+          FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
+          LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
+          Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+          this.$swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Thank you, Send it',
+            text: "Update your information, Successfully",
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }).catch(() => {
+          this.$swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Sorry, 😥',
+            text: "Update your information, Faild",
+            showConfirmButton: false,
+            timer: 1500
+          })
         });
 
-        const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-        await this.$store.dispatch('userProfile', userProfile[0]);
-        FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
-        LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
-        Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+
         // const user = await axios.post('/api/v1/users/profile', {
         //   profileInfo: {
         //     firstName: this.userData.profileInfo.firstName,
@@ -332,14 +351,7 @@ export default {
         //   this.image = this.$store.getters.user.profileInfo.image;
         // });
         // await this.$store.dispatch('user', user.data.data);
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Thank you, Send it',
-          text: "Update your information, Successfully",
-          showConfirmButton: false,
-          timer: 1500
-        })
+
       } else {
         this.userData.profileInfo.error.mobile = "Sorry! User mobile Faild, is Required";
         this.userData.profileInfo.error.firstName = "Sorry! User first Name Faild, is Required";
@@ -368,36 +380,51 @@ export default {
             }, 3000);
             return false;
           }
-
           await axios.put('/api/v1/users/profile', {
             userName: UserName,
+          }).then(async () => {
+            await axios.get('/api/v1/users/profile').then(async (response) => {
+              await this.$store.dispatch('userProfile', response.data.profileData[0]);
+              this.$swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: `<strong>Updated</strong>`,
+                text: "Update your UserName, Successfully",
+                showConfirmButton: false,
+                timer: 1500
+              })
+              this.EmptyFromInfoLogin();//empty form
+            }).catch((e) => {
+              console.log(e)
+            });
+          }).catch(() => {
+            this.userData.basicInfo.error.userName = "Sorry! UserName is already 😥";
+            setTimeout(() => {
+              this.userData.basicInfo.error.userName = null;
+            }, 3000);
           });
         }
         if (CurrentPassword && NewPassword) {
           await axios.put('/api/v1/users/profile', {
             password: NewPassword,
+          }).then(async () => {
+            await axios.get('/api/v1/users/profile').then(async (response) => {
+              await this.$store.dispatch('userProfile', response.data.profileData[0]);
+              this.$swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: `<strong>Updated</strong>`,
+                text: "Update your Password, Successfully",
+                showConfirmButton: false,
+                timer: 1500
+              })
+              this.EmptyFromInfoLogin();//empty form
+            }).catch((e) => {
+              console.log(e)
+            });
           });
         }
 
-        const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-        await this.$store.dispatch('userProfile', userProfile[0]);
-
-
-        // this.socket.emit("user_profileData", user.data.data);
-        // this.socket.on("user_profileData_server", (data) => {
-        //   this.$store.dispatch('user', data);
-        //   this.userName = this.$store.getters.user.basicInfo.userName;
-        // });
-        // await this.$store.dispatch('user', user.data.data);
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Thank you, Send it',
-          text: "Update your information, Successfully",
-          showConfirmButton: false,
-          timer: 1500
-        })
-        this.EmptyFromInfoLogin();//empty form
       } else {
         this.userData.basicInfo.error.userName = "Sorry! User user Name Faild, is Required";
         this.userData.basicInfo.error.newPassword = "Sorry! User Password Faild, is Required";
@@ -433,12 +460,15 @@ export default {
     /*** Empty Form ***/
     EmptyFromInfoLogin() {
       this.userData.basicInfo.currentPassword = null;
+      this.userData.basicInfo.userName = null;
       this.userData.basicInfo.newPassword = null;
       this.userData.basicInfo.error.currentPassword = null;
       this.userData.basicInfo.error.newPassword = null;
       this.userData.basicInfo.error.userName = null;
+      document.getElementById("username_input").style.borderBottom = "";
       document.getElementById("currentInput").style.borderBottom = "";
       document.getElementById("newPasswordInput").style.borderBottom = "";
+      document.getElementById("username_LabelInput").classList.remove("profile__bodyInfo-groupLabelAddMoved");
       document.getElementById("currentInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
       document.getElementById("newPasswordInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
     },
