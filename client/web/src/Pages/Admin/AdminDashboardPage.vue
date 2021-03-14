@@ -3,9 +3,7 @@
     <!--   section number 1     -->
     <section class="section">
       <header class="section__header">
-        <!--        v-if="TokenUser && user.basicInfo.isAdmin"-->
-        <!--         {{ user.basicInfo.userName }}-->
-        <h2 class="section__title">Admin DashBoard | admin</h2>
+        <h2 class="section__title">Admin DashBoard | {{ user.user_name }}</h2>
       </header>
       <!--   for Admin user     -->
       <ul class="team">
@@ -48,7 +46,7 @@
             </div>
             <div class="team__inform">
               <p class="team__name">{{ DashboardInfoADMIN.TitleCard }}</p>
-              <p v-if="TokenUser && userProcessorIds" class="team__name">{{ DashboardInfoADMIN.Number }}</p>
+              <p class="team__name">{{ DashboardInfoADMIN.Number }}</p>
             </div>
           </router-link>
         </li>
@@ -77,9 +75,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import io from "socket.io-client";
 import {mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: "AdminDashboardPage",
@@ -190,59 +188,92 @@ export default {
     }
   },
   methods: {
-    async GetAllType() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const {data: {data: allTypeController}} = await axios.get('/api/v1/controller/type');
-      const All_Type_Controller = allTypeController.map((item, i) => ({
-        id: i,
-        nameType: item.label,
-        labelId: item.labelId,
-        btn_Action: ''
-      }))
-      this.socket.emit("all_Type_Controller", All_Type_Controller);
-      this.socket.on("all_Type_Controller_server", (data) => {
-        this.$store.dispatch('allTypeController', data);
-
+    /* get All Controller Location */
+    async GetAllLocations() {
+      await axios.get('/api/v1/controller/location').then(async (response) => {
+        const All_Location_Controller = response.data.locationLabels.map((item, i) => ({
+          id: (++i).toString(),
+          nameLocation: item.label,
+          locationId: item.id,
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('allLocationController', All_Location_Controller);
+        this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
+      }).catch(() => {
+        console.log("get Faild")
+        this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
       });
-      if (this.$store.getters.allLocationController) {
-        this.DashboardInfoCardForADMIN[0].Number = this.$store.getters.allTypeController.length;
-      } else {
-        this.DashboardInfoCardForADMIN[0].Number = '0';
-      }
+    },
 
-    },
-    async GetAllLocation() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const {data: {data: allLocationController}} = await axios.get('/api/v1/controller/location');
-      const All_Location_Controller = allLocationController.map((item, i) => ({
-        id: i,
-        nameLocation: item.label,
-        locationId: item.locationId,
-        btn_Action: ''
-      }))
-      this.socket.emit("all_Location_Controller", All_Location_Controller);
-      this.socket.on("all_Location_Controller_server", (data) => {
-        this.$store.dispatch('allLocationController', data);
+    /*** Get All Type Controller  ***/
+    async GetAllTypes() {
+      await axios.get('/api/v1/controller/type').then(async (response) => {
+        const All_Type_Controller = response.data.typeLabels.map((item, i) => ({
+          id: (++i).toString(),
+          nameType: item.label,
+          labelId: item.id,
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('allTypeController', All_Type_Controller);
+        this.rows = this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [];
+      }).catch(() => {
+        console.log("get Faild")
+        this.rows = this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [];
       });
-      if (this.$store.getters.allLocationController) {
-        this.DashboardInfoCardForADMIN[1].Number = this.$store.getters.allLocationController.length;
-      } else {
-        this.DashboardInfoCardForADMIN[1].Number = '0';
-      }
-      // await this.$store.dispatch('allLocationController', All_Location_Controller);
-    },
+    }
+    // async GetAllType() {
+    //   axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+    //   const {data: {data: allTypeController}} = await axios.get('/api/v1/controller/type');
+    //   const All_Type_Controller = allTypeController.map((item, i) => ({
+    //     id: i,
+    //     nameType: item.label,
+    //     labelId: item.labelId,
+    //     btn_Action: ''
+    //   }))
+    //   this.socket.emit("all_Type_Controller", All_Type_Controller);
+    //   this.socket.on("all_Type_Controller_server", (data) => {
+    //     this.$store.dispatch('allTypeController', data);
+    //
+    //   });
+    //   if (this.$store.getters.allLocationController) {
+    //     this.DashboardInfoCardForADMIN[0].Number = this.$store.getters.allTypeController.length;
+    //   } else {
+    //     this.DashboardInfoCardForADMIN[0].Number = '0';
+    //   }
+    //
+    // },
+    // async GetAllLocation() {
+    //   axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
+    //   const {data: {data: allLocationController}} = await axios.get('/api/v1/controller/location');
+    //   const All_Location_Controller = allLocationController.map((item, i) => ({
+    //     id: i,
+    //     nameLocation: item.label,
+    //     locationId: item.locationId,
+    //     btn_Action: ''
+    //   }))
+    //   this.socket.emit("all_Location_Controller", All_Location_Controller);
+    //   this.socket.on("all_Location_Controller_server", (data) => {
+    //     this.$store.dispatch('allLocationController', data);
+    //   });
+    //   if (this.$store.getters.allLocationController) {
+    //     this.DashboardInfoCardForADMIN[1].Number = this.$store.getters.allLocationController.length;
+    //   } else {
+    //     this.DashboardInfoCardForADMIN[1].Number = '0';
+    //   }
+    //   // await this.$store.dispatch('allLocationController', All_Location_Controller);
+    // },
   },
-  async beforeMount() {
-    await this.GetAllType();
-    await this.GetAllLocation();
-  },
+  // async beforeMount() {
+  //   await this.GetAllType();
+  //   await this.GetAllLocation();
+  // },
   created() {
     this.socket = io('http://localhost:3001');
-    this.GetAllType();
-    this.GetAllLocation();
+    // this.GetAllType();
+    // this.GetAllLocation();
   },
   computed: {
-    ...mapGetters(['user', 'TokenUser', 'allTypeController', 'allLocationController']),
+    ...mapGetters(['user', 'allLocationController', 'allTypeController']),
   },
 }
 </script>

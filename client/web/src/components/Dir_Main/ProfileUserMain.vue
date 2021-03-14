@@ -9,8 +9,10 @@
                  class="p__Main-image">
           </div>
 
-          <h3 v-if="userProfile.first_name && userProfile.last_name">{{ userProfile.first_name }}
-            {{ userProfile.last_name }}</h3>
+          <h3>
+            {{ userProfile.first_name ? userProfile.first_name : '' }}
+            {{ userProfile.last_name ? userProfile.last_name : '' }}
+          </h3>
 
           <div v-if="userProfile.user_name" class="profile__Main-InfoSpan">
             <i class="fa fa-quote-left"></i>
@@ -304,34 +306,111 @@ export default {
           }
         }
 
-        await axios.put('/api/v1/users/profile', {
-          firstName: FirstName ? FirstName : this.$store.getters.userProfile.first_name,
-          lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
-          // mobile: Mobile ? Mobile : this.$store.getters.userProfile.mobile, /* 😪 Error Hear ☠️ 🆘 🔞 ' error: "mobile must be less than or equal to 15" not work correctly '*/
-        }).then(async () => {
-          const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-          await this.$store.dispatch('userProfile', userProfile[0]);
-          FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
-          LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
-          Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
-          this.$swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Thank you, Send it',
-            text: "Update your information, Successfully",
-            showConfirmButton: false,
-            timer: 1500
-          })
-        }).catch(() => {
-          this.$swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Sorry, 😥',
-            text: "Update your information, Faild",
-            showConfirmButton: false,
-            timer: 1500
-          })
-        });
+        if (FirstName && LastName && Mobile) {
+          await axios.put('/api/v1/users/profile', {
+            firstName: FirstName ? FirstName : this.$store.getters.userProfile.first_name,
+            lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
+            // mobile: Mobile ? Mobile : this.$store.getters.userProfile.mobile, /* 😪 Error Hear ☠️ 🆘 🔞 ' error: "mobile must be less than or equal to 15" not work correctly '*/
+          }).then(async () => {
+            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+            await this.$store.dispatch('userProfile', userProfile[0]);
+            FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
+            LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
+            Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Thank you, Send it',
+              text: "Update your information, Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(() => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Sorry, 😥',
+              text: "Update your information, Faild",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        } else if (FirstName) {
+          await axios.put('/api/v1/users/profile', {
+            firstName: FirstName ? FirstName : this.$store.getters.userProfile.first_name,
+          }).then(async () => {
+            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+            await this.$store.dispatch('userProfile', userProfile[0]);
+            FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Thank you, Send it',
+              text: "Update your First Name, Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(() => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Sorry, 😥',
+              text: "Update your First Name, Faild",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        } else if (LastName) {
+          await axios.put('/api/v1/users/profile', {
+            lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
+          }).then(async () => {
+            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+            await this.$store.dispatch('userProfile', userProfile[0]);
+            LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Thank you, Send it',
+              text: "Update your Last Name, Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(() => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Sorry, 😥',
+              text: "Update your lastName, Faild",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        } else {
+          await axios.put('/api/v1/users/profile', {
+            // mobile: Mobile ? Mobile : this.$store.getters.userProfile.mobile, /* 😪 Error Hear ☠️ 🆘 🔞 ' error: "mobile must be less than or equal to 15" not work correctly '*/
+          }).then(async () => {
+            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+            await this.$store.dispatch('userProfile', userProfile[0]);
+            Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Thank you, Send it',
+              text: "Update your Mobile, Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(() => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Sorry, 😥',
+              text: "Update your Mobile, Faild",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        }
 
 
         // const user = await axios.post('/api/v1/users/profile', {
@@ -394,8 +473,8 @@ export default {
                 timer: 1500
               })
               this.EmptyFromInfoLogin();//empty form
-            }).catch((e) => {
-              console.log(e)
+            }).catch(() => {
+              this.userData.basicInfo.userName = null;
             });
           }).catch(() => {
             this.userData.basicInfo.error.userName = "Sorry! UserName is already 😥";
@@ -465,10 +544,10 @@ export default {
       this.userData.basicInfo.error.currentPassword = null;
       this.userData.basicInfo.error.newPassword = null;
       this.userData.basicInfo.error.userName = null;
-      document.getElementById("username_input").style.borderBottom = "";
+      document.getElementById("userNameInput").style.borderBottom = "";
       document.getElementById("currentInput").style.borderBottom = "";
       document.getElementById("newPasswordInput").style.borderBottom = "";
-      document.getElementById("username_LabelInput").classList.remove("profile__bodyInfo-groupLabelAddMoved");
+      document.getElementById("userNameInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
       document.getElementById("currentInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
       document.getElementById("newPasswordInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
     },

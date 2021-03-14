@@ -332,7 +332,10 @@ export default new Router({
             beforeEnter: (to, from, next) => {
                 axios.get('/api/v1/users/me').then(() => {
                     next()
-                }).catch(() => {
+                }).catch(async () => {
+                    await this.$store.dispatch('user', null);
+                    await this.$store.dispatch('TokenUser', null);
+                    await this.$store.dispatch('userProfile', null);
                     return next({
                         name: "newRegisterPage"
                     })

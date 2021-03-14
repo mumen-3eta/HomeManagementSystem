@@ -12,27 +12,22 @@
           <div class="svg_Generator">
             <div>
               <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="controllerId">Sorry ,
-                some
-                thing error
+                some thing error
               </qrcode-vue>
               <div v-if="controllerId">
                 <label for="ControllerIDInput" hidden></label>
-                <input id="ControllerIDInput" class="InputForCopy"
-                       style=""
-                       v-bind:value="controllerId"/>
+                <input id="ControllerIDInput" class="InputForCopy" v-bind:value="controllerId"/>
               </div>
             </div>
           </div>
           <div class="btn-group_Generate-2">
             <button class="btn btn-secondary" @click.prevent="copyTextControllerId">Copy Controller Id</button>
             <button id="DownloadsAsImage" class="btn btn-primary"
-                    @click.prevent="downloadsControllerIdAsImage(controllerId)">
-              Downloads as image
+                    @click.prevent="downloadsControllerIdAsImage(controllerId)">Downloads as image
             </button>
           </div>
         </div>
         <canvas id="canvas" hidden></canvas>
-
       </div>
     </div>
   </div>
@@ -46,28 +41,32 @@ import QrcodeVue from 'vue-qrcode';
 
 export default {
   name: "AdminCreateControllerPage",
-  data() {
-    return {
-      processor_Id: '',
-    }
-  },
   components: {
     QrcodeVue
   },
   methods: {
     async generateControllerId() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const controllerId = await axios.post('/api/v1/controller');
-      await this.$store.dispatch('controllerId', controllerId.data.controllerId);
-      this.$swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Create Controller ID',
-        toast: false,
-        text: controllerId.data.controllerId,
-        showConfirmButton: false,
-        timer: 1500
-      })
+      await axios.post('/api/v1/controller/create').then(async (response) => {
+        await this.$store.dispatch('controllerId', response.data.newController[0].id.toString());
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Create Controller ID',
+          toast: false,
+          text: response.data.newController[0].id.toString(),
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }).catch(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Create Controller Faild',
+          toast: false,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      });
     },
     async clearGenerateControllerId() {
       if (this.$store.getters.controllerId) {
@@ -108,9 +107,6 @@ export default {
       a.click();
       document.body.removeChild(a);
     },
-  },
-  beforeMount() {
-    this.processor_Id = this.$store.getters.controllerId;
   },
   computed: {
     ...mapGetters(['controllerId'])
