@@ -25,31 +25,31 @@
                 <p class="profile__menu-nameTitle"> Profile </p>
               </router-link>
             </li>
-            <li v-if="user.isAdmin" class="profile__menu-li">
+            <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/processor'}" class="profile__menu-link">
                 <i class="fas fa-laptop-medical profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Create Processor</p>
               </router-link>
             </li>
-            <li v-if="user.isAdmin" class="profile__menu-li">
+            <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Create Controller</p>
               </router-link>
             </li>
-            <li v-if="user.isAdmin" class="profile__menu-li">
+            <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="profile__menu-link">
                 <i class="fas fa-cubes profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Add Type Controller</p>
               </router-link>
             </li>
-            <li v-if="user.isAdmin" class="profile__menu-li">
+            <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="profile__menu-link">
                 <i class="fas fa-map-marker-alt profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Add Location Controller</p>
               </router-link>
             </li>
-            <li v-if="!user.isAdmin" class="profile__menu-li">
+            <li v-if="!user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/device/add'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">my device</p>

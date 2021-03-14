@@ -19,9 +19,9 @@
         </div>
         <h1 v-show="userProfile.user_name" class="profile-main__name" v-text="userProfile.user_name"></h1>
         <h6 v-show="userProfile.email" class="profile-main__name" v-text="userProfile.email"></h6>
-        <h6 v-if="user.isAdmin" class="profile-main__name text-secondary">Admin</h6>
+        <h6 v-if="user.is_admin" class="profile-main__name text-secondary">Admin</h6>
       </div>
-      <div v-if="!user.isAdmin" class="banner">
+      <div v-if="!user.is_admin" class="banner">
         <h3 class="banner__title" v-text="BannerData.bannerTitle"></h3>
         <p class="banner__description" v-text="BannerData.bannerDescription"></p>
         <button class="banner__button" type="button" v-text="BannerData.bannerButtonText"></button>

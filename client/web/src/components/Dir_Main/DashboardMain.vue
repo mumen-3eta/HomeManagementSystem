@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-if="user.isAdmin">
-      <AdminDashboardPage v-if="user.isAdmin"/>
+    <div v-if="user.is_admin">
+      <AdminDashboardPage v-if="user.is_admin"/>
     </div>
 
-    <div v-if="!user.isAdmin">
-      <UserDashboard v-if="!user.isAdmin"/>
+    <div v-if="!user.is_admin">
+      <UserDashboard v-if="!user.is_admin"/>
     </div>
 
   </div>

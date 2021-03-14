@@ -19,7 +19,7 @@
         <!--  End  For All     -->
 
         <!--   For user     -->
-        <li v-if="!user.isAdmin"
+        <li v-if="!user.is_admin"
             :class="['nav__item',this.$route.path === '/v2/main/device/add' ? 'nav__item--isActive':'']"
             aria-label="Add Main Device">
           <router-link :to="{path:'/v2/main/device/add'}" class="nav__link focus--box-shadow" role="menuitem">
@@ -28,7 +28,7 @@
         </li>
         <!--  End  For user    -->
         <!--   For Admin     -->
-        <li v-if="user.isAdmin"
+        <li v-if="user.is_admin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/processor' ? 'nav__item--isActive':'']"
             aria-label="Add Processor">
           <router-link :to="{path:'/v2/main/admin/create/processor'}" aria-label="heart"
@@ -36,7 +36,7 @@
             <i class="fas fa-laptop-medical nav__icon"></i>
           </router-link>
         </li>
-        <li v-if="user.isAdmin"
+        <li v-if="user.is_admin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller' ? 'nav__item--isActive':'']"
             aria-label="Add Controller">
           <router-link :to="{path:'/v2/main/admin/create/controller'}" aria-label="heart"
@@ -44,7 +44,7 @@
             <i class="fas fa-laptop nav__icon"></i>
           </router-link>
         </li>
-        <li v-if="user.isAdmin"
+        <li v-if="user.is_admin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller/type' ? 'nav__item--isActive':'']"
             aria-label="Add Type Controller">
           <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="nav__link focus--box-shadow"
@@ -52,7 +52,7 @@
             <i class="fas fa-cubes nav__icon"></i>
           </router-link>
         </li>
-        <li v-if="user.isAdmin"
+        <li v-if="user.is_admin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller/location' ? 'nav__item--isActive':'']"
             aria-label="Add Location Controller">
           <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="nav__link focus--box-shadow"
@@ -60,7 +60,7 @@
             <i class="fas fa-map-marker-alt nav__icon"></i>
           </router-link>
         </li>
-        <li v-if="user.isAdmin"
+        <li v-if="user.is_admin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/all/messages' ? 'nav__item--isActive':'']"
             aria-label="All Messages">
           <router-link :to="{path:'/v2/main/admin/all/messages'}" class="nav__link focus--box-shadow" role="menuitem">
