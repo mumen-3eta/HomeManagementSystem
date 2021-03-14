@@ -4,6 +4,7 @@ const {
   addUsers,
   authUser,
   login,
+  logout,
   getAllProfileData,
   updateProfileData,
 } = require('./users');
@@ -38,6 +39,7 @@ module.exports = {
   serverError,
   addUsers,
   login,
+  logout,
   authUser,
   getAllProfileData,
   updateProfileData,
