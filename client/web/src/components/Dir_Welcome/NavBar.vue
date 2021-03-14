@@ -100,9 +100,18 @@ export default {
   name: "Nav-Bar",
   methods: {
     async handleClick() {
-      await axios.put('/api/v1/users/logout').then(async () => {
+      await axios.post('/api/v1/users/logout').then(async () => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'logout Successfully',
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        })
         await this.$store.dispatch('user', null);
         await this.$store.dispatch('TokenUser', null);
+        await this.$store.dispatch('userProfile', null);
         await this.$store.dispatch('deviceInfoAdd', null);
         await this.$store.dispatch('processorId', null);
         await this.$store.dispatch('controllerId', null);
@@ -115,14 +124,20 @@ export default {
         await this.$store.dispatch('TypeControllerData', null);
         await this.$store.dispatch('LocationControllerData', null);
         await this.$store.dispatch('NewControllerData', null);
-
         await this.$router.push('/v2/login');
-
-      }).catch((e) => {
-        console.log(e)
+      }).catch(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'logout Faild',
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        console.log("logout Faild")
       });
 
-    }
+    },
   },
   computed: {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])

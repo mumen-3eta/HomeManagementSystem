@@ -79,23 +79,43 @@ export default {
   mixins: [clickAway],
   methods: {
     async handleClick() {
-      await axios.put('/api/v1/users/logout');
-      await this.$store.dispatch('user', null);
-      await this.$store.dispatch('TokenUser', null);
-      await this.$store.dispatch('userProfile', null);
-      await this.$store.dispatch('deviceInfoAdd', null);
-      await this.$store.dispatch('processorId', null);
-      await this.$store.dispatch('controllerId', null);
-      await this.$store.dispatch('userProcessorIds', null);
-      await this.$store.dispatch('userAllProcessor', null);
-      await this.$store.dispatch('NewTypeController', null);
-      await this.$store.dispatch('allTypeController', null);
-      await this.$store.dispatch('NewLocationController', null);
-      await this.$store.dispatch('allLocationController', null);
-      await this.$store.dispatch('TypeControllerData', null);
-      await this.$store.dispatch('LocationControllerData', null);
-      await this.$store.dispatch('NewControllerData', null);
-      await this.$router.push('/v2/login');
+      await axios.post('/api/v1/users/logout').then(async () => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'logout Successfully',
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        await this.$store.dispatch('user', null);
+        await this.$store.dispatch('TokenUser', null);
+        await this.$store.dispatch('userProfile', null);
+        await this.$store.dispatch('deviceInfoAdd', null);
+        await this.$store.dispatch('processorId', null);
+        await this.$store.dispatch('controllerId', null);
+        await this.$store.dispatch('userProcessorIds', null);
+        await this.$store.dispatch('userAllProcessor', null);
+        await this.$store.dispatch('NewTypeController', null);
+        await this.$store.dispatch('allTypeController', null);
+        await this.$store.dispatch('NewLocationController', null);
+        await this.$store.dispatch('allLocationController', null);
+        await this.$store.dispatch('TypeControllerData', null);
+        await this.$store.dispatch('LocationControllerData', null);
+        await this.$store.dispatch('NewControllerData', null);
+        await this.$router.push('/v2/login');
+      }).catch(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'logout Faild',
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        console.log("logout Faild")
+      });
+
     },
     OpenDropMenu() {
       document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
