@@ -27,11 +27,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     public void goHome(View view){ redirectActivity(this, MainActivity.class);}
 
-    public void goLogin(View view){ redirectActivity(this, LoginActivity.class);}
-
-    public void goSignUp(View view){ redirectActivity(this, SiginupActivity.class);}
-
-    public void goContactUs(View view){ redirectActivity(this, ContactUsActivity.class);}
+    public void goSignUp(View view){ redirectActivity(this, SignUpActivity.class);}
 
     public void goAboutUs(View view){ redirectActivity(this, AboutUsActivity.class);}
 
@@ -46,5 +42,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
     public static void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity,aClass);
         activity.startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
     }
 }

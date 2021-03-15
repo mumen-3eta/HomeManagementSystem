@@ -17,9 +17,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import graduationproject.homemanagementsystem.dataClasses.userClass;
 
-public class SiginupActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
+    private LinearLayout drawer_about;
+    private LinearLayout drawer_home;
     private LinearLayout drawer_sign;
+    private Drawable drawable;
     private DrawerLayout drawer_layout;
     private EditText userNameTextField;
     private EditText userEmailTextField;
@@ -33,13 +36,15 @@ public class SiginupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_siginup);
 
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer_about = (LinearLayout) findViewById(R.id.drawer_about);
+        drawer_home = (LinearLayout) findViewById(R.id.drawer_home);
         drawer_sign = (LinearLayout) findViewById(R.id.drawer_sign);
         userNameTextField = (EditText) findViewById(R.id.userNameTextField);
         userEmailTextField = (EditText) findViewById(R.id.userEmailTextField);
         userPasswordTextField = (EditText) findViewById(R.id.userPasswordTextField);
         confirmPasswordTextField = (EditText) findViewById(R.id.confirmPasswordTextField);
 
-        Drawable drawable =  getResources().getDrawable(R.drawable.drawer_shoice);
+        drawable =  getResources().getDrawable(R.drawable.drawer_shoice);
 
         drawer_sign.setBackground(drawable);
     }
@@ -48,15 +53,17 @@ public class SiginupActivity extends AppCompatActivity {
         openDrawer(drawer_layout);
     }
 
-    public void goHome(View view){ redirectActivity(this, MainActivity.class);}
-
-    public void goLogin(View view){ redirectActivity(this, LoginActivity.class);}
+    public void goHome(View view){
+        drawer_sign.setBackground(null);
+        drawer_home.setBackground(drawable);
+        redirectActivity(this, MainActivity.class);}
 
     public void goSignUp(View view){ closeDrawer(drawer_layout);}
 
-    public void goContactUs(View view){ redirectActivity(this, ContactUsActivity.class);}
-
-    public void goAboutUs(View view){ redirectActivity(this, AboutUsActivity.class);}
+    public void goAboutUs(View view){
+        drawer_sign.setBackground(null);
+        drawer_about.setBackground(drawable);
+        redirectActivity(this, AboutUsActivity.class);}
 
     public void signUpAction(View view){
         String userName = userNameTextField.getText().toString().trim();
@@ -75,9 +82,7 @@ public class SiginupActivity extends AppCompatActivity {
             userClass newUser = new userClass(userName, userEmail,userPassword);
             MainActivity.users.add(newUser);
             toast.makeText(this, "sign up successful", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, homePage.class);
-            intent.putExtra("email", userEmail);
-            this.startActivity(intent);
+            redirectActivity(this, HomePageActivity.class, userEmail);
         }else if (!validUserName){
             toast.makeText(this, "name is not valid", Toast.LENGTH_SHORT).show();
             return;
@@ -95,7 +100,7 @@ public class SiginupActivity extends AppCompatActivity {
     }
 
 
-    public boolean checkUserName(String userName){
+    public static boolean checkUserName(String userName){
         if (userName.matches("^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,5}$")){
             return true;
         }else {
@@ -103,7 +108,7 @@ public class SiginupActivity extends AppCompatActivity {
         }
     }
 
-    public boolean checkUserEmail(String userEmail){
+    public static boolean checkUserEmail(String userEmail){
         if (userEmail.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
             return true;
         }else {
@@ -111,7 +116,7 @@ public class SiginupActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isUsedEmail(String userEmail) {
+    public static boolean isUsedEmail(String userEmail) {
         for (userClass user: MainActivity.users){
             if (user.getUserEmail().equals(userEmail)){
                 return true;
@@ -120,7 +125,7 @@ public class SiginupActivity extends AppCompatActivity {
         return false;
     }
 
-    public String checkUserPassword(String userPassword, String confirmPassword){
+    public static String checkUserPassword(String userPassword, String confirmPassword){
         final int passwordMinLength = 6;
         if (userPassword.length() < passwordMinLength){
             return "password is short, it must have at least 6 characters";
@@ -132,8 +137,24 @@ public class SiginupActivity extends AppCompatActivity {
             return "password must contain at least one capital letter";
         }
         if (!userPassword.equals(confirmPassword)){
-            return  " password does not match";
+            return  "password does not match";
         }
+
+        return  "valid";
+    }
+
+    public static String checkUserPassword(String userPassword){
+        final int passwordMinLength = 6;
+        if (userPassword.length() < passwordMinLength){
+            return "password is short, it must have at least 6 characters";
+        }
+        if (!userPassword.matches("(.*[0-9]+.*)")){
+            return "password must contain at least one number";
+        }
+        if (!userPassword.matches(".*[A-Z]+.*")){
+            return "password must contain at least one capital letter";
+        }
+
 
         return  "valid";
     }
@@ -149,5 +170,16 @@ public class SiginupActivity extends AppCompatActivity {
     public static void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity,aClass);
         activity.startActivity(intent);
+    }
+
+    public static void redirectActivity(Activity activity, Class aClass, String userEmail) {
+        Intent intent = new Intent(activity,aClass);
+        intent.putExtra("email", userEmail);
+        activity.startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        //do nothing
     }
 }
