@@ -4,4 +4,11 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="shade">#C9E2D5</color>
+    <color name="dashbordColor">#3f3f3f</color>
+    <color name="homePageMainColor">#343434</color>
+    <color name="homePageDraweColor">#3d3d3d</color>
+    <color name="nionBlue">#00FFE8</color>
+    <color name="green">#C9F8F8</color>
+    <color name="dark_green">#327B7B</color>
+    <color name="white">#ffffff</color>
 </resources>
