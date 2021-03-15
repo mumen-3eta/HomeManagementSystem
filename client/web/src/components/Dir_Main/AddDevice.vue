@@ -47,17 +47,17 @@
           <div slot="table-actions" class="btn_searchScan"></div>
           <template slot="table-row" slot-scope="props">
             <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-              <router-link :to="{path:'/v2/main/device/create/controller/' + props.row.Processor_Id}">
+              <router-link :to="{path:'/v2/main/device/create/controller/' + props.row.Connection_Id}">
                 <button class="btn_AddController"><i class="fas fa-plus"></i> Add Controller</button>
               </router-link>
-              <router-link :to="{path:'/v2/main/device/all/controller/' + props.row.Processor_Id}">
+              <router-link :to="{path:'/v2/main/device/all/controller/' + props.row.Connection_Id}">
                 <button class="btn_Show">
                   <i class="fas fa-eye"></i>
                   Controller
                 </button>
               </router-link>
-              <button class="btn_deleted" @click.prevent="deleteProcessorID(props.row.Processor_Id)"><i
-                  class="fas fa-trash-alt"></i> Delete
+              <button class="btn_deleted" @click.prevent="deleteProcessorID(props.row.Processor_Id)">
+                <i class="fas fa-trash-alt"></i> Delete
               </button>
             </div>
             <span v-else>
@@ -76,7 +76,8 @@
         <h2>Add New Processor ID</h2>
         <div class="input-group__AddProcessorID">
           <label for="input_ProcessorID">Processor ID</label>
-          <input id="input_ProcessorID" v-model.trim="Processor_ID" type="text">
+          <input id="input_ProcessorID" v-model.trim="Processor_ID" type="text"
+                 @keypress.enter="addProcessorID" @keypress.esc="CloseProcessorId">
           <p v-if="errorProcessorID" class="error_style pb-2">{{ errorProcessorID }}</p>
           <div class="btn-group__AddProcessorID">
             <button class="btn btn-secondary" @click.prevent="addProcessorID">Add Processor Id</button>
@@ -144,8 +145,8 @@ export default {
           type: 'string',
         },
         {
-          label: 'Name',
-          field: 'name',
+          label: 'Connection ID',
+          field: 'Connection_Id',
           type: 'string',
         },
         {
@@ -154,13 +155,6 @@ export default {
           type: 'string',
           sortable: false,
         },
-        // {
-        //   label: 'Created On',
-        //   field: 'createdAt',
-        //   type: 'date',
-        //   dateInputFormat: 'yyyy-MM-dd',
-        //   dateOutputFormat: 'MMM do yy',
-        // },
         {
           label: 'Action',
           field: 'btn_Action',
@@ -168,10 +162,11 @@ export default {
           sortable: false,
         },
       ],
-      rows: this.$store.getters.userAllProcessor,
+      rows: this.$store.getters.userAllProcessor ? this.$store.getters.userAllProcessor : [],
     }
   },
   methods: {
+    /*** -------------- Model open And Close And Clear Data ----------------- ***/
     OpenProcessorId() {
       this.$modal.show('AddNewProcessorId')
       this.ClearProcessorID();
@@ -200,59 +195,12 @@ export default {
       this.isShowingCamera = false;
       this.isShowingWait = true
     },
-    async addProcessorID() {
-      let ProcessorID = this.Processor_ID;
-      if (ProcessorID) {
-        let ProcessorIDRegex = /^[a-zA-Z0-9]+$/;
-        let CheckProcessorID = ProcessorIDRegex.test(ProcessorID);//true or false
-        if (!CheckProcessorID) {
-          this.errorProcessorID = "Sorry! User Processor Id Faild, ignored space";
-          setTimeout(() => {
-            this.errorProcessorID = null;
-          }, 3000);
-          return false;
-        }
-        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const {data: {data: ProcessorIdData}} = await axios.post('/api/v1/user/processor', {
-          ProcessorId: this.Processor_ID,
-        });
-        await this.$store.dispatch('processorId', ProcessorIdData);
-        const {data: {data: processorData}} = await axios.get('/api/v1/user/processor');
-        await this.$store.dispatch('userProcessorIds', processorData);
-        const userAllProcessors = processorData.map((item, i) => ({
-          id: i,
-          name: `processorID #${i}`,
-          Processor_Id: item,
-          btn_Action: ''
-        }))
-        this.socket.emit("user_All_Processor", userAllProcessors);
-        this.socket.on("user_All_Processor_server", (data) => {
-          this.$store.dispatch('userAllProcessor', data);
-          this.rows = this.$store.getters.userAllProcessor;
-        });
-        // await this.$store.dispatch('userAllProcessor', userAllProcessors);
-        // this.rows = this.$store.getters.userAllProcessor;
-        this.$modal.hide('AddNewProcessorId')
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Add Processor ID, Successfully',
-          toast: false,
-          text: ProcessorIdData.ProcessorId,
-          showConfirmButton: false,
-          timer: 1500
-        })
-      } else {
-        this.errorProcessorID = "Sorry! User Processor Id Faild!";
-        setTimeout(() => {
-          this.errorProcessorID = null;
-        }, 3000);
-      }
-
-    },
     async ClearProcessorID() {
       this.Processor_ID = null;
     },
+    /*** --------------End  Model open And Close And Clear Data -------------- ***/
+
+    /***----------------- to Scan operations --------------- ***/
     openScan() {
       const handle__camera = document.getElementById('handle__camera');
       handle__camera.style.transition = 'all ease 0.3s ';
@@ -288,10 +236,52 @@ export default {
         //  ....
       }
     },
-    async deleteProcessorID(processor_Id) {
+    /*** ---------------- End Scan operations -------------- ***/
+
+    /* ------------------- Add Processors ----------------- */
+    async addProcessorID() {
+      let ProcessorID = this.Processor_ID;
+      if (ProcessorID) {
+        await axios.post('/api/v1/processor/connection', {
+          processorId: ProcessorID,
+        }).then(async (response) => {
+          this.$modal.hide('AddNewProcessorId')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Add Processor ID, Successfully',
+            toast: false,
+            text: response.data.connectionData[0].processor_id,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }).catch(() => {
+          this.$modal.hide('AddNewProcessorId')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `<strong>Add Processor ID, Faild</strong>`,
+            toast: false,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        });
+        await this.GetAllConnections();
+      } else {
+        this.errorProcessorID = "Sorry! User Processor Id Faild!";
+        setTimeout(() => {
+          this.errorProcessorID = null;
+        }, 3000);
+      }
+
+    },
+    /* ---------------- End Add Processors ----------------- */
+
+    /* ----------------- Delete Processors ----------------- */
+    async deleteProcessorID(Processor_Id) {
       this.$swal.fire({
         title: 'Are you sure?',
-        html: `You won't Delete this ProcessorId <strong>${processor_Id}</strong>`,
+        html: `You won't Delete this ProcessorId <strong>${Processor_Id}</strong>`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#35997c',
@@ -299,14 +289,13 @@ export default {
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.DeleteFunction(processor_Id);
-          console.log(processor_Id)
+          this.DeleteFunction(Processor_Id);
           this.$swal.fire({
             position: 'center',
             icon: 'success',
             title: 'Delete Processor Id, Successfully',
             toast: false,
-            text: "ProcessorID \"" + processor_Id + "\"",
+            text: "ProcessorID \"" + Processor_Id + "\"",
             showConfirmButton: false,
             timer: 1500
           })
@@ -314,51 +303,68 @@ export default {
       })
 
     },
-    async DeleteFunction(processor_Id) {
-      console.log(processor_Id)
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      // await axios.delete('/api/v1/user/processor', {data: {ProcessorId: processor_Id.ProcessorId}});
-      await axios.delete('/api/v1/user/processor', {data: {ProcessorId: processor_Id}});
-      const {data: {data: processorData}} = await axios.get('/api/v1/user/processor');
-      await this.$store.dispatch('userProcessorIds', processorData);
-      const userAllProcessors = processorData.map((item, i) => ({
-        id: i,
-        name: `processorID #${i}`,
-        Processor_Id: item,
-        btn_Action: ''
-      }))
-      this.socket.emit("user_All_Processor", userAllProcessors);
-      this.socket.on("user_All_Processor_server", (data) => {
-        this.$store.dispatch('userAllProcessor', data);
-        this.rows = this.$store.getters.userAllProcessor;
-      });
-      // await this.$store.dispatch('userAllProcessor', userAllProcessors);
-      // this.rows = this.$store.getters.userAllProcessor;
-    },
+    async DeleteFunction(Processor_Id) {
+      await axios.delete('/api/v1/processor/connection', {data: {processorId: Processor_Id}}).then(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Delete this Connection, Successfully',
+          toast: false,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }).catch((e) => {
+        let errorArr = e.message.split(' ');
+        let ResultFilter = errorArr.filter(code => code.toString().toLowerCase() === '500')
+        if (ResultFilter[0].toString() === '500') {
+          this.$swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `<strong>this Processor Has connection, must delete connection First</strong>`,
+            toast: false,
+            text: 'Delete Processor ID, Faild',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        } else {
+          this.$swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `<strong>Delete Processor ID, Faild</strong>`,
+            toast: false,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
 
+      });
+
+      await this.GetAllConnections();
+    },
+    /* ------------- End Delete Processors ----------------- */
+
+    /*** ------ Get All Connection For processors to this user -------- ***/
+    async GetAllConnections() {
+      await axios.get('/api/v1/processor/connection').then(async (response) => {
+        const userAllProcessorsData = response.data.connectionData.map((item, i) => ({
+          id: (++i).toString(),
+          Connection_Id: item.id.toString(),
+          Processor_Id: item.processor_id.toString(),
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('userAllProcessor', userAllProcessorsData);
+        this.rows = this.$store.getters.userAllProcessor ? this.$store.getters.userAllProcessor : [];
+      }).catch(() => {
+        console.log("faild get All connection")
+      });
+    }
+    /*** -------- End  Get All Connection For processors to this user ------ ***/
   },
   async beforeMount() {
-    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const {data: {data: processorData}} = await axios.get('/api/v1/user/processor');
-    await this.$store.dispatch('userProcessorIds', processorData);
-    this.isShowingCamera = false;
-    const userAllProcessors = processorData.map((item, i) => ({
-      id: i,
-      name: `processorID #${i}`,
-      Processor_Id: item,
-      btn_Action: ''
-    }))
-    this.socket.emit("user_All_Processor", userAllProcessors);
-    this.socket.on("user_All_Processor_server", (data) => {
-      this.$store.dispatch('userAllProcessor', data);
-      this.rows = this.$store.getters.userAllProcessor;
-    });
-    // await this.$store.dispatch('userAllProcessor', userAllProcessors);
-    // this.rows = this.$store.getters.userAllProcessor;
-
+    await this.GetAllConnections();
   },
   computed: {
-    ...mapGetters(['processorId', 'userProcessorIds'])
+    ...mapGetters(['userAllProcessor'])
   },
   created() {
     this.socket = io('http://localhost:3001');

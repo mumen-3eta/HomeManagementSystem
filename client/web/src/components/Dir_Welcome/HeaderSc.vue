@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="container__headerSc">
-      <carousel :autoplay="true" :autoplaySpeed="2000" :dots="true" :items="1" :loop="true"
+      <carousel :autoplay="true"
+                :autoplaySpeed="2000"
+                :dots="true"
+                :items="1"
+                :loop="true"
                 :nav="false"
                 class="container__headerSc-CarouselGroup">
         <div v-for="(header , index) in ListHeaderSc" :key="index" class="container__headerSc-group">

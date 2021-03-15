@@ -142,7 +142,7 @@ export default new Router({
                     }
                 },
                 {
-                    path: '/v2/main/device/all/controller/:processor_id',
+                    path: '/v2/main/device/all/controller/:connection_id',
                     name: "AllController",
                     component: AllController,
                     // must be login

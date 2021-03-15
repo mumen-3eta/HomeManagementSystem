@@ -8,6 +8,8 @@ const state = {
     user: null,
     userProfile: null,
     TokenUser: null,
+    userAllControllerConnectedWithProcessor: null,
+    userAllControllerConnected: null,
     deviceInfoAdd: [],
     processorId: null,
     controllerId: null,
@@ -36,6 +38,12 @@ const store = new Vuex.Store({
         },
         GetUser: (state) => {
             return state.user;
+        },
+        userAllControllerConnectedWithProcessor: (state) => {
+            return state.userAllControllerConnectedWithProcessor;
+        },
+        userAllControllerConnected: (state) => {
+            return state.userAllControllerConnected;
         },
         TokenUser: (state) => {
             return state.TokenUser;
@@ -90,6 +98,12 @@ const store = new Vuex.Store({
         TokenUser(context, TokenUser) {
             context.commit('TokenUser', TokenUser);
         },
+        userAllControllerConnectedWithProcessor(context, userAllControllerConnectedWithProcessor) {
+            context.commit('userAllControllerConnectedWithProcessor', userAllControllerConnectedWithProcessor);
+        },
+        userAllControllerConnected(context, userAllControllerConnected) {
+            context.commit('userAllControllerConnected', userAllControllerConnected);
+        },
         userAllProcessor(context, userAllProcessor) {
             context.commit('userAllProcessor', userAllProcessor);
         },
@@ -140,6 +154,12 @@ const store = new Vuex.Store({
         },
         TokenUser(state, TokenUser) {
             state.TokenUser = TokenUser;
+        },
+        userAllControllerConnectedWithProcessor(state, userAllControllerConnectedWithProcessor) {
+            state.userAllControllerConnectedWithProcessor = userAllControllerConnectedWithProcessor;
+        },
+        userAllControllerConnected(state, userAllControllerConnected) {
+            state.userAllControllerConnected = userAllControllerConnected;
         },
         userAllProcessor(state, userAllProcessor) {
             state.userAllProcessor = userAllProcessor;

@@ -83,28 +83,38 @@ export default {
   },
 }
 </script>
-<style scoped>
-li:hover {
-  position: relative;
+<style lang="scss" scoped>
+li {
+  &:hover {
+    position: relative;
+  }
 }
 
-li[aria-label]:hover:after {
-  content: attr(aria-label);
-  padding: 4px 8px;
-  position: absolute;
-  left: calc(100% + 0.5rem);
-  top: -25%;
-  white-space: nowrap;
-  z-index: 20;
-  background: #949494;
-  border-radius: 5px;
-  color: white;
+li[aria-label] {
+  &:hover {
+    &:after {
+      content: attr(aria-label);
+      padding: 4px 8px;
+      position: absolute;
+      left: calc(100% + 0.5rem);
+      top: -25%;
+      white-space: nowrap;
+      z-index: 20;
+      background: #949494;
+      border-radius: 5px;
+      color: white;
+    }
+  }
 }
 
 @media (max-width: 1200px) {
-  li[aria-label]:hover:after {
-    left: 0;
-    top: -75%;
+  li[aria-label] {
+    &:hover {
+      &:after {
+        left: 0;
+        top: -75%;
+      }
+    }
   }
 }
 

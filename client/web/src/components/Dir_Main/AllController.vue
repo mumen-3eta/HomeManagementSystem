@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>All Controller : {{ $route.params.processor_id }}</h2>
+    <h2>All Controller for Processor : {{ $route.params.connection_id }}</h2>
     <div class="SubMain__Section-AllController my-3 mx-auto p-2 position-relative">
       <div class="search_group">
         <i class="fa fa-search search_group-icon"></i>
@@ -36,9 +36,9 @@
         <div slot="table-actions" class="btn_searchScan"></div>
         <template slot="table-row" slot-scope="props">
           <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-            <!--            :to="{path:'/v2/main/device/create/controller/' + props.row.Processor_Id}-->
+            <!--            :to="{path:'/v2/main/device/create/controller/' + props.row.connection_id}-->
             <router-link
-                :to="{path:'/v2/main/device/processor/' + $route.params.processor_id + '/controller/' + props.row.Controller_Id }">
+                :to="{path:'/v2/main/device/processor/' + $route.params.connection_id + '/controller/' + props.row.Controller_Id }">
               <button class="btn_Show">
                 <i class="fas fa-eye"></i>
               </button>
@@ -85,11 +85,13 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "AllController",
   data() {
     return {
-      ProcessorID: this.$route.params.processor_id,
+      ProcessorID: this.$route.params.connection_id ? this.$route.params.connection_id : '',
       ControllerID: '',
       NameControllerUser: '',
       typeController_id: '',
@@ -106,12 +108,24 @@ export default {
         },
         {
           label: 'Name',
-          field: 'name',
+          field: 'Name',
           type: 'string',
         },
         {
-          label: 'Controller ID',
-          field: 'Controller_Id',
+          label: 'Controller Connection ID',
+          field: 'Controller_Connection_Id',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'Processor ID',
+          field: 'Processor_Id',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'create At',
+          field: 'create_at',
           type: 'string',
           sortable: false,
         },
@@ -122,26 +136,8 @@ export default {
           sortable: false,
         },
       ],
-      rows: [
-        {
-          id: "1",
-          name: "Controller #1",
-          Controller_Id: "185w5158d6wa185w6418fe15fe",
-          btn_Action: "",
-        },
-        {
-          id: "2",
-          name: "Controller #2",
-          Controller_Id: "185185dw6d35181d86418fe15fe",
-          btn_Action: "",
-        },
-        {
-          id: "3",
-          name: "Controller #3",
-          Controller_Id: "185w51d418wdwa3w6418fe15fe",
-          btn_Action: "",
-        },
-      ],
+      rows: this.$store.getters.userAllControllerConnectedWithProcessor ? this.$store.getters.userAllControllerConnectedWithProcessor : []
+
     }
   },
   methods: {
@@ -176,7 +172,32 @@ export default {
       }, 50);
 
     },
+    /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
+    async GetAllControllerConnectedWithProcessor() {
+      await axios.get('/api/v1/controller/connection', {data: {processorId: this.$route.params.connection_id}}).then(async (response) => {
+        const userAllControllerConnectedWithProcessor = response.data.connectionData.map((item, i) => ({
+          id: (++i).toString(),
+          Controller_Connection_Id: item.id.toString(),
+          Name: item.name.toString(),
+          Status: item.status,
+          Processor_Id: item.processor_id.toString(),
+          Controller_id: item.controller_id.toString(),
+          TypeId: item.typeid.toString(),
+          LocationId: item.location_id.toString(),
+          create_at: item.create_at.toString(),
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('userAllControllerConnectedWithProcessor', userAllControllerConnectedWithProcessor);
+        this.rows = this.$store.getters.userAllControllerConnectedWithProcessor ? this.$store.getters.userAllControllerConnectedWithProcessor : [];
+      }).catch(() => {
+        console.log("faild get All controller connection")
+      });
+    },
+    /*** ---------------- End Get All Controller Connected With Processor ---------------- ***/
   },
+  async beforeMount() {
+    // await this.GetAllControllerConnectedWithProcessor();
+  }
 }
 </script>
 

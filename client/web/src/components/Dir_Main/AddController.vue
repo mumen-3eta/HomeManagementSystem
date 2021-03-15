@@ -15,7 +15,7 @@
         <div @click.prevent="getAllTypeController">
           <!--          $store.state.TypeControllerData-->
           <v-select id="TypeController" v-model.trim="typeController_id"
-                    :options="$store.getters.TypeControllerData ? $store.getters.TypeControllerData : 'Not Have Type yet'"
+                    :options="$store.getters.TypeControllerData ? $store.getters.TypeControllerData : ''"
                     :value="$store.getters.TypeControllerData ? $store.getters.TypeControllerData : ''"></v-select>
         </div>
       </div>
@@ -34,8 +34,8 @@
           {{ locationController_id ? locationController_id.label : '' }}</label>
         <div @click.prevent="getAllLocationController">
           <v-select id="LocationController" v-model.trim="locationController_id"
-                    :options="$store.state.LocationControllerData ? $store.state.LocationControllerData : 'Not Have location yet'"
-                    :value="$store.state.LocationControllerData ? $store.state.LocationControllerData : ''"></v-select>
+                    :options="$store.getters.LocationControllerData ? $store.getters.LocationControllerData : ''"
+                    :value="$store.getters.LocationControllerData ? $store.getters.LocationControllerData : ''"></v-select>
         </div>
 
       </div>
@@ -78,7 +78,7 @@ export default {
   components: {AllController},
   data() {
     return {
-      ProcessorID: this.$route.params.processor_id,
+      ProcessorID: this.$route.params.processor_id ? this.$route.params.processor_id : '',
       ControllerID: '',
       NameControllerUser: '',
       typeController_id: '',
@@ -87,75 +87,62 @@ export default {
       isShowingWait: true,
       searchTerm: '',
       Status: false,
-      columns: [
-        {
-          label: 'ID',
-          field: 'id',
-          type: 'string',
-        },
-        {
-          label: 'Name',
-          field: 'name',
-          type: 'string',
-        },
-        {
-          label: 'Controller ID',
-          field: 'Controller_Id',
-          type: 'string',
-          sortable: false,
-        },
-        {
-          label: 'Action',
-          field: 'btn_Action',
-          type: 'string',
-          sortable: false,
-        },
-      ],
-      rows: [
-        {
-          id: "1",
-          name: "Controller #1",
-          Controller_Id: "185w5158d6wa185w6418fe15fe",
-          btn_Action: "",
-        },
-        {
-          id: "2",
-          name: "Controller #2",
-          Controller_Id: "185185dw6d35181d86418fe15fe",
-          btn_Action: "",
-        },
-        {
-          id: "3",
-          name: "Controller #3",
-          Controller_Id: "185w51d418wdwa3w6418fe15fe",
-          btn_Action: "",
-        },
-      ],
+      error: '',
     }
   },
   methods: {
     /*** Create Controller For User ***/
     async CreateControllerForUser() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
       if (this.ProcessorID && this.ControllerID && this.NameControllerUser && this.typeController_id && this.locationController_id) {
-        const {data: {data: NewControllerData}} = await axios.post('/api/v1/user/controller', {
+
+        await axios.post('/api/v1/controller/connection', {
+          processorId: this.ProcessorID ? this.ProcessorID : this.$route.params.processor_id,
           name: this.NameControllerUser,
-          ProcessorId: this.ProcessorID,
-          typeId: this.typeController_id.labelId,
-          locationId: this.locationController_id.locationId,
+          typeId: this.typeController_id.id,
+          locationId: this.locationController_id.id,
           controllerId: this.ControllerID
+        }).then(async (response) => {
+          console.log(response)
+          this.$swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: `Add Controller ${response.data.connectionData[0].name} , Successfully`,
+            toast: false,
+            text: response.data.connectionData[0].id,
+            showConfirmButton: false,
+            timer: 1500
+          })
+          await this.$router.push({path: '/v2/main/device/add'});
+        }).catch((e) => {
+          let errorArr = e.message.split(' ');
+          let ResultFilter = errorArr.filter(code => code.toString().toLowerCase() === '409')
+          if (ResultFilter[0] === '409') {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: `<strong>this Controller Already Exist</strong>`,
+              toast: false,
+              text: 'Add Controller, Faild',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          } else {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: `<strong>Add Controller, Faild</strong>`,
+              toast: false,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }
         });
-        await this.$store.dispatch('NewControllerData', NewControllerData);
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `Add Controller ${NewControllerData.name} , Successfully`,
-          toast: false,
-          text: NewControllerData._id,
-          showConfirmButton: false,
-          timer: 1500
-        })
-        await this.$router.push({path: '/v2/main/device/add'});
+
+      } else {
+        this.error = 'All Input Required';
+        setTimeout(() => {
+          this.error = false;
+        }, 2000);
       }
 
     },
@@ -208,27 +195,23 @@ export default {
       this.getAllLocationController();
     },
 
-    /*** Get All Type Controller ***/
-    async getAllTypeController() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const {data: {data: TypeControllerData}} = await axios.get('/api/v1/controller/type');
-      this.socket.emit("user_TypeControllerData", TypeControllerData);
-      this.socket.on("user_TypeControllerData_server", (data) => {
-        this.$store.dispatch('TypeControllerData', data);
+    /* get All Controller Location */
+    async getAllLocationController() {
+      await axios.get('/api/v1/controller/location').then(async (response) => {
+        await this.$store.dispatch('LocationControllerData', response.data.locationLabels);
+      }).catch(() => {
+        console.log("get Faild LocationControllerData")
       });
-      // await this.$store.dispatch('TypeControllerData', TypeControllerData);
     },
 
-    /*** Get All Location Controller ***/
-    async getAllLocationController() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const {data: {data: LocationControllerData}} = await axios.get('/api/v1/controller/location');
-      this.socket.emit("user_LocationControllerData", LocationControllerData);
-      this.socket.on("user_LocationControllerData_server", (data) => {
-        this.$store.dispatch('LocationControllerData', data);
+    /*** Get All Type Controller  ***/
+    async getAllTypeController() {
+      await axios.get('/api/v1/controller/type').then(async (response) => {
+        await this.$store.dispatch('TypeControllerData', response.data.typeLabels);
+      }).catch(() => {
+        console.log("get Faild TypeControllerData")
       });
-      // await this.$store.dispatch('LocationControllerData', LocationControllerData);
-    },
+    }
 
 
   },

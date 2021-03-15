@@ -221,52 +221,12 @@ export default {
         this.rows = this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [];
       });
     }
-    // async GetAllType() {
-    //   axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    //   const {data: {data: allTypeController}} = await axios.get('/api/v1/controller/type');
-    //   const All_Type_Controller = allTypeController.map((item, i) => ({
-    //     id: i,
-    //     nameType: item.label,
-    //     labelId: item.labelId,
-    //     btn_Action: ''
-    //   }))
-    //   this.socket.emit("all_Type_Controller", All_Type_Controller);
-    //   this.socket.on("all_Type_Controller_server", (data) => {
-    //     this.$store.dispatch('allTypeController', data);
-    //
-    //   });
-    //   if (this.$store.getters.allLocationController) {
-    //     this.DashboardInfoCardForADMIN[0].Number = this.$store.getters.allTypeController.length;
-    //   } else {
-    //     this.DashboardInfoCardForADMIN[0].Number = '0';
-    //   }
-    //
-    // },
-    // async GetAllLocation() {
-    //   axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    //   const {data: {data: allLocationController}} = await axios.get('/api/v1/controller/location');
-    //   const All_Location_Controller = allLocationController.map((item, i) => ({
-    //     id: i,
-    //     nameLocation: item.label,
-    //     locationId: item.locationId,
-    //     btn_Action: ''
-    //   }))
-    //   this.socket.emit("all_Location_Controller", All_Location_Controller);
-    //   this.socket.on("all_Location_Controller_server", (data) => {
-    //     this.$store.dispatch('allLocationController', data);
-    //   });
-    //   if (this.$store.getters.allLocationController) {
-    //     this.DashboardInfoCardForADMIN[1].Number = this.$store.getters.allLocationController.length;
-    //   } else {
-    //     this.DashboardInfoCardForADMIN[1].Number = '0';
-    //   }
-    //   // await this.$store.dispatch('allLocationController', All_Location_Controller);
-    // },
+
   },
-  // async beforeMount() {
-  //   await this.GetAllType();
-  //   await this.GetAllLocation();
-  // },
+  async beforeMount() {
+    await this.GetAllLocations();
+    await this.GetAllTypes();
+  },
   created() {
     this.socket = io('http://localhost:3001');
     // this.GetAllType();

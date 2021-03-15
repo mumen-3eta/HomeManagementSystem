@@ -57,7 +57,7 @@
     <!--  For user  -->
     <section class="section section__mTop">
       <header class="section__header">
-        <h2 class="section__title">Favorite Controller</h2>
+        <h2 class="section__title">All Controller</h2>
         <div class="section__control-search">
           <div class="searchInput">
             <label for="SearchID"></label>
@@ -69,25 +69,25 @@
         </div>
       </header>
       <div class="Main__Card_FavoriteController">
-        <div v-for="(Controller , index) in filteredList" v-show="Controller.Status" :key="index"
+        <div v-for="(Controller , index) in filteredList" :key="index"
              class="Card_container">
           <ul class="card_ListData">
-            <router-link :to="{path : Controller.Path}">
-              <li class="card_item">
-                <i :class="[ Controller.IsActive  ? 'desktop_isActive' : '' , 'fas fa-desktop' ]"></i>
-              </li>
-              <li class="card_item">{{ Controller.ControllerName }}</li>
-              <li class="card_item">{{ Controller.TypeController }}</li>
-            </router-link>
+            <!--            <router-link :to="{path : Controller.Path}">-->
+            <li class="card_item">
+              <i :class="[ Controller.Status  ? 'desktop_isActive' : '' , 'fas fa-desktop' ]"></i>
+            </li>
+            <li class="card_item">{{ Controller.ControllerName }}</li>
+            <li class="card_item">{{ Controller.CreateAt | moment("DD MMM YYYY") }}</li>
+            <!--            </router-link>-->
             <li class="card_item card_itemBTN">
-              <button :class="[ Controller.Status  ? 'btn_Star-Favorite' : 'btn_Star' ]"
+              <button :class="[ Controller.IsActive  ? 'btn_Star-Favorite' : 'btn_Star' ]"
                       @click.prevent="ChangeFavorite(index)">
-                <i :class="[Controller.Status ? 'fas fa-star' : 'far fa-star' ]"></i>
+                <i :class="[Controller.IsActive ? 'fas fa-star' : 'far fa-star' ]"></i>
               </button>
               <div class="btn_Status">
                 <div class="form-check form-switch">
                   <label for="flexSwitchCheckChecked"></label>
-                  <input id="flexSwitchCheckChecked" :checked="Controller.IsActive ? 'checked' : '' "
+                  <input id="flexSwitchCheckChecked" :checked="Controller.Status ? 'checked' : '' "
                          class="form-check-input"
                          type="checkbox"
                          @change.prevent="ChangeActivation(index)"
@@ -101,51 +101,6 @@
       </div>
     </section><!-- End SECTION -->
 
-    <section class="section section__mTop">
-      <header class="section__header">
-        <h2 class="section__title">All Controller</h2>
-        <div class="section__control-search">
-          <div class="searchInput">
-            <label for="SearchID2"></label>
-            <input id="SearchID2" v-model="search2" placeholder="Search by name Or Type" type="search">
-          </div>
-          <button class="section__button section__button--painted focus--box-shadow" type="button">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </header>
-      <div class="Main__Card_FavoriteController">
-        <div v-for="(Controller , i) in filteredList2" :key="i"
-             class="Card_container">
-          <ul class="card_ListData">
-            <router-link :to="{path : Controller.Path}">
-              <li class="card_item">
-                <i :class="[ Controller.IsActive  ? 'desktop_isActive' : '' , 'fas fa-desktop' ]"></i>
-              </li>
-              <li class="card_item">{{ Controller.ControllerName }}</li>
-              <li class="card_item">{{ Controller.TypeController }}</li>
-            </router-link>
-            <li class="card_item card_itemBTN">
-              <button :class="[ Controller.Status  ? 'btn_Star-Favorite' : 'btn_Star' ]"
-                      @click.prevent="ChangeFavorite(i)">
-                <i :class="[Controller.Status ? 'fas fa-star' : 'far fa-star' ]"></i>
-              </button>
-              <div class="btn_Status">
-                <div class="form-check form-switch">
-                  <label for="flexSwitchCheckChecked2"></label>
-                  <input id="flexSwitchCheckChecked2" :checked="Controller.IsActive ? 'checked' : '' "
-                         class="form-check-input"
-                         type="checkbox"
-                         @change.prevent="ChangeActivation(i)"
-                  >
-                </div>
-              </div>
-            </li>
-          </ul>
-
-        </div>
-      </div>
-    </section><!-- End SECTION -->
 
   </div>
 </template>
@@ -153,6 +108,7 @@
 <script>
 import io from "socket.io-client";
 import {mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   name: "UserDashboard",
@@ -166,7 +122,7 @@ export default {
           Path: '/v2/main/device/add',
           ClassColorBorder: 'photo__item photo__item-bg1Color',
           TitleCard: 'Number Processor',
-          Number: '0',
+          Number: this.$store.getters.userProcessorIds ? this.$store.getters.userProcessorIds.length : '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -199,7 +155,7 @@ export default {
           Path: '/v2/main/device/add',
           ClassColorBorder: 'photo__item photo__item-bg2Color',
           TitleCard: 'Number Controller',
-          Number: '0',
+          Number: this.$store.getters.userAllControllerConnected ? this.$store.getters.userAllControllerConnected.length : '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -281,7 +237,7 @@ export default {
           ControllerName: 'Controller Name #2',
           TypeController: 'Type Controller #2',
           Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
-          Status: true,
+          Status: false,
           IsActive: true
         },
         {
@@ -309,45 +265,59 @@ export default {
     }
   },
   methods: {
-    // async GetAllProcessorUser() {
-    //   const {data: {data: responseProcessor}} = await axios.get('/api/v1/user/processor');
-    //   this.socket.emit("user_All_Processor", responseProcessor);
-    //   this.socket.on("user_All_Processor_server", (data) => {
-    //     this.$store.dispatch('userProcessorIds', data);
-    //   });
-    //   if (this.$store.getters.userProcessorIds) {
-    //     this.DashboardInfoCard[0].Number = this.$store.getters.userProcessorIds.length;
-    //   } else {
-    //     this.DashboardInfoCard[0].Number = '0';
-    //   }
-    //   // await this.$store.dispatch('userProcessorIds', responseProcessor);
-    // },
     ChangeFavorite(id) {
-      this.ListCardController[id].Status = !this.ListCardController[id].Status;
+      this.$store.getters.userAllControllerConnected[id].IsActive = !this.$store.getters.userAllControllerConnected[id].IsActive;
     },
     ChangeActivation(id) {
-      this.ListCardController[id].IsActive = !this.ListCardController[id].IsActive;
+      this.$store.getters.userAllControllerConnected[id].Status = !this.$store.getters.userAllControllerConnected[id].Status;
     },
+    /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
+    async GetAllControllerConnected() {
+      await axios.get('/api/v1/controller/connection/all').then(async (response) => {
+        console.log(response.data.connectionData)
+        const userAllControllerConnected = response.data.connectionData.map((item) => ({
+          ControllerName: item.name.toString(),
+          CreateAt: item.create_at.toString(),
+          Status: item.status,
+          IsActive: true
+        }))
+        await this.$store.dispatch('userAllControllerConnected', userAllControllerConnected);
+      }).catch(async () => {
+        console.log("faild get All Dashboard")
+        await this.$store.dispatch('userAllControllerConnected', null);
+      });
+    },
+    /*** ---------------- End Get All Controller Connected With Processor ---------------- ***/
+    /*** ------ Get All Connection For processors to this user -------- ***/
+    async GetAllProcessorUser() {
+      await axios.get('/api/v1/processor/connection').then(async (response) => {
+        await this.$store.dispatch('userProcessorIds', response.data.connectionData);
+      }).catch(() => {
+        console.log("faild get All connection")
+      });
+    }
+    /*** -------- End  Get All Connection For processors to this user ------ ***/
   },
   async beforeMount() {
-    // await this.GetAllProcessorUser();
+    await this.GetAllControllerConnected();
+    await this.GetAllProcessorUser();
   },
   created() {
     this.socket = io('http://localhost:3001');
     // this.GetAllProcessorUser();
   },
   computed: {
-    ...mapGetters(['user', 'userProfile']),
+    ...mapGetters(['user', 'userProfile', 'userAllControllerConnected']),
     filteredList() {
-      return this.ListCardController.filter(post => {
+      return this.$store.getters.userAllControllerConnected.filter(post => {
         return post.ControllerName.toLowerCase().includes(this.search.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search.toLowerCase())
       })
     },
-    filteredList2() {
-      return this.ListCardController.filter(post => {
-        return post.ControllerName.toLowerCase().includes(this.search2.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search2.toLowerCase())
-      })
-    },
+    // filteredList2() {
+    //   return this.ListCardController.filter(post => {
+    //     return post.ControllerName.toLowerCase().includes(this.search2.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search2.toLowerCase())
+    //   })
+    // },
   },
 }
 </script>
