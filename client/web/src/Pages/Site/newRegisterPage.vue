@@ -13,25 +13,25 @@
             <label id="username_LabelInput" class="R-form__input-label" for="username_input">username</label>
             <input id="username_input" v-model.trim="userName" class="R-form__input-input" type="text">
             <hr id="line1_U" class="R-style_line">
-            <p class="error_style">{{ this.errors.errorUserName }}</p>
           </div>
           <div class="form__group-R">
             <label id="email_LabelInput" class="R-form__input-label" for="email_input">E-mail</label>
             <input id="email_input" v-model.trim="Email" class="R-form__input-input" type="text">
             <hr id="line1_E" class="R-style_line">
-            <p class="error_style">{{ this.errors.errorEmail }}</p>
           </div>
           <div class="form__group-R">
             <label id="password_LabelInput" class="R-form__input-label" for="password_input">Password</label>
             <input id="password_input" v-model.trim="Password" class="R-form__input-input" type="password">
             <hr id="line2" class="R-style_line">
-            <p class="error_style">{{ this.errors.errorPassword }}</p>
           </div>
           <div class="form__group-R">
             <p class="R-form__forgot">
               <a class="R-form__forgot-link" href="">Forgot your password?</a>
             </p>
           </div>
+
+          <p class="error_style mt-3 ">{{ this.errors.ErrorEmailOrUserName }}</p>
+
           <div class="form__group-R">
             <button class="form__button-submit" type="submit">Sign Up</button>
           </div>
@@ -51,7 +51,6 @@
 
 
 import axios from "axios";
-import {boomify} from "@/utils";
 
 export default {
   name: "newRegisterPage",
@@ -62,9 +61,7 @@ export default {
       Email: '',
       Password: '',
       errors: {
-        errorUserName: '',
-        errorEmail: '',
-        errorPassword: '',
+        ErrorEmailOrUserName: '',
       },
     }
   },
@@ -94,26 +91,25 @@ export default {
           return false;
         }
       }
-      try {
-        const re = await axios.post('/api/v1/users/register', {
-          userName: this.userName,
-          email: this.Email,
-          password: this.Password,
-        });
-        if (re.data.errors) {
-          // Error handling from api
-          boomify(400, "Email is already taken");
-        }
+
+      await axios.post('/api/v1/users/register', {
+        userName: this.userName,
+        email: this.Email,
+        password: this.Password,
+      }).then(async (response) => {
         this.errors.errorUserName = null;
         this.errors.errorEmail = null;
         this.errors.errorPassword = null;
-        localStorage.setItem('csrfToken', re.data.csrfToken);
-        await this.$store.dispatch('TokenUser', re.data);
+        await this.$store.dispatch('TokenUser', response.data);
+        const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
+        await this.$store.dispatch('user', userInfo);
+        const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+        await this.$store.dispatch('userProfile', userProfile[0]);
         await this.$router.push('/v2/main/home');
-      } catch (e) {
-        this.errors.errorEmail = e.msg || e.message;
+      }).catch(() => {
+        this.errors.ErrorEmailOrUserName = "Email/username is already taken";
         return false;
-      }
+      });
 
 
     },

@@ -9,10 +9,13 @@
         <input class="search__input focus--box-shadow" placeholder="Search ..." type="search">
       </form>
       <div v-on-clickaway="CloseDropMenu" class="profile">
-        <button id="btn_Profile" class="profile__button" type="button" @click.prevent="OpenDropMenu">
-          <span v-if="user.basicInfo.userName" class="profile__name"><i
-              class="fas fa-caret-down"></i>{{ user.basicInfo.userName }}</span>
-          <img v-if="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image" class="profile__img">
+        <button id="btn_Profile" class="profile__button" type="button"
+                @click.prevent="OpenDropMenu">
+          <span v-if="userProfile.user_name" class="profile__name">
+            <i class="fas fa-caret-down"></i>{{ userProfile.user_name }}</span>
+          <img :src="userProfile.image ? userProfile.image : 'https://img.icons8.com/metro/500/000000/user-male.png' "
+               alt="profile image"
+               class="profile__img">
         </button>
         <div id="profile__menu" class="profile__menu">
           <ul class="profile__menu-ul">
@@ -22,31 +25,31 @@
                 <p class="profile__menu-nameTitle"> Profile </p>
               </router-link>
             </li>
-            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+            <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/processor'}" class="profile__menu-link">
                 <i class="fas fa-laptop-medical profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Create Processor</p>
               </router-link>
             </li>
-            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+            <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Create Controller</p>
               </router-link>
             </li>
-            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+            <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="profile__menu-link">
                 <i class="fas fa-cubes profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Add Type Controller</p>
               </router-link>
             </li>
-            <li v-if="user.basicInfo.isAdmin" class="profile__menu-li">
+            <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="profile__menu-link">
                 <i class="fas fa-map-marker-alt profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">Add Location Controller</p>
               </router-link>
             </li>
-            <li v-if="!user.basicInfo.isAdmin" class="profile__menu-li">
+            <li v-if="!user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/device/add'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">my device</p>
@@ -63,7 +66,7 @@
       </div>
     </div>
   </header><!-- End HEADER -->
-  
+
 </template>
 
 <script>
@@ -76,24 +79,43 @@ export default {
   mixins: [clickAway],
   methods: {
     async handleClick() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      await axios.put('/api/v1/users/logout');
-      localStorage.removeItem('csrfToken');
-      await this.$store.dispatch('user', null);
-      await this.$store.dispatch('TokenUser', null);
-      await this.$store.dispatch('deviceInfoAdd', null);
-      await this.$store.dispatch('processorId', null);
-      await this.$store.dispatch('controllerId', null);
-      await this.$store.dispatch('userProcessorIds', null);
-      await this.$store.dispatch('userAllProcessor', null);
-      await this.$store.dispatch('NewTypeController', null);
-      await this.$store.dispatch('allTypeController', null);
-      await this.$store.dispatch('NewLocationController', null);
-      await this.$store.dispatch('allLocationController', null);
-      await this.$store.dispatch('TypeControllerData', null);
-      await this.$store.dispatch('LocationControllerData', null);
-      await this.$store.dispatch('NewControllerData', null);
-      await this.$router.push('/v2/login');
+      await axios.post('/api/v1/users/logout').then(async () => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'logout Successfully',
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        await this.$store.dispatch('user', null);
+        await this.$store.dispatch('TokenUser', null);
+        await this.$store.dispatch('userProfile', null);
+        await this.$store.dispatch('deviceInfoAdd', null);
+        await this.$store.dispatch('processorId', null);
+        await this.$store.dispatch('controllerId', null);
+        await this.$store.dispatch('userProcessorIds', null);
+        await this.$store.dispatch('userAllProcessor', null);
+        await this.$store.dispatch('NewTypeController', null);
+        await this.$store.dispatch('allTypeController', null);
+        await this.$store.dispatch('NewLocationController', null);
+        await this.$store.dispatch('allLocationController', null);
+        await this.$store.dispatch('TypeControllerData', null);
+        await this.$store.dispatch('LocationControllerData', null);
+        await this.$store.dispatch('NewControllerData', null);
+        await this.$router.push('/v2/login');
+      }).catch(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'logout Faild',
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        console.log("logout Faild")
+      });
+
     },
     OpenDropMenu() {
       document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
@@ -105,15 +127,10 @@ export default {
     },
   },
   async beforeMount() {
-    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const user = await axios.get('/api/v1/users/profile');
-    await this.$store.dispatch('user', user.data.data);
-    // document.getElementById("btn_Profile").addEventListener("click", function () {
-    //
-    // });
+
   },
   computed: {
-    ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
+    ...mapGetters(['user', 'userProfile'])
   },
 }
 </script>

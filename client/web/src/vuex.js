@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 const state = {
     user: null,
+    userProfile: null,
     TokenUser: null,
     deviceInfoAdd: [],
     processorId: null,
@@ -29,6 +30,9 @@ const store = new Vuex.Store({
     getters: {
         user: (state) => {
             return state.user;
+        },
+        userProfile: (state) => {
+            return state.userProfile;
         },
         GetUser: (state) => {
             return state.user;
@@ -80,6 +84,9 @@ const store = new Vuex.Store({
         user(context, user) {
             context.commit('user', user);
         },
+        userProfile(context, userProfile) {
+            context.commit('userProfile', userProfile);
+        },
         TokenUser(context, TokenUser) {
             context.commit('TokenUser', TokenUser);
         },
@@ -127,6 +134,9 @@ const store = new Vuex.Store({
     mutations: {
         user(state, user) {
             state.user = user;
+        },
+        userProfile(state, userProfile) {
+            state.userProfile = userProfile;
         },
         TokenUser(state, TokenUser) {
             state.TokenUser = TokenUser;

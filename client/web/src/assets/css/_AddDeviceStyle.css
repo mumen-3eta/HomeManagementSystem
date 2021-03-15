@@ -302,6 +302,8 @@
 }
 
 .form-switch .form-check-input {
+    transform: rotate(-90deg) scale(1.5);
+
     width: 2.5em;
     /* margin-left: -2.5em; */
     border-radius: 2em;

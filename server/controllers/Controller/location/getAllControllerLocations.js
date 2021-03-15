@@ -4,12 +4,12 @@ const { getAllControllerLocation } = require('../../../database/queries');
 
 const getAllControllerTypes = async (req, res, next) => {
   try {
-    const { rows: typeLabels } = await getAllControllerLocation();
+    const { rows: locationLabels } = await getAllControllerLocation();
 
     return res.status(201).json({
       title: 'All Controller location',
       detail: 'Controller location fetched Successfully',
-      typeLabels,
+      locationLabels,
     });
   } catch (error) {
     return next(boom.badImplementation(error));

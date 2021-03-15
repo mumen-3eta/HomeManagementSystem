@@ -4,17 +4,22 @@
       <div class="profile__Main-containerInfo">
         <div class="profile__Main-Info">
           <div>
-            <img v-show="user.profileInfo.image" :src="user.profileInfo.image" alt="profile image"
+            <img :src="userProfile.image ? userProfile.image : 'https://img.icons8.com/metro/500/000000/user-male.png'"
+                 alt="profile image"
                  class="p__Main-image">
           </div>
-          <h3 v-show="user.profileInfo.firstName && user.profileInfo.lastName">{{ user.profileInfo.firstName }}
-            {{ user.profileInfo.lastName }}</h3>
-          <div v-show="user.basicInfo.userName" class="profile__Main-InfoSpan">
+
+          <h3>
+            {{ userProfile.first_name ? userProfile.first_name : '' }}
+            {{ userProfile.last_name ? userProfile.last_name : '' }}
+          </h3>
+
+          <div v-if="userProfile.user_name" class="profile__Main-InfoSpan">
             <i class="fa fa-quote-left"></i>
-            <p> {{ user.basicInfo.userName }}</p>
+            <p v-text="userProfile.user_name"></p>
             <i class="fa fa-quote-right"></i>
           </div>
-          <h6 v-show="user.basicInfo.email">{{ user.basicInfo.email }}</h6>
+          <h6 v-if="userProfile.email" v-text="userProfile.email"></h6>
         </div>
       </div>
       <div class="profile__Main-containerEditInfo">
@@ -77,7 +82,7 @@
                 <form @submit.prevent="OnUpdateBodyInfoLogin">
                   <div class="profile__bodyInfo-group">
                     <label id="userNameInputLabel" class="profile__bodyInfo-groupLabel"
-                           for="userNameInput">User Name</label>
+                           for="userNameInput">User Name <sup class="badge bg-secondary">New</sup></label>
                     <input id="userNameInput" v-model.trim="userData.basicInfo.userName"
                            class="profile__bodyInfo-groupInput"
                            type="text">
@@ -124,10 +129,10 @@ export default {
     return {
       userData: {
         profileInfo: {
-          mobile: this.$store.getters.user.profileInfo.mobile,
-          firstName: this.$store.getters.user.profileInfo.firstName,
-          lastName: this.$store.getters.user.profileInfo.lastName,
-          image: this.$store.getters.user.profileInfo.image,
+          mobile: '',
+          firstName: this.$store.getters.userProfile.first_name ? this.$store.getters.userProfile.first_name : '',
+          lastName: this.$store.getters.userProfile.last_name ? this.$store.getters.userProfile.last_name : '',
+          image: '',
           error: {
             mobile: '',
             firstName: '',
@@ -138,7 +143,7 @@ export default {
         basicInfo: {
           currentPassword: '',
           newPassword: '',
-          userName: this.$store.getters.user.basicInfo.userName,
+          userName: '',
           error: {
             currentPassword: '',
             newPassword: '',
@@ -160,29 +165,11 @@ export default {
     }
   },
   methods: {
+    /*** Refs for input file ***/
     onPickImage() {
       this.$refs.imageInput.click()
     },
-    onCancelImage() {
-      const input = this.$refs.imageInput;
-      const files = input.files;
-      if (files && files[0]) {
-        const reader = new FileReader;
-        reader.onload = () => {
-          this.imageLoading = null;
-          this.imageName = null
-          this.pictureSize = null;
-          this.pictureSizeKB = null;
-          this.pictureSizeUnit = null;
-          this.imageData = null;
-          this.picture = null;
-          this.uploadValue = 0;
-          this.errors = null;
-        };
-        reader.readAsDataURL(files[0]);
-        this.$emit('input', files[0])
-      }
-    },
+    /*** Image Preview ***/
     previewImage(event) {
       this.uploadValue = 0;
       this.pictureSize = (event.target.files[0].size);
@@ -211,7 +198,10 @@ export default {
         }
       }
     },
+
+    /*** up load image to FireBase Storage ***/
     async onUploadImage() {
+      /*** Alert Swal.fire ***/
       let timerInterval
       this.$swal.fire({
         title: 'Image is Upload now',
@@ -238,8 +228,7 @@ export default {
           console.log('I was closed by the timer')
         }
       })
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const getUser = await axios.get('/api/v1/users/profile');
+
       this.picture = null;
       const D = new Date();
       const Year = D.getFullYear();
@@ -257,18 +246,20 @@ export default {
         storageRef.snapshot.ref.getDownloadURL().then((url) => {
           this.picture = url;
           // Delete old Image
-          let isUserImage = getUser.data.data.profileInfo.image.split("?");
-          if (isUserImage[0].toString() !== "https://ui-avatars.com/api/") {
-            let FromURL = getUser.data.data.profileInfo.image;
-            // console.log(firebase.storage().refFromURL(FromURL))
-            if (FromURL) {
-              let oldRefFromURL = firebase.storage().refFromURL(FromURL);
-              if (oldRefFromURL) {
-                this.OnDeleteImage(oldRefFromURL); // to delete old
+          let UserImage = this.$store.getters.userProfile.image;
+          if (UserImage) {
+            let isUserImage = UserImage.split("?");
+            if (isUserImage[0].toString() !== "https://ui-avatars.com/api/") {
+              let FromURL = UserImage;
+              if (FromURL) {
+                let oldRefFromURL = firebase.storage().refFromURL(FromURL);
+                if (oldRefFromURL) {
+                  this.OnDeleteImage(oldRefFromURL); // to delete old
+                }
               }
             }
           }
-          //End test
+          /*** End DELETE ***/
           this.storeImageInDB(url);
           this.$swal.fire({
             position: 'center',
@@ -282,20 +273,11 @@ export default {
       })
       this.onCancelImage();
     },
+    /*** store image method ***/
     async storeImageInDB(URL) {
-      const user = await axios.post('/api/v1/users/profile', {
-        profileInfo: {
-          firstName: this.$store.getters.user.profileInfo.firstName,
-          lastName: this.$store.getters.user.profileInfo.lastName,
-          mobile: this.$store.getters.user.profileInfo.mobile,
-          image: URL
-        }
-      });
-      this.socket.emit("user_profileData", user.data.data);
-      this.socket.on("user_profileData_server", (data) => {
-        this.$store.dispatch('user', data);
-      });
-      // await this.$store.dispatch('user', user.data.data);
+      await axios.put('/api/v1/users/profile', {image: URL});
+      const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+      await this.$store.dispatch('userProfile', userProfile[0]);
     },
     OnDeleteImage(deletedImage) {
       deletedImage.delete().then(() => {
@@ -305,16 +287,16 @@ export default {
       });
     },
 
+
     //  OnUpdateBodyInfo
     async OnUpdateBodyInfo() {
-      if (this.userData.profileInfo.mobile
-          && this.userData.profileInfo.firstName
-          && this.userData.profileInfo.lastName) {
-        // section Api for send message
-        let mobile = this.userData.profileInfo.mobile;
-        if (mobile) {
+      let FirstName = this.userData.profileInfo.firstName;
+      let LastName = this.userData.profileInfo.lastName;
+      let Mobile = this.userData.profileInfo.mobile;
+      if (FirstName || LastName || Mobile) {
+        if (Mobile) {
           let mobileRegex = /^[0-9]+$/;
-          let CheckMobile = mobileRegex.test(mobile);//true or false
+          let CheckMobile = mobileRegex.test(Mobile);//true or false
           if (!CheckMobile) {
             this.userData.profileInfo.error.mobile = "Sorry! User mobile Faild, must be number";
             setTimeout(() => {
@@ -324,43 +306,152 @@ export default {
           }
         }
 
-        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const user = await axios.post('/api/v1/users/profile', {
-          profileInfo: {
-            firstName: this.userData.profileInfo.firstName,
-            lastName: this.userData.profileInfo.lastName,
-            mobile: this.userData.profileInfo.mobile,
-            image: this.$store.getters.user.profileInfo.image
-          }
-        });
-        this.socket.emit("user_profileData", user.data.data);
-        this.socket.on("user_profileData_server", (data) => {
-          this.$store.dispatch('user', data);
-          this.mobile = this.$store.getters.user.profileInfo.mobile;
-          this.firstName = this.$store.getters.user.profileInfo.firstName;
-          this.lastName = this.$store.getters.user.profileInfo.lastName;
-          this.image = this.$store.getters.user.profileInfo.image;
-        });
+        if (FirstName && LastName && Mobile) {
+          await axios.put('/api/v1/users/profile', {
+            firstName: FirstName ? FirstName : this.$store.getters.userProfile.first_name,
+            lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
+            // mobile: Mobile ? Mobile : this.$store.getters.userProfile.mobile, /* 😪 Error Hear ☠️ 🆘 🔞 ' error: "mobile must be less than or equal to 15" not work correctly '*/
+          }).then(async () => {
+            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+            await this.$store.dispatch('userProfile', userProfile[0]);
+            FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
+            LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
+            Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Thank you, Send it',
+              text: "Update your information, Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(() => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Sorry, 😥',
+              text: "Update your information, Faild",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        } else if (FirstName) {
+          await axios.put('/api/v1/users/profile', {
+            firstName: FirstName ? FirstName : this.$store.getters.userProfile.first_name,
+          }).then(async () => {
+            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+            await this.$store.dispatch('userProfile', userProfile[0]);
+            FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Thank you, Send it',
+              text: "Update your First Name, Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(() => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Sorry, 😥',
+              text: "Update your First Name, Faild",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        } else if (LastName) {
+          await axios.put('/api/v1/users/profile', {
+            lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
+          }).then(async () => {
+            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+            await this.$store.dispatch('userProfile', userProfile[0]);
+            LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Thank you, Send it',
+              text: "Update your Last Name, Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(() => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Sorry, 😥',
+              text: "Update your lastName, Faild",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        } else {
+          await axios.put('/api/v1/users/profile', {
+            // mobile: Mobile ? Mobile : this.$store.getters.userProfile.mobile, /* 😪 Error Hear ☠️ 🆘 🔞 ' error: "mobile must be less than or equal to 15" not work correctly '*/
+          }).then(async () => {
+            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
+            await this.$store.dispatch('userProfile', userProfile[0]);
+            Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Thank you, Send it',
+              text: "Update your Mobile, Successfully",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(() => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: 'Sorry, 😥',
+              text: "Update your Mobile, Faild",
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        }
+
+
+        // const user = await axios.post('/api/v1/users/profile', {
+        //   profileInfo: {
+        //     firstName: this.userData.profileInfo.firstName,
+        //     lastName: this.userData.profileInfo.lastName,
+        //     mobile: this.userData.profileInfo.mobile,
+        //     image: this.$store.getters.user.profileInfo.image
+        //   }
+        // });
+        // this.socket.emit("user_profileData", user.data.data);
+        // this.socket.on("user_profileData_server", (data) => {
+        //   this.$store.dispatch('user', data);
+        //   this.mobile = this.$store.getters.user.profileInfo.mobile;
+        //   this.firstName = this.$store.getters.user.profileInfo.firstName;
+        //   this.lastName = this.$store.getters.user.profileInfo.lastName;
+        //   this.image = this.$store.getters.user.profileInfo.image;
+        // });
         // await this.$store.dispatch('user', user.data.data);
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Thank you, Send it',
-          text: "Update your information, Successfully",
-          showConfirmButton: false,
-          timer: 1500
-        })
+
+      } else {
+        this.userData.profileInfo.error.mobile = "Sorry! User mobile Faild, is Required";
+        this.userData.profileInfo.error.firstName = "Sorry! User first Name Faild, is Required";
+        this.userData.profileInfo.error.lastName = "Sorry! User last Name Faild, is Required";
+        setTimeout(() => {
+          this.userData.profileInfo.error.mobile = '';
+          this.userData.profileInfo.error.firstName = '';
+          this.userData.profileInfo.error.lastName = '';
+        }, 3000);
       }
     },
     //  OnUpdateBodyInfoLogin
     async OnUpdateBodyInfoLogin() {
-      if (this.userData.basicInfo.currentPassword
-          && this.userData.basicInfo.newPassword
-          && this.userData.basicInfo.userName) {
-        let userName = this.userData.basicInfo.userName;
-        if (userName) {
+      let UserName = this.userData.basicInfo.userName;
+      let CurrentPassword = this.userData.basicInfo.currentPassword;
+      let NewPassword = this.userData.basicInfo.newPassword;
+      if (CurrentPassword || NewPassword || UserName) {
+
+        if (UserName) {
           let usernameRegex = /^[a-zA-Z0-9]+$/;
-          let CheckUserName = usernameRegex.test(userName);//true or false
+          let CheckUserName = usernameRegex.test(UserName);//true or false
           if (!CheckUserName) {
             this.userData.basicInfo.error.userName = "Sorry! User Name Faild, must be (a-z) and (0-1) and ignored space";
             setTimeout(() => {
@@ -368,58 +459,101 @@ export default {
             }, 3000);
             return false;
           }
+          await axios.put('/api/v1/users/profile', {
+            userName: UserName,
+          }).then(async () => {
+            await axios.get('/api/v1/users/profile').then(async (response) => {
+              await this.$store.dispatch('userProfile', response.data.profileData[0]);
+              this.$swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: `<strong>Updated</strong>`,
+                text: "Update your UserName, Successfully",
+                showConfirmButton: false,
+                timer: 1500
+              })
+              this.EmptyFromInfoLogin();//empty form
+            }).catch(() => {
+              this.userData.basicInfo.userName = null;
+            });
+          }).catch(() => {
+            this.userData.basicInfo.error.userName = "Sorry! UserName is already 😥";
+            setTimeout(() => {
+              this.userData.basicInfo.error.userName = null;
+            }, 3000);
+          });
         }
-        /***
-         *** section Api for send message
-         *** need check for api can't update password and can update email solve this problem
-         *** for api not hear ..
-         *** ***/
-        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const user = await axios.post('/api/v1/users/profile', {
-          basicInfo: {
-            userName: this.userData.basicInfo.userName,
-            email: this.$store.getters.user.basicInfo.email,
-            // currentPassword: this.userData.basicInfo.currentPassword,
-            Password: this.userData.basicInfo.newPassword,
-            isAdmin: false,
-          }
-        });
-        this.socket.emit("user_profileData", user.data.data);
-        this.socket.on("user_profileData_server", (data) => {
-          this.$store.dispatch('user', data);
-          this.userName = this.$store.getters.user.basicInfo.userName;
-        });
-        // await this.$store.dispatch('user', user.data.data);
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Thank you, Send it',
-          text: "Update your information, Successfully",
-          showConfirmButton: false,
-          timer: 1500
-        })
-        this.EmptyFromInfoLogin();//empty form
+        if (CurrentPassword && NewPassword) {
+          await axios.put('/api/v1/users/profile', {
+            password: NewPassword,
+          }).then(async () => {
+            await axios.get('/api/v1/users/profile').then(async (response) => {
+              await this.$store.dispatch('userProfile', response.data.profileData[0]);
+              this.$swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: `<strong>Updated</strong>`,
+                text: "Update your Password, Successfully",
+                showConfirmButton: false,
+                timer: 1500
+              })
+              this.EmptyFromInfoLogin();//empty form
+            }).catch((e) => {
+              console.log(e)
+            });
+          });
+        }
+
+      } else {
+        this.userData.basicInfo.error.userName = "Sorry! User user Name Faild, is Required";
+        this.userData.basicInfo.error.newPassword = "Sorry! User Password Faild, is Required";
+        setTimeout(() => {
+          this.userData.basicInfo.error.userName = '';
+          this.userData.basicInfo.error.newPassword = '';
+        }, 3000);
       }
     },
+
+
+    /*** Btn Cancel Image To Delete image from Preview ***/
+    onCancelImage() {
+      const input = this.$refs.imageInput;
+      const files = input.files;
+      if (files && files[0]) {
+        const reader = new FileReader;
+        reader.onload = () => {
+          this.imageLoading = null;
+          this.imageName = null
+          this.pictureSize = null;
+          this.pictureSizeKB = null;
+          this.pictureSizeUnit = null;
+          this.imageData = null;
+          this.picture = null;
+          this.uploadValue = 0;
+          this.errors = null;
+        };
+        reader.readAsDataURL(files[0]);
+        this.$emit('input', files[0])
+      }
+    },
+    /*** Empty Form ***/
     EmptyFromInfoLogin() {
       this.userData.basicInfo.currentPassword = null;
+      this.userData.basicInfo.userName = null;
       this.userData.basicInfo.newPassword = null;
       this.userData.basicInfo.error.currentPassword = null;
       this.userData.basicInfo.error.newPassword = null;
       this.userData.basicInfo.error.userName = null;
+      document.getElementById("userNameInput").style.borderBottom = "";
       document.getElementById("currentInput").style.borderBottom = "";
       document.getElementById("newPasswordInput").style.borderBottom = "";
+      document.getElementById("userNameInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
       document.getElementById("currentInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
       document.getElementById("newPasswordInputLabel").classList.remove("profile__bodyInfo-groupLabelAddMoved");
     },
   },
-  async beforeMount() {
-    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const user = await axios.get('/api/v1/users/profile');
-    this.socket.emit("user_profileData", user.data.data);
-    this.socket.on("user_profileData_server", (data) => {
-      this.$store.dispatch('user', data);
-    });
+  created() {
+    this.socket = io('http://localhost:3001');
   },
   mounted() {
     const Base_Info = document.getElementById('Base_Info');
@@ -449,37 +583,37 @@ export default {
     const labelInput2 = document.getElementById("lastNameInputLabel");
     const input3 = document.getElementById("mobileInput");
     const labelInput3 = document.getElementById("mobileInputLabel");
-    const input4 = document.getElementById("userNameInput");
-    const labelInput4 = document.getElementById("userNameInputLabel");
+    // const input4 = document.getElementById("userNameInput");
+    // const labelInput4 = document.getElementById("userNameInputLabel");
 
-    if (this.$store.getters.user.profileInfo.lastName) {
+    if (this.$store.getters.userProfile.last_name) {
       SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
       input1.style.borderBottom = "2px solid #219D9D";
     } else {
       SlidDown(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
       input1.style.borderBottom = "";
     }
-    if (this.$store.getters.user.profileInfo.firstName) {
+    if (this.$store.getters.userProfile.first_name) {
       SlidUp(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
       input2.style.borderBottom = "2px solid #219D9D";
     } else {
       SlidDown(labelInput2, "profile__bodyInfo-groupLabelAddMoved");
       input2.style.borderBottom = "";
     }
-    if (this.$store.getters.user.profileInfo.mobile) {
+    if (this.$store.getters.userProfile.mobile) {
       SlidUp(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
       input3.style.borderBottom = "2px solid #219D9D";
     } else {
       SlidDown(labelInput3, "profile__bodyInfo-groupLabelAddMoved");
       input3.style.borderBottom = "";
     }
-    if (this.$store.getters.user.basicInfo.userName) {
-      SlidUp(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
-      input4.style.borderBottom = "2px solid #219D9D";
-    } else {
-      SlidDown(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
-      input4.style.borderBottom = "";
-    }
+    // if (this.$store.getters.userProfile.user_name) {
+    //   SlidUp(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
+    //   input4.style.borderBottom = "2px solid #219D9D";
+    // } else {
+    //   SlidDown(labelInput4, "profile__bodyInfo-groupLabelAddMoved");
+    //   input4.style.borderBottom = "";
+    // }
 
     input1.addEventListener("focusin", function () {
       SlidUp(labelInput1, "profile__bodyInfo-groupLabelAddMoved");
@@ -566,10 +700,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user', 'TokenUser'])
-  },
-  created() {
-    this.socket = io('http://localhost:3001');
+    ...mapGetters(['user', 'userProfile'])
   },
 }
 </script>

@@ -5,7 +5,7 @@ const { verifyUser } = require('../../middleware/authentication');
 router.post('/register', addUsers);
 router.post('/login', login);
 router.get('/me', verifyUser, authUser);
-router.put('/logout', logout);
+router.get('/logout', logout);
 
 // // eslint-disable-next-line no-unused-vars
 // router.delete('/me', authenticate, csrfCheck, async (req, res, next) => {

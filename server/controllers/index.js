@@ -4,9 +4,9 @@ const {
   addUsers,
   authUser,
   login,
+  logout,
   getAllProfileData,
   updateProfileData,
-  logout,
 } = require('./users');
 
 const {
@@ -39,6 +39,7 @@ module.exports = {
   serverError,
   addUsers,
   login,
+  logout,
   authUser,
   getAllProfileData,
   updateProfileData,
@@ -59,8 +60,6 @@ module.exports = {
   updateControllerLocationLabel,
   deleteControllerLocationLabel,
   getAllControllerLocations,
-  // createControllerForProduction,
   swaggerServe,
   swaggerSetup,
-  logout,
 };

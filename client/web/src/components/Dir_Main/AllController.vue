@@ -180,6 +180,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.form-switch .form-check-input {
+  transform: rotate(-90deg) scale(1.2);
 
+  width: 2.5em;
+  /* margin-left: -2.5em; */
+  border-radius: 2em;
+}
 </style>

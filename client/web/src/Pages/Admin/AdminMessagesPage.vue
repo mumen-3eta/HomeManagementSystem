@@ -32,7 +32,20 @@
           <div slot="table-actions" class="btn_searchScan"></div>
           <template slot="table-row" slot-scope="props">
             <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-              <button class="btn_deleted"><i class="fas fa-trash-alt"></i> Delete</button>
+              <button class="btn_deleted"><i
+                  class="fas fa-trash-alt"></i>
+                Delete
+              </button>
+              <button class="btn_read">
+                <div class="btn_Status">
+                  <div class="form-check form-switch">
+                    <label for="flexSwitchCheckChecked2">Read</label>
+                    <input id="flexSwitchCheckChecked2" :checked=" '' "
+                           class="form-check-input"
+                           type="checkbox">
+                  </div>
+                </div>
+              </button>
             </div>
             <span v-else>
                 {{ props.formattedRow[props.column.field] }}
@@ -80,14 +93,21 @@ export default {
           sortable: false,
         },
       ],
-      rows: this.$store.getters.allMessages,
+      rows: this.$store.getters.allMessages ? this.$store.getters.allMessages : [],
     }
   },
   created() {
     this.socket = io('http://localhost:3001');
   },
+  methods: {
+    DeleteMessage(id) {
+      console.log(id)
+    }
+  },
   mounted() {
-    // reserve event that sent from server
+    /***
+     * // reserve event that sent from server
+     */
     this.socket.on("all_messages_server", (data) => {
       /*
       * create route in api (create/message)
@@ -101,7 +121,7 @@ export default {
       * */
       this.NowMessages.push(data);//api and database use (convert NowMessages to api)
       this.$store.dispatch('allMessages', this.NowMessages);
-      this.rows = this.$store.getters.allMessages;
+      this.rows = this.$store.getters.allMessages ? this.$store.getters.allMessages : [];
     });
   },
   computed: {
@@ -110,6 +130,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.form-switch .form-check-input {
+  transform: rotate(0) scale(1.2);
+  width: 2.5em;
+  margin-left: -2.5em;
+  margin-right: 1rem;
+  border-radius: 2em;
+}
 
+.btn_read {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  justify-self: center;
+  padding: 0.15rem;
+  margin: 0 0.25rem;
+  border-radius: 10px;
+
+}
 </style>

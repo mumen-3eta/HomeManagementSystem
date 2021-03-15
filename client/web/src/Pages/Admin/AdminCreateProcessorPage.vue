@@ -45,11 +45,6 @@ export default {
   components: {
     QrcodeVue,
   },
-  data() {
-    return {
-      processor_Id: '',
-    }
-  },
   methods: {
     async clearGenerateId() {
       if (this.$store.getters.processorId) {
@@ -66,18 +61,27 @@ export default {
       await this.$store.dispatch('processorId', null);
     },
     async generateId() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      const processorId = await axios.post('/api/v1/processor/create');
-      await this.$store.dispatch('processorId', processorId.data.processorId);
-      this.$swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Create Processor ID',
-        toast: false,
-        text: processorId.data.processorId,
-        showConfirmButton: false,
-        timer: 1500
-      })
+      await axios.post('/api/v1/processor/create').then(async (response) => {
+        await this.$store.dispatch('processorId', response.data.newProcessor[0].id.toString());
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Create Processor ID',
+          toast: false,
+          text: response.data.newProcessor[0].id.toString(),
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }).catch(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Create Processor Faild',
+          toast: false,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      });
     },
     copyText() {
       let copyText = document.getElementById("ProcessorIDInput");
@@ -104,9 +108,6 @@ export default {
       a.click();
       document.body.removeChild(a);
     },
-  },
-  beforeMount() {
-    this.processor_Id = this.$store.getters.processorId;
   },
   computed: {
     ...mapGetters(['processorId'])
