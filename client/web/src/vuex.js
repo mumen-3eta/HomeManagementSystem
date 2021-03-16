@@ -5,24 +5,29 @@ import VuexPersistence from 'vuex-persist'
 Vue.use(Vuex);
 
 const state = {
+    /* used it */
     user: null,
     userProfile: null,
     TokenUser: null,
     userAllControllerConnectedWithProcessor: null,
     userAllControllerConnected: null,
+    AllControllerConnectedForThisUser: null,
+    userProcessorIds: null,
+    allMessages: null,
+    TypeControllerData: null,
+    LocationControllerData: null,
+    userAllProcessor: [],
+    allTypeController: null,
+    allLocationController: null,
+    /* End  used it */
+
+    /*** Check it, if i not used delete them with (getters,action,mutations)***/
     deviceInfoAdd: [],
     processorId: null,
     controllerId: null,
-    userProcessorIds: null,
-    userAllProcessor: [],
     NewTypeController: null,
-    allTypeController: null,
     NewLocationController: null,
-    allLocationController: null,
-    TypeControllerData: null,
-    LocationControllerData: null,
     NewControllerData: null,
-    allMessages: null,
 
 };
 
@@ -44,6 +49,9 @@ const store = new Vuex.Store({
         },
         userAllControllerConnected: (state) => {
             return state.userAllControllerConnected;
+        },
+        AllControllerConnectedForThisUser: (state) => {
+            return state.AllControllerConnectedForThisUser;
         },
         TokenUser: (state) => {
             return state.TokenUser;
@@ -104,6 +112,9 @@ const store = new Vuex.Store({
         userAllControllerConnected(context, userAllControllerConnected) {
             context.commit('userAllControllerConnected', userAllControllerConnected);
         },
+        AllControllerConnectedForThisUser(context, AllControllerConnectedForThisUser) {
+            context.commit('AllControllerConnectedForThisUser', AllControllerConnectedForThisUser);
+        },
         userAllProcessor(context, userAllProcessor) {
             context.commit('userAllProcessor', userAllProcessor);
         },
@@ -160,6 +171,9 @@ const store = new Vuex.Store({
         },
         userAllControllerConnected(state, userAllControllerConnected) {
             state.userAllControllerConnected = userAllControllerConnected;
+        },
+        AllControllerConnectedForThisUser(state, AllControllerConnectedForThisUser) {
+            state.AllControllerConnectedForThisUser = AllControllerConnectedForThisUser;
         },
         userAllProcessor(state, userAllProcessor) {
             state.userAllProcessor = userAllProcessor;

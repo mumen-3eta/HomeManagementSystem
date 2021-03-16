@@ -26,6 +26,13 @@
             <i class="far fa-desktop nav__icon"></i>
           </router-link>
         </li>
+        <li v-if="!user.is_admin"
+            :class="['nav__item',this.$route.path === '/v2/main/controller/connected' ? 'nav__item--isActive':'']"
+            aria-label="All Controller">
+          <router-link :to="{path:'/v2/main/controller/connected'}" class="nav__link focus--box-shadow" role="menuitem">
+            <i class="far fa-laptop nav__icon"></i>
+          </router-link>
+        </li>
         <!--  End  For user    -->
         <!--   For Admin     -->
         <li v-if="user.is_admin"
@@ -99,7 +106,7 @@ li[aria-label] {
       left: calc(100% + 0.5rem);
       top: -25%;
       white-space: nowrap;
-      z-index: 20;
+      z-index: 9999;
       background: #949494;
       border-radius: 5px;
       color: white;
@@ -120,7 +127,7 @@ li[aria-label] {
 
 .nav {
   position: fixed;
-  z-index: 9;
+  z-index: 999;
   /*margin: -2rem 0.8rem 0 0.8rem;*/
 }
 

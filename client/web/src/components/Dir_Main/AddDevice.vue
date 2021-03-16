@@ -336,7 +336,6 @@ export default {
             timer: 1500
           })
         }
-
       });
 
       await this.GetAllConnections();
@@ -353,9 +352,10 @@ export default {
           btn_Action: ''
         }))
         await this.$store.dispatch('userAllProcessor', userAllProcessorsData);
-        this.rows = this.$store.getters.userAllProcessor ? this.$store.getters.userAllProcessor : [];
+        this.rows = this.$store.getters.userAllProcessor;
       }).catch(() => {
         console.log("faild get All connection")
+        this.rows = [];
       });
     }
     /*** -------- End  Get All Connection For processors to this user ------ ***/

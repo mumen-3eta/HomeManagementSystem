@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>All Controller for Processor : {{ $route.params.connection_id }}</h2>
+    <h2>All Controller Connected</h2>
     <div class="SubMain__Section-AllController my-3 mx-auto p-2 position-relative">
       <div class="search_group">
         <i class="fa fa-search search_group-icon"></i>
@@ -36,17 +36,14 @@
         <div slot="table-actions" class="btn_searchScan"></div>
         <template slot="table-row" slot-scope="props">
           <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-            <!--            :to="{path:'/v2/main/device/create/controller/' + props.row.connection_id}-->
-            <router-link
-                :to="{path:'/v2/main/device/processor/' + $route.params.connection_id + '/controller/' + props.row.Controller_Id }">
-              <button class="btn_Show">
-                <i class="fas fa-eye"></i>
-              </button>
-            </router-link>
-            <button class="btn_Edit">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="btn_deleted">
+            <!--            <router-link-->
+            <!--                :to="{path:'/v2/main/device/processor/' + $route.params.connection_id + '/controller/' + props.row.Controller_Id }">-->
+            <!--              <button class="btn_Show">-->
+            <!--                <i class="fas fa-eye"></i>-->
+            <!--              </button>-->
+            <!--            </router-link>-->
+            <button class="btn_deleted"
+                    @click.prevent="DeleteControllerConnection(props.row.ControllerId ,props.row.ProcessorId)">
               <i class="fas fa-trash-alt"></i>
             </button>
             <div class="btn_Status">
@@ -88,14 +85,13 @@
 import axios from "axios";
 
 export default {
-  name: "AllController",
+  name: "AllControllerConnection",
   data() {
     return {
-      ProcessorID: this.$route.params.connection_id ? this.$route.params.connection_id : '',
-      ControllerID: '',
-      NameControllerUser: '',
-      typeController_id: '',
-      locationController_id: '',
+      // ControllerID: '',
+      // NameControllerUser: '',
+      // typeController_id: '',
+      // locationController_id: '',
       isShowingCamera: false,
       isShowingWait: true,
       searchTerm: '',
@@ -108,24 +104,30 @@ export default {
         },
         {
           label: 'Name',
-          field: 'Name',
+          field: 'ControllerName',
           type: 'string',
+          sortable: false,
         },
         {
-          label: 'Controller Connection ID',
-          field: 'Controller_Connection_Id',
+          label: 'Controller ID',
+          field: 'ControllerId',
           type: 'string',
           sortable: false,
         },
         {
           label: 'Processor ID',
-          field: 'Processor_Id',
+          field: 'ProcessorId',
           type: 'string',
           sortable: false,
         },
         {
           label: 'create At',
-          field: 'create_at',
+          field: 'CreateAt',
+          type: 'string',
+        },
+        {
+          label: 'Status',
+          field: 'Status',
           type: 'string',
           sortable: false,
         },
@@ -136,7 +138,7 @@ export default {
           sortable: false,
         },
       ],
-      rows: this.$store.getters.userAllControllerConnectedWithProcessor ? this.$store.getters.userAllControllerConnectedWithProcessor : []
+      rows: this.$store.getters.AllControllerConnectedForThisUser ? this.$store.getters.AllControllerConnectedForThisUser : [],
 
     }
   },
@@ -183,41 +185,83 @@ export default {
       }
     },
 
+    /* Delete Controller Connection */
+    async DeleteControllerConnection(controller_Id, processor_Id) {
+      this.$swal.fire({
+        title: 'Are you sure?',
+        html: `You won't Delete this controller Id <strong>${controller_Id}</strong>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#35997c',
+        cancelButtonColor: '#cb4848',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await axios.delete('/api/v1/controller/connection', {
+            data: {
+              controllerId: controller_Id,
+              processorId: processor_Id
+            }
+          }).then(() => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Delete this Connection, Successfully',
+              toast: false,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(async () => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: `<strong>Delete Processor ID, Faild</strong>`,
+              toast: false,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+          await this.GetAllControllerConnectedForThisUser();
+        }
+      })
+
+    },
     /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
-    async GetAllControllerConnectedWithProcessor() {
-      await axios.get('/api/v1/controller/connection', {data: {processorId: this.$route.params.connection_id}}).then(async (response) => {
-        const userAllControllerConnectedWithProcessor = response.data.connectionData.map((item, i) => ({
+    async GetAllControllerConnectedForThisUser() {
+      await axios.get('/api/v1/controller/connection/all').then(async (response) => {
+        const AllControllerConnectedForThisUser = response.data.connectionData.map((item, i) => ({
           id: (++i).toString(),
-          Controller_Connection_Id: item.id.toString(),
-          Name: item.name.toString(),
-          Status: item.status,
-          Processor_Id: item.processor_id.toString(),
-          Controller_id: item.controller_id.toString(),
-          TypeId: item.typeid.toString(),
-          LocationId: item.location_id.toString(),
-          create_at: item.create_at.toString(),
+          ControllerName: item.name.toString(),
+          ControllerId: item.controller_id.toString(),
+          ProcessorId: item.processor_id.toString(),
+          CreateAt: this.FormatDate(item.create_at.toString()),
+          Status: item.status === false ? 'OFF' : 'ON',
           btn_Action: ''
         }))
-        await this.$store.dispatch('userAllControllerConnectedWithProcessor', userAllControllerConnectedWithProcessor);
-        this.rows = this.$store.getters.userAllControllerConnectedWithProcessor ? this.$store.getters.userAllControllerConnectedWithProcessor : [];
-      }).catch(() => {
-        console.log("faild get All controller connection")
+        await this.$store.dispatch('AllControllerConnectedForThisUser', AllControllerConnectedForThisUser);
+        this.rows = this.$store.getters.AllControllerConnectedForThisUser ? this.$store.getters.AllControllerConnectedForThisUser : [];
+      }).catch(async () => {
+        console.log("Faild controller connection all")
+        this.rows = [];
       });
+    },
+    FormatDate(data) {
+      if (data) {
+        let splitDate1 = data.split('T');
+        let splitDate2 = splitDate1[0].split('-')
+        return `${splitDate2[0]}/${splitDate2[1]}/${splitDate2[2]}`;
+      } else {
+        return ' ';
+      }
     },
     /*** ---------------- End Get All Controller Connected With Processor ---------------- ***/
   },
   async beforeMount() {
-    await this.GetAllControllerConnectedWithProcessor();
-  }
+    await this.GetAllControllerConnectedForThisUser();
+  },
 }
 </script>
 
-<style lang="scss" scoped>
-.form-switch .form-check-input {
-  transform: rotate(-90deg) scale(1.2);
+<style scoped>
 
-  width: 2.5em;
-  /* margin-left: -2.5em; */
-  border-radius: 2em;
-}
 </style>

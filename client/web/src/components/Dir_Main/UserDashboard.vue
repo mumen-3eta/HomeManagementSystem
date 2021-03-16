@@ -274,7 +274,6 @@ export default {
     /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
     async GetAllControllerConnected() {
       await axios.get('/api/v1/controller/connection/all').then(async (response) => {
-        console.log(response.data.connectionData)
         const userAllControllerConnected = response.data.connectionData.map((item) => ({
           ControllerName: item.name.toString(),
           CreateAt: item.create_at.toString(),
@@ -309,9 +308,15 @@ export default {
   computed: {
     ...mapGetters(['user', 'userProfile', 'userAllControllerConnected']),
     filteredList() {
-      return this.$store.getters.userAllControllerConnected.filter(post => {
-        return post.ControllerName.toLowerCase().includes(this.search.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search.toLowerCase())
-      })
+      if (this.$store.getters.userAllControllerConnected) {
+        return this.$store.getters.userAllControllerConnected.filter(post => {
+          return post.ControllerName.toLowerCase().includes(this.search.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search.toLowerCase())
+        })
+      } else {
+        return [];
+      }
+
+
     },
     // filteredList2() {
     //   return this.ListCardController.filter(post => {
@@ -413,7 +418,7 @@ section {
             width: 95%;
             position: absolute;
             top: 10px;
-            z-index: 999;
+            z-index: 99;
           }
 
           .btn_Star {

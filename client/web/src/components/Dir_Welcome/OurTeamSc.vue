@@ -6,6 +6,7 @@
         <carousel :autoplay="true"
                   :autoplaySpeed="2000"
                   :dots="true"
+                  :loop="true"
                   :nav="false"
                   :responsive="{0:{items:1},600:{items:2},1200:{items:3},1800:{items:4}}">
           <div v-for="(MemberTeam , index) in ListProjectTeams" :key="index"

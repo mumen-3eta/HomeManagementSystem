@@ -18,6 +18,7 @@ import AllController from "@/components/Dir_Main/AllController";
 import ShowControllerInfo from "@/components/Dir_Main/ShowControllerInfo";
 import axios from "axios";
 import store from "@/vuex";
+import AllControllerConnection from "@/components/Dir_Main/AllControllerConnection";
 
 Vue.use(Router)
 
@@ -193,6 +194,20 @@ export default new Router({
                         //         name: "newRegisterPage"
                         //     })
                         // });
+                    }
+                },
+                {
+                    path: '/v2/main/controller/connected',
+                    name: "AllControllerConnection",
+                    component: AllControllerConnection,
+                    // must be login
+                    beforeEnter: (to, from, next) => {
+                        if (store.getters['user'].is_admin) {
+                            return next({
+                                path: '/v2/main/home'
+                            })
+                        }
+                        next()
                     }
                 },
 
