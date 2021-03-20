@@ -185,8 +185,8 @@ export default {
 
     /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
     async GetAllControllerConnectedWithProcessor() {
-      await axios.get('/api/v1/controller/connection', {data: {processorId: this.$route.params.connection_id}}).then(async (response) => {
-        const userAllControllerConnectedWithProcessor = response.data.connectionData.map((item, i) => ({
+      await axios.get('/api/v1/controller/connection', {data: {processorId: this.$route.params.connection_id}}).then(async ({data: {connectionData: response}}) => {
+        const userAllControllerConnectedWithProcessor = response.map((item, i) => ({
           id: (++i).toString(),
           Controller_Connection_Id: item.id.toString(),
           Name: item.name.toString(),

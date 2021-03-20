@@ -101,14 +101,13 @@ export default {
           typeId: this.typeController_id.id,
           locationId: this.locationController_id.id,
           controllerId: this.ControllerID
-        }).then(async (response) => {
-          console.log(response)
+        }).then(async ({data: {connectionData: response}}) => {
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Add Controller ${response.data.connectionData[0].name} , Successfully`,
+            title: `Add Controller ${response[0].name} , Successfully`,
             toast: false,
-            text: response.data.connectionData[0].id,
+            text: response[0].id,
             showConfirmButton: false,
             timer: 1500
           })
@@ -197,8 +196,8 @@ export default {
 
     /* get All Controller Location */
     async getAllLocationController() {
-      await axios.get('/api/v1/controller/location').then(async (response) => {
-        await this.$store.dispatch('LocationControllerData', response.data.locationLabels);
+      await axios.get('/api/v1/controller/location').then(async ({data: {locationLabels: response}}) => {
+        await this.$store.dispatch('LocationControllerData', response);
       }).catch(() => {
         console.log("get Faild LocationControllerData")
       });
@@ -206,8 +205,8 @@ export default {
 
     /*** Get All Type Controller  ***/
     async getAllTypeController() {
-      await axios.get('/api/v1/controller/type').then(async (response) => {
-        await this.$store.dispatch('TypeControllerData', response.data.typeLabels);
+      await axios.get('/api/v1/controller/type').then(async ({data: {typeLabels: response}}) => {
+        await this.$store.dispatch('TypeControllerData', response);
       }).catch(() => {
         console.log("get Faild TypeControllerData")
       });

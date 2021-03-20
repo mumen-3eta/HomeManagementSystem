@@ -46,14 +46,14 @@ export default {
   },
   methods: {
     async generateControllerId() {
-      await axios.post('/api/v1/controller/create').then(async (response) => {
-        await this.$store.dispatch('controllerId', response.data.newController[0].id.toString());
+      await axios.post('/api/v1/controller/create').then(async ({data: {newController: response}}) => {
+        await this.$store.dispatch('controllerId', response[0].id.toString());
         this.$swal.fire({
           position: 'center',
           icon: 'success',
           title: 'Create Controller ID',
           toast: false,
-          text: response.data.newController[0].id.toString(),
+          text: response[0].id.toString(),
           showConfirmButton: false,
           timer: 1500
         })

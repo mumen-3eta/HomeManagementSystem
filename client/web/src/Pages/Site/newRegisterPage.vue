@@ -96,26 +96,36 @@ export default {
         userName: this.userName,
         email: this.Email,
         password: this.Password,
-      }).then(async (response) => {
-        this.errors.errorUserName = null;
-        this.errors.errorEmail = null;
-        this.errors.errorPassword = null;
-        await this.$store.dispatch('TokenUser', response.data);
-        const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
-        await this.$store.dispatch('user', userInfo);
-        const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-        await this.$store.dispatch('userProfile', userProfile[0]);
-        await this.$router.push('/v2/main/home');
+      }).then(async ({data: response}) => {
+        await this.ClearError();
+        await this.$store.dispatch('TokenUser', response);
+        await this.GetUserData();
       }).catch(() => {
         this.errors.ErrorEmailOrUserName = "Email/username is already taken";
         return false;
       });
-
-
+    },
+    async GetUserData() {
+      await axios.get('/api/v1/users/me').then(async ({data: {user: userInfo}}) => {
+        await this.$store.dispatch('user', userInfo);
+      }).catch(() => {
+        console.log('Failed response me')
+      });
+      await axios.get('/api/v1/users/profile').then(async ({data: {profileData: userProfile}}) => {
+        await this.$store.dispatch('userProfile', userProfile[0]);
+      }).catch(() => {
+        console.log('Failed response profile')
+      });
+      await this.$router.push('/v2/main/home');
+    },
+    ClearError() {
+      this.errors.errorUserName = null;
+      this.errors.errorEmail = null;
+      this.errors.errorPassword = null;
     },
 
-
   },
+
   mounted() {
     const input1 = document.getElementById("username_input");
     const labelInput1 = document.getElementById("username_LabelInput");

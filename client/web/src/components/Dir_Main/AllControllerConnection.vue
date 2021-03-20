@@ -228,8 +228,8 @@ export default {
     },
     /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
     async GetAllControllerConnectedForThisUser() {
-      await axios.get('/api/v1/controller/connection/all').then(async (response) => {
-        const AllControllerConnectedForThisUser = response.data.connectionData.map((item, i) => ({
+      await axios.get('/api/v1/controller/connection/all').then(async ({data: {connectionData: response}}) => {
+        const AllControllerConnectedForThisUser = response.map((item, i) => ({
           id: (++i).toString(),
           ControllerName: item.name.toString(),
           ControllerId: item.controller_id.toString(),

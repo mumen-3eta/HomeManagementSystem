@@ -273,8 +273,8 @@ export default {
     },
     /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
     async GetAllControllerConnected() {
-      await axios.get('/api/v1/controller/connection/all').then(async (response) => {
-        const userAllControllerConnected = response.data.connectionData.map((item) => ({
+      await axios.get('/api/v1/controller/connection/all').then(async ({data: {connectionData: response}}) => {
+        const userAllControllerConnected = response.map((item) => ({
           ControllerName: item.name.toString(),
           CreateAt: item.create_at.toString(),
           Status: item.status,
@@ -289,8 +289,8 @@ export default {
     /*** ---------------- End Get All Controller Connected With Processor ---------------- ***/
     /*** ------ Get All Connection For processors to this user -------- ***/
     async GetAllProcessorUser() {
-      await axios.get('/api/v1/processor/connection').then(async (response) => {
-        await this.$store.dispatch('userProcessorIds', response.data.connectionData);
+      await axios.get('/api/v1/processor/connection').then(async ({data: {connectionData: response}}) => {
+        await this.$store.dispatch('userProcessorIds', response);
       }).catch(() => {
         console.log("faild get All connection")
       });

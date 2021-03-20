@@ -244,14 +244,14 @@ export default {
       if (ProcessorID) {
         await axios.post('/api/v1/processor/connection', {
           processorId: ProcessorID,
-        }).then(async (response) => {
+        }).then(async ({data: {connectionData: response}}) => {
           this.$modal.hide('AddNewProcessorId')
           this.$swal.fire({
             position: 'center',
             icon: 'success',
             title: 'Add Processor ID, Successfully',
             toast: false,
-            text: response.data.connectionData[0].processor_id,
+            text: response[0].processor_id,
             showConfirmButton: false,
             timer: 1500
           })
@@ -344,8 +344,8 @@ export default {
 
     /*** ------ Get All Connection For processors to this user -------- ***/
     async GetAllConnections() {
-      await axios.get('/api/v1/processor/connection').then(async (response) => {
-        const userAllProcessorsData = response.data.connectionData.map((item, i) => ({
+      await axios.get('/api/v1/processor/connection').then(async ({data: {connectionData: response}}) => {
+        const userAllProcessorsData = response.map((item, i) => ({
           id: (++i).toString(),
           Connection_Id: item.id.toString(),
           Processor_Id: item.processor_id.toString(),

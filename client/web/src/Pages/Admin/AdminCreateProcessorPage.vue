@@ -61,14 +61,14 @@ export default {
       await this.$store.dispatch('processorId', null);
     },
     async generateId() {
-      await axios.post('/api/v1/processor/create').then(async (response) => {
-        await this.$store.dispatch('processorId', response.data.newProcessor[0].id.toString());
+      await axios.post('/api/v1/processor/create').then(async ({data: {newProcessor: response}}) => {
+        await this.$store.dispatch('processorId', response[0].id.toString());
         this.$swal.fire({
           position: 'center',
           icon: 'success',
           title: 'Create Processor ID',
           toast: false,
-          text: response.data.newProcessor[0].id.toString(),
+          text: response[0].id.toString(),
           showConfirmButton: false,
           timer: 1500
         })

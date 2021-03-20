@@ -190,8 +190,8 @@ export default {
   methods: {
     /* get All Controller Location */
     async GetAllLocations() {
-      await axios.get('/api/v1/controller/location').then(async (response) => {
-        const All_Location_Controller = response.data.locationLabels.map((item, i) => ({
+      await axios.get('/api/v1/controller/location').then(async ({data: {locationLabels: response}}) => {
+        const All_Location_Controller = response.map((item, i) => ({
           id: (++i).toString(),
           nameLocation: item.label,
           locationId: item.id,
@@ -207,8 +207,8 @@ export default {
 
     /*** Get All Type Controller  ***/
     async GetAllTypes() {
-      await axios.get('/api/v1/controller/type').then(async (response) => {
-        const All_Type_Controller = response.data.typeLabels.map((item, i) => ({
+      await axios.get('/api/v1/controller/type').then(async ({data: {typeLabels: response}}) => {
+        const All_Type_Controller = response.map((item, i) => ({
           id: (++i).toString(),
           nameType: item.label,
           labelId: item.id,

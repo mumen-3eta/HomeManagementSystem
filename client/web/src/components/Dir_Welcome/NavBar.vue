@@ -143,8 +143,8 @@ export default {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
   },
   async beforeCreate() {
-    await axios.get('/api/v1/users/me').then(async (res) => {
-      await this.$store.dispatch('TokenUser', res.data.user);
+    await axios.get('/api/v1/users/me').then(async ({data: {user: response}}) => {
+      await this.$store.dispatch('TokenUser', response);
     }).catch(async () => {
       console.log("unauthenticated")
       await this.$store.dispatch('TokenUser', null);

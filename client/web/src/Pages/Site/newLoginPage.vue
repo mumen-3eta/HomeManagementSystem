@@ -82,13 +82,9 @@ export default {
           await axios.post('/api/v1/users/login', {
             email: UserNameOrEmail,
             password: this.Password
-          }).then(async (response) => {
-            await this.$store.dispatch('TokenUser', response.data);
-            const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
-            await this.$store.dispatch('user', userInfo);
-            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-            await this.$store.dispatch('userProfile', userProfile[0]);
-            await this.$router.push('/v2/main/home');
+          }).then(async ({data: response}) => {
+            await this.$store.dispatch('TokenUser', response);
+            await this.GetUserData();
           }).catch(() => {
             this.errors.errorUserNameOrEmail = 'Invalid Email/Password';
             return false;
@@ -98,13 +94,9 @@ export default {
           await axios.post('/api/v1/users/login', {
             userName: UserNameOrEmail,
             password: this.Password
-          }).then(async (response) => {
-            await this.$store.dispatch('TokenUser', response.data);
-            const {data: {user: userInfo}} = await axios.get('/api/v1/users/me');
-            await this.$store.dispatch('user', userInfo);
-            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-            await this.$store.dispatch('userProfile', userProfile[0]);
-            await this.$router.push('/v2/main/home');
+          }).then(async ({data: response}) => {
+            await this.$store.dispatch('TokenUser', response);
+            await this.GetUserData();
           }).catch(() => {
             this.errors.errorUserNameOrEmail = 'Invalid userName/Password';
             return false;
@@ -121,6 +113,19 @@ export default {
         return false;
       }
 
+    },
+    async GetUserData() {
+      await axios.get('/api/v1/users/me').then(async ({data: {user: userInfo}}) => {
+        await this.$store.dispatch('user', userInfo);
+      }).catch(() => {
+        console.log('Failed response me')
+      });
+      await axios.get('/api/v1/users/profile').then(async ({data: {profileData: userProfile}}) => {
+        await this.$store.dispatch('userProfile', userProfile[0]);
+      }).catch(() => {
+        console.log('Failed response profile')
+      });
+      await this.$router.push('/v2/main/home');
     },
   },
   mounted() {
