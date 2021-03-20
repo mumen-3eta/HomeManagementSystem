@@ -1,5 +1,6 @@
 const {
   createControllerForProduction,
+  getAllControllerProduction,
   connectControllerToProcessor,
   getAllProcessorControllers,
   getAllUserControllers,
@@ -21,6 +22,7 @@ const {
 
 module.exports = {
   createControllerForProduction,
+  getAllControllerProduction,
   connectControllerToProcessor,
   getAllProcessorControllers,
   getAllUserControllers,

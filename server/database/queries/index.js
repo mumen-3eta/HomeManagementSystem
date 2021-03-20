@@ -3,6 +3,7 @@ const {
   checkIdByEmailOrUserName,
   getUserDataById,
   deleteUser,
+  getAllUsersForAdmin,
   getAllUserData,
   updateUserData,
 } = require('./users');
@@ -13,9 +14,11 @@ const {
   deleteProcessorConnectionData,
   getProcessorByProcessorId,
   getProcessorByConnectionId,
+  getAllProcessorProductionForAdmin
 } = require('./processor');
 const {
   createControllerProduction,
+  getAllControllerProductionForAdmin,
   connectControllerProcessor,
   updateUserControllerData,
   deleteControllerConnection,
@@ -41,6 +44,7 @@ module.exports = {
   checkIdByEmailOrUserName,
   getUserDataById,
   deleteUser,
+  getAllUsersForAdmin,
   getAllUserData,
   updateUserData,
   createProcessorProduction,
@@ -48,9 +52,10 @@ module.exports = {
   getProcessorConnectionByUserId,
   deleteProcessorConnectionData,
   createControllerProduction,
+  getAllControllerProductionForAdmin,
   connectControllerProcessor,
   getProcessorByProcessorId,
-  getProcessorByConnectionId,
+  getProcessorByConnectionId,getAllProcessorProductionForAdmin,
   updateUserControllerData,
   deleteControllerConnection,
   getControllerByControllerId,
