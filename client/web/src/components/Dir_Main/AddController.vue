@@ -44,8 +44,6 @@
       <button class="btn btn-info" @click.prevent="CreateControllerForUser">Create</button>
       <button class="btn btn-danger" @click.prevent="ClearAllDataController">Clear</button>
     </div>
-    <hr class="mt-3">
-    <AllController/>
     <!--    modal Search Processor id  -->
     <modal :resizable="false" :width="650" height="auto" name="ScanControllerId" @closed="CloseScanModalControllerID"
            @before-open="CloseScanModalControllerID">
@@ -71,11 +69,9 @@
 import {mapGetters} from "vuex";
 import axios from "axios";
 import io from "socket.io-client";
-import AllController from "@/components/Dir_Main/AllController";
 
 export default {
   name: "AddController",
-  components: {AllController},
   data() {
     return {
       ProcessorID: this.$route.params.processor_id ? this.$route.params.processor_id : '',
@@ -111,7 +107,7 @@ export default {
             showConfirmButton: false,
             timer: 1500
           })
-          await this.$router.push({path: '/v2/main/device/add'});
+          await this.$router.push({path: '/v2/main/device/all/controller/' + this.$route.params.processor_id});
         }).catch((e) => {
           let errorArr = e.message.split(' ');
           let ResultFilter = errorArr.filter(code => code.toString().toLowerCase() === '409')

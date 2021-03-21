@@ -49,8 +49,11 @@
             <div class="btn_Status">
               <div class="form-check form-switch">
                 <label for="flexSwitchCheckChecked"></label>
-                <input id="flexSwitchCheckChecked" :checked="Status ? 'checked' : '' " class="form-check-input"
-                       type="checkbox">
+                <input id="flexSwitchCheckChecked"
+                       :checked="props.row.Status === 'ON' ? 'checked' : '' "
+                       class="form-check-input"
+                       type="checkbox"
+                       @change.prevent="ChangeActivation(props.row.ControllerId)">
               </div>
             </div>
           </div>
@@ -83,6 +86,7 @@
 
 <script>
 import axios from "axios";
+import {mapGetters} from "vuex";
 
 export default {
   name: "AllControllerConnection",
@@ -226,23 +230,66 @@ export default {
       })
 
     },
+
+    /*** Change Activation ***/
+    async ChangeActivation(id) {
+
+      await axios.post('/api/v1/controller/change', {
+        newStatus: '',
+        controllerId: id
+      }).then(async ({data: {controllerStatus: status}}) => {
+        if (status[0].status) {
+          this.$swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Active this Controller, Successfully',
+            toast: false,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        } else {
+          this.$swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Not Active this Controller, Successfully',
+            toast: false,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+        await this.GetAllControllerConnectedForThisUser();
+      }).catch(async () => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Change Status, Faild',
+          toast: false,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        await this.GetAllControllerConnectedForThisUser();
+      });
+    },
+
     /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
     async GetAllControllerConnectedForThisUser() {
       await axios.get('/api/v1/controller/connection/all').then(async ({data: {connectionData: response}}) => {
-        const AllControllerConnectedForThisUser = response.map((item, i) => ({
-          id: (++i).toString(),
+        const AllControllerConnectedForThisUser = response.map((item) => ({
+          id: (item.id).toString(),
           ControllerName: item.name.toString(),
           ControllerId: item.controller_id.toString(),
           ProcessorId: item.processor_id.toString(),
           CreateAt: this.FormatDate(item.create_at.toString()),
           Status: item.status === false ? 'OFF' : 'ON',
+          ActiveStatus: item.status,
           btn_Action: ''
         }))
         await this.$store.dispatch('AllControllerConnectedForThisUser', AllControllerConnectedForThisUser);
         this.rows = this.$store.getters.AllControllerConnectedForThisUser ? this.$store.getters.AllControllerConnectedForThisUser : [];
       }).catch(async () => {
         console.log("Faild controller connection all")
-        this.rows = [];
+        await this.$store.dispatch('AllControllerConnectedForThisUser', null);
+        this.rows = this.$store.getters.AllControllerConnectedForThisUser ? this.$store.getters.AllControllerConnectedForThisUser : [];
       });
     },
     FormatDate(data) {
@@ -258,6 +305,9 @@ export default {
   },
   async beforeMount() {
     await this.GetAllControllerConnectedForThisUser();
+  },
+  computed: {
+    ...mapGetters(['AllControllerConnectedForThisUser'])
   },
 }
 </script>

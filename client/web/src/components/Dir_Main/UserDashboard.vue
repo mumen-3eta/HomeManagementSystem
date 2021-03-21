@@ -69,7 +69,7 @@
         </div>
       </header>
       <div class="Main__Card_FavoriteController">
-        <div v-for="(Controller , index) in filteredList" :key="index"
+        <div v-for="(Controller , index) in filteredList" :key="Controller.id"
              class="Card_container">
           <ul class="card_ListData">
             <!--            <router-link :to="{path : Controller.Path}">-->
@@ -90,8 +90,7 @@
                   <input id="flexSwitchCheckChecked" :checked="Controller.Status ? 'checked' : '' "
                          class="form-check-input"
                          type="checkbox"
-                         @change.prevent="ChangeActivation(index)"
-                  >
+                         @change.prevent="ChangeActivation(Controller.id)">
                 </div>
               </div>
             </li>
@@ -152,7 +151,7 @@ export default {
           },
         },
         {
-          Path: '/v2/main/device/add',
+          Path: '/v2/main/controller/connected',
           ClassColorBorder: 'photo__item photo__item-bg2Color',
           TitleCard: 'Number Controller',
           Number: this.$store.getters.userAllControllerConnected ? this.$store.getters.userAllControllerConnected.length : '0',
@@ -185,7 +184,7 @@ export default {
           },
         },
         {
-          Path: '/v2/main/device/add',
+          Path: '#',
           ClassColorBorder: 'photo__item photo__item-bg3Color',
           TitleCard: 'Favorite Controller',
           Number: '0',
@@ -268,13 +267,49 @@ export default {
     ChangeFavorite(id) {
       this.$store.getters.userAllControllerConnected[id].IsActive = !this.$store.getters.userAllControllerConnected[id].IsActive;
     },
-    ChangeActivation(id) {
-      this.$store.getters.userAllControllerConnected[id].Status = !this.$store.getters.userAllControllerConnected[id].Status;
+    async ChangeActivation(id) {
+      await axios.post('/api/v1/controller/change', {
+        newStatus: '',
+        controllerId: id
+      }).then(async ({data: {controllerStatus: status}}) => {
+        if (status[0].status) {
+          this.$swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Active this Controller, Successfully',
+            toast: false,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        } else {
+          this.$swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: 'Not Active this Controller, Successfully',
+            toast: false,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+        await this.GetAllControllerConnected();
+      }).catch(async () => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Change Status, Faild',
+          toast: false,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        await this.GetAllControllerConnected();
+      });
+      // this.$store.getters.userAllControllerConnected[id].Status = !this.$store.getters.userAllControllerConnected[id].Status;
     },
     /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
     async GetAllControllerConnected() {
       await axios.get('/api/v1/controller/connection/all').then(async ({data: {connectionData: response}}) => {
         const userAllControllerConnected = response.map((item) => ({
+          id: item.controller_id.toString(),
           ControllerName: item.name.toString(),
           CreateAt: item.create_at.toString(),
           Status: item.status,
