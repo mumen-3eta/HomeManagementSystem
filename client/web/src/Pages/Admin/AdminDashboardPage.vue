@@ -285,7 +285,7 @@ export default {
           },
         },
         {
-          Path: '#',
+          Path: '/v2/main/admin/all/messages',
           ClassColorBorder: 'photo__item photo__item-bg3Color',
           TitleCard: 'Number Messages',
           SVG: {
