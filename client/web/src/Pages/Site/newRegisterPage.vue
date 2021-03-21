@@ -99,6 +99,7 @@ export default {
       }).then(async ({data: response}) => {
         await this.ClearError();
         await this.$store.dispatch('TokenUser', response);
+        this.LoadingActivation();
         await this.GetUserData();
       }).catch(() => {
         this.errors.ErrorEmailOrUserName = "Email/username is already taken";
@@ -122,6 +123,12 @@ export default {
       this.errors.errorUserName = null;
       this.errors.errorEmail = null;
       this.errors.errorPassword = null;
+    },
+    LoadingActivation() {
+      document.getElementById("loadingScreen").style.display = "flex";
+      setTimeout(function () {
+        document.getElementById("loadingScreen").style.display = "none";
+      }, 750);
     },
 
   },

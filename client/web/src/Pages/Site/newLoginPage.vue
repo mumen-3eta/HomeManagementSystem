@@ -84,6 +84,7 @@ export default {
             password: this.Password
           }).then(async ({data: response}) => {
             await this.$store.dispatch('TokenUser', response);
+            this.LoadingActivation();
             await this.GetUserData();
           }).catch(() => {
             this.errors.errorUserNameOrEmail = 'Invalid Email/Password';
@@ -96,6 +97,7 @@ export default {
             password: this.Password
           }).then(async ({data: response}) => {
             await this.$store.dispatch('TokenUser', response);
+            this.LoadingActivation();
             await this.GetUserData();
           }).catch(() => {
             this.errors.errorUserNameOrEmail = 'Invalid userName/Password';
@@ -126,6 +128,12 @@ export default {
         console.log('Failed response profile')
       });
       await this.$router.push('/v2/main/home');
+    },
+    LoadingActivation() {
+      document.getElementById("loadingScreen").style.display = "flex";
+      setTimeout(function () {
+        document.getElementById("loadingScreen").style.display = "none";
+      }, 750);
     },
   },
   mounted() {

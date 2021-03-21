@@ -7,7 +7,7 @@
       </header>
       <!--   for Admin user     -->
       <ul class="team">
-        <li v-for="(DashboardInfoADMIN,i) in DashboardInfoCardForADMIN" :key="i" class="team__item">
+        <li v-for="(DashboardInfoADMIN,i) in DashboardInfoCardSection1ForADMIN" :key="i" class="team__item">
           <router-link :to="{path:DashboardInfoADMIN.Path}" class="team__link focus--box-shadow">
             <div class="team__header">
               <ul class="photo">
@@ -46,7 +46,9 @@
             </div>
             <div class="team__inform">
               <p class="team__name">{{ DashboardInfoADMIN.TitleCard }}</p>
-              <p class="team__name">{{ DashboardInfoADMIN.Number }}</p>
+              <p v-if="i===0 && allTypeController" class="team__name">{{ allTypeController.length }}</p>
+              <p v-if="i===1 && allLocationController" class="team__name">{{ allLocationController.length }}</p>
+              <p v-if="i===2" class="team__name">20</p>
             </div>
           </router-link>
         </li>
@@ -56,19 +58,54 @@
     <!--   section number 2     -->
     <!--  For Admin   -->
     <section class="section section__mTop">
-      <header class="section__header">
-        <h2 class="section__title">Un Know </h2>
-        <div class="section__control">
-          <button class="section__button  focus--box-shadow" type="button">
-            <i class="fas fa-cog"></i>
-          </button>
-          <button class="section__button section__button--painted focus--box-shadow" type="button">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-      </header>
       <!--    Start hear  -->
-
+      <ul class="team">
+        <li v-for="(DashboardInfoADMIN,i) in DashboardInfoCardSection2ForADMIN" :key="i" class="team__item">
+          <router-link :to="{path:DashboardInfoADMIN.Path}" class="team__link focus--box-shadow">
+            <div class="team__header">
+              <ul class="photo">
+                <li :class="DashboardInfoADMIN.ClassColorBorder">
+                  <span class="photo__substrate">
+                       <svg :height="DashboardInfoADMIN.SVG.height" :style="DashboardInfoADMIN.SVG.Style"
+                            :viewBox="DashboardInfoADMIN.SVG.viewBox"
+                            :width="DashboardInfoADMIN.SVG.width" :x="DashboardInfoADMIN.SVG.x"
+                            :xmlns="DashboardInfoADMIN.SVG.xmlns"
+                            :y="DashboardInfoADMIN.SVG.y">
+                         <g :fill="DashboardInfoADMIN.SVG.Fill_1" :fill-rule="DashboardInfoADMIN.SVG.fill_rule"
+                            :font-family="DashboardInfoADMIN.SVG.font_family"
+                            :font-size="DashboardInfoADMIN.SVG.font_size"
+                            :font-weight="DashboardInfoADMIN.SVG.font_weight" :stroke="DashboardInfoADMIN.SVG.stroke"
+                            :stroke-dasharray="DashboardInfoADMIN.SVG.stroke_dasharray"
+                            :stroke-dashoffset="DashboardInfoADMIN.SVG.stroke_dashoffset"
+                            :stroke-linecap="DashboardInfoADMIN.SVG.stroke_linecap"
+                            :stroke-linejoin="DashboardInfoADMIN.SVG.stroke_linejoin"
+                            :stroke-miterlimit="DashboardInfoADMIN.SVG.stroke_miterlimit"
+                            :stroke-width="DashboardInfoADMIN.SVG.stroke_width"
+                            :style="DashboardInfoADMIN.SVG.Style_mix" :text-anchor="DashboardInfoADMIN.SVG.text_anchor">
+                           <path :d="DashboardInfoADMIN.SVG.d_1" :fill="DashboardInfoADMIN.SVG.Fill_2">
+                           </path>
+                           <g :fill="DashboardInfoADMIN.SVG.Fill_3">
+                             <path
+                                 :d="DashboardInfoADMIN.SVG.d_2"></path>
+                           </g>
+                         </g>
+                       </svg>
+                  </span>
+                </li>
+              </ul>
+              <button class="setting setting--absolute foucs--box-shadow" type="button">
+                <i class="fa fa-ellipsis-v"></i>
+              </button>
+            </div>
+            <div class="team__inform">
+              <p class="team__name">{{ DashboardInfoADMIN.TitleCard }}</p>
+              <p v-if="i===0 && All_Processor" class="team__name">{{ All_Processor.length }}</p>
+              <p v-if="i===1 && All_Controller" class="team__name">{{ All_Controller.length }}</p>
+              <p v-if="i===2" class="team__name">0</p>
+            </div>
+          </router-link>
+        </li>
+      </ul>
       <!--   End hear   -->
     </section><!-- End SECTION -->
   </div>
@@ -84,12 +121,11 @@ export default {
   data() {
     return {
       socket: '',
-      DashboardInfoCardForADMIN: [
+      DashboardInfoCardSection1ForADMIN: [
         {
           Path: '/v2/main/admin/create/controller/type',
           ClassColorBorder: 'photo__item photo__item-bg1Color',
           TitleCard: 'Number Type',
-          Number: this.$store.getters.allTypeController ? this.$store.getters.allTypeController.length : '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -122,7 +158,6 @@ export default {
           Path: '/v2/main/admin/create/controller/location',
           ClassColorBorder: 'photo__item photo__item-bg2Color',
           TitleCard: 'Number Location',
-          Number: this.$store.getters.allLocationController ? this.$store.getters.allLocationController.length : '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -155,7 +190,6 @@ export default {
           Path: '#',
           ClassColorBorder: 'photo__item photo__item-bg3Color',
           TitleCard: 'Number User',
-          Number: '20',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -185,6 +219,104 @@ export default {
           },
         },
       ],
+      DashboardInfoCardSection2ForADMIN: [
+        {
+          Path: '/v2/main/admin/create/processor',
+          ClassColorBorder: 'photo__item photo__item-bg1Color',
+          TitleCard: 'Number Processors',
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: ' M45.6875,10.75c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-13.4375c-7.41162,0 -13.4375,6.02588 -13.4375,13.4375v8.0625h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v8.0625c0,7.41162 6.02588,13.4375 13.4375,13.4375h13.4375v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h13.4375c7.41162,0 13.4375,-6.02588 13.4375,-13.4375v-8.0625h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-8.0625c0,-7.41162 -6.02588,-13.4375 -13.4375,-13.4375h-13.4375v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM29.5625,26.875h112.875c4.44067,0 8.0625,3.62183 8.0625,8.0625v102.125c0,4.44067 -3.62183,8.0625 -8.0625,8.0625h-112.875c-4.44067,0 -8.0625,-3.62183 -8.0625,-8.0625v-102.125c0,-4.44067 3.62183,-8.0625 8.0625,-8.0625zM37.625,37.625c-2.96045,0 -5.375,2.41455 -5.375,5.375v86c0,2.96045 2.41455,5.375 5.375,5.375h96.75c2.96045,0 5.375,-2.41455 5.375,-5.375v-86c0,-2.96045 -2.41455,-5.375 -5.375,-5.375zM37.625,43h96.75v86h-96.75zM56.4375,53.75c-2.06811,0 -4.12573,0.78735 -5.70044,2.36206c-3.14941,3.14941 -3.14941,8.25147 0,11.40088c1.57471,1.57471 3.63233,2.36206 5.70044,2.36206c2.06811,0 4.12573,-0.78735 5.70044,-2.36206c3.14941,-3.14941 3.14941,-8.25147 0,-11.40088c-1.57471,-1.57471 -3.63233,-2.36206 -5.70044,-2.36206zM56.4375,59.125c0.69287,0 1.37524,0.26245 1.90015,0.78735c1.0498,1.0498 1.0498,2.75049 0,3.80029c-1.0498,1.0498 -2.75049,1.0498 -3.80029,0c-1.0498,-1.0498 -1.0498,-2.75049 0,-3.80029c0.5249,-0.5249 1.20728,-0.78735 1.90015,-0.78735zM67.1875,80.625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h43c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM67.1875,91.375c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h13.4375c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM91.375,91.375c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h5.375c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM45.6875,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM59.125,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM72.5625,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM86,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM99.4375,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM112.875,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM126.3125,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875z',
+          },
+        },
+        {
+          Path: '/v2/main/admin/create/controller',
+          ClassColorBorder: 'photo__item photo__item-bg2Color',
+          TitleCard: 'Number Controllers',
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M24.1875,21.5c-4.43017,0 -8.0625,3.63233 -8.0625,8.0625v18.8125h-2.6875c-7.42212,0 -13.4375,6.01538 -13.4375,13.4375v80.625c0,7.42212 6.01538,13.4375 13.4375,13.4375h32.25c7.42212,0 13.4375,-6.01538 13.4375,-13.4375v-13.4375h20.57617l-6.4563,21.5h-6.05737c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875c0,1.48022 1.19678,2.6875 2.6875,2.6875h59.125c1.49072,0 2.6875,-1.20728 2.6875,-2.6875c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875h-6.05737l-6.4563,-21.5h50.13867c4.43018,0 8.0625,-3.63232 8.0625,-8.0625v-91.375c0,-4.43017 -3.63232,-8.0625 -8.0625,-8.0625zM24.1875,26.875h139.75c1.48022,0 2.6875,1.20728 2.6875,2.6875v2.6875h-145.125v-2.6875c0,-1.48022 1.20728,-2.6875 2.6875,-2.6875zM21.5,37.625h145.125v32.25c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875v5.375c0,1.48022 1.19678,2.6875 2.6875,2.6875v26.875h-56.21704c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875c0,1.48022 1.19678,2.6875 2.6875,2.6875h56.21704v8.0625c0,1.48022 -1.20728,2.6875 -2.6875,2.6875h-104.8125v-10.75h24.39746c1.51172,0 2.6875,-1.20728 2.6875,-2.6875c0,-1.48022 -1.17578,-2.6875 -2.6875,-2.6875h-24.39746v-26.875c1.49072,0 2.6875,-1.20728 2.6875,-2.6875v-5.375c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875v-8.0625c0,-7.42212 -6.01538,-13.4375 -13.4375,-13.4375h-24.1875zM13.4375,53.75h32.25c4.43018,0 8.0625,3.63233 8.0625,8.0625v2.6875h-48.375v-2.6875c0,-4.43017 3.63233,-8.0625 8.0625,-8.0625zM26.875,56.4375c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875c0,1.48022 1.19678,2.6875 2.6875,2.6875h2.6875c1.49072,0 2.6875,-1.20728 2.6875,-2.6875c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875zM5.375,69.875h48.375v59.125h-48.375zM72.5625,69.875c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875v5.375c0,1.48022 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.20728 2.6875,-2.6875v-5.375c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875zM86,69.875c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875v5.375c0,1.48022 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.20728 2.6875,-2.6875v-5.375c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875zM99.4375,69.875c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875v5.375c0,1.48022 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.20728 2.6875,-2.6875v-5.375c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875zM112.875,69.875c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875v5.375c0,1.48022 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.20728 2.6875,-2.6875v-5.375c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875zM126.3125,69.875c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875v5.375c0,1.48022 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.20728 2.6875,-2.6875v-5.375c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875zM139.75,69.875c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875v5.375c0,1.48022 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.20728 2.6875,-2.6875v-5.375c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875zM153.1875,69.875c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875v5.375c0,1.48022 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.20728 2.6875,-2.6875v-5.375c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875zM94.28296,107.5c-1.49072,0 -2.6875,1.20728 -2.6875,2.6875c0,1.48022 1.19678,2.6875 2.6875,2.6875h5.15454c1.49072,0 2.6875,-1.20728 2.6875,-2.6875c0,-1.48022 -1.19678,-2.6875 -2.6875,-2.6875zM85.31763,129h22.86474l6.4563,21.5h-35.77734zM5.375,134.375h48.375v8.0625c0,4.43018 -3.63232,8.0625 -8.0625,8.0625h-32.25c-4.43017,0 -8.0625,-3.63232 -8.0625,-8.0625zM29.5625,137.0625c-2.97095,0 -5.375,2.40405 -5.375,5.375c0,2.97095 2.40405,5.375 5.375,5.375c2.97095,0 5.375,-2.40405 5.375,-5.375c0,-2.97095 -2.40405,-5.375 -5.375,-5.375z',
+          },
+        },
+        {
+          Path: '#',
+          ClassColorBorder: 'photo__item photo__item-bg3Color',
+          TitleCard: 'Number Messages',
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M21.5,21.5v86h21.5v21.5h21.5v27.30542l34.13965,-27.30542h51.86035v-5.375v-80.625h-21.5v-21.5zM32.25,32.25h86v10.75h-75.25v53.75h-10.75zM53.75,53.75h86v64.5h-44.88965l-19.61035,15.68408v-15.68408h-21.5zM69.875,69.875v10.75h53.75v-10.75zM69.875,91.375v10.75h32.25v-10.75z',
+          },
+        },
+      ],
     }
   },
   methods: {
@@ -198,10 +330,10 @@ export default {
           btn_Action: ''
         }))
         await this.$store.dispatch('allLocationController', All_Location_Controller);
-        this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
+        // this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
       }).catch(() => {
         console.log("get Faild")
-        this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
+        // this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
       });
     },
 
@@ -215,25 +347,65 @@ export default {
           btn_Action: ''
         }))
         await this.$store.dispatch('allTypeController', All_Type_Controller);
-        this.rows = this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [];
+        // this.rows = this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [];
       }).catch(() => {
         console.log("get Faild")
-        this.rows = this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [];
+        // this.rows = this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [];
       });
-    }
+    },
+
+    /* get All Controller  */
+    async GetAllController() {
+      await axios.get('/api/v1/controller/all').then(async ({data: {productionData: response}}) => {
+        const All_Controller = response.map((item, i) => ({
+          id: (++i).toString(),
+          controllerID: item.id,
+          Create_at: item.create_at,
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('All_Controller', All_Controller);
+      }).catch(() => {
+        console.log("get Faild")
+      });
+    },
+
+    /*** Get All Processors  ***/
+    async GetAllProcessors() {
+      await axios.get('/api/v1/processor/all').then(async ({data: {productionData: response}}) => {
+        const All_Processor = response.map((item, i) => ({
+          id: (++i).toString(),
+          processorID: item.id.toString(),
+          Create_at: this.FormatDate(item.create_at),
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('All_Processor', All_Processor);
+      }).catch(() => {
+        console.log("get Faild")
+      });
+    },
+
+    FormatDate(data) {
+      if (data) {
+        let splitDate1 = data.split('T');
+        let splitDate2 = splitDate1[0].split('-')
+        return `${splitDate2[0]}/${splitDate2[1]}/${splitDate2[2]}`;
+      } else {
+        return ' ';
+      }
+    },
 
   },
   async beforeMount() {
     await this.GetAllLocations();
     await this.GetAllTypes();
+    await this.GetAllController();
+    await this.GetAllProcessors();
   },
   created() {
     this.socket = io('http://localhost:3001');
-    // this.GetAllType();
-    // this.GetAllLocation();
   },
   computed: {
-    ...mapGetters(['user', 'allLocationController', 'allTypeController']),
+    ...mapGetters(['user', 'allLocationController', 'allTypeController', 'All_Controller', 'All_Processor']),
   },
 }
 </script>

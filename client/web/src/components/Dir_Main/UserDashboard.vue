@@ -46,7 +46,10 @@
             </div>
             <div class="team__inform">
               <p class="team__name">{{ DashboardInfo.TitleCard }}</p>
-              <p class="team__name">{{ DashboardInfo.Number }}</p>
+              <p v-if="index === 0 && userProcessorIds" class="team__name">{{ userProcessorIds.length }}</p>
+              <p v-if="index === 1 && userAllControllerConnected" class="team__name">
+                {{ userAllControllerConnected.length }}</p>
+              <p v-if="index === 2 " class="team__name">0</p>
             </div>
           </router-link>
         </li>
@@ -121,7 +124,6 @@ export default {
           Path: '/v2/main/device/add',
           ClassColorBorder: 'photo__item photo__item-bg1Color',
           TitleCard: 'Number Processor',
-          Number: this.$store.getters.userProcessorIds ? this.$store.getters.userProcessorIds.length : '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -187,7 +189,6 @@ export default {
           Path: '#',
           ClassColorBorder: 'photo__item photo__item-bg3Color',
           TitleCard: 'Favorite Controller',
-          Number: '0',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -326,22 +327,23 @@ export default {
     async GetAllProcessorUser() {
       await axios.get('/api/v1/processor/connection').then(async ({data: {connectionData: response}}) => {
         await this.$store.dispatch('userProcessorIds', response);
-      }).catch(() => {
+      }).catch(async () => {
         console.log("faild get All connection")
+        await this.$store.dispatch('userProcessorIds', null);
       });
     }
     /*** -------- End  Get All Connection For processors to this user ------ ***/
   },
   async beforeMount() {
-    await this.GetAllControllerConnected();
     await this.GetAllProcessorUser();
+    await this.GetAllControllerConnected();
   },
   created() {
     this.socket = io('http://localhost:3001');
     // this.GetAllProcessorUser();
   },
   computed: {
-    ...mapGetters(['user', 'userProfile', 'userAllControllerConnected']),
+    ...mapGetters(['user', 'userProcessorIds', 'userProfile', 'userAllControllerConnected']),
     filteredList() {
       if (this.$store.getters.userAllControllerConnected) {
         return this.$store.getters.userAllControllerConnected.filter(post => {
