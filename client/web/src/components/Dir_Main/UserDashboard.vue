@@ -46,9 +46,10 @@
             </div>
             <div class="team__inform">
               <p class="team__name">{{ DashboardInfo.TitleCard }}</p>
-              <p v-if="index === 0 && userProcessorIds" class="team__name">{{ userProcessorIds.length }}</p>
-              <p v-if="index === 1 && userAllControllerConnected" class="team__name">
-                {{ userAllControllerConnected.length }}</p>
+              <p v-if="index === 0 " class="team__name">
+                {{ userProcessorIds ? userProcessorIds.length : '0' }}</p>
+              <p v-if="index === 1 " class="team__name">
+                {{ userAllControllerConnected ? userAllControllerConnected.length : '0' }}</p>
               <p v-if="index === 2 " class="team__name">0</p>
             </div>
           </router-link>

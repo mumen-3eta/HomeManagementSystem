@@ -46,9 +46,9 @@
             </div>
             <div class="team__inform">
               <p class="team__name">{{ DashboardInfoADMIN.TitleCard }}</p>
-              <p v-if="i===0 && allTypeController" class="team__name">{{ allTypeController.length }}</p>
-              <p v-if="i===1 && allLocationController" class="team__name">{{ allLocationController.length }}</p>
-              <p v-if="i===2" class="team__name">20</p>
+              <p v-if="i===0 " class="team__name">{{ allTypeController ? allTypeController.length : '0' }}</p>
+              <p v-if="i===1 " class="team__name">{{ allLocationController ? allLocationController.length : '0' }}</p>
+              <p v-if="i===2" class="team__name">{{ Get_All_Users ? Get_All_Users.length : '0' }}</p>
             </div>
           </router-link>
         </li>
@@ -99,8 +99,8 @@
             </div>
             <div class="team__inform">
               <p class="team__name">{{ DashboardInfoADMIN.TitleCard }}</p>
-              <p v-if="i===0 && All_Processor" class="team__name">{{ All_Processor.length }}</p>
-              <p v-if="i===1 && All_Controller" class="team__name">{{ All_Controller.length }}</p>
+              <p v-if="i===0 " class="team__name">{{ All_Processor ? All_Processor.length : '0' }}</p>
+              <p v-if="i===1 " class="team__name">{{ All_Controller ? All_Controller.length : '0' }}</p>
               <p v-if="i===2" class="team__name">0</p>
             </div>
           </router-link>
@@ -187,7 +187,7 @@ export default {
           },
         },
         {
-          Path: '#',
+          Path: '/v2/main/admin/all/Users',
           ClassColorBorder: 'photo__item photo__item-bg3Color',
           TitleCard: 'Number User',
           SVG: {
@@ -384,6 +384,28 @@ export default {
       });
     },
 
+    /*** Get All Processors  ***/
+    async GetAllUsers() {
+      await axios.get('/api/v1/users/profile/all').then(async ({data: {productionData: response}}) => {
+        const Get_All_Users = response.map((item, i) => ({
+          id: (++i).toString(),
+          user_id: item.id ? item.id.toString() : item.id,
+          userName: item.user_name ? item.user_name.toString() : item.user_name,
+          Email: item.email ? item.email.toString() : item.email,
+          firstName: item.first_name ? item.first_name.toString() : item.first_name,
+          lastName: item.last_name ? item.last_name.toString() : item.last_name,
+          Image: item.image ? item.image.toString() : item.image,
+          Mobile: item.mobile ? item.mobile.toString() : item.mobile,
+          IsAdmin: item.is_admin,
+          Create_at: this.FormatDate(item.create_at),
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('Get_All_Users', Get_All_Users);
+      }).catch(() => {
+        console.log("get Get All Users Faild")
+      });
+    },
+
     FormatDate(data) {
       if (data) {
         let splitDate1 = data.split('T');
@@ -400,12 +422,13 @@ export default {
     await this.GetAllTypes();
     await this.GetAllController();
     await this.GetAllProcessors();
+    await this.GetAllUsers();
   },
   created() {
     this.socket = io('http://localhost:3001');
   },
   computed: {
-    ...mapGetters(['user', 'allLocationController', 'allTypeController', 'All_Controller', 'All_Processor']),
+    ...mapGetters(['user', 'allLocationController', 'allTypeController', 'All_Controller', 'All_Processor', 'Get_All_Users']),
   },
 }
 </script>

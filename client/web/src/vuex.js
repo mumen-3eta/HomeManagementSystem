@@ -21,6 +21,7 @@ const state = {
     allLocationController: null,
     All_Controller: null,
     All_Processor: null,
+    Get_All_Users: null,
     /* End  used it */
 
     /*** Check it, if i not used delete them with (getters,action,mutations)***/
@@ -60,6 +61,9 @@ const store = new Vuex.Store({
         },
         All_Processor: (state) => {
             return state.All_Processor;
+        },
+        Get_All_Users: (state) => {
+            return state.Get_All_Users;
         },
         TokenUser: (state) => {
             return state.TokenUser;
@@ -129,6 +133,9 @@ const store = new Vuex.Store({
         All_Processor(context, All_Processor) {
             context.commit('All_Processor', All_Processor);
         },
+        Get_All_Users(context, Get_All_Users) {
+            context.commit('Get_All_Users', Get_All_Users);
+        },
         userAllProcessor(context, userAllProcessor) {
             context.commit('userAllProcessor', userAllProcessor);
         },
@@ -197,6 +204,9 @@ const store = new Vuex.Store({
         },
         All_Processor(state, All_Processor) {
             state.All_Processor = All_Processor;
+        },
+        Get_All_Users(state, Get_All_Users) {
+            state.Get_All_Users = Get_All_Users;
         },
         deviceInfoAdd(state, deviceInfoAdd) {
             state.deviceInfoAdd = deviceInfoAdd;
