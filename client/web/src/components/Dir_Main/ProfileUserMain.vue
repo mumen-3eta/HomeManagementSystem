@@ -350,7 +350,8 @@ export default {
               timer: 1500
             })
           });
-        } else if (FirstName) {
+        }
+        if (FirstName) {
           await axios.put('/api/v1/users/profile', {
             firstName: FirstName ? FirstName : this.$store.getters.userProfile.first_name,
           }).then(async () => {
@@ -378,7 +379,8 @@ export default {
               timer: 1500
             })
           });
-        } else if (LastName) {
+        }
+        if (LastName) {
           await axios.put('/api/v1/users/profile', {
             lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
           }).then(async () => {

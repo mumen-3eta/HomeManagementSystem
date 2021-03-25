@@ -5,7 +5,6 @@
       <h2>Create Processor</h2>
       <div class="btn-group_Generate">
         <button class="btn btn-secondary" @click.prevent="generateId">Generate Id Processor</button>
-        <button class="btn btn-danger" @click.prevent="clearGenerateId">Clear</button>
       </div>
       <div class="project my-3 mx-auto p-2 position-relative">
         <vue-good-table
@@ -145,20 +144,7 @@ export default {
     CloseAllProcessorModal() {
       this.$modal.hide('AllProcessors')
     },
-    async clearGenerateId() {
-      if (this.$store.getters.processorId) {
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Cleared Successfully',
-          toast: false,
-          text: null,
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-      await this.$store.dispatch('processorId', null);
-    },
+
     async generateId() {
       await axios.post('/api/v1/processor/create').then(async ({data: {newProcessor: response}}) => {
         await this.$store.dispatch('processorId', response[0].id.toString());

@@ -5,7 +5,6 @@
       <h2>Create Controller</h2>
       <div class="btn-group_Generate">
         <button class="btn btn-secondary" @click.prevent="generateControllerId">Generate Id Controller</button>
-        <button class="btn btn-danger" @click.prevent="clearGenerateControllerId">Clear</button>
       </div>
 
       <div class="project my-3 mx-auto p-2 position-relative">
@@ -172,20 +171,6 @@ export default {
           timer: 1500
         })
       });
-    },
-    async clearGenerateControllerId() {
-      if (this.$store.getters.controllerId) {
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Cleared Successfully',
-          toast: false,
-          text: null,
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-      await this.$store.dispatch('controllerId', null);
     },
     copyTextControllerId() {
       let copyText = document.getElementById("ControllerIDInput");
