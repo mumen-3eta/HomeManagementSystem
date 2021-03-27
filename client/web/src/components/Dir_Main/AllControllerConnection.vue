@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>All Controller for Processor : {{ $route.params.connection_id }}</h2>
+    <h2>All Controller Connected</h2>
     <div class="SubMain__Section-AllController my-3 mx-auto p-2 position-relative">
       <div class="search_group">
         <i class="fa fa-search search_group-icon"></i>
@@ -43,17 +43,17 @@
             <!--              </button>-->
             <!--            </router-link>-->
             <button class="btn_deleted"
-                    @click.prevent="DeleteControllerConnection(props.row.Controller_id ,props.row.Processor_Id)">
+                    @click.prevent="DeleteControllerConnection(props.row.ControllerId ,props.row.ProcessorId)">
               <i class="fas fa-trash-alt"></i>
             </button>
             <div class="btn_Status">
               <div class="form-check form-switch">
                 <label for="flexSwitchCheckChecked"></label>
                 <input id="flexSwitchCheckChecked"
-                       :checked="props.row.ActiveStatus === 'ON'  ? 'checked' : '' "
+                       :checked="props.row.Status === 'ON' ? 'checked' : '' "
                        class="form-check-input"
                        type="checkbox"
-                       @change.prevent="ChangeActivation(props.row.Controller_id)">
+                       @change.prevent="ChangeActivation(props.row.ControllerId)">
               </div>
             </div>
           </div>
@@ -86,16 +86,16 @@
 
 <script>
 import axios from "axios";
+import {mapGetters} from "vuex";
 
 export default {
-  name: "AllController",
+  name: "AllControllerConnection",
   data() {
     return {
-      ProcessorID: this.$route.params.connection_id ? this.$route.params.connection_id : '',
-      ControllerID: '',
-      NameControllerUser: '',
-      typeController_id: '',
-      locationController_id: '',
+      // ControllerID: '',
+      // NameControllerUser: '',
+      // typeController_id: '',
+      // locationController_id: '',
       isShowingCamera: false,
       isShowingWait: true,
       searchTerm: '',
@@ -108,31 +108,32 @@ export default {
         },
         {
           label: 'Name',
-          field: 'Name',
+          field: 'ControllerName',
           type: 'string',
+          sortable: false,
         },
         {
           label: 'Controller ID',
-          field: 'Controller_id',
+          field: 'ControllerId',
           type: 'string',
           sortable: false,
         },
         {
           label: 'Processor ID',
-          field: 'Processor_Id',
-          type: 'string',
-          sortable: false,
-        },
-        {
-          label: 'Status',
-          field: 'ActiveStatus',
+          field: 'ProcessorId',
           type: 'string',
           sortable: false,
         },
         {
           label: 'create At',
-          field: 'create_at',
+          field: 'CreateAt',
           type: 'string',
+        },
+        {
+          label: 'Status',
+          field: 'Status',
+          type: 'string',
+          sortable: false,
         },
         {
           label: 'Action',
@@ -141,7 +142,7 @@ export default {
           sortable: false,
         },
       ],
-      rows: this.$store.getters.userAllControllerConnectedWithProcessor ? this.$store.getters.userAllControllerConnectedWithProcessor : []
+      rows: this.$store.getters.AllControllerConnectedForThisUser ? this.$store.getters.AllControllerConnectedForThisUser : [],
 
     }
   },
@@ -224,7 +225,7 @@ export default {
               timer: 1500
             })
           });
-          await this.GetAllControllerConnectedWithProcessor();
+          await this.GetAllControllerConnectedForThisUser();
         }
       })
 
@@ -256,7 +257,7 @@ export default {
             timer: 1500
           })
         }
-        await this.GetAllControllerConnectedWithProcessor();
+        await this.GetAllControllerConnectedForThisUser();
       }).catch(async () => {
         this.$swal.fire({
           position: 'center',
@@ -266,34 +267,29 @@ export default {
           showConfirmButton: false,
           timer: 1500
         })
-        await this.GetAllControllerConnectedWithProcessor();
+        await this.GetAllControllerConnectedForThisUser();
       });
     },
 
     /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
-    async GetAllControllerConnectedWithProcessor() {
-      await axios.post('/api/v1/controller/connection/processor', {
-        processorId: this.$route.params.connection_id,
-      }).then(async ({data: {connectionData: response}}) => {
-        const userAllControllerConnectedWithProcessor = response.map((item, i) => ({
-          id: (++i).toString(),
-          Controller_Connection_Id: item.id.toString(),
-          Name: item.name.toString(),
-          Status: item.status,
-          ActiveStatus: item.status === false ? 'OFF' : 'ON',
-          Processor_Id: item.processor_id.toString(),
-          Controller_id: item.controller_id.toString(),
-          TypeId: item.typeid.toString(),
-          LocationId: item.location_id.toString(),
-          create_at: this.FormatDate(item.create_at.toString()),
+    async GetAllControllerConnectedForThisUser() {
+      await axios.get('/api/v1/controller/connection/all').then(async ({data: {connectionData: response}}) => {
+        const AllControllerConnectedForThisUser = response.map((item) => ({
+          id: (item.id).toString(),
+          ControllerName: item.name.toString(),
+          ControllerId: item.controller_id.toString(),
+          ProcessorId: item.processor_id.toString(),
+          CreateAt: this.FormatDate(item.create_at.toString()),
+          Status: item.status === false ? 'OFF' : 'ON',
+          ActiveStatus: item.status,
           btn_Action: ''
         }))
-        await this.$store.dispatch('userAllControllerConnectedWithProcessor', userAllControllerConnectedWithProcessor);
-        this.rows = this.$store.getters.userAllControllerConnectedWithProcessor ? this.$store.getters.userAllControllerConnectedWithProcessor : [];
+        await this.$store.dispatch('AllControllerConnectedForThisUser', AllControllerConnectedForThisUser);
+        this.rows = this.$store.getters.AllControllerConnectedForThisUser ? this.$store.getters.AllControllerConnectedForThisUser : [];
       }).catch(async () => {
-        console.log("faild get All controller connection")
-        await this.$store.dispatch('userAllControllerConnectedWithProcessor', null);
-        this.rows = this.$store.getters.userAllControllerConnectedWithProcessor ? this.$store.getters.userAllControllerConnectedWithProcessor : [];
+        console.log("Faild controller connection all")
+        await this.$store.dispatch('AllControllerConnectedForThisUser', null);
+        this.rows = this.$store.getters.AllControllerConnectedForThisUser ? this.$store.getters.AllControllerConnectedForThisUser : [];
       });
     },
     FormatDate(data) {
@@ -308,17 +304,14 @@ export default {
     /*** ---------------- End Get All Controller Connected With Processor ---------------- ***/
   },
   async beforeMount() {
-    await this.GetAllControllerConnectedWithProcessor();
-  }
+    await this.GetAllControllerConnectedForThisUser();
+  },
+  computed: {
+    ...mapGetters(['AllControllerConnectedForThisUser'])
+  },
 }
 </script>
 
-<style lang="scss" scoped>
-.form-switch .form-check-input {
-  transform: rotate(-90deg) scale(1.2);
+<style scoped>
 
-  width: 2.5em;
-  /* margin-left: -2.5em; */
-  border-radius: 2em;
-}
 </style>

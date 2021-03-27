@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { addUsers, login, authUser, logout } = require('../../controllers');
 const { verifyUser } = require('../../middleware/authentication');
 
+
 router.post('/register', addUsers);
 router.post('/login', login);
 router.get('/me', verifyUser, authUser);

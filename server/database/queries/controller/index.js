@@ -1,8 +1,10 @@
 const createControllerProduction = require('./createControllerProduction');
+const getAllControllerProductionForAdmin = require('./getAllControllerProductionForAdmin');
 const connectControllerProcessor = require('./connectControllerProcessor');
 const updateUserControllerData = require('./updateUserControllerData');
 const deleteControllerConnection = require('./deleteControllerConnection');
 const getControllerByControllerId = require('./getControllerByControllerId');
+const changeControllerStatus = require('./changeControllerStatus');
 const getControllerByProcessorId = require('./getControllerByProcessorId');
 const getControllerByUserId = require('./getControllerByUserId');
 
@@ -25,10 +27,12 @@ const {
 
 module.exports = {
   createControllerProduction,
+  getAllControllerProductionForAdmin,
   connectControllerProcessor,
   updateUserControllerData,
   deleteControllerConnection,
   getControllerByControllerId,
+  changeControllerStatus,
   getControllerByProcessorId,
   getControllerByUserId,
   addControllerType,

@@ -2,9 +2,11 @@
   <aside class="aside">
     <section class="section">
       <div class="aside__control">
-        <button class="aside__button focus--box-shadow" type="button">
-          <i class="fas fa-chevron-left"></i>
-        </button>
+        <router-link :to="{path:'/'}" aria-label="Go To Welcome Page">
+          <button class="aside__button focus--box-shadow" type="button">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </router-link>
         <button aria-label="You hav new feedback"
                 class="aside__button aside__button--notification focus--box-shadow " type="button">
           <i class="fas fa-bell"></i>
@@ -54,4 +56,29 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+a {
+  &:hover {
+    position: relative;
+  }
+}
+
+a[aria-label] {
+  &:hover {
+    &:after {
+      content: attr(aria-label);
+      padding: 4px 8px;
+      position: absolute;
+      left: calc(100% + 0.5rem);
+      top: -25%;
+      white-space: nowrap;
+      z-index: 20;
+      background: #949494;
+      border-radius: 5px;
+      color: white;
+    }
+  }
+
+}
+</style>
 

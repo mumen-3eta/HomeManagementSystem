@@ -26,6 +26,13 @@
             <i class="far fa-desktop nav__icon"></i>
           </router-link>
         </li>
+        <li v-if="!user.is_admin"
+            :class="['nav__item',this.$route.path === '/v2/main/controller/connected' ? 'nav__item--isActive':'']"
+            aria-label="All Controller">
+          <router-link :to="{path:'/v2/main/controller/connected'}" class="nav__link focus--box-shadow" role="menuitem">
+            <i class="far fa-laptop nav__icon"></i>
+          </router-link>
+        </li>
         <!--  End  For user    -->
         <!--   For Admin     -->
         <li v-if="user.is_admin"
@@ -67,6 +74,13 @@
             <i class="far fa-comment-dots nav__icon"></i>
           </router-link>
         </li>
+        <li v-if="user.is_admin"
+            :class="['nav__item',this.$route.path === '/v2/main/admin/all/Users' ? 'nav__item--isActive':'']"
+            aria-label="All Messages">
+          <router-link :to="{path:'/v2/main/admin/all/Users'}" class="nav__link focus--box-shadow" role="menuitem">
+            <i class="far fa-users nav__icon"></i>
+          </router-link>
+        </li>
         <!--  End  For Admin    -->
       </ul>
     </nav><!-- End NAV -->
@@ -83,34 +97,44 @@ export default {
   },
 }
 </script>
-<style scoped>
-li:hover {
-  position: relative;
+<style lang="scss" scoped>
+li {
+  &:hover {
+    position: relative;
+  }
 }
 
-li[aria-label]:hover:after {
-  content: attr(aria-label);
-  padding: 4px 8px;
-  position: absolute;
-  left: calc(100% + 0.5rem);
-  top: -25%;
-  white-space: nowrap;
-  z-index: 20;
-  background: #949494;
-  border-radius: 5px;
-  color: white;
+li[aria-label] {
+  &:hover {
+    &:after {
+      content: attr(aria-label);
+      padding: 4px 8px;
+      position: absolute;
+      left: calc(100% + 0.5rem);
+      top: -25%;
+      white-space: nowrap;
+      z-index: 9999;
+      background: #949494;
+      border-radius: 5px;
+      color: white;
+    }
+  }
 }
 
 @media (max-width: 1200px) {
-  li[aria-label]:hover:after {
-    left: 0;
-    top: -75%;
+  li[aria-label] {
+    &:hover {
+      &:after {
+        left: 0;
+        top: -75%;
+      }
+    }
   }
 }
 
 .nav {
   position: fixed;
-  z-index: 9;
+  z-index: 999;
   /*margin: -2rem 0.8rem 0 0.8rem;*/
 }
 

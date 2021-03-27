@@ -1,6 +1,8 @@
 const {
   createControllerForProduction,
+  getAllControllerProduction,
   connectControllerToProcessor,
+  changeControllerStatus,
   getAllProcessorControllers,
   getAllUserControllers,
   deleteControllerConnection,
@@ -21,7 +23,9 @@ const {
 
 module.exports = {
   createControllerForProduction,
+  getAllControllerProduction,
   connectControllerToProcessor,
+  changeControllerStatus,
   getAllProcessorControllers,
   getAllUserControllers,
   deleteControllerConnection,

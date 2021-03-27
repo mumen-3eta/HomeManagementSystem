@@ -18,6 +18,8 @@ import AllController from "@/components/Dir_Main/AllController";
 import ShowControllerInfo from "@/components/Dir_Main/ShowControllerInfo";
 import axios from "axios";
 import store from "@/vuex";
+import AllControllerConnection from "@/components/Dir_Main/AllControllerConnection";
+import AdminAllUsersPage from "@/Pages/Admin/AdminAllUsersPage";
 
 Vue.use(Router)
 
@@ -142,7 +144,7 @@ export default new Router({
                     }
                 },
                 {
-                    path: '/v2/main/device/all/controller/:processor_id',
+                    path: '/v2/main/device/all/controller/:connection_id',
                     name: "AllController",
                     component: AllController,
                     // must be login
@@ -193,6 +195,20 @@ export default new Router({
                         //         name: "newRegisterPage"
                         //     })
                         // });
+                    }
+                },
+                {
+                    path: '/v2/main/controller/connected',
+                    name: "AllControllerConnection",
+                    component: AllControllerConnection,
+                    // must be login
+                    beforeEnter: (to, from, next) => {
+                        if (store.getters['user'].is_admin) {
+                            return next({
+                                path: '/v2/main/home'
+                            })
+                        }
+                        next()
                     }
                 },
 
@@ -305,6 +321,32 @@ export default new Router({
                     path: '/v2/main/admin/all/messages',
                     name: "AdminMessagesPage",
                     component: AdminMessagesPage,
+                    // must be login
+                    beforeEnter: (to, from, next) => {
+                        if (!store.getters['user'].is_admin) {
+                            return next({
+                                path: '/v2/main/home'
+                            })
+                        }
+                        next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (!response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
+                    }
+                },
+                {
+                    path: '/v2/main/admin/all/Users',
+                    name: "AdminAllUsersPage",
+                    component: AdminAllUsersPage,
                     // must be login
                     beforeEnter: (to, from, next) => {
                         if (!store.getters['user'].is_admin) {

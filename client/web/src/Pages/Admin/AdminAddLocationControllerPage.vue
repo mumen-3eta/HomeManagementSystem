@@ -157,9 +157,9 @@ export default {
       if (NameLocationController) {
         await axios.post('/api/v1/controller/location', {
           label: NameLocationController,
-        }).then(async (response) => {
-          await axios.get('/api/v1/controller/location').then(async (response) => {
-            const All_Location_Controller = response.data.locationLabels.map((item, i) => ({
+        }).then(async ({data: {data: response}}) => {
+          await axios.get('/api/v1/controller/location').then(async ({data: {locationLabels: response}}) => {
+            const All_Location_Controller = response.map((item, i) => ({
               id: (++i).toString(),
               nameLocation: item.label,
               locationId: item.id,
@@ -175,9 +175,9 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Add ${response.data.data[0].label}, Successfully`,
+            title: `Add ${response[0].label}, Successfully`,
             toast: false,
-            text: `ID this Type : " ${response.data.data[0].id} "`,
+            text: `ID this Type : " ${response[0].id} "`,
             showConfirmButton: false,
             timer: 1500
           })
@@ -215,15 +215,15 @@ export default {
         await axios.put('/api/v1/controller/location', {
           locationId: this.EditInfo.Location_id,
           label: NameLocationController,
-        }).then(async (response) => {
+        }).then(async ({data: {data: response}}) => {
           await this.GetAllLocations();
           this.$modal.hide('AddNewLocationController')
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Update Location " ${response.data.data[0].label} " , Successfully`,
+            title: `Update Location " ${response[0].label} " , Successfully`,
             toast: false,
-            text: `ID this Location : " ${response.data.data[0].id} "`,
+            text: `ID this Location : " ${response[0].id} "`,
             showConfirmButton: false,
             timer: 1500
           })
@@ -291,8 +291,8 @@ export default {
 
     /* get All Controller Location */
     async GetAllLocations() {
-      await axios.get('/api/v1/controller/location').then(async (response) => {
-        const All_Location_Controller = response.data.locationLabels.map((item, i) => ({
+      await axios.get('/api/v1/controller/location').then(async ({data: {locationLabels: response}}) => {
+        const All_Location_Controller = response.map((item, i) => ({
           id: (++i).toString(),
           nameLocation: item.label,
           locationId: item.id,

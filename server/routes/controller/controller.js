@@ -2,7 +2,9 @@ const router = require('express').Router();
 
 const {
   createControllerForProduction,
+  getAllControllerProduction,
   connectControllerToProcessor,
+  changeControllerStatus,
   getAllProcessorControllers,
   getAllUserControllers,
   deleteControllerConnection,
@@ -11,9 +13,11 @@ const {
 const { protectedAdmin } = require('../../middleware/authentication');
 
 router.post('/create', protectedAdmin, createControllerForProduction);
-router.post('/connection', connectControllerToProcessor);
+router.get('/all', protectedAdmin, getAllControllerProduction);
 
-router.get('/connection', getAllProcessorControllers);
+router.post('/connection', connectControllerToProcessor);
+router.post('/change', changeControllerStatus );
+router.post('/connection/processor', getAllProcessorControllers);
 router.get('/connection/all', getAllUserControllers);
 router.delete('/connection', deleteControllerConnection);
 

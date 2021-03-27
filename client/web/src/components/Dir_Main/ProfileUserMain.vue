@@ -261,23 +261,35 @@ export default {
           }
           /*** End DELETE ***/
           this.storeImageInDB(url);
-          this.$swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Thank you, Send it',
-            text: "Update your information, Successfully",
-            showConfirmButton: false,
-            timer: 1500
-          })
         })
       })
       this.onCancelImage();
     },
     /*** store image method ***/
     async storeImageInDB(URL) {
-      await axios.put('/api/v1/users/profile', {image: URL});
-      const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-      await this.$store.dispatch('userProfile', userProfile[0]);
+      await axios.put('/api/v1/users/profile', {image: URL}).then(async () => {
+        await axios.get('/api/v1/users/profile').then(async ({data: {profileData: userProfile}}) => {
+          await this.$store.dispatch('userProfile', userProfile[0]);
+        }).catch(() => {
+          console.log('Get Profile faild!')
+        });
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Thank you, Send it',
+          text: "Update your information, Successfully",
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }).catch(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Store image Faild!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      });
     },
     OnDeleteImage(deletedImage) {
       deletedImage.delete().then(() => {
@@ -312,11 +324,14 @@ export default {
             lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
             // mobile: Mobile ? Mobile : this.$store.getters.userProfile.mobile, /* 😪 Error Hear ☠️ 🆘 🔞 ' error: "mobile must be less than or equal to 15" not work correctly '*/
           }).then(async () => {
-            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-            await this.$store.dispatch('userProfile', userProfile[0]);
-            FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
-            LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
-            Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+            await axios.get('/api/v1/users/profile').then(async ({data: {profileData: userProfile}}) => {
+              await this.$store.dispatch('userProfile', userProfile[0]);
+              FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
+              LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
+              Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+            }).catch(() => {
+              console.log('Get data profile faild')
+            });
             this.$swal.fire({
               position: 'center',
               icon: 'success',
@@ -335,13 +350,17 @@ export default {
               timer: 1500
             })
           });
-        } else if (FirstName) {
+        }
+        if (FirstName) {
           await axios.put('/api/v1/users/profile', {
             firstName: FirstName ? FirstName : this.$store.getters.userProfile.first_name,
           }).then(async () => {
-            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-            await this.$store.dispatch('userProfile', userProfile[0]);
-            FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
+            await axios.get('/api/v1/users/profile').then(async ({data: {profileData: userProfile}}) => {
+              await this.$store.dispatch('userProfile', userProfile[0]);
+              FirstName = userProfile[0].first_name ? userProfile[0].first_name : ''
+            }).catch(() => {
+              console.log('Get data profile faild')
+            });
             this.$swal.fire({
               position: 'center',
               icon: 'success',
@@ -360,13 +379,17 @@ export default {
               timer: 1500
             })
           });
-        } else if (LastName) {
+        }
+        if (LastName) {
           await axios.put('/api/v1/users/profile', {
             lastName: LastName ? LastName : this.$store.getters.userProfile.last_name,
           }).then(async () => {
-            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-            await this.$store.dispatch('userProfile', userProfile[0]);
-            LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
+            await axios.get('/api/v1/users/profile').then(async ({data: {profileData: userProfile}}) => {
+              await this.$store.dispatch('userProfile', userProfile[0]);
+              LastName = userProfile[0].last_name ? userProfile[0].last_name : ''
+            }).catch(() => {
+              console.log('Get data profile faild')
+            });
             this.$swal.fire({
               position: 'center',
               icon: 'success',
@@ -389,9 +412,12 @@ export default {
           await axios.put('/api/v1/users/profile', {
             // mobile: Mobile ? Mobile : this.$store.getters.userProfile.mobile, /* 😪 Error Hear ☠️ 🆘 🔞 ' error: "mobile must be less than or equal to 15" not work correctly '*/
           }).then(async () => {
-            const {data: {profileData: userProfile}} = await axios.get('/api/v1/users/profile');
-            await this.$store.dispatch('userProfile', userProfile[0]);
-            Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+            await axios.get('/api/v1/users/profile').then(async ({data: {profileData: userProfile}}) => {
+              await this.$store.dispatch('userProfile', userProfile[0]);
+              Mobile = userProfile[0].mobile ? userProfile[0].mobile : ''
+            }).catch(() => {
+              console.log('Get data profile faild')
+            });
             this.$swal.fire({
               position: 'center',
               icon: 'success',
@@ -411,25 +437,6 @@ export default {
             })
           });
         }
-
-
-        // const user = await axios.post('/api/v1/users/profile', {
-        //   profileInfo: {
-        //     firstName: this.userData.profileInfo.firstName,
-        //     lastName: this.userData.profileInfo.lastName,
-        //     mobile: this.userData.profileInfo.mobile,
-        //     image: this.$store.getters.user.profileInfo.image
-        //   }
-        // });
-        // this.socket.emit("user_profileData", user.data.data);
-        // this.socket.on("user_profileData_server", (data) => {
-        //   this.$store.dispatch('user', data);
-        //   this.mobile = this.$store.getters.user.profileInfo.mobile;
-        //   this.firstName = this.$store.getters.user.profileInfo.firstName;
-        //   this.lastName = this.$store.getters.user.profileInfo.lastName;
-        //   this.image = this.$store.getters.user.profileInfo.image;
-        // });
-        // await this.$store.dispatch('user', user.data.data);
 
       } else {
         this.userData.profileInfo.error.mobile = "Sorry! User mobile Faild, is Required";
@@ -462,8 +469,8 @@ export default {
           await axios.put('/api/v1/users/profile', {
             userName: UserName,
           }).then(async () => {
-            await axios.get('/api/v1/users/profile').then(async (response) => {
-              await this.$store.dispatch('userProfile', response.data.profileData[0]);
+            await axios.get('/api/v1/users/profile').then(async ({data: {profileData: response}}) => {
+              await this.$store.dispatch('userProfile', response[0]);
               this.$swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -487,8 +494,8 @@ export default {
           await axios.put('/api/v1/users/profile', {
             password: NewPassword,
           }).then(async () => {
-            await axios.get('/api/v1/users/profile').then(async (response) => {
-              await this.$store.dispatch('userProfile', response.data.profileData[0]);
+            await axios.get('/api/v1/users/profile').then(async ({data: {profileData: response}}) => {
+              await this.$store.dispatch('userProfile', response[0]);
               this.$swal.fire({
                 position: 'center',
                 icon: 'success',

@@ -5,12 +5,14 @@ const {
   authUser,
   login,
   logout,
+  getAllUsers,
   getAllProfileData,
   updateProfileData,
 } = require('./users');
 
 const {
   createProcessorForProduction,
+  getAllProcessorProduction,
   connectProcessorToUser,
   getProcessorConnection,
   deleteProcessorConnection,
@@ -18,7 +20,9 @@ const {
 
 const {
   createControllerForProduction,
+  getAllControllerProduction,
   connectControllerToProcessor,
+  changeControllerStatus,
   getAllProcessorControllers,
   getAllUserControllers,
   deleteControllerConnection,
@@ -41,14 +45,18 @@ module.exports = {
   login,
   logout,
   authUser,
+  getAllUsers,
   getAllProfileData,
   updateProfileData,
   createProcessorForProduction,
+  getAllProcessorProduction,
   connectProcessorToUser,
   getProcessorConnection,
   deleteProcessorConnection,
   createControllerForProduction,
+  getAllControllerProduction,
   connectControllerToProcessor,
+  changeControllerStatus,
   getAllProcessorControllers,
   getAllUserControllers,
   deleteControllerConnection,

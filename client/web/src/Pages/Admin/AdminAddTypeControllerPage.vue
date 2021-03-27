@@ -156,9 +156,9 @@ export default {
       if (NameTypeController) {
         await axios.post('/api/v1/controller/type', {
           label: NameTypeController,
-        }).then(async (response) => {
-          await axios.get('/api/v1/controller/type').then(async (response) => {
-            const All_Type_Controller = response.data.typeLabels.map((item, i) => ({
+        }).then(async ({data: {data: response}}) => {
+          await axios.get('/api/v1/controller/type').then(async ({data: {typeLabels: response}}) => {
+            const All_Type_Controller = response.map((item, i) => ({
               id: (++i).toString(),
               nameType: item.label,
               labelId: item.id,
@@ -175,9 +175,9 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Add ${response.data.data[0].label}, Successfully`,
+            title: `Add ${response[0].label}, Successfully`,
             toast: false,
-            text: `ID this Type : " ${response.data.data[0].id} "`,
+            text: `ID this Type : " ${response[0].id} "`,
             showConfirmButton: false,
             timer: 1500
           })
@@ -259,15 +259,15 @@ export default {
         await axios.put('/api/v1/controller/type', {
           typeId: this.EditInfo.Type_id,
           label: NameTypeController,
-        }).then(async (response) => {
+        }).then(async ({data: {data: response}}) => {
           await this.GetAllTypes();
           this.$modal.hide('AddNewTypeController')
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Update type " ${response.data.data[0].label} " , Successfully`,
+            title: `Update type " ${response[0].label} " , Successfully`,
             toast: false,
-            text: `ID this Type : " ${response.data.data[0].id} "`,
+            text: `ID this Type : " ${response[0].id} "`,
             showConfirmButton: false,
             timer: 1500
           })
@@ -294,8 +294,8 @@ export default {
     },
     /*** Get All Type Controller  ***/
     async GetAllTypes() {
-      await axios.get('/api/v1/controller/type').then(async (response) => {
-        const All_Type_Controller = response.data.typeLabels.map((item, i) => ({
+      await axios.get('/api/v1/controller/type').then(async ({data: {typeLabels: response}}) => {
+        const All_Type_Controller = response.map((item, i) => ({
           id: (++i).toString(),
           nameType: item.label,
           labelId: item.id,

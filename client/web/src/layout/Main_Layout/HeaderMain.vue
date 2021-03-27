@@ -79,7 +79,7 @@ export default {
   mixins: [clickAway],
   methods: {
     async handleClick() {
-      await axios.post('/api/v1/users/logout').then(async () => {
+      await axios.get('/api/v1/users/logout').then(async () => {
         this.$swal.fire({
           position: 'center',
           icon: 'success',

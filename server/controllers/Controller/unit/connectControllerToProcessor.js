@@ -2,7 +2,7 @@ const boom = require('@hapi/boom');
 
 const {
   connectControllerProcessor,
-  getProcessorConnectionByUserId,
+  getProcessorByConnectionId,
   getControllerByControllerId,
   getControllerType,
   getControllerLocation,
@@ -25,16 +25,26 @@ const connectControllerToProcessor = async (req, res, next) => {
       );
     }
 
+    // const {
+    //   rows: [processorConnectionData],
+    // } = await getProcessorConnectionByUserId({ userId });
+
+    // // eslint-disable-next-line
+    // if (processorConnectionData.id != processorId) {
+    //   return next(
+    //     boom.conflict('this processor is already connected to another user')
+    //   );
+    // }
     const {
       rows: [processorConnectionData],
-    } = await getProcessorConnectionByUserId({ userId });
-
-    // eslint-disable-next-line
-    if (processorConnectionData.id != processorId) {
+  } = await getProcessorByConnectionId({ processorId });
+  
+  // eslint-disable-next-line
+  if (processorConnectionData.user_id != userId) {
       return next(
-        boom.conflict('this processor is already connected to another user')
-      );
-    }
+          boom.conflict('this processor is already connected to another user')
+          );
+      }
 
     const {
       rows: [controllerType],
@@ -55,8 +65,8 @@ const connectControllerToProcessor = async (req, res, next) => {
     const { rows: connectionData } = await connectControllerProcessor(req.body);
 
     return res.status(201).json({
-      title: 'connecting processor Unit',
-      detail: 'processor unit connected Successfully ',
+      title: 'connecting to processor Unit',
+      detail: 'controller unit connected Successfully ',
       connectionData,
     });
   } catch (error) {
