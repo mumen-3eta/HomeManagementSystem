@@ -3,7 +3,11 @@
     <div class="container__ourTeamSc">
       <h2 v-animate-onscroll="'animated fadeIn'" class="container__ourTeamSc-title">Our Team</h2>
       <div class="main__ourTeamSc">
-        <carousel :autoplay="true" :autoplaySpeed="1000" :dots="true" :nav="false"
+        <carousel :autoplay="true"
+                  :autoplaySpeed="2000"
+                  :dots="true"
+                  :loop="true"
+                  :nav="false"
                   :responsive="{0:{items:1},600:{items:2},1200:{items:3},1800:{items:4}}">
           <div v-for="(MemberTeam , index) in ListProjectTeams" :key="index"
                v-animate-onscroll="'animated fadeIn fadeInUp'" class="Member__Team">

@@ -5,21 +5,32 @@ import VuexPersistence from 'vuex-persist'
 Vue.use(Vuex);
 
 const state = {
+    /* used it */
     user: null,
+    userProfile: null,
     TokenUser: null,
+    userAllControllerConnectedWithProcessor: null,
+    userAllControllerConnected: null,
+    AllControllerConnectedForThisUser: null,
+    userProcessorIds: null,
+    allMessages: null,
+    TypeControllerData: null,
+    LocationControllerData: null,
+    userAllProcessor: [],
+    allTypeController: null,
+    allLocationController: null,
+    All_Controller: null,
+    All_Processor: null,
+    Get_All_Users: null,
+    /* End  used it */
+
+    /*** Check it, if i not used delete them with (getters,action,mutations)***/
     deviceInfoAdd: [],
     processorId: null,
     controllerId: null,
-    userProcessorIds: null,
-    userAllProcessor: [],
     NewTypeController: null,
-    allTypeController: null,
     NewLocationController: null,
-    allLocationController: null,
-    TypeControllerData: null,
-    LocationControllerData: null,
     NewControllerData: null,
-    allMessages: null,
 
 };
 
@@ -30,8 +41,29 @@ const store = new Vuex.Store({
         user: (state) => {
             return state.user;
         },
+        userProfile: (state) => {
+            return state.userProfile;
+        },
         GetUser: (state) => {
             return state.user;
+        },
+        userAllControllerConnectedWithProcessor: (state) => {
+            return state.userAllControllerConnectedWithProcessor;
+        },
+        userAllControllerConnected: (state) => {
+            return state.userAllControllerConnected;
+        },
+        AllControllerConnectedForThisUser: (state) => {
+            return state.AllControllerConnectedForThisUser;
+        },
+        All_Controller: (state) => {
+            return state.All_Controller;
+        },
+        All_Processor: (state) => {
+            return state.All_Processor;
+        },
+        Get_All_Users: (state) => {
+            return state.Get_All_Users;
         },
         TokenUser: (state) => {
             return state.TokenUser;
@@ -80,8 +112,29 @@ const store = new Vuex.Store({
         user(context, user) {
             context.commit('user', user);
         },
+        userProfile(context, userProfile) {
+            context.commit('userProfile', userProfile);
+        },
         TokenUser(context, TokenUser) {
             context.commit('TokenUser', TokenUser);
+        },
+        userAllControllerConnectedWithProcessor(context, userAllControllerConnectedWithProcessor) {
+            context.commit('userAllControllerConnectedWithProcessor', userAllControllerConnectedWithProcessor);
+        },
+        userAllControllerConnected(context, userAllControllerConnected) {
+            context.commit('userAllControllerConnected', userAllControllerConnected);
+        },
+        AllControllerConnectedForThisUser(context, AllControllerConnectedForThisUser) {
+            context.commit('AllControllerConnectedForThisUser', AllControllerConnectedForThisUser);
+        },
+        All_Controller(context, All_Controller) {
+            context.commit('All_Controller', All_Controller);
+        },
+        All_Processor(context, All_Processor) {
+            context.commit('All_Processor', All_Processor);
+        },
+        Get_All_Users(context, Get_All_Users) {
+            context.commit('Get_All_Users', Get_All_Users);
         },
         userAllProcessor(context, userAllProcessor) {
             context.commit('userAllProcessor', userAllProcessor);
@@ -128,11 +181,32 @@ const store = new Vuex.Store({
         user(state, user) {
             state.user = user;
         },
+        userProfile(state, userProfile) {
+            state.userProfile = userProfile;
+        },
         TokenUser(state, TokenUser) {
             state.TokenUser = TokenUser;
         },
+        userAllControllerConnectedWithProcessor(state, userAllControllerConnectedWithProcessor) {
+            state.userAllControllerConnectedWithProcessor = userAllControllerConnectedWithProcessor;
+        },
+        userAllControllerConnected(state, userAllControllerConnected) {
+            state.userAllControllerConnected = userAllControllerConnected;
+        },
+        AllControllerConnectedForThisUser(state, AllControllerConnectedForThisUser) {
+            state.AllControllerConnectedForThisUser = AllControllerConnectedForThisUser;
+        },
         userAllProcessor(state, userAllProcessor) {
             state.userAllProcessor = userAllProcessor;
+        },
+        All_Controller(state, All_Controller) {
+            state.All_Controller = All_Controller;
+        },
+        All_Processor(state, All_Processor) {
+            state.All_Processor = All_Processor;
+        },
+        Get_All_Users(state, Get_All_Users) {
+            state.Get_All_Users = Get_All_Users;
         },
         deviceInfoAdd(state, deviceInfoAdd) {
             state.deviceInfoAdd = deviceInfoAdd;

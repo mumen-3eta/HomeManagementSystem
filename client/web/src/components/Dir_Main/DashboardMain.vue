@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div v-if="TokenUser && user.basicInfo.isAdmin">
-      <AdminDashboardPage v-if="TokenUser && user.basicInfo.isAdmin"/>
+    <div v-if="user.is_admin">
+      <AdminDashboardPage v-if="user.is_admin"/>
     </div>
-    <div v-if="TokenUser && !user.basicInfo.isAdmin">
-      <UserDashboard v-if="TokenUser && !user.basicInfo.isAdmin"/>
+
+    <div v-if="!user.is_admin">
+      <UserDashboard v-if="!user.is_admin"/>
     </div>
 
   </div>
@@ -17,9 +18,12 @@ import UserDashboard from "@/components/Dir_Main/UserDashboard";
 
 export default {
   name: "DashboardMain",
-  components: {UserDashboard, AdminDashboardPage},
+  components: {
+    UserDashboard,
+    AdminDashboardPage
+  },
   computed: {
-    ...mapGetters(['user', 'TokenUser']),
+    ...mapGetters(['user']),
   },
 }
 </script>

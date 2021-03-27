@@ -43,7 +43,28 @@
     transition: all ease 0.3s;
 }
 
+.container__DeviceId {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+.btn-group_Generate-2 {
+    display: flex;
+    justify-content: space-between;
+}
+
+input:focus, input:active {
+    outline: none;
+    border: none;
+}
+
 .container__DeviceId .container__processor_Id {
+    display: flex;
+    flex-direction: column;
     background-color: #bfbfbf;
     width: 100%;
     height: 100%;
@@ -73,62 +94,62 @@
     transition: all ease 0.3s;
 }
 
-@media (max-width: 990px) {
-    .container_Admin_CreateDevice .btn-group_Generate,
-    .container_Admin_CreateDevice .btn-group_Generate-2 {
-        width: 85%;
-    }
+/*@media (max-width: 990px) {*/
+/*    .container_Admin_CreateDevice .btn-group_Generate,*/
+/*    .container_Admin_CreateDevice .btn-group_Generate-2 {*/
+/*        width: 85%;*/
+/*    }*/
 
 
-    .container__DeviceId .container__processor_Id {
-        width: 85%;
-    }
-}
+/*    .container__DeviceId .container__processor_Id {*/
+/*        width: 85%;*/
+/*    }*/
+/*}*/
 
-@media (max-width: 670px) {
-    .container_Admin_CreateDevice .btn-group_Generate,
-    .container_Admin_CreateDevice .btn-group_Generate-2 {
-        width: 90%;
-    }
+/*@media (max-width: 670px) {*/
+/*    .container_Admin_CreateDevice .btn-group_Generate,*/
+/*    .container_Admin_CreateDevice .btn-group_Generate-2 {*/
+/*        width: 90%;*/
+/*    }*/
 
-    .container__DeviceId .container__processor_Id {
-        width: 90%;
-        padding: 3rem 0.5rem;
-    }
-}
+/*    .container__DeviceId .container__processor_Id {*/
+/*        width: 90%;*/
+/*        padding: 3rem 0.5rem;*/
+/*    }*/
+/*}*/
 
-@media (max-width: 470px) {
-    .container_Admin_CreateDevice .btn-group_Generate,
-    .container_Admin_CreateDevice .btn-group_Generate-2 {
-        width: 95%;
-    }
+/*@media (max-width: 470px) {*/
+/*    .container_Admin_CreateDevice .btn-group_Generate,*/
+/*    .container_Admin_CreateDevice .btn-group_Generate-2 {*/
+/*        width: 95%;*/
+/*    }*/
 
-    .container__DeviceId .container__processor_Id {
-        width: 95%;
-        padding: 3rem 0.5rem;
-    }
-}
+/*    .container__DeviceId .container__processor_Id {*/
+/*        width: 95%;*/
+/*        padding: 3rem 0.5rem;*/
+/*    }*/
+/*}*/
 
-@media (max-width: 470px) {
-    .container_Admin_CreateDevice .btn-group_Generate-2 {
-        flex-direction: column;
-        width: 95%;
-    }
+/*@media (max-width: 470px) {*/
+/*    .container_Admin_CreateDevice .btn-group_Generate-2 {*/
+/*        flex-direction: column;*/
+/*        width: 95%;*/
+/*    }*/
 
-    .container_Admin_CreateDevice .btn-group_Generate-2 .btn {
-        width: 95%;
-        margin: 0 auto;
-    }
+/*    .container_Admin_CreateDevice .btn-group_Generate-2 .btn {*/
+/*        width: 95%;*/
+/*        margin: 0 auto;*/
+/*    }*/
 
-    .container_Admin_CreateDevice .btn-group_Generate-2 .btn:not(:last-child) {
-        margin-bottom: 0.9rem;
-    }
+/*    .container_Admin_CreateDevice .btn-group_Generate-2 .btn:not(:last-child) {*/
+/*        margin-bottom: 0.9rem;*/
+/*    }*/
 
-    .container__DeviceId .svg_Generator svg.vue-barcode-element {
-        margin: 0 auto;
-        max-width: 250px;
-    }
+/*    .container__DeviceId .svg_Generator svg.vue-barcode-element {*/
+/*        margin: 0 auto;*/
+/*        max-width: 250px;*/
+/*    }*/
 
-}
+/*}*/
 
 

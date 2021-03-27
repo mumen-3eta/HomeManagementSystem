@@ -1,11 +1,11 @@
 const router = require('express').Router();
 
-const controlerRoute = require('./controller');
-const locationRoute = require('./location');
+const controllerRoute = require('./controller');
 const typeRoute = require('./type');
+const locationRoute = require('./location');
 
-router.use('/', controlerRoute);
-router.use('/type', locationRoute);
-router.use('/location', typeRoute);
+router.use('/', controllerRoute);
+router.use('/type', typeRoute);
+router.use('/location', locationRoute);
 
 module.exports = router;

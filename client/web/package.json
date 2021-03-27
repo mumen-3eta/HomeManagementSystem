@@ -28,6 +28,7 @@
     "vue-clickaway": "^2.2.2",
     "vue-good-table": "^2.21.3",
     "vue-js-modal": "^2.0.0-rc.6",
+    "vue-moment": "^4.1.0",
     "vue-owl-carousel": "^2.0.3",
     "vue-qrcode": "^0.3.5",
     "vue-qrcode-reader": "^2.3.16",
