@@ -7,7 +7,7 @@ const registerUserSchema = object({
   firstName: string().min(1).max(20),
   lastName: string().min(1).max(20),
   image: string(),
-  mobile: number().min(10).max(15),
+  mobile: string().min(10).max(15),
   isAdmin: boolean(),
 });
 
