@@ -3,7 +3,7 @@ const boom = require('@hapi/boom');
 const {
   getProcessorByConnectionId,
   getControllerByControllerId,
-//   getControllerStatus,
+  // getControllerStatus,
   changeControllerStatus,
 } = require('../../../database/queries');
 
