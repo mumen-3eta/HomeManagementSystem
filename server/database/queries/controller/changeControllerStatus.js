@@ -1,6 +1,7 @@
 const { connection } = require('../../data/index');
 
 const getControllerStatus = ({ controllerId,newStatus }) => {
+  console.log("hi query");
   const sql = {
     text:
       'update user_controller set status=COALESCE($1,status ) where controller_id = $2 returning status ;',
