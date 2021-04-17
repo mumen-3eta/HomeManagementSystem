@@ -1,15 +1,40 @@
 const { statusChange } = require('./statusChange');
 
-const joinProcessorConnection = (socket) => ({processorId }) => {
-//  const processorId = processorId ? processorId : { processorId } = socket.decoded;
-  // const { processorId } = socket.decoded;
-  socket.join(processorId)
+const {
+  getProcessorByConnectionId,
+  getControllerByControllerId,
+} = require('../database/queries');
 
-  socket.emit('msg', processorId)
+const joinProcessorConnection = (io,socket) => async({controllerId }) => {
+  const { controllerId:controllerIdFromToken,userId } = socket.decoded;
+try {
+    console.log({controllerIdFromToken: controllerIdFromToken,userId});
+    const {
+      rows: [controllerConnected],
+    } = await getControllerByControllerId({ controllerId });
 
-  socket.broadcast.to(processorId).emit('msg', 'a user has joined')
+    if (!controllerConnected) {
+      throw new Error('this controller is not yours')
+    }
 
-  socket.on('statusChange', statusChange(socket))
+    const {processor_id:processorId} = controllerConnected;
+
+    const {
+      rows: [processorConnectionData],
+  } = await getProcessorByConnectionId({ processorId });
+
+    if (!(controllerId==controllerIdFromToken||processorConnectionData.user_id==userId)) {
+      throw new Error('unauthorized to this room')
+    }
+    
+    socket.join(controllerId)
+
+    socket.to(controllerId).emit('msg', 'a user has joined')
+
+    socket.on('statusChange', statusChange(io,socket,controllerId))
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 module.exports = {

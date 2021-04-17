@@ -2,11 +2,9 @@ const { joinProcessorConnection } = require('./joinProcessorConnection')
 
 const ioHandler = (io) => (socket) => {
   try {
-    console.log("hello ->**********************************************");
-    // 
-    // console.log(socket.request.headers);
-    // console.log("hi");
-    socket.on('joinProcessorConnection', joinProcessorConnection(socket))
+    
+    socket.broadcast.emit('msg', 'some one joined')
+    socket.on('joinProcessorConnection', joinProcessorConnection(io,socket))
 
   } catch (error) {
     console.log(error, "here is the error");

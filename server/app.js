@@ -32,7 +32,6 @@ io.use(async (socket, next) => {
   try {
     const decoded = await verify(token);
     socket.decoded = decoded;
-    console.log(decoded);
     next();
   } catch (err) {
     next(new Error('Authentication error'));

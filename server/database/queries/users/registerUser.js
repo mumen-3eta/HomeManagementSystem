@@ -8,5 +8,5 @@ const registerUser = ({ email, userName, password }) => {
   };
   return connection.query(sql);
 };
-console.log();
+
 module.exports = registerUser;
