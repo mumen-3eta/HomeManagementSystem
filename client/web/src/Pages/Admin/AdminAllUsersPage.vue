@@ -4,7 +4,7 @@
     <div class="container_Admin_AddLocationController">
       <section class="container_Admin_btnSectionGroup">
         <header class="section__header">
-          <h2 class="section__title">Add Users</h2>
+          <h2 class="section__title">All Users</h2>
         </header>
         <div class="project my-3 mx-auto p-2 position-relative">
           <vue-good-table

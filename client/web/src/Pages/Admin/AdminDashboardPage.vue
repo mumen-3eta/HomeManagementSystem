@@ -112,7 +112,6 @@
 </template>
 
 <script>
-import io from "socket.io-client";
 import {mapGetters} from "vuex";
 import axios from "axios";
 
@@ -425,7 +424,7 @@ export default {
     await this.GetAllUsers();
   },
   created() {
-    this.socket = io('http://localhost:3001');
+    // this.socket = io('http://localhost:3001');
   },
   computed: {
     ...mapGetters(['user', 'allLocationController', 'allTypeController', 'All_Controller', 'All_Processor', 'Get_All_Users']),

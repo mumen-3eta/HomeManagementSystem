@@ -94,7 +94,6 @@
 <script>
 import axios from "axios";
 import {mapGetters} from "vuex";
-import io from "socket.io-client";
 
 export default {
   name: "AdminAddTypeControllerPage",
@@ -310,7 +309,7 @@ export default {
     }
   },
   created() {
-    this.socket = io('http://localhost:3001');
+    // this.socket = io('http://localhost:3001');
   },
   async beforeMount() {
     await this.GetAllTypes();

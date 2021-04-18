@@ -121,7 +121,6 @@ import axios from "axios";
 import {mapGetters} from "vuex";
 import firebase from 'firebase/app';
 import 'firebase/storage';
-import io from "socket.io-client";
 
 export default {
   name: "ProfileUserMain",
@@ -562,7 +561,7 @@ export default {
     },
   },
   created() {
-    this.socket = io('http://localhost:3001');
+    // this.socket = io('http://localhost:3001');
   },
   mounted() {
     const Base_Info = document.getElementById('Base_Info');

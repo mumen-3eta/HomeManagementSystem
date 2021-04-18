@@ -89,7 +89,6 @@
 <script>
 import axios from "axios";
 import {mapGetters} from "vuex";
-import io from "socket.io-client";
 
 export default {
   name: "AdminAddLocationControllerPage",
@@ -313,7 +312,7 @@ export default {
     await this.GetAllLocations();
   },
   created() {
-    this.socket = io('http://localhost:3001');
+    // this.socket = io('http://localhost:3001');
   },
 }
 </script>

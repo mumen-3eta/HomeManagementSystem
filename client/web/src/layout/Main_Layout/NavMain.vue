@@ -76,7 +76,7 @@
         </li>
         <li v-if="user.is_admin"
             :class="['nav__item',this.$route.path === '/v2/main/admin/all/Users' ? 'nav__item--isActive':'']"
-            aria-label="All Messages">
+            aria-label="All User">
           <router-link :to="{path:'/v2/main/admin/all/Users'}" class="nav__link focus--box-shadow" role="menuitem">
             <i class="far fa-users nav__icon"></i>
           </router-link>

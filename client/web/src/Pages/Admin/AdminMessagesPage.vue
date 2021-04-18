@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import io from "socket.io-client";
-
 import {mapGetters} from "vuex";
 
 export default {
@@ -97,7 +95,7 @@ export default {
     }
   },
   created() {
-    this.socket = io('http://localhost:3001');
+    // this.socket = io('http://localhost:3001');
   },
   methods: {
     DeleteMessage(id) {

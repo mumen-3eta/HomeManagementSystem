@@ -68,7 +68,6 @@
 <script>
 import {mapGetters} from "vuex";
 import axios from "axios";
-import io from "socket.io-client";
 
 export default {
   name: "AddController",
@@ -218,7 +217,7 @@ export default {
     ...mapGetters(['TypeControllerData', 'LocationControllerData'])
   },
   created() {
-    this.socket = io('http://localhost:3001');
+    // this.socket = io('http://localhost:3001');
   },
 }
 </script>
