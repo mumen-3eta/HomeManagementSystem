@@ -16,6 +16,8 @@ const { clientError, serverError } = require('./controllers/errorHandle');
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
+app.io = io;
+
 app.set('port', process.env.PORT || 3000);
 app.disable('x-powered-by');
 

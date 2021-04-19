@@ -42,7 +42,9 @@ const connectControllerToProcessor = async (req, res, next) => {
     const newStatus = !status
 
     const { rows: controllerStatus } = await changeControllerStatus({controllerId,newStatus});
-
+        console.log({controllerId,controllerStatus});
+    req.app.io.to(+controllerId).emit('statusChangeReport', controllerStatus)
+    
     return res.status(201).json({
       title: 'changing controller status',
       detail: 'changing controller status Successfully ',

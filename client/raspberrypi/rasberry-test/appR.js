@@ -1,4 +1,5 @@
 const config = require("./config.js");
+var gpiop = require('rpi-gpio').promise;
 const socket = require("socket.io-client")(config.server_url,{
   transportOptions: {
     polling: {
@@ -13,6 +14,27 @@ const socket = require("socket.io-client")(config.server_url,{
   }
 }); 
 const controllerId = 1
+
+process.on('SIGINT', function () {
+  gpiop
+    .write(config.led, false)
+    .then(() => {
+      return gpiop.destroy();
+    })
+    .then(() => {
+      process.exit();
+    });
+});
+
+gpiop
+  .setup(config.led, gpiop.DIR_OUT)
+  .then(() => {
+    return gpiop.write(config.led, false);
+  })
+  .catch((err) => {
+    console.log('Error: ', err.toString());
+  });
+
 console.log('hi');
 socket.emit("connection", () => {
   socket.emit('user connected');
@@ -34,8 +56,8 @@ socket.on('msg',msg=>{
 })
 
 socket.on('statusChangeReport',body=>{
-  console.log('hi');
-  console.log(body);
+  console.log('The new state is: ' + body);
+  gpiop.write(config.led, !body[0].status);
   // some function to hahndel the change of the status 
 })
 
@@ -43,10 +65,12 @@ socket.on('statusChangeReport',body=>{
 // switch.addeventlistiner('change',e=>{
 //   const data = {controllerId:e.target.id,
 //   status:e.target.value}
-setTimeout(function(){ socket.emit('statusChange') }, 1000);
   // socket.emit('statusChange',data)
 // })
 
 // socket.on('statusChangeReport',obj=>{
 //   console.log(obj);
 // })
+
+
+
