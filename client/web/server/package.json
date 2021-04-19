@@ -1,0 +1,52 @@
+{
+  "name": "homemanagementsystem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node ./index.js",
+    "dev": "cross-env NODE_ENV=development nodemon ./index.js",
+    "test": "cross-env NODE_ENV=test jest",
+    "client": "cd client && npm start",
+    "build-db": "cross-env NODE_ENV=test node ./database/data/build",
+    "kill": "fuser -k 3000/tcp",
+    "lint-fix": "eslint ./ --fix",
+    "lint": "eslint ./",
+    "lint-react": "cd client && npm run lint",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "dependencies": {
+    "@hapi/boom": "^9.1.1",
+    "babel-node": "0.0.1-security",
+    "bcrypt": "^5.0.1",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.3",
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose-unique-validator": "^2.0.1",
+    "pg": "^8.5.1",
+    "socket.io": "^3.1.2",
+    "swagger-jsdoc": "^3.4.0",
+    "swagger-ui-express": "^4.1.6",
+    "yup": "^0.32.8"
+  },
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-prettier": "^3.3.1",
+    "jest": "^26.6.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1",
+    "supertest": "^6.1.3"
+  },
+  "resolutions": {
+    "is-promise": "2.1.0"
+  }
+}
