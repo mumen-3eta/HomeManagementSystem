@@ -6,8 +6,8 @@ module.exports = {
   devServer: {
     proxy: {
       '^/api': {
-        // target: 'https://hmsy-app.herokuapp.com',
-        target: 'http://localhost:3000',
+        target: 'https://hmsy-app2.herokuapp.com',
+        // target: 'http://localhost:3000',
         changeOrigin: true
       },
     }

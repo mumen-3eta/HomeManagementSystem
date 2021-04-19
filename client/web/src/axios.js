@@ -1,4 +1,6 @@
-// import axios from 'axios'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'https://hmsy-app2.herokuapp.com';
 
 // axios.defaults.baseURL = 'http://apiuser.test/api/';
 // axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');//this.$store.getters.TokenUser.csrfToken
