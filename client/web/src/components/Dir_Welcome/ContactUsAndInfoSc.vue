@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import io from "socket.io-client";
+
 
 export default {
   name: "ContactUsAndInfoSc",
@@ -159,9 +159,6 @@ export default {
       document.getElementById("lab_MsgInputContact").style.backgroundColor = "";
       document.getElementById("lab_MsgInputContact").classList.remove("AddMoved");
     },
-  },
-  created() {
-    this.socket = io('http://localhost:3001');
   },
   mounted() {
     const input1 = document.getElementById("EmailInputContact");
