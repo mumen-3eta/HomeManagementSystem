@@ -84,6 +84,15 @@
         "newPassword": "كلمة المرور الجديدة",
         "confirmPassword": "تأكيد كلمة المرور الجديدة"
       }
+    },
+    "ControllersConnected": {
+      "allControllerConnected": "جميع وحدات التحكم متصلة بالمعالج",
+      "btn_Text": "QR Code للبحث مسح",
+      "webCame": {
+        "title": "QR Code للبحث مسح",
+        "messageWait": "... انتظر فتح الكاميرا",
+        "error": "ضع الكاميرا ، يرجى التحقق من كاميرا الويب الخاصة بك"
+      }
     }
   }
 }

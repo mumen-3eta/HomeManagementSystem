@@ -84,6 +84,15 @@
         "newPassword": "New Password",
         "confirmPassword": "Confirm Your Password"
       }
+    },
+    "ControllersConnected": {
+      "allControllerConnected": "All controllers connected to the processor",
+      "btn_Text": "Scan To Search",
+      "webCame": {
+        "title": "Scan QR Code To Search",
+        "messageWait": "Wait For Open Camera...",
+        "error": "place camera, Pleas Check your web Came"
+      }
     }
   }
 }
