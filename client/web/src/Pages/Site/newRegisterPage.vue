@@ -1,45 +1,63 @@
 <template>
   <header class="Main__Header-R">
     <main class="main__register">
-      <div class="register__photo"></div>
-      <div class="register__inform">
+      <div class="register__photo">
+        <a class="nav_link-btn nav_lang custom-select" href="javascript:void;">
+            <span class="icon_nav_lang">
+             <i class="fas fa-globe-americas"></i>
+            </span>
+          <select v-model="lang" class="select_nav_lang" @change="changeLanguage($event)">
+            <option value="en">English</option>
+            <option value="ar">عربي</option>
+          </select>
+        </a>
+      </div>
+      <div :class=" lang==='ar' ? 'register__inform direction-rtl' :'register__inform direction-ltr'">
         <div class="close__to-home">
-          <router-link class="close__to-home_link" to="/"><i class="far fa-times-circle"></i></router-link>
+          <router-link :class=" lang==='ar' ? 'close__to-home_link_AR' :'close__to-home_link'" to="/"><i
+              class="far fa-times-circle"></i></router-link>
         </div>
-        <h2 class="register__inform-title">Sign Up</h2>
-        <p class="register__inform-minTitle">Signup to continue using HMSy</p>
+        <h2 class="register__inform-title">{{ $t('signUp.title') }}</h2>
+        <p class="register__inform-minTitle">{{ $t('signUp.body') }}</p>
         <form action="#" class="register__form" @submit.prevent="checkForm">
           <div class="form__group-R">
-            <label id="username_LabelInput" class="R-form__input-label" for="username_input">username</label>
+            <label id="username_LabelInput" :class=" lang==='ar' ? 'form__input-label_AR' :'R-form__input-label'"
+                   for="username_input">{{
+                $t('signUp.username')
+              }}</label>
             <input id="username_input" v-model.trim="userName" class="R-form__input-input" type="text">
             <hr id="line1_U" class="R-style_line">
           </div>
           <div class="form__group-R">
-            <label id="email_LabelInput" class="R-form__input-label" for="email_input">E-mail</label>
+            <label id="email_LabelInput" :class=" lang==='ar' ? 'form__input-label_AR' :'R-form__input-label'"
+                   for="email_input">{{ $t('signUp.email') }}</label>
             <input id="email_input" v-model.trim="Email" class="R-form__input-input" type="text">
             <hr id="line1_E" class="R-style_line">
           </div>
           <div class="form__group-R">
-            <label id="password_LabelInput" class="R-form__input-label" for="password_input">Password</label>
+            <label id="password_LabelInput" :class=" lang==='ar' ? 'form__input-label_AR' :'R-form__input-label'"
+                   for="password_input">{{
+                $t('signUp.password')
+              }}</label>
             <input id="password_input" v-model.trim="Password" class="R-form__input-input" type="password">
             <hr id="line2" class="R-style_line">
           </div>
           <div class="form__group-R">
             <p class="R-form__forgot">
-              <a class="R-form__forgot-link" href="">Forgot your password?</a>
+              <a class="R-form__forgot-link" href="">{{ $t('signUp.forgotPassword') }}</a>
             </p>
           </div>
 
           <p class="error_style mt-3 ">{{ this.errors.ErrorEmailOrUserName }}</p>
 
           <div class="form__group-R">
-            <button class="form__button-submit" type="submit">Sign Up</button>
+            <button class="form__button-submit" type="submit">{{ $t('signUp.btn_text') }}</button>
           </div>
         </form>
         <div class="go__login">
           <p class="login__label">
-            You have an account?
-            <router-link class="login__label-link" to="/v2/login">Login Here</router-link>
+            {{ $t('signUp.goToLogin_text') }}
+            <router-link class="login__label-link" to="/v2/login">{{ $t('signUp.goToLogin_link') }}</router-link>
           </p>
         </div>
       </div>
@@ -57,6 +75,7 @@ export default {
   components: {},
   data() {
     return {
+      lang: localStorage.getItem('lang') || 'en',
       userName: '',
       Email: '',
       Password: '',
@@ -130,7 +149,10 @@ export default {
         document.getElementById("loadingScreen").style.display = "none";
       }, 750);
     },
-
+    changeLanguage(event) {
+      window.location.reload();
+      localStorage.setItem('lang', event.target.value);
+    },
   },
 
   mounted() {

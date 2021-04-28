@@ -1,0 +1,45 @@
+{
+  "navBar": {
+    "home": "الرئيسية",
+    "aboutUs": "تعرف علينا",
+    "contactUs": "تواصل معنا",
+    "ourTeam": "الفريق",
+    "login": "تسجيل الدخول",
+    "sigUp": "حساب جيديد",
+    "logout": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم"
+  },
+  "ourTeam": "فريقنا",
+  "frequently_Asked_Questions": "أسئلة مطروحة علينا",
+  "contactUs": {
+    "email": "البريد الإلكتروني",
+    "subject": "العنوان",
+    "message": "الرسالة",
+    "send": "إرسال"
+  },
+  "404": {
+    "NotFound": "الصفحة غير متوفرة",
+    "goBack": "الرجوع"
+  },
+  "login": {
+    "title": "أهلا بعودتك",
+    "body": "قم بتسجيل الدخول لمواصلة استخدام HMSy",
+    "newAccount": "ليس لديك حساب؟",
+    "registerHere": "سجل هنا",
+    "btn_text": "دخول",
+    "forgotPassword": "نسيت رقمك السري ؟",
+    "usernameOrEmail": "البريد الإلكتروني أو إسم المستخدم",
+    "password": "كلمة المرور"
+  },
+  "signUp": {
+    "title": "اشتراك",
+    "body": "اشترك لمتابعة استخدام HMSy",
+    "username": "اسم االمستخدم",
+    "email": "بريد إلكتروني",
+    "password": "كلمه السر",
+    "forgotPassword": "نسيت رقمك السري؟",
+    "btn_text": "اشتراك",
+    "goToLogin_text": "لديك حساب؟",
+    "goToLogin_link": "تسجيل الدخول من هنا"
+  }
+}

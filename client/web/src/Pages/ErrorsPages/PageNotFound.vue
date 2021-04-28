@@ -1,14 +1,15 @@
 <template>
   <div class="content__404">
     <img alt="" class="content__body-404  " src="https://media.giphy.com/media/UoeaPqYrimha6rdTFV/giphy.gif">
-    <h2 class="text-center  content__body-404 p-5"> Not Found | <a href="javascript:void(0)"
-                                                                   @click.prevent="$router.go(-1)"> Go back </a></h2>
+    <h2 class="text-center  content__body-404 p-5"> {{ $t('404.NotFound') }} | <a href="javascript:void(0)"
+                                                                                  @click.prevent="$router.go(-1)">
+      {{ $t('404.goBack') }} </a></h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PageNotFound"
+  name: "PageNotFound",
 }
 </script>
 

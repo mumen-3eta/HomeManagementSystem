@@ -1,0 +1,45 @@
+{
+  "navBar": {
+    "home": "Home",
+    "aboutUs": "About us",
+    "contactUs": "contact us",
+    "ourTeam": "our Team",
+    "login": "Login",
+    "sigUp": "SigUp",
+    "logout": "logout",
+    "dashboard": "Dashboard"
+  },
+  "ourTeam": "Our Team",
+  "frequently_Asked_Questions": "Frequently Asked Questions",
+  "contactUs": {
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send"
+  },
+  "404": {
+    "NotFound": "Not Found",
+    "goBack": "Go Back"
+  },
+  "login": {
+    "title": "Welcome back",
+    "body": "Sign to continue using HMSy",
+    "newAccount": "Don't have an account?",
+    "registerHere": "Register Here",
+    "btn_text": "Login",
+    "forgotPassword": "Forgot your password ?",
+    "usernameOrEmail": "username or E-mail",
+    "password": "Password"
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "body": "Signup to continue using HMSy",
+    "username": "username",
+    "email": "E-mail",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "btn_text": "Sign Up",
+    "goToLogin_text": "You have an account?",
+    "goToLogin_link": "Login Here"
+  }
+}

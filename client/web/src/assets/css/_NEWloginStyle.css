@@ -198,6 +198,16 @@ img {
     left: 0;
 }
 
+.form__input-label_AR {
+    color: var(--label-v2-500);
+    font-size: 1.3rem;
+    text-transform: capitalize;
+    position: absolute;
+    user-select: none;
+    top: 0.9rem;
+    right: 0;
+}
+
 @media (max-width: 900px) {
     .login__form {
         text-align: center;
@@ -323,6 +333,14 @@ img {
 .close__to-home_link {
     position: absolute;
     right: 0;
+    font-size: 2.3rem;
+    color: var(--gray-v2-500);
+    transition: all 0.3s ease;
+}
+
+.close__to-home_link_AR {
+    position: absolute;
+    left: 0;
     font-size: 2.3rem;
     color: var(--gray-v2-500);
     transition: all 0.3s ease;

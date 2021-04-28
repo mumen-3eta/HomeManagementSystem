@@ -15,6 +15,7 @@ import vSelect from 'vue-select'
 // import the styles
 import 'vue-good-table/dist/vue-good-table.css'
 import 'vue-select/dist/vue-select.css';
+import i18n from './i18n'
 
 Vue.component('v-select', vSelect)
 
@@ -39,6 +40,7 @@ firebase.initializeApp({
 
 Vue.config.productionTip = false
 new Vue({
+  i18n,
   router,
   store,
   render: h => h(App),

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container__ourTeamSc">
-      <h2 v-animate-onscroll="'animated fadeIn'" class="container__ourTeamSc-title">Our Team</h2>
+      <h2 v-animate-onscroll="'animated fadeIn'" class="container__ourTeamSc-title">{{ $t('ourTeam') }}</h2>
       <div class="main__ourTeamSc">
         <carousel :autoplay="true"
                   :autoplaySpeed="2000"
@@ -9,7 +9,7 @@
                   :loop="true"
                   :nav="false"
                   :responsive="{0:{items:1},600:{items:2},1200:{items:3},1800:{items:4}}">
-          <div v-for="(MemberTeam , index) in ListProjectTeams" :key="index"
+          <div v-for="(MemberTeam , index) in lang === 'en' ? ListProjectTeams_EN : ListProjectTeams_AR" :key="index"
                v-animate-onscroll="'animated fadeIn fadeInUp'" class="Member__Team">
             <div class="Member__Team-img">
               <img :alt="MemberTeam.ImagePath" :src="MemberTeam.ImagePath"
@@ -43,7 +43,8 @@ export default {
   components: {carousel},
   data() {
     return {
-      ListProjectTeams: [
+      lang: localStorage.getItem('lang') || 'en',
+      ListProjectTeams_EN: [
         {
           ImagePath: require(`@/assets/img/welcomePage/imgTeam/osama.jpg`),
           name: "Osama Younis",
@@ -140,6 +141,123 @@ export default {
           ImagePath: require(`@/assets/img/welcomePage/imgTeam/mumen.jpg`),
           name: "Mumen Abu Aita",
           job: "Android Developer",
+          Social_media_list: [
+            {
+              link: "https://www.facebook.com/Mumen.Aita",
+              Type: "fab fa-facebook-f",
+            },
+            {
+              link: "#",
+              Type: "fab fa-twitter",
+            },
+            {
+              link: "#",
+              Type: "fab fa-linkedin-in",
+            },
+            {
+              link: "https://github.com/mumen-3eta",
+              Type: "fab fa-github",
+            },
+          ],
+        },
+      ],
+      ListProjectTeams_AR: [
+        {
+          ImagePath: require(`@/assets/img/welcomePage/imgTeam/osama.jpg`),
+          name: "م. أسامة يونس",
+          job: "مطور بيئة خلفية (API)",
+          Social_media_list: [
+            {
+              link: "https://www.facebook.com/Osama.w.you/",
+              Type: "fab fa-facebook-f",
+            },
+            {
+              link: "#",
+              Type: "fab fa-twitter",
+            },
+            {
+              link: "#",
+              Type: "fab fa-linkedin-in",
+            },
+            {
+              link: "https://github.com/Osama-you",
+              Type: "fab fa-github",
+            },
+          ],
+        },
+        {
+          ImagePath: require(`@/assets/img/welcomePage/imgTeam/AboObada.jpg`),
+          name: "م. أحمد إقطيفان",
+          job: "مطور هاردوير",
+          Social_media_list: [
+            {
+              link: "https://www.facebook.com/profile.php?id=100003143624009",
+              Type: "fab fa-facebook-f",
+            },
+            {
+              link: "#",
+              Type: "fab fa-twitter",
+            },
+            {
+              link: "#",
+              Type: "fab fa-linkedin-in",
+            },
+            {
+              link: "#",
+              Type: "fab fa-github",
+            },
+          ],
+        },
+        {
+          ImagePath: require(`@/assets/img/welcomePage/imgTeam/A7medQeshta.jpg`),
+          name: "م. أحمد قشطة",
+          job: "مطور واجهات أمامية (Vue)",
+          Social_media_list: [
+            {
+              link: "https://www.facebook.com/A7medQeshta",
+              Type: "fab fa-facebook-f",
+            },
+            {
+              link: "#",
+              Type: "fab fa-twitter",
+            },
+            {
+              link: "#",
+              Type: "fab fa-linkedin-in",
+            },
+            {
+              link: "https://github.com/AhmedQeshta",
+              Type: "fab fa-github",
+            },
+          ],
+        },
+        {
+          ImagePath: require(`@/assets/img/welcomePage/imgTeam/Alaa.png`),
+          name: "م. علاء شراب",
+          job: "مطور بيئة خلفية (API)",
+          Social_media_list: [
+            {
+              link: "https://www.facebook.com/alaa.shurrab.39",
+              Type: "fab fa-facebook-f",
+            },
+            {
+              link: "#",
+              Type: "fab fa-twitter",
+            },
+            {
+              link: "#",
+              Type: "fab fa-linkedin-in",
+            },
+            {
+              link: "https://github.com/AlaaShurrab",
+              Type: "fab fa-github",
+            },
+          ],
+        },
+        {
+          ImagePath: require(`@/assets/img/welcomePage/imgTeam/mumen.jpg`),
+          name: "م. مؤمن أبو عيطة",
+          job: "مطور تطبيقات جوال",
           Social_media_list: [
             {
               link: "https://www.facebook.com/Mumen.Aita",
