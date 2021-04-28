@@ -1,4 +1,5 @@
 {
+  "loading_Text": "جاري التحميل",
   "navBar": {
     "home": "الرئيسية",
     "aboutUs": "تعرف علينا",
@@ -59,6 +60,30 @@
       "title": "لوحة التحكم",
       "subTitle": "جميع وحدات التحكم",
       "searchLabel": "البحث بالاسم أو التاريخ"
+    },
+    "Profile": {
+      "title": "تحديث ملفك الشخصي",
+      "Image": {
+        "chooseYourImage": "اختر صورتك",
+        "upload": "رفع الصورة",
+        "cancel": "إلغاء"
+      },
+      "UpdateForm": {
+        "baseInfo": "معلومات أساسية",
+        "loginInfo": "معلومات تسجيل الدخول",
+        "btn_Update": "تحديث"
+      },
+      "baseInfo": {
+        "firstName": "الاسم الأول",
+        "lastName": "الكنية",
+        "mobile": "رقم الهاتف أو المحمول"
+      },
+      "loginInfo": {
+        "new": "الجديد",
+        "userName": "إسم المستخدم",
+        "newPassword": "كلمة المرور الجديدة",
+        "confirmPassword": "تأكيد كلمة المرور الجديدة"
+      }
     }
   }
 }

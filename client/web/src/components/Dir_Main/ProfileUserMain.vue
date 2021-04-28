@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="profile__Main-containerEditInfo">
-        <h2 class="profile__Main-EditInfoH2 mb-4">Update Your Profile</h2>
+        <h2 class="profile__Main-EditInfoH2 mb-4">{{ $t('Dashboard.Profile.title') }}</h2>
         <div class="profile__Main-EditInfo">
           <div class="profile__Main-EditInfoImg">
             <div class="profile__image-outline">
@@ -33,19 +33,29 @@
             <div class="profile__image-btn">
               <input id="input__file" ref="imageInput" accept="image/*" hidden type="file"
                      @change.prevent="previewImage">
-              <button v-show="!imageLoading" class="Add-btn btn btn-info" @click.prevent="onPickImage">Choose Your Image
+              <button v-show="!imageLoading" class="Add-btn btn btn-info" @click.prevent="onPickImage">{{
+                  $t('Dashboard.Profile.Image.chooseYourImage')
+                }}
               </button>
-              <button v-show="imageLoading" class="upload-btn btn btn-success" @click.prevent="onUploadImage">upload
+              <button v-show="imageLoading" class="upload-btn btn btn-success" @click.prevent="onUploadImage">
+                {{ $t('Dashboard.Profile.Image.upload') }}
               </button>
-              <button v-show="imageLoading" class="btn btn-danger" @click.prevent="onCancelImage">Cancel</button>
+              <button v-show="imageLoading" class="btn btn-danger" @click.prevent="onCancelImage">
+                {{ $t('Dashboard.Profile.Image.cancel') }}
+              </button>
             </div>
           </div>
-          <div class="profile__Main-EditInfoImg">
+          <div
+              :class=" lang==='ar' ? 'profile__Main-EditInfoImg direction-rtl' :'profile__Main-EditInfoImg direction-ltr'">
             <div class="profile__Main-EditInfoData__title">
               <ul class="profile__Main-EditInfoData__ul">
                 <li class="profile__Main-EditInfoData__li"><a id="Base_Info" class="profile__Main-EditInfoData__active"
-                                                              href="javascript:void(0);">Base Info</a></li>
-                <li class="profile__Main-EditInfoData__li"><a id="Login_Info" href="javascript:void(0);">Login info</a>
+                                                              href="javascript:void(0);">{{
+                    $t('Dashboard.Profile.UpdateForm.baseInfo')
+                  }}</a></li>
+                <li class="profile__Main-EditInfoData__li"><a id="Login_Info" href="javascript:void(0);">{{
+                    $t('Dashboard.Profile.UpdateForm.loginInfo')
+                  }}</a>
                 </li>
               </ul>
             </div>
@@ -53,28 +63,34 @@
               <div id="bodyBaseInfo" class="profile__Main-EditInfoData__bodyInfo">
                 <form @submit.prevent="OnUpdateBodyInfo">
                   <div class="profile__bodyInfo-group">
-                    <label id="firstNameInputLabel" class="profile__bodyInfo-groupLabel" for="firstNameInput">First
-                      Name</label>
+                    <label id="firstNameInputLabel" class="profile__bodyInfo-groupLabel" for="firstNameInput">
+                      {{ $t('Dashboard.Profile.baseInfo.firstName') }}
+                    </label>
                     <input id="firstNameInput" v-model.trim="userData.profileInfo.firstName"
                            class="profile__bodyInfo-groupInput" type="text">
                     <p class="error_style">{{ userData.profileInfo.error.firstName }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
-                    <label id="lastNameInputLabel" class="profile__bodyInfo-groupLabel" for="lastNameInput">Last
-                      Name</label>
+                    <label id="lastNameInputLabel" class="profile__bodyInfo-groupLabel" for="lastNameInput">
+                      {{ $t('Dashboard.Profile.baseInfo.lastName') }}
+                    </label>
                     <input id="lastNameInput" v-model.trim="userData.profileInfo.lastName"
                            class="profile__bodyInfo-groupInput" type="text">
                     <p class="error_style">{{ userData.profileInfo.error.lastName }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
-                    <label id="mobileInputLabel" class="profile__bodyInfo-groupLabel" for="mobileInput">mobile</label>
+                    <label id="mobileInputLabel" class="profile__bodyInfo-groupLabel" for="mobileInput">
+                      {{ $t('Dashboard.Profile.baseInfo.mobile') }}
+                    </label>
                     <input id="mobileInput" v-model.trim="userData.profileInfo.mobile"
                            class="profile__bodyInfo-groupInput"
                            type="text">
                     <p class="error_style">{{ userData.profileInfo.error.mobile }}</p>
                   </div>
                   <div class="profile__bodyInfo-groupBTN">
-                    <button class="profile__bodyInfo-SubmitBTN" type="submit">Update</button>
+                    <button class="profile__bodyInfo-SubmitBTN" type="submit">
+                      {{ $t('Dashboard.Profile.UpdateForm.btn_Update') }}
+                    </button>
                   </div>
                 </form>
               </div>
@@ -82,29 +98,38 @@
                 <form @submit.prevent="OnUpdateBodyInfoLogin">
                   <div class="profile__bodyInfo-group">
                     <label id="userNameInputLabel" class="profile__bodyInfo-groupLabel"
-                           for="userNameInput">User Name <sup class="badge bg-secondary">New</sup></label>
+                           for="userNameInput">
+                      {{ $t('Dashboard.Profile.loginInfo.userName') }}
+                      <sup class="badge bg-secondary">
+                        {{ $t('Dashboard.Profile.loginInfo.new') }}
+                      </sup>
+                    </label>
                     <input id="userNameInput" v-model.trim="userData.basicInfo.userName"
                            class="profile__bodyInfo-groupInput"
                            type="text">
                     <p class="error_style">{{ userData.basicInfo.error.userName }}</p>
                   </div>
                   <div class="profile__bodyInfo-group">
-                    <label id="currentInputLabel" class="profile__bodyInfo-groupLabel" for="currentInput">Current
-                      Password</label>
-                    <input id="currentInput" v-model.trim="userData.basicInfo.currentPassword"
-                           class="profile__bodyInfo-groupInput" type="password">
-                    <p class="error_style">{{ userData.basicInfo.error.currentPassword }}</p>
-                  </div>
-                  <div class="profile__bodyInfo-group">
-                    <label id="newPasswordInputLabel" class="profile__bodyInfo-groupLabel" for="newPasswordInput">New
-                      Password</label>
+                    <label id="newPasswordInputLabel" class="profile__bodyInfo-groupLabel" for="newPasswordInput">
+                      {{ $t('Dashboard.Profile.loginInfo.newPassword') }}
+                    </label>
                     <input id="newPasswordInput" v-model.trim="userData.basicInfo.newPassword"
                            class="profile__bodyInfo-groupInput" type="password">
                     <p class="error_style">{{ userData.basicInfo.error.newPassword }}</p>
                   </div>
+                  <div class="profile__bodyInfo-group">
+                    <label id="currentInputLabel" class="profile__bodyInfo-groupLabel" for="currentInput">
+                      {{ $t('Dashboard.Profile.loginInfo.confirmPassword') }}
+                    </label>
+                    <input id="currentInput" v-model.trim="userData.basicInfo.currentPassword"
+                           class="profile__bodyInfo-groupInput" type="password">
+                    <p class="error_style">{{ userData.basicInfo.error.currentPassword }}</p>
+                  </div>
 
                   <div class="profile__bodyInfo-groupBTN">
-                    <button class="profile__bodyInfo-SubmitBTN" type="submit">Update</button>
+                    <button class="profile__bodyInfo-SubmitBTN" type="submit">
+                      {{ $t('Dashboard.Profile.UpdateForm.btn_Update') }}
+                    </button>
                   </div>
                 </form>
               </div>
@@ -126,6 +151,7 @@ export default {
   name: "ProfileUserMain",
   data() {
     return {
+      lang: localStorage.getItem('lang') || 'en',
       userData: {
         profileInfo: {
           mobile: this.$store.getters.userProfile.mobile ? this.$store.getters.userProfile.mobile : '',
@@ -177,7 +203,11 @@ export default {
       this.imageName = event.target.files[0].name;
       const limit = 2000 * 1000; // 2000 KB = 2MB
       if (this.pictureSize >= limit) {
-        this.errors = `Your image size: ${this.pictureSizeKB} , image file size must be less than ${limit / 1000}KB`;
+        if (this.lang === 'en') {
+          this.errors = `Your image size: ${this.pictureSizeKB} , image file size must be less than ${limit / 1000}KB`;
+        } else {
+          this.errors = ` حجم صورتك : ${this.pictureSizeKB} , يجب أن يكون حجم ملف الصورة أقل من ${limit / 1000}كيلو بايت `;
+        }
         setTimeout(() => {
           this.errors = null;
         }, 5000);
@@ -203,9 +233,9 @@ export default {
       /*** Alert Swal.fire ***/
       let timerInterval
       this.$swal.fire({
-        title: 'Image is Upload now',
-        html: 'Wait,  I will close in <b></b> milliseconds.',
-        timer: 2000,
+        title: this.lang === 'en' ? 'Image is Upload now' : 'يتم تحميل الصورة الآن',
+        html: this.lang === 'en' ? 'Wait,  I will close in <b></b> milliseconds.' : 'انتظر ، سأغلق خلال <b> </b> مللي ثانية.',
+        timer: 3000,
         timerProgressBar: true,
         didOpen: () => {
           this.$swal.showLoading()
@@ -275,8 +305,8 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Thank you, Send it',
-          text: "Update your information, Successfully",
+          title: this.lang === 'en' ? 'Thank you, Send it' : 'شكرا لك تم الإرسال',
+          text: this.lang === 'en' ? 'Your information has been successfully updated' : 'تم التحديث معلوماتك بنجاح',
           showConfirmButton: false,
           timer: 1500
         })
@@ -284,7 +314,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'Store image Faild!',
+          title: this.lang === 'en' ? 'Failed to store your photo!' : 'فشل تخزين صورتك!',
           showConfirmButton: false,
           timer: 1500
         })
@@ -309,7 +339,11 @@ export default {
           let mobileRegex = /^[0-9]+$/;
           let CheckMobile = mobileRegex.test(Mobile);//true or false
           if (!CheckMobile) {
-            this.userData.profileInfo.error.mobile = "Sorry! User mobile Faild, must be number";
+            if (this.lang === 'en') {
+              this.userData.profileInfo.error.mobile = 'Excuse me! It must be a phone number';
+            } else {
+              this.userData.profileInfo.error.mobile = 'عذرا! يجب أن يكون رقم هاتف';
+            }
             setTimeout(() => {
               this.userData.profileInfo.error.mobile = null;
             }, 3000);
@@ -334,8 +368,8 @@ export default {
             this.$swal.fire({
               position: 'center',
               icon: 'success',
-              title: 'Thank you, Send it',
-              text: "Update your information, Successfully",
+              title: this.lang === 'en' ? 'Thank you, Send it' : 'شكرا لك تم الإرسال',
+              text: this.lang === 'en' ? 'Your information has been successfully updated' : 'تم تحديث معلوماتك بنجاح',
               showConfirmButton: false,
               timer: 1500
             })
@@ -343,8 +377,8 @@ export default {
             this.$swal.fire({
               position: 'center',
               icon: 'error',
-              title: 'Sorry, 😥',
-              text: "Update your information, Faild",
+              title: this.lang === 'en' ? 'Excuse me, 😥' : 'عفواً, 😥',
+              text: this.lang === 'en' ? 'Failed, Update your information' : 'فشل تحديث المعلومات الخاصة بك',
               showConfirmButton: false,
               timer: 1500
             })
@@ -363,8 +397,8 @@ export default {
               this.$swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Thank you, Send it',
-                text: "Update your First Name, Successfully",
+                title: this.lang === 'en' ? 'Thank you, Send it' : 'شكرا لك تم الإرسال',
+                text: this.lang === 'en' ? 'Your first name has been successfully updated' : 'تم تحديث اسمك الأول بنجاح',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -372,8 +406,8 @@ export default {
               this.$swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: 'Sorry, 😥',
-                text: "Update your First Name, Faild",
+                title: this.lang === 'en' ? 'Excuse me, 😥' : 'عفواً, 😥',
+                text: this.lang === 'en' ? 'Failed, Update your First Name' : 'فشل تحديث الإسم الأول الخاصة بك',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -392,8 +426,8 @@ export default {
               this.$swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Thank you, Send it',
-                text: "Update your Last Name, Successfully",
+                title: this.lang === 'en' ? 'Thank you, Send it' : 'شكرا لك تم الإرسال',
+                text: this.lang === 'en' ? 'Your Last name has been successfully updated' : 'تم تحديث الكنية بنجاح',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -401,8 +435,8 @@ export default {
               this.$swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: 'Sorry, 😥',
-                text: "Update your lastName, Faild",
+                title: this.lang === 'en' ? 'Excuse me, 😥' : 'عفواً, 😥',
+                text: this.lang === 'en' ? 'Failed, Update your last Name' : 'فشل تحديث الكنية الخاصة بك',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -420,8 +454,8 @@ export default {
               this.$swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: 'Thank you, Send it',
-                text: "Update your Mobile, Successfully",
+                title: this.lang === 'en' ? 'Thank you, Send it' : 'شكرا لك تم الإرسال',
+                text: this.lang === 'en' ? 'Your Mobile has been successfully updated' : 'تم تحديث رقم الهاتف بنجاح',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -429,8 +463,8 @@ export default {
               this.$swal.fire({
                 position: 'center',
                 icon: 'error',
-                title: 'Sorry, 😥',
-                text: "Update your Mobile, Faild",
+                title: this.lang === 'en' ? 'Excuse me, 😥' : 'عفواً, 😥',
+                text: this.lang === 'en' ? 'Failed, Update your Mobile' : 'فشل تحديث رقم الهاتف الخاصة بك',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -440,9 +474,16 @@ export default {
 
 
       } else {
-        this.userData.profileInfo.error.mobile = "Sorry! User mobile Faild, is Required";
-        this.userData.profileInfo.error.firstName = "Sorry! User first Name Faild, is Required";
-        this.userData.profileInfo.error.lastName = "Sorry! User last Name Faild, is Required";
+        if (this.lang === 'en') {
+          this.userData.profileInfo.error.mobile = 'Excuse me! The mobile number field is required';
+          this.userData.profileInfo.error.firstName = 'Excuse me! The first name field is required';
+          this.userData.profileInfo.error.lastName = 'Excuse me! The Nickname field, is required';
+        } else {
+          this.userData.profileInfo.error.mobile = "عفوا ! حقل رقم الهاتف المحمول مطلوب";
+          this.userData.profileInfo.error.firstName = 'عفوا ! حقل الإسم الأول ، مطلوب';
+          this.userData.profileInfo.error.lastName = 'عفوا ! حقل الكنية ، مطلوب';
+        }
+
         setTimeout(() => {
           this.userData.profileInfo.error.mobile = '';
           this.userData.profileInfo.error.firstName = '';
@@ -461,7 +502,11 @@ export default {
           let usernameRegex = /^[a-zA-Z0-9]+$/;
           let CheckUserName = usernameRegex.test(UserName);//true or false
           if (!CheckUserName) {
-            this.userData.basicInfo.error.userName = "Sorry! User Name Faild, must be (a-z) and (0-1) and ignored space";
+            if (this.lang === 'en') {
+              this.userData.basicInfo.error.userName = 'Excuse me! Username failed, it should be (a-z), (0-1) and space ignored';
+            } else {
+              this.userData.basicInfo.error.userName = 'عذرا! فشل اسم المستخدم ، يجب أن يكون (a-z) ، (0-1) وتجاهل المسافة';
+            }
             setTimeout(() => {
               this.userData.basicInfo.error.userName = null;
             }, 3000);
@@ -475,8 +520,8 @@ export default {
               this.$swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: `<strong>Updated</strong>`,
-                text: "Update your UserName, Successfully",
+                title: this.lang === 'en' ? `<strong>Updated</strong>` : `<strong>محدث</strong>`,
+                text: this.lang === 'en' ? 'Your username has been successfully updated' : 'تم تحديث اسم المستخدم الخاص بك بنجاح',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -485,7 +530,11 @@ export default {
               this.userData.basicInfo.userName = null;
             });
           }).catch(() => {
-            this.userData.basicInfo.error.userName = "Sorry! UserName is already 😥";
+            if (this.lang === 'en') {
+              this.userData.basicInfo.error.userName = 'Excuse me ! Username already exists 😥';
+            } else {
+              this.userData.basicInfo.error.userName = 'عفوا ! اسم المستخدم موجود مسبقا 😥';
+            }
             setTimeout(() => {
               this.userData.basicInfo.error.userName = null;
             }, 3000);
@@ -500,8 +549,8 @@ export default {
               this.$swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: `<strong>Updated</strong>`,
-                text: "Update your Password, Successfully",
+                title: this.lang === 'en' ? `<strong>Updated</strong>` : `<strong>محدث</strong>`,
+                text: this.lang === 'en' ? 'Your Password has been successfully updated' : 'تم تحديث كلمةالمرورالخاص بك بنجاح',
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -513,8 +562,13 @@ export default {
         }
 
       } else {
-        this.userData.basicInfo.error.userName = "Sorry! User user Name Faild, is Required";
-        this.userData.basicInfo.error.newPassword = "Sorry! User Password Faild, is Required";
+        if (this.lang === 'en') {
+          this.userData.basicInfo.error.userName = 'Excuse me! The user Name field is required';
+          this.userData.basicInfo.error.newPassword = 'Excuse me! The Password field is required';
+        } else {
+          this.userData.basicInfo.error.userName = "عفوا ! حقل إسم المستخدم مطلوب مطلوب";
+          this.userData.basicInfo.error.newPassword = 'عفوا ! حقل كلمة المرور مطلوب مطلوب';
+        }
         setTimeout(() => {
           this.userData.basicInfo.error.userName = '';
           this.userData.basicInfo.error.newPassword = '';

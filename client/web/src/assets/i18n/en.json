@@ -1,4 +1,5 @@
 {
+  "loading_Text": "loading",
   "navBar": {
     "home": "Home",
     "aboutUs": "About us",
@@ -59,6 +60,30 @@
       "title": "DashBoard",
       "subTitle": "All Controllers",
       "searchLabel": "Search by name Or Date"
+    },
+    "Profile": {
+      "title": "Update Your Profile",
+      "Image": {
+        "chooseYourImage": "Choose Your Image",
+        "upload": "Upload",
+        "cancel": "Cancel"
+      },
+      "UpdateForm": {
+        "baseInfo": "Base Info",
+        "loginInfo": "Login info",
+        "btn_Update": "Update"
+      },
+      "baseInfo": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "mobile": "mobile"
+      },
+      "loginInfo": {
+        "new": "New",
+        "userName": "User Name",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Your Password"
+      }
     }
   }
 }

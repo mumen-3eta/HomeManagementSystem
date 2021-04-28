@@ -86,44 +86,71 @@ export default {
   },
   methods: {
     async checkForm() {
-      if (this.userName) {
-        let userName = this.userName;
-        let usernameRegex = /^[a-zA-Z0-9]+$/;
-        let CheckUserName = usernameRegex.test(userName);//true or false
-        if (!CheckUserName) {
-          this.errors.errorUserName = "Sorry! User Name Faild, must be (a-z) and (0-1) and ignored space";
-          setTimeout(() => {
-            this.errors.errorUserName = null;
-          }, 3000);
-          return false;
+      if (this.userName && this.Email && this.Password) {
+        if (this.userName) {
+          let userName = this.userName;
+          let usernameRegex = /^[a-zA-Z0-9]+$/;
+          let CheckUserName = usernameRegex.test(userName);//true or false
+          if (!CheckUserName) {
+            if (this.lang === 'en') {
+              this.errors.errorUserName = "Excuse me! Username failed, must be (a-z), (0-1) and space ignored";
+            } else {
+              this.errors.errorUserName = "إعذرني! فشل اسم المستخدم ، يجب أن يكون (a-z) ، (0-1) وتجاهل المسافة";
+            }
+            setTimeout(() => {
+              this.errors.errorUserName = null;
+            }, 3000);
+            return false;
+          }
         }
-      }
-      if (this.Email) {
-        let email = this.Email;
-        let EmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let CheckEmail = EmailRegex.test(email);//true or false
-        if (!CheckEmail) {
-          this.errors.errorEmail = "Sorry! Email Faild, must be (@) and (.) and ignored space";
-          setTimeout(() => {
-            this.errors.errorEmail = null;
-          }, 3000);
-          return false;
+        if (this.Email) {
+          let email = this.Email;
+          let EmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          let CheckEmail = EmailRegex.test(email);//true or false
+          if (!CheckEmail) {
+            if (this.lang === 'en') {
+              this.errors.errorEmail = "Excuse me ! Email failed, must be (@), (.) And a space ignored";
+            } else {
+              this.errors.errorEmail = "عفواً 👽 فشل البريد الإلكتروني ، يجب أن يكون (@) و (.) ومسافة متجاهلة";
+            }
+            setTimeout(() => {
+              this.errors.errorEmail = null;
+            }, 3000);
+            return false;
+          }
         }
+
+        await axios.post('/api/v1/users/register', {
+          userName: this.userName,
+          email: this.Email,
+          password: this.Password,
+        }).then(async ({data: response}) => {
+          await this.ClearError();
+          await this.$store.dispatch('TokenUser', response);
+          this.LoadingActivation();
+          await this.GetUserData();
+        }).catch(() => {
+          if (this.lang === 'en') {
+            this.errors.ErrorEmailOrUserName = "Email or username is already taken Or Invalid Email Or Password";
+          } else {
+            this.errors.ErrorEmailOrUserName = "البريد الإلكتروني أو اسم المستخدم مأخوذ بالفعل أو البريد الإلكتروني أو كلمة السر خاطئة";
+          }
+          return false;
+        });
+      } else {
+        /* if not Input userName And Email  👽  */
+        if (this.lang === 'en') {
+          this.errors.ErrorEmailOrUserName = "Excuse me 👽 Username failed or password is required";
+        } else {
+          this.errors.ErrorEmailOrUserName = "عفواً 👽 فشل الإشتراك اسم المستخدم و كلمةالمرور و الإيميل مطلوب";
+        }
+        setTimeout(() => {
+          this.errors.ErrorEmailOrUserName = null;
+
+        }, 3000);
+        return false;
       }
 
-      await axios.post('/api/v1/users/register', {
-        userName: this.userName,
-        email: this.Email,
-        password: this.Password,
-      }).then(async ({data: response}) => {
-        await this.ClearError();
-        await this.$store.dispatch('TokenUser', response);
-        this.LoadingActivation();
-        await this.GetUserData();
-      }).catch(() => {
-        this.errors.ErrorEmailOrUserName = "Email/username is already taken";
-        return false;
-      });
     },
     async GetUserData() {
       await axios.get('/api/v1/users/me').then(async ({data: {user: userInfo}}) => {

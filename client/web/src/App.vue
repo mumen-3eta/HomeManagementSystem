@@ -10,7 +10,8 @@
           <div class="loader__bar"></div>
           <div class="loader__ball"></div>
         </div>
-        <div> loading<span class="refresh">...</span></div>
+        <div :class=" lang ==='ar' ? 'direction-rtl' :' direction-ltr'">
+          {{ $t('loading_Text') }}<span class="refresh">...</span></div>
       </div>
     </div>
     <div>
@@ -24,6 +25,11 @@
 <script>
 export default {
   name: 'App',
+  data() {
+    return {
+      lang: localStorage.getItem('lang') || 'en',
+    }
+  },
   mounted() {
     window.onload = function () {
       setTimeout(function () {

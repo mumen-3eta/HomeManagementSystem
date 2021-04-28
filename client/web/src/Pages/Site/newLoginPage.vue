@@ -84,7 +84,11 @@ export default {
         let CheckEmail = EmailRegex.test(UserNameOrEmail);//true or false
         /* this condition to Check if username Or Email not input correctly 👺  */
         if (!CheckEmail && !CheckUserName) {
-          this.errors.errorUserNameOrEmail = "Sorry! Email Faild, must be (@) and (.) and ignored space";
+          if (this.lang === 'en') {
+            this.errors.errorUserNameOrEmail = "Excuse me ! Email failed, must be (@), (.) And a space ignored";
+          } else {
+            this.errors.errorUserNameOrEmail = "عفواً 👽 فشل البريد الإلكتروني ، يجب أن يكون (@) و (.) ومسافة متجاهلة";
+          }
           setTimeout(() => {
             this.errors.errorUserNameOrEmail = null;
           }, 3000);
@@ -100,7 +104,11 @@ export default {
             this.LoadingActivation();
             await this.GetUserData();
           }).catch(() => {
-            this.errors.errorUserNameOrEmail = 'Invalid Email/Password';
+            if (this.lang === 'en') {
+              this.errors.errorUserNameOrEmail = 'Invalid Email Or Password';
+            } else {
+              this.errors.errorUserNameOrEmail = 'البريد الإلكتروني أو كلمة السر خاطئة';
+            }
             return false;
           });
         }
@@ -113,14 +121,22 @@ export default {
             this.LoadingActivation();
             await this.GetUserData();
           }).catch(() => {
-            this.errors.errorUserNameOrEmail = 'Invalid userName/Password';
+            if (this.lang === 'en') {
+              this.errors.errorUserNameOrEmail = 'Invalid Email Or Password';
+            } else {
+              this.errors.errorUserNameOrEmail = 'البريد الإلكتروني أو كلمة السر خاطئة';
+            }
             return false;
           });
         }
 
       } else {
         /* if not Input userName And Email  👽  */
-        this.errors.errorUserNameOrEmail = "Sorry! User Name Faild oR Password  is Required ";
+        if (this.lang === 'en') {
+          this.errors.errorUserNameOrEmail = "Excuse me 👽 Username failed or password is required";
+        } else {
+          this.errors.errorUserNameOrEmail = "عفواً 👽 فشل اسم المستخدم أو مطلوب كلمة المرور";
+        }
         setTimeout(() => {
           this.errors.errorUserNameOrEmail = null;
 
