@@ -28,7 +28,6 @@
                     allLabel:  this.lang==='en' ?  'All' : 'الجميع',
                   }"
           :rows="rows"
-          :rtl="this.lang!=='en'"
           :search-options=" {
                     enabled: false,
                     skipDiacritics: true,
@@ -139,7 +138,7 @@ export default {
       ],
       columns_AR: [
         {
-          label: 'الرقم',
+          label: 'رقم الترتيب',
           field: 'id',
           type: 'string',
         },

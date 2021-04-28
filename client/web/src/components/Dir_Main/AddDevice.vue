@@ -1,9 +1,9 @@
 <template>
   <div>
     <!--   section number 2     -->
-    <section class="section section__mTop">
+    <section :class="lang==='ar' ? 'section section__mTop direction-rtl' :'section section__mTop direction-ltr'">
       <header class="section__header">
-        <h2 class="section__title">Processor</h2>
+        <h2 class="section__title">{{ $t('Dashboard.addProcessors.title') }}</h2>
         <div class="section__control-s">
           <button class="section__button section__button--painted focus--box-shadow" type="button"
                   @click.prevent="OpenProcessorId">
@@ -13,29 +13,30 @@
       </header>
 
       <div class="project my-3 mx-auto p-2 position-relative">
-        <div class="search_group">
+        <div :class="lang==='ar' ? 'search_group direction-ltr' :'search_group '">
           <i class="fa fa-search search_group-icon"></i>
           <label for="searchId"></label>
           <input id="searchId" v-model="searchTerm" class="search_group-input" type="search">
-          <button class="btn btn-secondary mx-2 search_group-btn" @click.prevent="OpenScanSearch">Scan To Search
+          <button class="btn btn-secondary mx-2 search_group-btn" @click.prevent="OpenScanSearch">
+            {{ $t('Dashboard.addProcessors.btn_Text') }}
           </button>
         </div>
         <vue-good-table
-            :columns="columns"
+            :columns="this.lang === 'en' ? columns_EN : columns_AR"
             :pagination-options="{
                     enabled: true,
-                    mode: 'records',
+                     mode: 'pages',
                     perPage: 5,
                     position: 'bottom',
                     perPageDropdown: [5, 7, 9],
                     dropdownAllowAll: false,
                     setCurrentPage: 1,
-                    nextLabel: 'next',
-                    prevLabel: 'prev',
-                    rowsPerPageLabel: 'Rows per page',
-                    ofLabel: 'of',
-                    pageLabel: 'page', // for 'pages' mode
-                    allLabel: 'All',
+                    nextLabel:  this.lang==='en' ? 'next' : 'التالي',
+                    prevLabel: this.lang==='en' ? 'prev' : 'السابق',
+                    rowsPerPageLabel: this.lang==='en' ? 'Rows per page' : 'عدد الصفوف في الصفحة',
+                    ofLabel: this.lang==='en' ? 'of' :'من' ,
+                    pageLabel: this.lang==='en' ? 'page' :'صفحة', // for 'pages' mode
+                    allLabel:  this.lang==='en' ?  'All' : 'الجميع',
                   }"
             :rows="rows"
             :search-options=" {
@@ -46,18 +47,22 @@
                   }">
           <div slot="table-actions" class="btn_searchScan"></div>
           <template slot="table-row" slot-scope="props">
-            <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
+            <div v-if="props.column.field === 'btn_Action'"
+                 :class="lang==='ar' ? 'btn_actionGroup direction-ltr' :'btn_actionGroup '">
               <router-link :to="{path:'/v2/main/device/create/controller/' + props.row.Connection_Id}">
-                <button class="btn_AddController"><i class="fas fa-plus"></i> Add Controller</button>
+                <button class="btn_AddController"><i class="fas fa-plus"></i>
+                  {{ $t('Dashboard.addProcessors.table.addController') }}
+                </button>
               </router-link>
               <router-link :to="{path:'/v2/main/device/all/controller/' + props.row.Connection_Id}">
                 <button class="btn_Show">
                   <i class="fas fa-eye"></i>
-                  Controller
+                  {{ $t('Dashboard.addProcessors.table.controller') }}
                 </button>
               </router-link>
               <button class="btn_deleted" @click.prevent="deleteProcessorID(props.row.Processor_Id)">
-                <i class="fas fa-trash-alt"></i> Delete
+                <i class="fas fa-trash-alt"></i>
+                {{ $t('Dashboard.addProcessors.table.delete') }}
               </button>
             </div>
             <span v-else>
@@ -73,30 +78,39 @@
            @before-open="CloseProcessorId">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseProcessorId"></i>
       <div class="container__AddProcessorID">
-        <h2>Add New Processor ID</h2>
-        <div class="input-group__AddProcessorID">
-          <label for="input_ProcessorID">Processor ID</label>
+        <h2>{{ $t('Dashboard.addProcessors.webCame.model.title') }}</h2>
+        <div
+            :class="lang==='ar' ? 'input-group__AddProcessorID direction-rtl' :'input-group__AddProcessorID direction-ltr'">
+          <label for="input_ProcessorID">
+            {{ $t('Dashboard.addProcessors.webCame.model.Input_label') }}
+          </label>
           <input id="input_ProcessorID" v-model.trim="Processor_ID" type="text"
                  @keypress.enter="addProcessorID" @keypress.esc="CloseProcessorId">
           <p v-if="errorProcessorID" class="error_style pb-2">{{ errorProcessorID }}</p>
           <div class="btn-group__AddProcessorID">
-            <button class="btn btn-secondary" @click.prevent="addProcessorID">Add Processor Id</button>
-            <button class="btn btn-danger" @click.prevent="ClearProcessorID">Clear</button>
+            <button class="btn btn-secondary" @click.prevent="addProcessorID">
+              {{ $t('Dashboard.addProcessors.webCame.model.btn_text') }}
+            </button>
+            <button class="btn btn-danger" @click.prevent="ClearProcessorID">
+              {{ $t('Dashboard.addProcessors.webCame.model.btn_Clear') }}
+            </button>
           </div>
         </div>
         <div class="otherWay_AddProcessorID">
-          <div class="otherWay_btnAdd">
-            <h4>Other Way To Add Processor ID</h4>
+          <div :class="lang==='ar' ? 'otherWay_btnAdd direction-rtl' :'otherWay_btnAdd direction-ltr'">
+            <h4>{{ $t('Dashboard.addProcessors.webCame.addTitle') }}</h4>
             <button class="btn btn-secondary" @click.prevent="openScan">
-              {{ !isShowingCamera ? 'Scan BarCode' : 'Exit Scanning' }}
+              {{
+                !isShowingCamera ? (lang === 'en' ? 'Scan BarCode' : 'مسح الرمز الشريطى') : (lang === 'en' ? 'Exit Scanning' : 'الخروج من المسح')
+              }}
             </button>
           </div>
           <div id="handle__camera" class="handle__camera ScanOpen">
-
             <qrcode-stream v-if="isShowingCamera" @decode="onDecode" @init="onInit">
-              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">Wait For Open Camera...</p>
+              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">
+                {{ $t('Dashboard.addProcessors.webCame.messageWait') }}</p>
             </qrcode-stream>
-            <p v-if="!isShowingCamera">place camera, Pleas Check your web Came</p>
+            <p v-if="!isShowingCamera">{{ $t('Dashboard.addProcessors.webCame.error') }}</p>
           </div>
         </div>
       </div>
@@ -108,13 +122,14 @@
            @before-open="AfterCloseScanSearch">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseScanSearch"></i>
       <div class="container__AddProcessorID">
-        <h3>Scan To Search</h3>
+        <h3>{{ $t('Dashboard.addProcessors.webCame.title') }}</h3>
         <div class="otherWay_AddProcessorID">
           <div class="handle__camera">
             <qrcode-stream v-if="isShowingCamera" @decode="onDecodeSearch" @init="onInit">
-              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">Wait For Open Camera...</p>
+              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">
+                {{ $t('Dashboard.addProcessors.webCame.messageWait') }}</p>
             </qrcode-stream>
-            <p v-if="!isShowingCamera">place camera, Pleas Check your web Came</p>
+            <p v-if="!isShowingCamera">{{ $t('Dashboard.addProcessors.webCame.error') }}</p>
           </div>
         </div>
       </div>
@@ -132,12 +147,13 @@ export default {
   name: "AddDevice",
   data() {
     return {
+      lang: localStorage.getItem('lang') || 'en',
       Processor_ID: '',
       errorProcessorID: '',
       isShowingCamera: false,
       isShowingWait: true,
       searchTerm: '',
-      columns: [
+      columns_EN: [
         {
           label: 'ID',
           field: 'id',
@@ -155,7 +171,31 @@ export default {
           sortable: false,
         },
         {
-          label: 'Action',
+          label: 'Settings',
+          field: 'btn_Action',
+          type: 'string',
+          sortable: false,
+        },
+      ],
+      columns_AR: [
+        {
+          label: 'رقم الترتيب',
+          field: 'id',
+          type: 'string',
+        },
+        {
+          label: 'معرف الاتصال',
+          field: 'Connection_Id',
+          type: 'string',
+        },
+        {
+          label: 'معرف المعالج',
+          field: 'Processor_Id',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'الإعدادات',
           field: 'btn_Action',
           type: 'string',
           sortable: false,
@@ -248,7 +288,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Add Processor ID, Successfully',
+            title: this.lang === 'en' ? 'Processor ID, added successfully' : 'تم إضافة معرف المعالج ، بنجاح',
             toast: false,
             text: response[0].processor_id,
             showConfirmButton: false,
@@ -259,7 +299,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'error',
-            title: `<strong>Add Processor ID, Faild</strong>`,
+            title: this.lang === 'en' ? `<strong>Failed Add Processor ID</strong>` : `<strong>فشل إضافة معرف المعالج</strong>`,
             toast: false,
             showConfirmButton: false,
             timer: 1500
@@ -267,7 +307,11 @@ export default {
         });
         await this.GetAllConnections();
       } else {
-        this.errorProcessorID = "Sorry! User Processor Id Faild!";
+        if (this.lang === 'en') {
+          this.errorProcessorID = "Excuse me! Processor Id Failed!";
+        } else {
+          this.errorProcessorID = "عذرا! فشل معرف معالج!";
+        }
         setTimeout(() => {
           this.errorProcessorID = null;
         }, 3000);
@@ -279,22 +323,23 @@ export default {
     /* ----------------- Delete Processors ----------------- */
     async deleteProcessorID(Processor_Id) {
       this.$swal.fire({
-        title: 'Are you sure?',
-        html: `You won't Delete this ProcessorId <strong>${Processor_Id}</strong>`,
+        title: this.lang === 'en' ? 'Are you sure?' : 'هل أنت متأكد؟',
+        html: this.lang === 'en' ? `Do you want to delete this processor ID? <strong>${Processor_Id}</strong>` : `هل تريد أن حذف معرف المعالج هذا <strong>${Processor_Id}</strong>`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#35997c',
         cancelButtonColor: '#cb4848',
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonText: this.lang === 'en' ? 'Cancel' : 'إلغاء',
+        confirmButtonText: this.lang === 'en' ? 'Yes, delete it!' : 'نعم , إحذف'
       }).then((result) => {
         if (result.isConfirmed) {
           this.DeleteFunction(Processor_Id);
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Delete Processor Id, Successfully',
+            title: this.lang === 'en' ? 'This Processor Id has been successfully deleted' : 'تم حذف هذا المعرف بنجاح',
             toast: false,
-            text: "ProcessorID \"" + Processor_Id + "\"",
+            text: this.lang === 'en' ? "ProcessorID \"" + Processor_Id + "\"" : "معرف المعالج \"" + Processor_Id + "\"",
             showConfirmButton: false,
             timer: 1500
           })
@@ -307,7 +352,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Delete this Connection, Successfully',
+          title: this.lang === 'en' ? 'This connection has been successfully deleted' : 'تم حذف هذا الاتصال بنجاح',
           toast: false,
           showConfirmButton: false,
           timer: 1500
@@ -319,9 +364,9 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'error',
-            title: `<strong>this Processor Has connection, must delete connection First</strong>`,
+            title: this.lang === 'en' ? `<strong>this Processor Has a connection, must delete connection First</strong>` : `<strong>هذا المعالج لديه اتصال ، يجب حذف الاتصال أولاً</strong>`,
             toast: false,
-            text: 'Delete Processor ID, Faild',
+            text: this.lang === 'en' ? 'Deleting this processor ID has failed' : 'قد فشل حذف هذا  معرف المعالج ',
             showConfirmButton: false,
             timer: 1500
           })
@@ -329,7 +374,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'error',
-            title: `<strong>Delete Processor ID, Faild</strong>`,
+            title: this.lang === 'en' ? `<strong>Deleting this processor ID has failed</strong>` : `<strong>قد فشل حذف هذا  معرف المعالج </strong>`,
             toast: false,
             showConfirmButton: false,
             timer: 1500
