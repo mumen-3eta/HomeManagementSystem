@@ -114,6 +114,47 @@
         "controller": "Controllers",
         "delete": "Delete"
       }
+    },
+    "allControllerForProcessor": {
+      "title": "All Controller for Processor :",
+      "btn_Text": "Scan To Search",
+      "webCame": {
+        "addTitle": "Another Way To Add Processor ID",
+        "title": "Scan QR Code To Search",
+        "messageWait": "Wait For Open Camera...",
+        "error": "place camera, Pleas Check your web Came",
+        "model": {
+          "title": "Add New Processor ID",
+          "Input_label": "Processor ID",
+          "btn_text": "Add Processor Id",
+          "btn_Clear": "Clear"
+        }
+      },
+      "table": {
+        "addController": "Add Controller",
+        "controller": "Controllers",
+        "delete": "Delete"
+      }
+    },
+    "AddControllerForProcessor": {
+      "title": "Add Controller",
+      "btn_Text": "Scan To Search",
+      "webCame": {
+        "title": "Scan QR Code To Search",
+        "messageWait": "Wait For Open Camera...",
+        "error": "place camera, Pleas Check your web Came"
+      },
+      "Form": {
+        "buttonCreate": "Create Controller",
+        "buttonClear": "Clear",
+        "name": "Name :",
+        "typeController": "Type Controller :",
+        "controllerID": "Controller ID :",
+        "locationController": "Location Controller :",
+        "btn_Scan": "Scan",
+        "placeholderScan": "Enter Controller id Or Scan QRCode",
+        "placeholderName": "Enter Name Controller"
+      }
     }
   }
 }

@@ -25,7 +25,7 @@
             :columns="this.lang === 'en' ? columns_EN : columns_AR"
             :pagination-options="{
                     enabled: true,
-                     mode: 'pages',
+                    mode: 'pages',
                     perPage: 5,
                     position: 'bottom',
                     perPageDropdown: [5, 7, 9],

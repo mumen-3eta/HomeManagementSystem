@@ -1,30 +1,31 @@
 <template>
-  <div>
-    <h2>All Controller for Processor : {{ $route.params.connection_id }}</h2>
+  <div :class="lang==='ar' ? 'direction-rtl' :'direction-ltr'">
+    <h2>{{ $t('Dashboard.allControllerForProcessor.title') }} {{ $route.params.connection_id }}</h2>
     <div class="SubMain__Section-AllController my-3 mx-auto p-2 position-relative">
-      <div class="search_group">
+      <div :class="lang==='ar' ? 'search_group direction-ltr' :'search_group '">
         <i class="fa fa-search search_group-icon"></i>
         <label for="searchId"></label>
         <input id="searchId" v-model="searchTerm" class="search_group-input" type="search">
-        <button class="btn btn-secondary mx-2 search_group-btn" @click.prevent="OpenScanSearch">Scan To Search
+        <button class="btn btn-secondary mx-2 search_group-btn" @click.prevent="OpenScanSearch">
+          {{ $t('Dashboard.allControllerForProcessor.btn_Text') }}
         </button>
       </div>
       <vue-good-table
-          :columns="columns"
+          :columns="this.lang === 'en' ? columns_EN : columns_AR"
           :pagination-options="{
                     enabled: true,
-                    mode: 'records',
+                    mode: 'pages',
                     perPage: 5,
                     position: 'bottom',
                     perPageDropdown: [5, 7, 9],
                     dropdownAllowAll: false,
                     setCurrentPage: 1,
-                    nextLabel: 'next',
-                    prevLabel: 'prev',
-                    rowsPerPageLabel: 'Rows per page',
-                    ofLabel: 'of',
-                    pageLabel: 'page', // for 'pages' mode
-                    allLabel: 'All',
+                    nextLabel:  this.lang==='en' ? 'next' : 'التالي',
+                    prevLabel: this.lang==='en' ? 'prev' : 'السابق',
+                    rowsPerPageLabel: this.lang==='en' ? 'Rows per page' : 'عدد الصفوف في الصفحة',
+                    ofLabel: this.lang==='en' ? 'of' :'من' ,
+                    pageLabel: this.lang==='en' ? 'page' :'صفحة', // for 'pages' mode
+                    allLabel:  this.lang==='en' ?  'All' : 'الجميع',
                   }"
           :rows="rows"
           :search-options=" {
@@ -36,12 +37,7 @@
         <div slot="table-actions" class="btn_searchScan"></div>
         <template slot="table-row" slot-scope="props">
           <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-            <!--            <router-link-->
-            <!--                :to="{path:'/v2/main/device/processor/' + $route.params.connection_id + '/controller/' + props.row.Controller_Id }">-->
-            <!--              <button class="btn_Show">-->
-            <!--                <i class="fas fa-eye"></i>-->
-            <!--              </button>-->
-            <!--            </router-link>-->
+
             <button class="btn_deleted"
                     @click.prevent="DeleteControllerConnection(props.row.Controller_id ,props.row.Processor_Id)">
               <i class="fas fa-trash-alt"></i>
@@ -50,7 +46,7 @@
               <div class="form-check form-switch">
                 <label for="flexSwitchCheckChecked"></label>
                 <input id="flexSwitchCheckChecked"
-                       :checked="props.row.ActiveStatus === 'ON'  ? 'checked' : '' "
+                       :checked="props.row.ActiveStatus === 'ON' ? 'checked' : '' || props.row.ActiveStatus === 'شغال' ? 'checked' : ''  "
                        class="form-check-input"
                        type="checkbox"
                        @change.prevent="ChangeActivation(props.row.Controller_id)">
@@ -65,17 +61,24 @@
     </div>
 
     <!--    modal Search Processor id  -->
-    <modal :resizable="false" :width="650" height="auto" name="ScanSearchControllerId" @closed="AfterCloseScanSearch"
+    <modal :class=" lang==='ar' ? 'direction-ltr' :''" :resizable="false" :width="650" height="auto"
+           name="ScanSearchControllerId" @closed="AfterCloseScanSearch"
            @before-open="AfterCloseScanSearch">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseScanSearch"></i>
       <div class="container__AddProcessorID">
-        <h3>Scan To Search</h3>
+        <h3>
+          {{ $t('Dashboard.allControllerForProcessor.webCame.title') }}
+        </h3>
         <div class="otherWay_AddProcessorID">
           <div class="handle__camera">
             <qrcode-stream v-if="isShowingCamera" @decode="onDecodeSearch" @init="onInit">
-              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">Wait For Open Camera...</p>
+              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">
+                {{ $t('Dashboard.allControllerForProcessor.webCame.messageWait') }}
+              </p>
             </qrcode-stream>
-            <p v-if="!isShowingCamera">place camera, Pleas Check your web Came</p>
+            <p v-if="!isShowingCamera">
+              {{ $t('Dashboard.allControllerForProcessor.webCame.error') }}
+            </p>
           </div>
         </div>
       </div>
@@ -91,6 +94,7 @@ export default {
   name: "AllController",
   data() {
     return {
+      lang: localStorage.getItem('lang') || 'en',
       ProcessorID: this.$route.params.connection_id ? this.$route.params.connection_id : '',
       ControllerID: '',
       NameControllerUser: '',
@@ -100,7 +104,7 @@ export default {
       isShowingWait: true,
       searchTerm: '',
       Status: false,
-      columns: [
+      columns_EN: [
         {
           label: 'ID',
           field: 'id',
@@ -130,12 +134,53 @@ export default {
           sortable: false,
         },
         {
-          label: 'create At',
+          label: 'Date added',
           field: 'create_at',
           type: 'string',
         },
         {
-          label: 'Action',
+          label: 'Settings',
+          field: 'btn_Action',
+          type: 'string',
+          sortable: false,
+        },
+      ],
+      columns_AR: [
+        {
+          label: 'رقم الترتيب',
+          field: 'id',
+          type: 'string',
+        },
+        {
+          label: 'الاسم',
+          field: 'Name',
+          type: 'string',
+        },
+        {
+          label: 'معرف وحدة التحكم',
+          field: 'Controller_id',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'معرف المعالج',
+          field: 'Processor_Id',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'الحالة',
+          field: 'ActiveStatus',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'تاريخ الاضافة',
+          field: 'create_at',
+          type: 'string',
+        },
+        {
+          label: 'الاعدادات',
           field: 'btn_Action',
           type: 'string',
           sortable: false,
@@ -191,13 +236,14 @@ export default {
     /* Delete Controller Connection */
     async DeleteControllerConnection(controller_Id, processor_Id) {
       this.$swal.fire({
-        title: 'Are you sure?',
-        html: `You won't Delete this controller Id <strong>${controller_Id}</strong>`,
+        title: this.lang === 'en' ? 'Are you sure?' : 'هل أنت متأكد؟',
+        html: this.lang === 'en' ? `Do you want to delete this controller ID? <strong>${controller_Id}</strong>` : `هل تريد أن تحذف معرف وحدة التحكم هذه <strong>${controller_Id}</strong>`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#35997c',
         cancelButtonColor: '#cb4848',
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonText: this.lang === 'en' ? 'Cancel' : 'إلغاء',
+        confirmButtonText: this.lang === 'en' ? 'Yes, delete it!' : 'نعم , إحذف وحدة التحكم'
       }).then(async (result) => {
         if (result.isConfirmed) {
           await axios.delete('/api/v1/controller/connection', {
@@ -209,7 +255,7 @@ export default {
             this.$swal.fire({
               position: 'center',
               icon: 'success',
-              title: 'Delete this Connection, Successfully',
+              title: this.lang === 'en' ? 'This connection has been successfully deleted' : 'تم حذف هذا الاتصال بنجاح',
               toast: false,
               showConfirmButton: false,
               timer: 1500
@@ -218,7 +264,7 @@ export default {
             this.$swal.fire({
               position: 'center',
               icon: 'error',
-              title: `<strong>Delete Processor ID, Faild</strong>`,
+              title: this.lang === 'en' ? `<strong>Failed to delete processor ID</strong>` : `<strong>فشل حذف معرف المعالج</strong>`,
               toast: false,
               showConfirmButton: false,
               timer: 1500
@@ -241,7 +287,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'warning',
-            title: 'Active this Controller, Successfully',
+            title: this.lang === 'en' ? 'This Controller has been successfully activated' : 'تم تنشيط وحدة التحكم هذه بنجاح',
             toast: false,
             showConfirmButton: false,
             timer: 1500
@@ -250,7 +296,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'warning',
-            title: 'Not Active this Controller, Successfully',
+            title: this.lang === 'en' ? 'This controller has been successfully deactivated' : 'تم إلغاء تنشيط وحدة التحكم هذه ، بنجاح',
             toast: false,
             showConfirmButton: false,
             timer: 1500
@@ -261,7 +307,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'Change Status, Faild',
+          title: this.lang === 'en' ? 'Failed Change Status' : 'فشل تغيير الحالة',
           toast: false,
           showConfirmButton: false,
           timer: 1500
@@ -275,12 +321,14 @@ export default {
       await axios.post('/api/v1/controller/connection/processor', {
         processorId: this.$route.params.connection_id,
       }).then(async ({data: {connectionData: response}}) => {
+        let ON = this.lang === 'en' ? 'ON' : 'شغال';
+        let OFF = this.lang === 'en' ? 'OFF' : 'لا يعمل';
         const userAllControllerConnectedWithProcessor = response.map((item, i) => ({
           id: (++i).toString(),
           Controller_Connection_Id: item.id.toString(),
           Name: item.name.toString(),
           Status: item.status,
-          ActiveStatus: item.status === false ? 'OFF' : 'ON',
+          ActiveStatus: item.status === false ? OFF : ON,
           Processor_Id: item.processor_id.toString(),
           Controller_id: item.controller_id.toString(),
           TypeId: item.typeid.toString(),

@@ -87,19 +87,19 @@
     },
     "ControllersConnected": {
       "allControllerConnected": "جميع وحدات التحكم متصلة بالمعالج",
-      "btn_Text": "QR Code للبحث مسح",
+      "btn_Text": "QR Code للبحث إمسح",
       "webCame": {
-        "title": "QR Code للبحث مسح",
+        "title": "QR Code للبحث إمسح",
         "messageWait": "... انتظر فتح الكاميرا",
         "error": "ضع الكاميرا ، يرجى التحقق من كاميرا الويب الخاصة بك"
       }
     },
     "addProcessors": {
       "title": "المعالجات",
-      "btn_Text": "QR Code للبحث مسح",
+      "btn_Text": "QR Code للبحث إمسح",
       "webCame": {
         "addTitle": "طريقة أخرى لإضافة معرف المعالج",
-        "title": "QR Code للبحث مسح",
+        "title": "QR Code للبحث إمسح",
         "messageWait": "... انتظر فتح الكاميرا",
         "error": "ضع الكاميرا ، يرجى التحقق من كاميرا الويب الخاصة بك",
         "model": {
@@ -113,6 +113,35 @@
         "addController": "أضف وحدة تحكم",
         "controller": "وحدات تحكم",
         "delete": "حذف"
+      }
+    },
+    "allControllerForProcessor": {
+      "title": "كل أجهزة التحكم للمعالج:",
+      "btn_Text": "QR Code للبحث إمسح",
+      "webCame": {
+        "title": "QR Code للبحث إمسح",
+        "messageWait": "... انتظر فتح الكاميرا",
+        "error": "ضع الكاميرا ، يرجى التحقق من كاميرا الويب الخاصة بك"
+      }
+    },
+    "AddControllerForProcessor": {
+      "title": "إضافة وحدة تحكم جديدة",
+      "btn_Text": "QR Code للبحث إمسح",
+      "webCame": {
+        "title": "QR Code للبحث إمسح",
+        "messageWait": "... انتظر فتح الكاميرا",
+        "error": "ضع الكاميرا ، يرجى التحقق من كاميرا الويب الخاصة بك"
+      },
+      "Form": {
+        "buttonCreate": "إنشاء وحدة تحكم",
+        "buttonClear": "إلغاء",
+        "name": "إسم وحدة التحكم :",
+        "typeController": "نوع وحدة التحكم :",
+        "controllerID": "معرف وحدة التحكم :",
+        "locationController": "موقع وحدة التحكم :",
+        "btn_Scan": "إمسح الكود",
+        "placeholderScan": "أدخل معرف وحدة التحكم أو امسح رمز QR code",
+        "placeholderName": "أدخل وحدة تحكم الاسم"
       }
     }
   }

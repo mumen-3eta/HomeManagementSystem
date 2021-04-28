@@ -279,7 +279,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'warning',
-            title: this.lang === 'en' ? 'This console has been successfully activated' : 'تم تنشيط وحدة التحكم هذه بنجاح',
+            title: this.lang === 'en' ? 'This Controller has been successfully activated' : 'تم تنشيط وحدة التحكم هذه بنجاح',
             toast: false,
             showConfirmButton: false,
             timer: 1500
