@@ -41,5 +41,24 @@
     "btn_text": "Sign Up",
     "goToLogin_text": "You have an account?",
     "goToLogin_link": "Login Here"
+  },
+  "Dashboard": {
+    "Header_nav": {
+      "profile": "Profile",
+      "createProcessor": "Create Processor",
+      "createController": "Create Controller",
+      "addTypeController": "Add Type Controller",
+      "addLocationController": "Add Location Controller",
+      "myDevice": "my device",
+      "logOut": "log out"
+    },
+    "Aside_Nav": {
+      "text_Admin": "Admin"
+    },
+    "Body": {
+      "title": "DashBoard",
+      "subTitle": "All Controllers",
+      "searchLabel": "Search by name Or Date"
+    }
   }
 }

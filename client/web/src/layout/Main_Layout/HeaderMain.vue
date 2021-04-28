@@ -2,12 +2,17 @@
 
   <header class="header">
     <div class="header__wrapper">
-      <form action="" class="search">
-        <button class="search__button focus--box-shadow" type="submit">
-          <i class="fa fa-search"></i>
-        </button>
-        <input class="search__input focus--box-shadow" placeholder="Search ..." type="search">
-      </form>
+      <div class="profile">
+        <div class="nav_link-btn nav_lang custom-select" href="javascript:void;">
+            <span class="icon_nav_lang">
+             <i class="fas fa-globe-americas"></i>
+            </span>
+          <select v-model="lang" class="select_nav_lang " @change="changeLanguage($event)">
+            <option value="en">English</option>
+            <option value="ar">عربي</option>
+          </select>
+        </div>
+      </div>
       <div v-on-clickaway="CloseDropMenu" class="profile">
         <button id="btn_Profile" class="profile__button" type="button"
                 @click.prevent="OpenDropMenu">
@@ -18,47 +23,47 @@
                class="profile__img">
         </button>
         <div id="profile__menu" class="profile__menu">
-          <ul class="profile__menu-ul">
+          <ul :class=" lang==='ar' ? 'profile__menu-ul direction-rtl' :'profile__menu-ul direction-ltr'">
             <li class="profile__menu-li">
               <router-link class="profile__menu-link" to="/v2/main/profile">
                 <i class="fas fa-user-alt profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle"> Profile </p>
+                <p class="profile__menu-nameTitle"> {{ $t('Dashboard.Header_nav.profile') }} </p>
               </router-link>
             </li>
             <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/processor'}" class="profile__menu-link">
                 <i class="fas fa-laptop-medical profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">Create Processor</p>
+                <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.createProcessor') }}</p>
               </router-link>
             </li>
             <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">Create Controller</p>
+                <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.createController') }}</p>
               </router-link>
             </li>
             <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="profile__menu-link">
                 <i class="fas fa-cubes profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">Add Type Controller</p>
+                <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.addTypeController') }}</p>
               </router-link>
             </li>
             <li v-if="user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="profile__menu-link">
                 <i class="fas fa-map-marker-alt profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">Add Location Controller</p>
+                <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.addLocationController') }}</p>
               </router-link>
             </li>
             <li v-if="!user.is_admin" class="profile__menu-li">
               <router-link :to="{path:'/v2/main/device/add'}" class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">my device</p>
+                <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.myDevice') }}</p>
               </router-link>
             </li>
             <li class="profile__menu-li" @click.prevent="handleClick">
               <a class="profile__menu-link" href="javascript:(void(0));">
                 <i class="fas fa-sign-out-alt profile__menu-icon"></i>
-                <p class="profile__menu-nameTitle">log out</p>
+                <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.logOut') }}</p>
               </a>
             </li>
           </ul>
@@ -77,6 +82,11 @@ import {mixin as clickAway} from "vue-clickaway";
 export default {
   name: "HeaderMain",
   mixins: [clickAway],
+  data() {
+    return {
+      lang: localStorage.getItem('lang') || 'en',
+    }
+  },
   methods: {
     async handleClick() {
       await axios.get('/api/v1/users/logout').then(async () => {
@@ -124,6 +134,10 @@ export default {
     CloseDropMenu() {
       document.getElementById("btn_Profile").classList.remove("profile__menu-open");
       document.getElementById("profile__menu").classList.remove("profile__menu-open");
+    },
+    changeLanguage(event) {
+      window.location.reload();
+      localStorage.setItem('lang', event.target.value);
     },
   },
   async beforeMount() {

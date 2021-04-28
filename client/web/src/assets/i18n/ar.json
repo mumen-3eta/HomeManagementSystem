@@ -41,5 +41,24 @@
     "btn_text": "اشتراك",
     "goToLogin_text": "لديك حساب؟",
     "goToLogin_link": "تسجيل الدخول من هنا"
+  },
+  "Dashboard": {
+    "Header_nav": {
+      "profile": "الملف الشخصي",
+      "createProcessor": "إنشاء المعالج",
+      "createController": "إنشاء وحدة تحكم",
+      "addTypeController": "إضافة نوع تحكم",
+      "addLocationController": "أضف وحدة تحكم الموقع",
+      "myDevice": "جهازي",
+      "logOut": "تسجيل خروج"
+    },
+    "Aside_Nav": {
+      "text_Admin": "المسؤول"
+    },
+    "Body": {
+      "title": "لوحة التحكم",
+      "subTitle": "جميع وحدات التحكم",
+      "searchLabel": "البحث بالاسم أو التاريخ"
+    }
   }
 }

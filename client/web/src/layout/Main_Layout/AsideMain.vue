@@ -2,7 +2,8 @@
   <aside class="aside">
     <section class="section">
       <div class="aside__control">
-        <router-link :to="{path:'/'}" aria-label="Go To Welcome Page">
+        <router-link :aria-label="lang ==='en' ? GoToWelcomePage.EN : GoToWelcomePage.AR"
+                     :to="{path:'/'}">
           <button class="aside__button focus--box-shadow" type="button">
             <i class="fas fa-chevron-left"></i>
           </button>
@@ -21,12 +22,16 @@
         </div>
         <h1 v-show="userProfile.user_name" class="profile-main__name" v-text="userProfile.user_name"></h1>
         <h6 v-show="userProfile.email" class="profile-main__name" v-text="userProfile.email"></h6>
-        <h6 v-if="user.is_admin" class="profile-main__name text-secondary">Admin</h6>
+        <h6 v-if="user.is_admin" class="profile-main__name text-secondary">{{
+            $t('Dashboard.Aside_Nav.text_Admin')
+          }}</h6>
       </div>
       <div v-if="!user.is_admin" class="banner">
-        <h3 class="banner__title" v-text="BannerData.bannerTitle"></h3>
-        <p class="banner__description" v-text="BannerData.bannerDescription"></p>
-        <button class="banner__button" type="button" v-text="BannerData.bannerButtonText"></button>
+        <h3 class="banner__title" v-text="lang ==='en' ? BannerData_EN.bannerTitle : BannerData_AR.bannerTitle"></h3>
+        <p class="banner__description"
+           v-text="lang ==='en' ? BannerData_EN.bannerDescription : BannerData_AR.bannerDescription"></p>
+        <button class="banner__button" type="button"
+                v-text="lang ==='en' ? BannerData_EN.bannerButtonText : BannerData_AR.bannerButtonText"></button>
       </div>
     </section>
   </aside><!-- End ASIDE -->
@@ -41,10 +46,20 @@ export default {
   name: "AsideMain",
   data() {
     return {
-      BannerData: {
+      lang: localStorage.getItem('lang') || 'en',
+      BannerData_EN: {
         bannerTitle: 'Premium access',
         bannerDescription: 'Create Teams without limit',
         bannerButtonText: 'Get Premium Access',
+      },
+      BannerData_AR: {
+        bannerTitle: 'الوصول المتميز',
+        bannerDescription: 'إنشاء فرق بلا حدود',
+        bannerButtonText: 'احصل على وصول بريميوم',
+      },
+      GoToWelcomePage: {
+        EN: 'Go To Welcome Page',
+        AR: 'انتقل إلى صفحة الترحيب',
       }
     }
   },

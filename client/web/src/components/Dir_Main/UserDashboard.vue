@@ -2,12 +2,14 @@
   <div>
     <!--   section number 1     -->
     <section class="section">
-      <header v-if="userProfile.user_name" class="section__header">
-        <h2 class="section__title">DashBoard | {{ userProfile.user_name }}</h2>
+      <header v-if="userProfile.user_name"
+              :class=" lang==='ar' ? 'section__header direction-rtl' :'section__header direction-ltr'">
+        <h2 class="section__title">{{ $t('Dashboard.Body.title') }} | {{ userProfile.user_name }}</h2>
       </header>
       <!--   for default user     -->
       <ul class="team">
-        <li v-for="(DashboardInfo,index) in DashboardInfoCard" :key="index" class="team__item">
+        <li v-for="(DashboardInfo,index) in lang==='ar' ?  DashboardInfoCard_AR : DashboardInfoCard_EN" :key="index"
+            class="team__item">
           <router-link :to="{path:DashboardInfo.Path}" class="team__link focus--box-shadow">
             <div class="team__header">
               <ul class="photo">
@@ -44,7 +46,7 @@
                 <i class="fa fa-ellipsis-v"></i>
               </button>
             </div>
-            <div class="team__inform">
+            <div :class=" lang==='ar' ? 'team__inform direction-rtl' :'team__inform direction-ltr'">
               <p class="team__name">{{ DashboardInfo.TitleCard }}</p>
               <p v-if="index === 0 " class="team__name">
                 {{ userProcessorIds ? userProcessorIds.length : '0' }}</p>
@@ -60,12 +62,13 @@
     <!--   section number 2     -->
     <!--  For user  -->
     <section class="section section__mTop">
-      <header class="section__header">
-        <h2 class="section__title">All Controller</h2>
-        <div class="section__control-search">
-          <div class="searchInput">
+      <header :class=" lang==='ar' ? 'section__header direction-rtl' :'section__header direction-ltr'">
+        <h2 class="section__title">{{ $t('Dashboard.Body.subTitle') }}</h2>
+        <div :class=" lang==='en' ? 'section__control-search ' :'section__control-search direction-ltr'"
+             class="section__control-search">
+          <div :class=" lang==='ar' ? 'searchInput direction-rtl' :'searchInput direction-ltr'" class="searchInput">
             <label for="SearchID"></label>
-            <input id="SearchID" v-model="search" placeholder="Search by name Or Date" type="search">
+            <input id="SearchID" v-model="search" :placeholder="$t('Dashboard.Body.searchLabel')" type="search">
           </div>
           <button class="section__button section__button--painted focus--box-shadow" type="button">
             <i class="fa fa-search"></i>
@@ -76,18 +79,12 @@
         <div v-for="(Controller) in filteredList" :key="Controller.id"
              class="Card_container">
           <ul class="card_ListData">
-            <!--            <router-link :to="{path : Controller.Path}">-->
             <li class="card_item">
               <i :class="[ Controller.Status  ? 'desktop_isActive' : '' , 'fas fa-desktop' ]"></i>
             </li>
             <li class="card_item">{{ Controller.ControllerName }}</li>
-            <li class="card_item">{{ Controller.CreateAt | moment("DD MMM YYYY") }}</li>
-            <!--            </router-link>-->
+            <li class="card_item">{{ Controller.CreateAt | momentAROrEN }}</li>
             <li class="card_item card_itemBTN">
-              <!--              <button :class="[ Controller.IsActive  ? 'btn_Star-Favorite' : 'btn_Star' ]"-->
-              <!--                      @click.prevent="ChangeFavorite(index)">-->
-              <!--                <i :class="[Controller.IsActive ? 'fas fa-star' : 'far fa-star' ]"></i>-->
-              <!--              </button>-->
               <div class="btn_Status">
                 <div class="form-check form-switch">
                   <label for="flexSwitchCheckChecked"></label>
@@ -117,14 +114,15 @@ export default {
   name: "UserDashboard",
   data() {
     return {
+      lang: localStorage.getItem('lang') || 'en',
       socket: '',
       search: '',
       // search2: '',
-      DashboardInfoCard: [
+      DashboardInfoCard_EN: [
         {
           Path: '/v2/main/device/add',
           ClassColorBorder: 'photo__item photo__item-bg1Color',
-          TitleCard: 'Number Processor',
+          TitleCard: 'Processors Number',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -156,7 +154,7 @@ export default {
         {
           Path: '/v2/main/controller/connected',
           ClassColorBorder: 'photo__item photo__item-bg2Color',
-          TitleCard: 'Number Controller',
+          TitleCard: 'Controllers Number',
           Number: this.$store.getters.userAllControllerConnected ? this.$store.getters.userAllControllerConnected.length : '0',
           SVG: {
             height: '30',
@@ -187,56 +185,76 @@ export default {
           },
         },
       ],
-      ListCardController: [
+      DashboardInfoCard_AR: [
         {
-          ControllerName: 'Controller Name #1',
-          TypeController: 'Type Controller #111',
-          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
-          Status: false,
-          IsActive: false
+          Path: '/v2/main/device/add',
+          ClassColorBorder: 'photo__item photo__item-bg1Color',
+          TitleCard: 'عدد المعالجات',
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M45.6875,10.75c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-13.4375c-7.41162,0 -13.4375,6.02588 -13.4375,13.4375v8.0625h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v10.75h-8.0625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h8.0625v8.0625c0,7.41162 6.02588,13.4375 13.4375,13.4375h13.4375v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h10.75v8.0625c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-8.0625h13.4375c7.41162,0 13.4375,-6.02588 13.4375,-13.4375v-8.0625h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-10.75h8.0625c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875h-8.0625v-8.0625c0,-7.41162 -6.02588,-13.4375 -13.4375,-13.4375h-13.4375v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v8.0625h-10.75v-8.0625c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM29.5625,26.875h112.875c4.44067,0 8.0625,3.62183 8.0625,8.0625v102.125c0,4.44067 -3.62183,8.0625 -8.0625,8.0625h-112.875c-4.44067,0 -8.0625,-3.62183 -8.0625,-8.0625v-102.125c0,-4.44067 3.62183,-8.0625 8.0625,-8.0625zM37.625,37.625c-2.96045,0 -5.375,2.41455 -5.375,5.375v86c0,2.96045 2.41455,5.375 5.375,5.375h96.75c2.96045,0 5.375,-2.41455 5.375,-5.375v-86c0,-2.96045 -2.41455,-5.375 -5.375,-5.375zM37.625,43h96.75v86h-96.75zM56.4375,53.75c-2.06811,0 -4.12573,0.78735 -5.70044,2.36206c-3.14941,3.14941 -3.14941,8.25147 0,11.40088c1.57471,1.57471 3.63233,2.36206 5.70044,2.36206c2.06811,0 4.12573,-0.78735 5.70044,-2.36206c3.14941,-3.14941 3.14941,-8.25147 0,-11.40088c-1.57471,-1.57471 -3.63233,-2.36206 -5.70044,-2.36206zM56.4375,59.125c0.69287,0 1.37524,0.26245 1.90015,0.78735c1.0498,1.0498 1.0498,2.75049 0,3.80029c-1.0498,1.0498 -2.75049,1.0498 -3.80029,0c-1.0498,-1.0498 -1.0498,-2.75049 0,-3.80029c0.5249,-0.5249 1.20728,-0.78735 1.90015,-0.78735zM67.1875,80.625c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h43c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM67.1875,91.375c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h13.4375c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM91.375,91.375c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875c0,1.49072 1.19678,2.6875 2.6875,2.6875h5.375c1.49072,0 2.6875,-1.19678 2.6875,-2.6875c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM45.6875,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM59.125,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM72.5625,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM86,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM99.4375,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM112.875,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875zM126.3125,112.875c-1.49072,0 -2.6875,1.19678 -2.6875,2.6875v5.375c0,1.49072 1.19678,2.6875 2.6875,2.6875c1.49072,0 2.6875,-1.19678 2.6875,-2.6875v-5.375c0,-1.49072 -1.19678,-2.6875 -2.6875,-2.6875z',
+          },
         },
         {
-          ControllerName: 'Controller Name #2',
-          TypeController: 'Type Controller #222',
-          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
-          Status: true,
-          IsActive: true
-        },
-        {
-          ControllerName: 'Controller Name #2',
-          TypeController: 'Type Controller #2',
-          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
-          Status: false,
-          IsActive: true
-        },
-        {
-          ControllerName: 'Controller Name #3',
-          TypeController: 'Type Controller #3',
-          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
-          Status: false,
-          IsActive: false
-        },
-        {
-          ControllerName: 'Controller Name #4',
-          TypeController: 'Type Controller #4',
-          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
-          Status: true,
-          IsActive: true
-        },
-        {
-          ControllerName: 'Controller Name #5',
-          TypeController: 'Type Controller #5',
-          Path: '/v2/main/device/processor/6029b5e176c08c314041f39f/controller/185w5158d6wa185w6418fe15fe',
-          Status: true,
-          IsActive: false
+          Path: '/v2/main/controller/connected',
+          ClassColorBorder: 'photo__item photo__item-bg2Color',
+          TitleCard: 'عدد وحدات التحكم',
+          Number: this.$store.getters.userAllControllerConnected ? this.$store.getters.userAllControllerConnected.length : '0',
+          SVG: {
+            height: '30',
+            Style: 'fill:#000000;',
+            viewBox: '0 0 172 172',
+            width: '30',
+            x: '0px',
+            xmlns: 'http://www.w3.org/2000/svg',
+            y: '0px',
+            Fill_1: 'none',
+            fill_rule: 'nonzero',
+            font_family: 'none',
+            font_size: 'none',
+            font_weight: 'none',
+            stroke: 'none',
+            stroke_dasharray: '',
+            stroke_dashoffset: '0',
+            stroke_linecap: 'butt',
+            stroke_linejoin: 'miter',
+            stroke_miterlimit: '10',
+            stroke_width: '1',
+            Style_mix: 'mix-blend-mode: normal',
+            text_anchor: 'none',
+            d_1: 'M0,172v-172h172v172z',
+            Fill_2: 'none',
+            Fill_3: '#ffffff',
+            d_2: 'M27.95,23.65c-4.72832,0 -8.6,3.87168 -8.6,8.6v73.1c0,1.57051 0.46191,3.03184 1.20938,4.3h-9.80937v6.45c0,5.9125 4.8375,10.75 10.75,10.75h23.65v21.5c0,3.53574 2.91426,6.45 6.45,6.45h30.1c3.53574,0 6.45,-2.91426 6.45,-6.45v-4.3h45.15c3.53574,0 6.45,-2.91426 6.45,-6.45v-10.75h10.75c5.9125,0 10.75,-4.8375 10.75,-10.75v-6.45h-9.80938c0.74746,-1.26816 1.20938,-2.72949 1.20938,-4.3v-73.1c0,-4.72832 -3.87168,-8.6 -8.6,-8.6zM27.95,27.95h116.1c2.40195,0 4.3,1.89805 4.3,4.3v73.1c0,2.40195 -1.89805,4.3 -4.3,4.3h-4.3v-43c0,-3.53574 -2.91426,-6.45 -6.45,-6.45h-51.6c-3.53574,0 -6.45,2.91426 -6.45,6.45v21.5h-23.65c-3.53574,0 -6.45,2.91426 -6.45,6.45v15.05h-17.2c-2.40195,0 -4.3,-1.89805 -4.3,-4.3v-73.1c0,-2.40195 1.89805,-4.3 4.3,-4.3zM34.4,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM43,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM51.6,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM60.2,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM68.8,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM77.4,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM86,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM94.6,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM103.2,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM111.8,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM120.4,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM129,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM137.6,36.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,45.15c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM137.6,45.15c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,53.75c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM137.6,53.75c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,62.35c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM81.7,64.5h51.6c1.21777,0 2.15,0.93223 2.15,2.15v70.95c0,1.21777 -0.93223,2.15 -2.15,2.15h-45.15v-45.15c0,-3.53574 -2.91426,-6.45 -6.45,-6.45h-2.15v-21.5c0,-1.21777 0.93223,-2.15 2.15,-2.15zM34.4,70.95c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,79.55c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM34.4,88.15c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM51.6,92.45h30.1c1.21777,0 2.15,0.93223 2.15,2.15v53.75c0,1.21777 -0.93223,2.15 -2.15,2.15h-30.1c-1.21777,0 -2.15,-0.93223 -2.15,-2.15v-53.75c0,-1.21777 0.93223,-2.15 2.15,-2.15zM34.4,96.75c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM15.05,113.95h30.1v8.6h-23.65c-3.58613,0 -6.45,-2.86387 -6.45,-6.45zM139.75,113.95h17.2v2.15c0,3.58613 -2.86387,6.45 -6.45,6.45h-10.75zM107.5,131.15c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15zM66.65,141.9c-1.18418,0 -2.15,0.96582 -2.15,2.15c0,1.18418 0.96582,2.15 2.15,2.15c1.18418,0 2.15,-0.96582 2.15,-2.15c0,-1.18418 -0.96582,-2.15 -2.15,-2.15z',
+          },
         },
       ],
     }
   },
   methods: {
-    // ChangeFavorite(id) {
-    //   this.$store.getters.userAllControllerConnected[id].IsActive = !this.$store.getters.userAllControllerConnected[id].IsActive;
-    // },
     async ChangeActivation(id) {
       await axios.post('/api/v1/controller/change', {
         newStatus: '',
@@ -246,7 +264,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'warning',
-            title: 'Active this Controller, Successfully',
+            title: this.lang === 'en' ? 'This Controller has been successfully activated' : 'تم تنشيط وحدة التحكم هذه بنجاح',
             toast: false,
             showConfirmButton: false,
             timer: 1500
@@ -255,7 +273,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'warning',
-            title: 'Not Active this Controller, Successfully',
+            title: this.lang === 'en' ? 'This Controller has been successfully deactivated' : 'تم إلغاء تنشيط وحدة التحكم هذه بنجاح',
             toast: false,
             showConfirmButton: false,
             timer: 1500
@@ -266,7 +284,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'Change Status, Faild',
+          title: this.lang === 'en' ? 'Failed, Change Status' : 'فشل تغيير الحالة',
           toast: false,
           showConfirmButton: false,
           timer: 1500
@@ -316,21 +334,20 @@ export default {
     filteredList() {
       if (this.$store.getters.userAllControllerConnected) {
         return this.$store.getters.userAllControllerConnected.filter(post => {
+          moment.locale(this.lang === 'ar' ? 'ar_SA' : 'en_US');
           let date = moment(post.CreateAt).format('DD MMM YYYY');
           return post.ControllerName.toString().toLowerCase().includes(this.search.toString().toLowerCase()) || date.toString().toLowerCase().includes(this.search.toString().toLowerCase());
         })
       } else {
         return [];
       }
-
-
     },
-    // filteredList2() {
-    //   return this.ListCardController.filter(post => {
-    //     return post.ControllerName.toLowerCase().includes(this.search2.toLowerCase()) || post.TypeController.toLowerCase().includes(this.search2.toLowerCase())
-    //   })
-    // },
   },
+  filters: {
+    momentAROrEN(value) {
+      return moment(value).format('DD MMM YYYY');
+    }
+  }
 }
 </script>
 
