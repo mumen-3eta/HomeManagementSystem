@@ -6,7 +6,7 @@
     "contactUs": "تواصل معنا",
     "ourTeam": "الفريق",
     "login": "تسجيل الدخول",
-    "sigUp": "حساب جيديد",
+    "sigUp": "إنشاء حساب",
     "logout": "تسجيل الخروج",
     "dashboard": "لوحة التحكم"
   },
@@ -44,6 +44,7 @@
     "goToLogin_link": "تسجيل الدخول من هنا"
   },
   "Dashboard": {
+    "NoDataForTable": "لا يوجد بيانات في الجدول",
     "Header_nav": {
       "profile": "الملف الشخصي",
       "createProcessor": "إنشاء المعالج",
@@ -148,6 +149,40 @@
   "AdminDashboard": {
     "Body": {
       "title": "لوحة التحكم للمسؤول |"
+    },
+    "createProcessor": {
+      "title": "قم بإنشاء المعالج",
+      "btn_Generate": "إنشاء معرف المعالج",
+      "table": {
+        "btn_QRCode": "احصل على رمز الاستجابة السريعة (QR Code)"
+      },
+      "model": {
+        "title": "رمز الاستجابة السريعة (QR Code) , للمعالج هذا",
+        "error": "عذرا ،هناك خطأ ما",
+        "btn_Copy": "انسخ معرف المعالج",
+        "btn_Download": "تنزيل كصورة"
+      }
+    },
+    "createController": {
+      "title": "قم بإنشاء وحدة تحكم",
+      "btn_Generate": "إنشاء معرف وحدة التحكم",
+      "table": {
+        "btn_QRCode": "احصل على رمز الاستجابة السريعة (QR Code)"
+      },
+      "model": {
+        "title": "رمز الاستجابة السريعة (QR Code) , لوحدة التحكم هذه",
+        "error": "عذرا ،هناك خطأ ما",
+        "btn_Copy": "انسخ معرف وحدة التحكم",
+        "btn_Download": "تنزيل كصورة"
+      }
+    },
+    "allUser": {
+      "title": "جميع المستخدمين"
+    },
+    "Messages": {
+      "title": "جميع الرسائل",
+      "Delete": "حذف",
+      "Read": "مقروء"
     }
   }
 }

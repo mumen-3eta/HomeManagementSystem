@@ -44,6 +44,7 @@
     "goToLogin_link": "Login Here"
   },
   "Dashboard": {
+    "NoDataForTable": "No data for table",
     "Header_nav": {
       "profile": "Profile",
       "createProcessor": "Create Processor",
@@ -160,6 +161,40 @@
   "AdminDashboard": {
     "Body": {
       "title": "Admin DashBoard |"
+    },
+    "createProcessor": {
+      "title": "Create Processor",
+      "btn_Generate": "Generate Id Processor",
+      "table": {
+        "btn_QRCode": "Get QR Code"
+      },
+      "model": {
+        "title": "QRCode For Processors",
+        "error": "Sorry, something went wrong",
+        "btn_Copy": "Copy the Processor Id",
+        "btn_Download": "Download as image"
+      }
+    },
+    "createController": {
+      "title": "Create Controller",
+      "btn_Generate": "Generate Id Controller",
+      "table": {
+        "btn_QRCode": "Get QR Code"
+      },
+      "model": {
+        "title": "QRCode For this Controller",
+        "error": "Sorry, something went wrong",
+        "btn_Copy": "Copy the Controller Id",
+        "btn_Download": "Download as image"
+      }
+    },
+    "allUser": {
+      "title": "All Users"
+    },
+    "Messages": {
+      "title": "All Messages",
+      "Delete": "Delete",
+      "Read": "Readable"
     }
   }
 }

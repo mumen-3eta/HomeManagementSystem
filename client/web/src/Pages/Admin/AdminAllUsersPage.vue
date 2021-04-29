@@ -1,28 +1,29 @@
 <template>
   <div class="wrapper">
     <!--   ********** body content can change it here *****************-->
-    <div class="container_Admin_AddLocationController">
+    <div
+        :class="lang ==='ar' ? 'container_Admin_AddLocationController direction-rtl' :'container_Admin_AddLocationController direction-ltr'">
       <section class="container_Admin_btnSectionGroup">
         <header class="section__header">
-          <h2 class="section__title">All Users</h2>
+          <h2 class="section__title">{{ $t('AdminDashboard.allUser.title') }}</h2>
         </header>
         <div class="project my-3 mx-auto p-2 position-relative">
           <vue-good-table
-              :columns="columns"
+              :columns="this.lang === 'en' ? columns_EN : columns_AR"
               :pagination-options="{
                     enabled: true,
-                    mode: 'records',
+                    mode: 'pages',
                     perPage: 5,
                     position: 'bottom',
-                    perPageDropdown: [5, 7, 9],
+                    perPageDropdown: [5,7,9,12,15,25,50],
                     dropdownAllowAll: false,
                     setCurrentPage: 1,
-                    nextLabel: 'next',
-                    prevLabel: 'prev',
-                    rowsPerPageLabel: 'Rows per page',
-                    ofLabel: 'of',
-                    pageLabel: 'page', // for 'pages' mode
-                    allLabel: 'All',
+                    nextLabel:  this.lang==='en' ? 'next' : 'التالي',
+                    prevLabel: this.lang==='en' ? 'prev' : 'السابق',
+                    rowsPerPageLabel: this.lang==='en' ? 'Rows per page' : 'عدد الصفوف في الصفحة',
+                    ofLabel: this.lang==='en' ? 'of' :'من' ,
+                    pageLabel: this.lang==='en' ? 'page' :'صفحة', // for 'pages' mode
+                    allLabel:  this.lang==='en' ?  'All' : 'الجميع',
                   }"
               :rows="rows"
               :search-options=" {
@@ -37,6 +38,9 @@
                         {field: 'id', type: 'desc'},
                     ]
               }">
+            <div slot="emptystate" style="text-align: center">
+              {{ $t('Dashboard.NoDataForTable') }}
+            </div>
             <div slot="table-actions" class="btn_searchScan"></div>
             <template slot="table-row" slot-scope="props">
               <div v-if="props.column.field === 'Image'" class="Image_styleTable">
@@ -63,7 +67,8 @@ export default {
   name: "AdminAllUsersPage",
   data() {
     return {
-      columns: [
+      lang: localStorage.getItem('lang') || 'en',
+      columns_EN: [
         {
           label: 'ID',
           field: 'id',
@@ -88,12 +93,48 @@ export default {
           sortable: false,
         },
         {
-          label: 'Created At',
+          label: 'Date added',
           field: 'Create_at',
           type: 'string',
         },
         {
           label: 'Image',
+          field: 'Image',
+          type: 'string',
+          sortable: false,
+        },
+      ],
+      columns_AR: [
+        {
+          label: 'رقم الترتيب',
+          field: 'id',
+          type: 'string',
+        },
+        {
+          label: 'إسم المستخدم',
+          field: 'userName',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'البريد الإلكتروني',
+          field: 'Email',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'الادارة',
+          field: 'IsAdmin',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'تاريخ الاضافة',
+          field: 'Create_at',
+          type: 'string',
+        },
+        {
+          label: 'الصورة',
           field: 'Image',
           type: 'string',
           sortable: false,
@@ -106,6 +147,8 @@ export default {
     /*** Get All Processors  ***/
     async GetAllUsers() {
       await axios.get('/api/v1/users/profile/all').then(async ({data: {productionData: response}}) => {
+        let Admin = this.lang === 'en' ? 'Admin' : 'المسؤول';
+        let User = this.lang === 'en' ? 'User' : 'مستخدم';
         const Get_All_Users = response.map((item, i) => ({
           id: (++i).toString(),
           user_id: item.id ? item.id.toString() : item.id,
@@ -115,7 +158,7 @@ export default {
           lastName: item.last_name ? item.last_name.toString() : item.last_name,
           Image: item.image ? item.image.toString() : item.image,
           Mobile: item.mobile ? item.mobile.toString() : item.mobile,
-          IsAdmin: item.is_admin ? 'Admin' : 'User',
+          IsAdmin: item.is_admin ? Admin : User,
           Create_at: this.FormatDate(item.create_at),
         }))
         await this.$store.dispatch('Get_All_Users', Get_All_Users);

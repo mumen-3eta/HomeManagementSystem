@@ -226,7 +226,7 @@ export default {
         {
           Path: '/v2/main/admin/create/controller/type',
           ClassColorBorder: 'photo__item photo__item-bg1Color',
-          TitleCard: 'عدد الأنواع',
+          TitleCard: 'عدد الأنواع لوحد التحكم',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -258,7 +258,7 @@ export default {
         {
           Path: '/v2/main/admin/create/controller/location',
           ClassColorBorder: 'photo__item photo__item-bg2Color',
-          TitleCard: 'عدد المواقع',
+          TitleCard: 'عدد المواقع لوحد التحكم',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',
@@ -486,7 +486,7 @@ export default {
         {
           Path: '/v2/main/admin/all/messages',
           ClassColorBorder: 'photo__item photo__item-bg3Color',
-          TitleCard: 'رقم الرسائل',
+          TitleCard: 'عدد الرسائل',
           SVG: {
             height: '30',
             Style: 'fill:#000000;',

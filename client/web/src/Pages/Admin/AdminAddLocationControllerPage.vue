@@ -36,6 +36,9 @@
                     skipDiacritics: true,
                     placeholder: 'Search this table'
                   }">
+            <div slot="emptystate" style="text-align: center">
+              {{ $t('Dashboard.NoDataForTable') }}
+            </div>
             <div slot="table-actions" class="btn_searchScan"></div>
             <template slot="table-row" slot-scope="props">
               <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
