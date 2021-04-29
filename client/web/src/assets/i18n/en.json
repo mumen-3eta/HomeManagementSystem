@@ -156,5 +156,10 @@
         "placeholderName": "Enter Name Controller"
       }
     }
+  },
+  "AdminDashboard": {
+    "Body": {
+      "title": "Admin DashBoard |"
+    }
   }
 }

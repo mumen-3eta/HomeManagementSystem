@@ -162,7 +162,7 @@ export default {
       document.getElementById("loadingScreen").style.display = "flex";
       setTimeout(function () {
         document.getElementById("loadingScreen").style.display = "none";
-      }, 750);
+      }, 950);
     },
     changeLanguage(event) {
       window.location.reload();

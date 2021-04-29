@@ -9,7 +9,7 @@
       <!--   for default user     -->
       <ul class="team">
         <li v-for="(DashboardInfo,index) in lang==='ar' ?  DashboardInfoCard_AR : DashboardInfoCard_EN" :key="index"
-            class="team__item">
+            :class=" lang==='ar' ? 'team__item_AR' :'team__item'">
           <router-link :to="{path:DashboardInfo.Path}" class="team__link focus--box-shadow">
             <div class="team__header">
               <ul class="photo">
@@ -75,7 +75,8 @@
           </button>
         </div>
       </header>
-      <div class="Main__Card_FavoriteController">
+      <div
+          :class=" lang==='ar' ? 'Main__Card_FavoriteController direction-rtl' :'Main__Card_FavoriteController direction-ltr'">
         <div v-for="(Controller) in filteredList" :key="Controller.id"
              class="Card_container">
           <ul class="card_ListData">

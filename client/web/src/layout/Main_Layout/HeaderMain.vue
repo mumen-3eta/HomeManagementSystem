@@ -93,7 +93,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'logout Successfully',
+          title: this.lang === 'en' ? 'logout Successfully' : 'تم تسجيل الخروج بنجاح',
           toast: true,
           showConfirmButton: false,
           timer: 1500
@@ -118,7 +118,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'logout Faild',
+          title: this.lang === 'en' ? 'logout Faild' : 'فشل تسجيل الخروج',
           toast: true,
           showConfirmButton: false,
           timer: 1500
