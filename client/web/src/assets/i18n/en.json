@@ -195,6 +195,19 @@
       "title": "All Messages",
       "Delete": "Delete",
       "Read": "Readable"
+    },
+    "addTypeController": {
+      "title": "Add Type Controller",
+      "table": {
+        "btn_Edit": "Edit",
+        "btn_Delete": "Delete"
+      },
+      "model": {
+        "nameType": "Controller type name",
+        "addTypeController": "Add Type Controller",
+        "clear": "Clear",
+        "saveChange": "Save Change"
+      }
     }
   }
 }

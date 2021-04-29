@@ -49,8 +49,8 @@
       "profile": "الملف الشخصي",
       "createProcessor": "إنشاء المعالج",
       "createController": "إنشاء وحدة تحكم",
-      "addTypeController": "إضافة نوع تحكم",
-      "addLocationController": "أضف وحدة تحكم الموقع",
+      "addTypeController": "إضافة نوع وحدة التحكم",
+      "addLocationController": "أضف مواقع وحدة التحكم",
       "myDevice": "جهازي",
       "logOut": "تسجيل خروج"
     },
@@ -183,6 +183,19 @@
       "title": "جميع الرسائل",
       "Delete": "حذف",
       "Read": "مقروء"
+    },
+    "addTypeController": {
+      "title": "قم بإنشاء وحدة تحكم",
+      "table": {
+        "btn_Edit": "تعديل",
+        "btn_Delete": "حذف"
+      },
+      "model": {
+        "nameType": "اسم نوع وحدة التحكم",
+        "addTypeController": "إضافة نوع تحكم",
+        "clear": "تفريغ المعلومات",
+        "saveChange": "حفظ التغيير"
+      }
     }
   }
 }
