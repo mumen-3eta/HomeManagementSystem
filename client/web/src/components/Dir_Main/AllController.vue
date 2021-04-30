@@ -33,7 +33,8 @@
                     skipDiacritics: true,
                     placeholder: 'Search this table',
                     externalQuery: searchTerm
-                  }">
+                  }"
+          :theme="mode==='dark' ? 'black-rhino' : ''">
         <div slot="emptystate" style="text-align: center">
           {{ $t('Dashboard.NoDataForTable') }}
         </div>
@@ -98,6 +99,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
       ProcessorID: this.$route.params.connection_id ? this.$route.params.connection_id : '',
       ControllerID: '',
       NameControllerUser: '',

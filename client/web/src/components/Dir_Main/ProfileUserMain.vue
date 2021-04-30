@@ -22,7 +22,8 @@
           <h6 v-if="userProfile.email" v-text="userProfile.email"></h6>
         </div>
       </div>
-      <div class="profile__Main-containerEditInfo">
+      <div :class="mode=== 'dark' ? 'profile__Main-containerEditInfo_dark' : 'profile__Main-containerEditInfo_default'"
+           class="profile__Main-containerEditInfo">
         <h2 class="profile__Main-EditInfoH2 mb-4">{{ $t('Dashboard.Profile.title') }}</h2>
         <div class="profile__Main-EditInfo">
           <div class="profile__Main-EditInfoImg">
@@ -152,6 +153,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
       userData: {
         profileInfo: {
           mobile: this.$store.getters.userProfile.mobile ? this.$store.getters.userProfile.mobile : '',

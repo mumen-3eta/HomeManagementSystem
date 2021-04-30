@@ -6,10 +6,14 @@
   --font-weight-medium: 500;
   --font-weight-bold: 700;
   --athens-gray: #e9e8ec;
+  --athens-gray_dark: #898989;
   --dune: #242221;
   --dune-rgba-5: rgba(36, 35, 34, 0.5);
   --dune-rgba-2: rgba(36, 35, 34, 0.2);
   --alabaster: #f8f8f8;
+  --alabaster_dark: #323232;
+  --alabaster_dark_2: #494949;
+  --alabaster_dark_3: #4c4c4c;
   --true-v: #9174db;
   --true-v-rgba-5: rgba(145, 116, 216, 0.5);
   --blue-violet: #7a61b7;
@@ -44,6 +48,15 @@ button {
   color: var(--dune);
   cursor: pointer;
   transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+button.btn_dark {
+  background-color: var(--athens-gray_dark);
+}
+
+button.bg_dark {
+  background-color: rgb(41 41 41);
+  color: white;
 }
 
 button:focus {
@@ -175,8 +188,16 @@ h4, h5, h6 {
   max-height: 40rem;
   margin: 9.33rem 1.45rem;
   padding: 1.5rem 0.825rem;
-  background-color: var(--alabaster);
+
   border-radius: 10px;
+}
+
+.nav_default {
+  background-color: var(--alabaster);
+}
+
+.nav_dark {
+  background-color: var(--alabaster_dark_2);
 }
 
 
@@ -196,6 +217,18 @@ h4, h5, h6 {
   background-color: var(--alabaster);
   text-align: center;
   transition: background-color 0.3s ease;
+}
+
+.nav__link_default {
+  background-color: var(--alabaster);
+}
+
+.nav__link_dark {
+  background-color: var(--alabaster_dark_2);
+}
+
+.nav__icon_forDark {
+  color: var(--alabaster);
 }
 
 @media (hover: hover) {
@@ -664,11 +697,19 @@ section.section__mTop {
   display: block;
   width: 100%;
   height: 100%;
-  background-color: var(--alabaster);
   padding: 1.8rem 1.6rem;
   border-radius: 10px;
   transition: background-color 0.3s ease;
 }
+
+.team__link_dark {
+  background-color: var(--alabaster_dark_3);
+}
+
+.team__link_default {
+  background-color: var(--alabaster);
+}
+
 
 .team__inform {
   display: flex;
@@ -681,6 +722,14 @@ section.section__mTop {
   font-size: 1.5rem;
   font-weight: var(--font-weight-bold);
   line-height: 1.5;
+
+}
+
+.team__name_dark {
+  color: var(--white_color);
+}
+
+.team__name_default {
   color: var(--dune);
 }
 
@@ -786,19 +835,17 @@ section.section__mTop {
 }
 
 .photo__item.photo__item-bg1Color {
-  border: 3px solid var(--alabaster);
   background-color: #1f9d75;
 }
 
 .photo__item.photo__item-bg2Color {
-  border: 3px solid var(--alabaster);
   background-color: #1f719d;
 }
 
 .photo__item.photo__item-bg3Color {
-  border: 3px solid var(--alabaster);
   background-color: #861f9d;
 }
+
 
 .photo__substrate {
   display: flex;
@@ -1187,6 +1234,12 @@ section.section__mTop {
   }
 }
 
+/* aside-dark */
+.aside_dark {
+  width: 24rem;
+  background-color: var(--alabaster_dark);
+  padding: 3.05rem 1.875rem;
+}
 
 /* Profile main*/
 .profile-main {

@@ -37,7 +37,8 @@
                         {field: 'Create_at', type: 'desc'},
                         {field: 'id', type: 'desc'},
                     ]
-              }">
+              }"
+              :theme="mode==='dark' ? 'black-rhino' : ''">
             <div slot="emptystate" style="text-align: center">
               {{ $t('Dashboard.NoDataForTable') }}
             </div>
@@ -68,6 +69,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
       columns_EN: [
         {
           label: 'ID',

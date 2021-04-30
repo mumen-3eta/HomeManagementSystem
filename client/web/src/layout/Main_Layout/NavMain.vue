@@ -1,19 +1,22 @@
 <template>
   <div class="div__nav">
-    <nav class="nav">
+    <nav :class="mode === 'dark' ? 'nav_dark' :'nav_default' " class="nav">
       <ul class="nav__list" role="menubar">
         <!--   For All     -->
         <li :aria-label="lang ==='en' ? ariaLabel_EN.mainHome : ariaLabel_AR.mainHome"
             :class="['nav__item',this.$route.path === '/v2/main/home' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/home'}" class="nav__link focus--box-shadow"
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' " :to="{path:'/v2/main/home'}"
+                       class="nav__link focus--box-shadow"
                        role="menuitem">
-            <i class="fas fa-home nav__icon"></i>
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="fas fa-home"></i>
           </router-link>
         </li>
         <li :aria-label="lang ==='en' ? ariaLabel_EN.profile : ariaLabel_AR.profile"
             :class="['nav__item',this.$route.path === '/v2/main/profile' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/profile'}" class="nav__link focus--box-shadow" role="menuitem">
-            <i class="fas fa-user-tie nav__icon"></i>
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' "
+                       :to="{path:'/v2/main/profile'}"
+                       class="nav__link focus--box-shadow" role="menuitem">
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="fas fa-user-tie"></i>
           </router-link>
         </li>
         <!--  End  For All     -->
@@ -22,15 +25,19 @@
         <li v-if="!user.is_admin"
             :aria-label="lang ==='en' ? ariaLabel_EN.addMainDevice : ariaLabel_AR.addMainDevice"
             :class="['nav__item',this.$route.path === '/v2/main/device/add' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/device/add'}" class="nav__link focus--box-shadow" role="menuitem">
-            <i class="far fa-desktop nav__icon"></i>
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' "
+                       :to="{path:'/v2/main/device/add'}"
+                       class="nav__link focus--box-shadow" role="menuitem">
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="far fa-desktop"></i>
           </router-link>
         </li>
         <li v-if="!user.is_admin"
             :aria-label="lang ==='en' ? ariaLabel_EN.allController : ariaLabel_AR.allController"
             :class="['nav__item',this.$route.path === '/v2/main/controller/connected' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/controller/connected'}" class="nav__link focus--box-shadow" role="menuitem">
-            <i class="far fa-laptop nav__icon"></i>
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' "
+                       :to="{path:'/v2/main/controller/connected'}"
+                       class="nav__link focus--box-shadow" role="menuitem">
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="far fa-laptop"></i>
           </router-link>
         </li>
         <!--  End  For user    -->
@@ -38,47 +45,59 @@
         <li v-if="user.is_admin"
             :aria-label="lang ==='en' ? ariaLabel_EN.createProcessor : ariaLabel_AR.createProcessor"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/processor' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/admin/create/processor'}" aria-label="heart"
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' "
+                       :to="{path:'/v2/main/admin/create/processor'}"
+                       aria-label="heart"
                        class="nav__link focus--box-shadow" role="menuitem">
-            <i class="fas fa-laptop-medical nav__icon"></i>
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="fas fa-laptop-medical"></i>
           </router-link>
         </li>
         <li v-if="user.is_admin"
             :aria-label="lang ==='en' ? ariaLabel_EN.createController : ariaLabel_AR.createController"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/admin/create/controller'}" aria-label="heart"
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' "
+                       :to="{path:'/v2/main/admin/create/controller'}"
+                       aria-label="heart"
                        class="nav__link focus--box-shadow" role="menuitem">
-            <i class="fas fa-laptop nav__icon"></i>
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="fas fa-laptop"></i>
           </router-link>
         </li>
         <li v-if="user.is_admin"
             :aria-label="lang ==='en' ? ariaLabel_EN.addTypeController : ariaLabel_AR.addTypeController"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller/type' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="nav__link focus--box-shadow"
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' "
+                       :to="{path:'/v2/main/admin/create/controller/type'}"
+                       class="nav__link focus--box-shadow"
                        role="menuitem">
-            <i class="fas fa-cubes nav__icon"></i>
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="fas fa-cubes"></i>
           </router-link>
         </li>
         <li v-if="user.is_admin"
             :aria-label="lang ==='en' ? ariaLabel_EN.addLocationController : ariaLabel_AR.addLocationController"
             :class="['nav__item',this.$route.path === '/v2/main/admin/create/controller/location' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="nav__link focus--box-shadow"
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' "
+                       :to="{path:'/v2/main/admin/create/controller/location'}"
+                       class="nav__link focus--box-shadow"
                        role="menuitem">
-            <i class="fas fa-map-marker-alt nav__icon"></i>
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="fas fa-map-marker-alt"></i>
           </router-link>
         </li>
         <li v-if="user.is_admin"
             :aria-label="lang ==='en' ? ariaLabel_EN.allMessages : ariaLabel_AR.allMessages"
             :class="['nav__item',this.$route.path === '/v2/main/admin/all/messages' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/admin/all/messages'}" class="nav__link focus--box-shadow" role="menuitem">
-            <i class="far fa-comment-dots nav__icon"></i>
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' "
+                       :to="{path:'/v2/main/admin/all/messages'}"
+                       class="nav__link focus--box-shadow" role="menuitem">
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="far fa-comment-dots"></i>
           </router-link>
         </li>
         <li v-if="user.is_admin"
             :aria-label="lang ==='en' ? ariaLabel_EN.allUser : ariaLabel_AR.allUser"
             :class="['nav__item',this.$route.path === '/v2/main/admin/all/Users' ? 'nav__item--isActive':'']">
-          <router-link :to="{path:'/v2/main/admin/all/Users'}" class="nav__link focus--box-shadow" role="menuitem">
-            <i class="far fa-users nav__icon"></i>
+          <router-link :class="mode === 'dark' ?  'nav__link_dark' : 'nav__link_default' "
+                       :to="{path:'/v2/main/admin/all/Users'}"
+                       class="nav__link focus--box-shadow" role="menuitem">
+            <i :class="mode === 'dark' ? 'nav__icon_forDark' : 'nav__icon' " class="far fa-users"></i>
           </router-link>
         </li>
         <!--  End  For Admin    -->
@@ -95,6 +114,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
       ariaLabel_EN: {
         mainHome: 'Main Home',
         profile: 'Profile',

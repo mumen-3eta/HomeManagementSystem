@@ -14,7 +14,7 @@
         </div>
       </div>
       <div v-on-clickaway="CloseDropMenu" class="profile">
-        <button id="btn_Profile" class="profile__button" type="button"
+        <button id="btn_Profile" :class="mode==='dark' ? 'bg_dark' : ''" class="profile__button" type="button"
                 @click.prevent="OpenDropMenu">
           <span v-if="userProfile.user_name" class="profile__name">
             <i class="fas fa-caret-down"></i>{{ userProfile.user_name }}</span>
@@ -22,40 +22,50 @@
                alt="profile image"
                class="profile__img">
         </button>
-        <div id="profile__menu" class="profile__menu">
+        <div id="profile__menu" :class="mode==='dark' ? 'profile__menu_dark' : 'profile__menu'">
           <ul :class=" lang==='ar' ? 'profile__menu-ul direction-rtl' :'profile__menu-ul direction-ltr'">
-            <li class="profile__menu-li">
-              <router-link class="profile__menu-link" to="/v2/main/profile">
+            <li :class="mode==='dark' ? 'profile__menu-li_dark' :'profile__menu-li'">
+              <router-link :class="mode ==='dark' ? 'dark_theme_White' : '' " class="profile__menu-link"
+                           to="/v2/main/profile">
                 <i class="fas fa-user-alt profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle"> {{ $t('Dashboard.Header_nav.profile') }} </p>
               </router-link>
             </li>
-            <li v-if="user.is_admin" class="profile__menu-li">
-              <router-link :to="{path:'/v2/main/admin/create/processor'}" class="profile__menu-link">
+            <li v-if="user.is_admin" :class="mode==='dark' ? 'profile__menu-li_dark' :'profile__menu-li'">
+              <router-link :class="mode ==='dark' ? 'dark_theme_White' : '' "
+                           :to="{path:'/v2/main/admin/create/processor'}"
+                           class="profile__menu-link ">
                 <i class="fas fa-laptop-medical profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.createProcessor') }}</p>
               </router-link>
             </li>
-            <li v-if="user.is_admin" class="profile__menu-li">
-              <router-link :to="{path:'/v2/main/admin/create/controller'}" class="profile__menu-link">
+            <li v-if="user.is_admin" :class="mode==='dark' ? 'profile__menu-li_dark' :'profile__menu-li'">
+              <router-link :class="mode ==='dark' ? 'dark_theme_White' : '' "
+                           :to="{path:'/v2/main/admin/create/controller'}"
+                           class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.createController') }}</p>
               </router-link>
             </li>
-            <li v-if="user.is_admin" class="profile__menu-li">
-              <router-link :to="{path:'/v2/main/admin/create/controller/type'}" class="profile__menu-link">
+            <li v-if="user.is_admin" :class="mode==='dark' ? 'profile__menu-li_dark' :'profile__menu-li'">
+              <router-link :class="mode ==='dark' ? 'dark_theme_White' : '' "
+                           :to="{path:'/v2/main/admin/create/controller/type'}"
+                           class="profile__menu-link">
                 <i class="fas fa-cubes profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.addTypeController') }}</p>
               </router-link>
             </li>
-            <li v-if="user.is_admin" class="profile__menu-li">
-              <router-link :to="{path:'/v2/main/admin/create/controller/location'}" class="profile__menu-link">
+            <li v-if="user.is_admin" :class="mode==='dark' ? 'profile__menu-li_dark' :'profile__menu-li'">
+              <router-link :class="mode ==='dark' ? 'dark_theme_White' : '' "
+                           :to="{path:'/v2/main/admin/create/controller/location'}"
+                           class="profile__menu-link">
                 <i class="fas fa-map-marker-alt profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.addLocationController') }}</p>
               </router-link>
             </li>
-            <li v-if="!user.is_admin" class="profile__menu-li">
-              <router-link :to="{path:'/v2/main/device/add'}" class="profile__menu-link">
+            <li v-if="!user.is_admin" :class="mode==='dark' ? 'profile__menu-li_dark' :'profile__menu-li'">
+              <router-link :class="mode ==='dark' ? 'dark_theme_White' : '' " :to="{path:'/v2/main/device/add'}"
+                           class="profile__menu-link">
                 <i class="fas fa-desktop profile__menu-icon"></i>
                 <p class="profile__menu-nameTitle">{{ $t('Dashboard.Header_nav.myDevice') }}</p>
               </router-link>
@@ -85,6 +95,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
     }
   },
   methods: {
@@ -128,12 +139,22 @@ export default {
 
     },
     OpenDropMenu() {
-      document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
-      document.getElementById("profile__menu").classList.toggle("profile__menu-open");
+      if (this.mode === 'dark') {
+        document.getElementById("btn_Profile").classList.toggle("profile__menu-open_dark");
+        document.getElementById("profile__menu").classList.toggle("profile__menu-open_dark");
+      } else {
+        document.getElementById("btn_Profile").classList.toggle("profile__menu-open");
+        document.getElementById("profile__menu").classList.toggle("profile__menu-open");
+      }
     },
     CloseDropMenu() {
-      document.getElementById("btn_Profile").classList.remove("profile__menu-open");
-      document.getElementById("profile__menu").classList.remove("profile__menu-open");
+      if (this.mode === 'dark') {
+        document.getElementById("btn_Profile").classList.remove("profile__menu-open_dark");
+        document.getElementById("profile__menu").classList.remove("profile__menu-open_dark");
+      } else {
+        document.getElementById("btn_Profile").classList.remove("profile__menu-open");
+        document.getElementById("profile__menu").classList.remove("profile__menu-open");
+      }
     },
     changeLanguage(event) {
       window.location.reload();
@@ -157,6 +178,13 @@ export default {
   transition: all 0.3s ease;
 }
 
+.profile__menu-open_dark {
+  background-color: #474747;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 1px 1px 4px #3d3d3d;
+  transition: all 0.3s ease;
+}
+
 .profile__menu {
   position: absolute;
   left: -8.5rem;
@@ -177,6 +205,27 @@ export default {
   transition: all 0.3s ease;
 }
 
+.profile__menu_dark {
+  position: absolute;
+  left: -8.5rem;
+  width: calc(100% + 8.5rem);
+  max-width: calc(100% + 8.5rem);
+  min-width: calc(100% + 8.5rem);
+  height: auto;
+  background-color: #474747;
+  z-index: 999;
+  box-shadow: 1px 1px 4px #3d3d3d;
+  border-radius: 10px 0 10px 10px;
+  display: none;
+  transition: all 0.3s ease;
+}
+
+.profile__menu-open_dark {
+  display: flex;
+  transition: all 0.3s ease;
+}
+
+
 @media (max-width: 769px) {
   .profile__menu {
     width: 13.65rem;
@@ -186,7 +235,17 @@ export default {
     left: -16rem;
     border-radius: 10px 0 10px 10px;
   }
+
+  .profile__menu_dark {
+    width: 13.65rem;
+    max-width: 20.65rem;
+    min-width: 20.65rem;
+    top: 3.71rem;
+    left: -16rem;
+    border-radius: 10px 0 10px 10px;
+  }
 }
+
 
 i.fa-caret-down {
   padding-right: 0.5rem;
@@ -213,6 +272,20 @@ i.fa-caret-down {
 .profile__menu-li:not(:last-child) {
   border-bottom: 2px solid #cfcfcf;
 }
+
+.profile__menu-li_dark {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: start;
+  padding: 0.5rem;
+}
+
+.profile__menu-li_dark:not(:last-child) {
+  border-bottom: 2px solid #3d3d3d;
+}
+
 
 .profile__menu-li:last-child {
   background-color: #cb5959;
@@ -254,6 +327,10 @@ i.fa-caret-down {
   font-family: Ubuntu, Arial, Helvetica, sans-serif;
   text-transform: capitalize;
   cursor: pointer;
+}
+
+.dark_theme_White {
+  color: white;
 }
 
 </style>

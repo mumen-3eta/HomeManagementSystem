@@ -9,7 +9,9 @@
       <ul class="team">
         <li v-for="(DashboardInfoADMIN,i) in  lang==='ar' ?  DashboardInfoCardSection1ForADMIN_AR : DashboardInfoCardSection1ForADMIN_EN "
             :key="i" :class=" lang==='ar' ? 'team__item_AR' :'team__item'">
-          <router-link :to="{path:DashboardInfoADMIN.Path}" class="team__link focus--box-shadow">
+          <router-link :class="mode==='dark' ? 'team__link_dark' :'team__link_default' "
+                       :to="{path:DashboardInfoADMIN.Path}"
+                       class="team__link focus--box-shadow">
             <div class="team__header">
               <ul class="photo">
                 <li :class="DashboardInfoADMIN.ClassColorBorder">
@@ -41,16 +43,21 @@
                   </span>
                 </li>
               </ul>
-              <button class="setting setting--absolute foucs--box-shadow" type="button">
+              <button :class="mode==='dark' ? 'btn_dark' : ''" class="setting setting--absolute foucs--box-shadow"
+                      type="button">
                 <i class="fa fa-ellipsis-v"></i>
               </button>
             </div>
 
             <div :class=" lang==='ar' ? 'team__inform direction-rtl' :'team__inform direction-ltr'">
-              <p class="team__name">{{ DashboardInfoADMIN.TitleCard }}</p>
-              <p v-if="i===0 " class="team__name">{{ allTypeController ? allTypeController.length : '0' }}</p>
-              <p v-if="i===1 " class="team__name">{{ allLocationController ? allLocationController.length : '0' }}</p>
-              <p v-if="i===2" class="team__name">{{ Get_All_Users ? Get_All_Users.length : '0' }}</p>
+              <p :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' " class="team__name">
+                {{ DashboardInfoADMIN.TitleCard }}</p>
+              <p v-if="i===0 " :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' " class="team__name">
+                {{ allTypeController ? allTypeController.length : '0' }}</p>
+              <p v-if="i===1 " :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' " class="team__name">
+                {{ allLocationController ? allLocationController.length : '0' }}</p>
+              <p v-if="i===2" :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' " class="team__name">
+                {{ Get_All_Users ? Get_All_Users.length : '0' }}</p>
             </div>
           </router-link>
         </li>
@@ -64,7 +71,9 @@
       <ul class="team">
         <li v-for="(DashboardInfoADMIN,i) in  lang==='ar' ?  DashboardInfoCardSection2ForADMIN_AR : DashboardInfoCardSection2ForADMIN_EN "
             :key="i" :class=" lang==='ar' ? 'team__item_AR' :'team__item'">
-          <router-link :to="{path:DashboardInfoADMIN.Path}" class="team__link focus--box-shadow">
+          <router-link :class="mode==='dark' ? 'team__link_dark' :'team__link_default' "
+                       :to="{path:DashboardInfoADMIN.Path}"
+                       class="team__link focus--box-shadow">
             <div class="team__header">
               <ul class="photo">
                 <li :class="DashboardInfoADMIN.ClassColorBorder">
@@ -96,15 +105,20 @@
                   </span>
                 </li>
               </ul>
-              <button class="setting setting--absolute foucs--box-shadow" type="button">
+              <button :class="mode==='dark' ? 'btn_dark' : ''" class="setting setting--absolute foucs--box-shadow"
+                      type="button">
                 <i class="fa fa-ellipsis-v"></i>
               </button>
             </div>
             <div :class=" lang==='ar' ? 'team__inform direction-rtl' :'team__inform direction-ltr'">
-              <p class="team__name">{{ DashboardInfoADMIN.TitleCard }}</p>
-              <p v-if="i===0 " class="team__name">{{ All_Processor ? All_Processor.length : '0' }}</p>
-              <p v-if="i===1 " class="team__name">{{ All_Controller ? All_Controller.length : '0' }}</p>
-              <p v-if="i===2" class="team__name">0</p>
+              <p :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' " class="team__name">
+                {{ DashboardInfoADMIN.TitleCard }}</p>
+              <p v-if="i===0 " :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' " class="team__name">
+                {{ All_Processor ? All_Processor.length : '0' }}</p>
+              <p v-if="i===1 " :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' " class="team__name">
+                {{ All_Controller ? All_Controller.length : '0' }}</p>
+              <p v-if="i===2" :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' " class="team__name">
+                0</p>
             </div>
           </router-link>
         </li>
@@ -123,6 +137,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
       socket: '',
       DashboardInfoCardSection1ForADMIN_EN: [
         {

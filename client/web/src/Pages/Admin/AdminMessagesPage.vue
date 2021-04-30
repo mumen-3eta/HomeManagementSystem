@@ -30,7 +30,8 @@
                     enabled: true,
                     skipDiacritics: true,
                     placeholder: 'Search this table'
-                  }">
+                  }"
+            :theme="mode==='dark' ? 'black-rhino' : ''">
           <!--         -->
           <div slot="emptystate" style="text-align: center">
             {{ $t('Dashboard.NoDataForTable') }}
@@ -71,6 +72,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
       socket: '',
       NowMessages: [],
       columns_EN: [

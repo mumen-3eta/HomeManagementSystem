@@ -10,7 +10,8 @@
       <ul class="team">
         <li v-for="(DashboardInfo,index) in lang==='ar' ?  DashboardInfoCard_AR : DashboardInfoCard_EN" :key="index"
             :class=" lang==='ar' ? 'team__item_AR' :'team__item'">
-          <router-link :to="{path:DashboardInfo.Path}" class="team__link focus--box-shadow">
+          <router-link :class="mode==='dark' ? 'team__link_dark' :'team__link_default' " :to="{path:DashboardInfo.Path}"
+                       class="team__link focus--box-shadow">
             <div class="team__header">
               <ul class="photo">
                 <li :class="DashboardInfo.ClassColorBorder">
@@ -42,17 +43,22 @@
                     </span>
                 </li>
               </ul>
-              <button class="setting setting--absolute foucs--box-shadow" type="button">
+              <button :class="mode==='dark' ? 'btn_dark' : ''" class="setting setting--absolute foucs--box-shadow"
+                      type="button">
                 <i class="fa fa-ellipsis-v"></i>
               </button>
             </div>
             <div :class=" lang==='ar' ? 'team__inform direction-rtl' :'team__inform direction-ltr'">
-              <p class="team__name">{{ DashboardInfo.TitleCard }}</p>
-              <p v-if="index === 0 " class="team__name">
+              <p :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' " class="team__name">
+                {{ DashboardInfo.TitleCard }}</p>
+              <p v-if="index === 0 " :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' "
+                 class="team__name">
                 {{ userProcessorIds ? userProcessorIds.length : '0' }}</p>
-              <p v-if="index === 1 " class="team__name">
+              <p v-if="index === 1 " :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' "
+                 class="team__name">
                 {{ userAllControllerConnected ? userAllControllerConnected.length : '0' }}</p>
-              <p v-if="index === 2 " class="team__name">0</p>
+              <p v-if="index === 2 " :class="mode=== 'dark' ? 'team__name_dark' : 'team__name_default' "
+                 class="team__name">0</p>
             </div>
           </router-link>
         </li>
@@ -78,7 +84,7 @@
       <div
           :class=" lang==='ar' ? 'Main__Card_FavoriteController direction-rtl' :'Main__Card_FavoriteController direction-ltr'">
         <div v-for="(Controller) in filteredList" :key="Controller.id"
-             class="Card_container">
+             :class="mode === 'dark' ? 'Card_container_dark' : 'Card_container_default' " class="Card_container">
           <ul class="card_ListData">
             <li class="card_item">
               <i :class="[ Controller.Status  ? 'desktop_isActive' : '' , 'fas fa-desktop' ]"></i>
@@ -116,6 +122,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
       socket: '',
       search: '',
       // search2: '',
@@ -396,6 +403,7 @@ section {
         margin: 0;
         border-radius: 0 10px 10px 0;
         color: white;
+        background-color: cadetblue;
       }
     }
   }
@@ -415,14 +423,10 @@ section {
       width: 340px;
       height: auto;
       display: flex;
-      //flex-wrap: wrap;
-      //flex-grow: 1;
       flex-direction: column;
       padding: 1.9rem 0;
       margin: 0.4rem;
-      background-color: white;
       border-radius: 15px;
-      box-shadow: 2px 2px 2px 2px #dbcbbe;
       position: relative;
 
       .card_ListData {
@@ -484,7 +488,18 @@ section {
 
       }
     }
+
   }
+}
+
+.Card_container_dark {
+  background-color: #4a4c4b;
+  box-shadow: 2px 2px 2px 2px #494949;
+}
+
+.Card_container_default {
+  background-color: white;
+  box-shadow: 2px 2px 2px 2px #dbcbbe;
 }
 
 button {

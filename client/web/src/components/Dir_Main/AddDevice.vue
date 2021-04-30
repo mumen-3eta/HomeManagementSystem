@@ -44,7 +44,8 @@
                     skipDiacritics: true,
                     placeholder: 'Search this table',
                     externalQuery: searchTerm
-                  }">
+                  }"
+            :theme="mode==='dark' ? 'black-rhino' : ''">
           <div slot="emptystate" style="text-align: center">
             {{ $t('Dashboard.NoDataForTable') }}
           </div>
@@ -151,6 +152,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
       Processor_ID: '',
       errorProcessorID: '',
       isShowingCamera: false,

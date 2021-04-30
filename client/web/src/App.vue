@@ -1,14 +1,14 @@
 <template>
-  <div id="app" class="body-app">
-    <div id="loadingScreen">
-      <div class="mainLoader">
+  <div class="body-app">
+    <div id="loadingScreen" :class="mode ==='dark'?'loadingScreen_dark':'loadingScreen'">
+      <div :class="mode ==='dark'?'mainLoader_dark':'mainLoader'">
         <div class="loader">
-          <div class="loader__bar"></div>
-          <div class="loader__bar"></div>
-          <div class="loader__bar"></div>
-          <div class="loader__bar"></div>
-          <div class="loader__bar"></div>
-          <div class="loader__ball"></div>
+          <div :class="mode ==='dark'?'loader__bar_dark':'loader__bar'"></div>
+          <div :class="mode ==='dark'?'loader__bar_dark':'loader__bar'"></div>
+          <div :class="mode ==='dark'?'loader__bar_dark':'loader__bar'"></div>
+          <div :class="mode ==='dark'?'loader__bar_dark':'loader__bar'"></div>
+          <div :class="mode ==='dark'?'loader__bar_dark':'loader__bar'"></div>
+          <div :class="mode ==='dark'?'loader__ball_dark':'loader__ball'"></div>
         </div>
         <div :class=" lang ==='ar' ? 'direction-rtl' :' direction-ltr'">
           {{ $t('loading_Text') }}<span class="refresh">...</span></div>
@@ -28,6 +28,7 @@ export default {
   data() {
     return {
       lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'dark',
     }
   },
   mounted() {
@@ -41,7 +42,8 @@ export default {
 </script>
 
 <style scoped>
-#loadingScreen {
+
+.loadingScreen {
   position: fixed;
   width: 100%;
   height: 100vh;
@@ -800,6 +802,384 @@ export default {
     -webkit-transform: scale(1, 1);
     transform: scale(1, 1)
   }
+}
+
+
+/* Dark Mode Theme*/
+
+.loadingScreen_dark {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  /*background: #fff url('https://media.giphy.com/media/feN0YJbVs0fwA/giphy.gif') no-repeat center;*/
+  background: rgb(19, 19, 19) no-repeat center;
+  z-index: calc(99 * 999);
+  display: flex;
+  justify-content: center;
+}
+
+.mainLoader_dark {
+  font-size: 1.25rem;
+  color: #c5dbd7;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.loader__bar_dark {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 1%;
+  background: #c5dbd7;
+  -webkit-transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+  transform-origin: center bottom;
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2)
+}
+
+.loader__bar_dark:nth-child(1) {
+  left: 0px;
+  -webkit-transform: scale(1, .2);
+  -ms-transform: scale(1, .2);
+  transform: scale(1, .2);
+  -webkit-animation: barUp1 4s infinite;
+  animation: barUp1 4s infinite
+}
+
+.loader__bar_dark:nth-child(2) {
+  left: 15px;
+  -webkit-transform: scale(1, .4);
+  -ms-transform: scale(1, .4);
+  transform: scale(1, .4);
+  -webkit-animation: barUp2 4s infinite;
+  animation: barUp2 4s infinite
+}
+
+.loader__bar_dark:nth-child(3) {
+  left: 30px;
+  -webkit-transform: scale(1, .6);
+  -ms-transform: scale(1, .6);
+  transform: scale(1, .6);
+  -webkit-animation: barUp3 4s infinite;
+  animation: barUp3 4s infinite
+}
+
+.loader__bar_dark:nth-child(4) {
+  left: 45px;
+  -webkit-transform: scale(1, .8);
+  -ms-transform: scale(1, .8);
+  transform: scale(1, .8);
+  -webkit-animation: barUp4 4s infinite;
+  animation: barUp4 4s infinite
+}
+
+.loader__bar_dark:nth-child(5) {
+  left: 60px;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  -webkit-animation: barUp5 4s infinite;
+  animation: barUp5 4s infinite
+}
+
+.loader__bar_dark {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 50%;
+  background: #c5dbd7;
+  -webkit-transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+  transform-origin: center bottom;
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2)
+}
+
+.loader__bar_dark:nth-child(1) {
+  left: 0px;
+  -webkit-transform: scale(1, .2);
+  -ms-transform: scale(1, .2);
+  transform: scale(1, .2);
+  -webkit-animation: barUp1 4s infinite;
+  animation: barUp1 4s infinite
+}
+
+.loader__bar_dark:nth-child(2) {
+  left: 15px;
+  -webkit-transform: scale(1, .4);
+  -ms-transform: scale(1, .4);
+  transform: scale(1, .4);
+  -webkit-animation: barUp2 4s infinite;
+  animation: barUp2 4s infinite
+}
+
+.loader__bar_dark:nth-child(3) {
+  left: 30px;
+  -webkit-transform: scale(1, .6);
+  -ms-transform: scale(1, .6);
+  transform: scale(1, .6);
+  -webkit-animation: barUp3 4s infinite;
+  animation: barUp3 4s infinite
+}
+
+.loader__bar_dark:nth-child(4) {
+  left: 45px;
+  -webkit-transform: scale(1, .8);
+  -ms-transform: scale(1, .8);
+  transform: scale(1, .8);
+  -webkit-animation: barUp4 4s infinite;
+  animation: barUp4 4s infinite
+}
+
+.loader__bar_dark:nth-child(5) {
+  left: 60px;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  -webkit-animation: barUp5 4s infinite;
+  animation: barUp5 4s infinite
+}
+
+.loader__bar_dark {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 50%;
+  background: #c5dbd7;
+  -webkit-transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+  transform-origin: center bottom;
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2)
+}
+
+.loader__bar_dark:nth-child(1) {
+  left: 0px;
+  -webkit-transform: scale(1, .2);
+  -ms-transform: scale(1, .2);
+  transform: scale(1, .2);
+  -webkit-animation: barUp1 4s infinite;
+  animation: barUp1 4s infinite
+}
+
+.loader__bar_dark:nth-child(2) {
+  left: 15px;
+  -webkit-transform: scale(1, .4);
+  -ms-transform: scale(1, .4);
+  transform: scale(1, .4);
+  -webkit-animation: barUp2 4s infinite;
+  animation: barUp2 4s infinite
+}
+
+.loader__bar_dark:nth-child(3) {
+  left: 30px;
+  -webkit-transform: scale(1, .6);
+  -ms-transform: scale(1, .6);
+  transform: scale(1, .6);
+  -webkit-animation: barUp3 4s infinite;
+  animation: barUp3 4s infinite
+}
+
+.loader__bar_dark:nth-child(4) {
+  left: 45px;
+  -webkit-transform: scale(1, .8);
+  -ms-transform: scale(1, .8);
+  transform: scale(1, .8);
+  -webkit-animation: barUp4 4s infinite;
+  animation: barUp4 4s infinite
+}
+
+.loader__bar_dark:nth-child(5) {
+  left: 60px;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  -webkit-animation: barUp5 4s infinite;
+  animation: barUp5 4s infinite
+}
+
+.loader__bar_dark {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 50%;
+  background: #c5dbd7;
+  -webkit-transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+  transform-origin: center bottom;
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2)
+}
+
+.loader__bar_dark:nth-child(1) {
+  left: 0px;
+  -webkit-transform: scale(1, .2);
+  -ms-transform: scale(1, .2);
+  transform: scale(1, .2);
+  -webkit-animation: barUp1 4s infinite;
+  animation: barUp1 4s infinite
+}
+
+.loader__bar_dark:nth-child(2) {
+  left: 15px;
+  -webkit-transform: scale(1, .4);
+  -ms-transform: scale(1, .4);
+  transform: scale(1, .4);
+  -webkit-animation: barUp2 4s infinite;
+  animation: barUp2 4s infinite
+}
+
+.loader__bar_dark:nth-child(3) {
+  left: 30px;
+  -webkit-transform: scale(1, .6);
+  -ms-transform: scale(1, .6);
+  transform: scale(1, .6);
+  -webkit-animation: barUp3 4s infinite;
+  animation: barUp3 4s infinite
+}
+
+.loader__bar_dark:nth-child(4) {
+  left: 45px;
+  -webkit-transform: scale(1, .8);
+  -ms-transform: scale(1, .8);
+  transform: scale(1, .8);
+  -webkit-animation: barUp4 4s infinite;
+  animation: barUp4 4s infinite
+}
+
+.loader__bar_dark:nth-child(5) {
+  left: 60px;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  -webkit-animation: barUp5 4s infinite;
+  animation: barUp5 4s infinite
+}
+
+.loader__bar_dark {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 50%;
+  background: #c5dbd7;
+  -webkit-transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+  transform-origin: center bottom;
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2)
+}
+
+.loader__bar_dark:nth-child(1) {
+  left: 0px;
+  -webkit-transform: scale(1, .2);
+  -ms-transform: scale(1, .2);
+  transform: scale(1, .2);
+  -webkit-animation: barUp1 4s infinite;
+  animation: barUp1 4s infinite
+}
+
+.loader__bar_dark:nth-child(2) {
+  left: 15px;
+  -webkit-transform: scale(1, .4);
+  -ms-transform: scale(1, .4);
+  transform: scale(1, .4);
+  -webkit-animation: barUp2 4s infinite;
+  animation: barUp2 4s infinite
+}
+
+.loader__bar_dark:nth-child(3) {
+  left: 30px;
+  -webkit-transform: scale(1, .6);
+  -ms-transform: scale(1, .6);
+  transform: scale(1, .6);
+  -webkit-animation: barUp3 4s infinite;
+  animation: barUp3 4s infinite
+}
+
+.loader__bar_dark:nth-child(4) {
+  left: 45px;
+  -webkit-transform: scale(1, .8);
+  -ms-transform: scale(1, .8);
+  transform: scale(1, .8);
+  -webkit-animation: barUp4 4s infinite;
+  animation: barUp4 4s infinite
+}
+
+.loader__bar_dark:nth-child(5) {
+  left: 60px;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  -webkit-animation: barUp5 4s infinite;
+  animation: barUp5 4s infinite
+}
+
+.loader__bar_dark {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 50%;
+  background: #c5dbd7;
+  -webkit-transform-origin: center bottom;
+  -ms-transform-origin: center bottom;
+  transform-origin: center bottom;
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.2)
+}
+
+.loader__bar_dark:nth-child(1) {
+  left: 0px;
+  -webkit-transform: scale(1, .2);
+  -ms-transform: scale(1, .2);
+  transform: scale(1, .2);
+  -webkit-animation: barUp1 4s infinite;
+  animation: barUp1 4s infinite
+}
+
+.loader__bar_dark:nth-child(2) {
+  left: 15px;
+  -webkit-transform: scale(1, .4);
+  -ms-transform: scale(1, .4);
+  transform: scale(1, .4);
+  -webkit-animation: barUp2 4s infinite;
+  animation: barUp2 4s infinite
+}
+
+.loader__bar_dark:nth-child(3) {
+  left: 30px;
+  -webkit-transform: scale(1, .6);
+  -ms-transform: scale(1, .6);
+  transform: scale(1, .6);
+  -webkit-animation: barUp3 4s infinite;
+  animation: barUp3 4s infinite
+}
+
+.loader__bar_dark:nth-child(4) {
+  left: 45px;
+  -webkit-transform: scale(1, .8);
+  -ms-transform: scale(1, .8);
+  transform: scale(1, .8);
+  -webkit-animation: barUp4 4s infinite;
+  animation: barUp4 4s infinite
+}
+
+.loader__bar_dark:nth-child(5) {
+  left: 60px;
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
+  transform: scale(1, 1);
+  -webkit-animation: barUp5 4s infinite;
+  animation: barUp5 4s infinite
+}
+
+.loader__ball_dark {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background: #c5dbd7;
+  border-radius: 50%;
+  -webkit-animation: ball 4s infinite;
+  animation: ball 4s infinite
 }
 </style>
 
