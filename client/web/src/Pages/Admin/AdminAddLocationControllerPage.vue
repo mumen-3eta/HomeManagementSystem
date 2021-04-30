@@ -1,10 +1,11 @@
 <template>
   <div class="wrapper">
     <!--   ********** body content can change it here *****************-->
-    <div class="container_Admin_AddLocationController">
+    <div
+        :class="lang ==='ar' ? 'container_Admin_AddLocationController direction-rtl' :'container_Admin_AddLocationController direction-ltr'">
       <section class="container_Admin_btnSectionGroup">
         <header class="section__header">
-          <h2 class="section__title">Add Location Controller</h2>
+          <h2 class="section__title">{{ $t('AdminDashboard.addLocationController.title') }}</h2>
           <div class="section__control-s">
             <button class="section__button section__button--painted focus--box-shadow" type="button"
                     @click.prevent="OpenLocationControllerModal">
@@ -14,21 +15,21 @@
         </header>
         <div class="project my-3 mx-auto p-2 position-relative">
           <vue-good-table
-              :columns="columns"
+              :columns="this.lang === 'en' ? columns_EN : columns_AR"
               :pagination-options="{
                     enabled: true,
-                    mode: 'records',
+                    mode: 'pages',
                     perPage: 5,
                     position: 'bottom',
-                    perPageDropdown: [5, 7, 9],
+                    perPageDropdown: [3, 5, 7, 9,15,25,50],
                     dropdownAllowAll: false,
                     setCurrentPage: 1,
-                    nextLabel: 'next',
-                    prevLabel: 'prev',
-                    rowsPerPageLabel: 'Rows per page',
-                    ofLabel: 'of',
-                    pageLabel: 'page', // for 'pages' mode
-                    allLabel: 'All',
+                    nextLabel:  this.lang==='en' ? 'next' : 'التالي',
+                    prevLabel: this.lang==='en' ? 'prev' : 'السابق',
+                    rowsPerPageLabel: this.lang==='en' ? 'Rows per page' : 'عدد الصفوف في الصفحة',
+                    ofLabel: this.lang==='en' ? 'of' :'من' ,
+                    pageLabel: this.lang==='en' ? 'page' :'صفحة', // for 'pages' mode
+                    allLabel:  this.lang==='en' ?  'All' : 'الجميع',
                   }"
               :rows="rows"
               :search-options=" {
@@ -41,14 +42,15 @@
             </div>
             <div slot="table-actions" class="btn_searchScan"></div>
             <template slot="table-row" slot-scope="props">
-              <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
+              <div v-if="props.column.field === 'btn_Action'"
+                   :class="lang==='en' ? 'btn_actionGroup' :'btn_actionGroup direction-ltr'">
                 <button class="btn_AddController"
                         @click.prevent="editLocationController(props.row.locationId,props.row.nameLocation)"><i
-                    class="fas fa-edit"></i> Edit
+                    class="fas fa-edit"></i> {{ $t('AdminDashboard.addLocationController.table.btn_Edit') }}
                 </button>
                 <button class="btn_deleted"
                         @click.prevent="deleteTypeController(props.row.locationId,props.row.nameLocation)"><i
-                    class="fas fa-trash-alt"></i> Delete
+                    class="fas fa-trash-alt"></i> {{ $t('AdminDashboard.addLocationController.table.btn_Delete') }}
                 </button>
               </div>
               <span v-else>
@@ -64,23 +66,41 @@
            @closed="CloseLocationControllerModal"
            @before-open="CloseLocationControllerModal">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseLocationControllerModal"></i>
-      <div class="container__AddProcessorID">
-        <h2>{{ !edited ? "Add New Location for Controller" : `Edit Location name: "${EditInfo.Name_Location}"` }}</h2>
+      <div :class="lang==='ar' ? 'container__AddProcessorID direction-rtl' :'container__AddProcessorID direction-ltr'">
+        <h2>
+          {{
+            !edited
+                ?
+                (lang === 'en' ? 'Add New Location for Controller' : 'إضافة موقع جديد لوحدة التحكم')
+                :
+                (lang === 'en' ? `Edit Location name: "${EditInfo.Name_Location}"` : `تحرير اسم الموقع: "${EditInfo.Name_Location}"`)
+          }}
+        </h2>
         <div class="input-group__AddProcessorID">
-          <label v-if="!edited" for="input_ProcessorID_Add">Location Name</label>
+          <label v-if="!edited" for="input_ProcessorID_Add">
+            {{ $t('AdminDashboard.addLocationController.model.nameType') }}
+          </label>
           <input v-if="!edited" id="input_ProcessorID_Add" v-model.trim="NameLocationController"
                  required type="text" @keypress.enter="addLocationController"
                  @keypress.esc="CloseLocationControllerModal">
-          <label v-if="edited" for="input_ProcessorID_Edit">Location Name</label>
+          <label v-if="edited" for="input_ProcessorID_Edit">
+            {{ $t('AdminDashboard.addLocationController.model.nameType') }}
+          </label>
           <input v-if="edited" id="input_ProcessorID_Edit" v-model.trim="NameLocationController"
                  required type="text" @keypress.enter="SaveChangeLocation" @keypress.esc="CloseLocationControllerModal">
           <p v-if="errorNameLocationController" class="error_style pb-2">{{ errorNameLocationController }}</p>
           <div v-if="!edited" class="btn-group__AddProcessorID">
-            <button class="btn btn-secondary" @click.prevent="addLocationController">Add Location Controller</button>
-            <button class="btn btn-danger" @click.prevent="ClearLocationController">Clear</button>
+            <button class="btn btn-secondary" @click.prevent="addLocationController">
+              {{ $t('AdminDashboard.addLocationController.model.addTypeController') }}
+            </button>
+            <button class="btn btn-danger" @click.prevent="ClearLocationController">
+              {{ $t('AdminDashboard.addLocationController.model.clear') }}
+            </button>
           </div>
           <div v-if="edited" class="btn-group__AddProcessorID">
-            <button class="btn btn-secondary" @click.prevent="SaveChangeLocation">Save Change</button>
+            <button class="btn btn-secondary" @click.prevent="SaveChangeLocation">
+              {{ $t('AdminDashboard.addLocationController.model.saveChange') }}
+            </button>
           </div>
         </div>
       </div>
@@ -97,6 +117,7 @@ export default {
   name: "AdminAddLocationControllerPage",
   data() {
     return {
+      lang: localStorage.getItem('lang') || 'en',
       socket: '',
       NameLocationController: '',
       errorNameLocationController: '',
@@ -105,25 +126,49 @@ export default {
         Location_id: '',
         Name_Location: '',
       },
-      columns: [
+      columns_EN: [
         {
           label: 'ID',
           field: 'id',
           type: 'string',
         },
         {
-          label: 'Name Location',
+          label: 'Controller Location name',
           field: 'nameLocation',
           type: 'string',
         },
         {
-          label: 'Location Id',
+          label: 'Controller Location Id',
           field: 'locationId',
           type: 'string',
           sortable: false,
         },
         {
-          label: 'Action',
+          label: 'Settings',
+          field: 'btn_Action',
+          type: 'string',
+          sortable: false,
+        },
+      ],
+      columns_AR: [
+        {
+          label: 'رقم الترتيب',
+          field: 'id',
+          type: 'string',
+        },
+        {
+          label: 'اسم موقع وحدة التحكم',
+          field: 'nameLocation',
+          type: 'string',
+        },
+        {
+          label: 'معرف موقع وحدة التحكم',
+          field: 'locationId',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'الاعدادات',
           field: 'btn_Action',
           type: 'string',
           sortable: false,
@@ -177,9 +222,9 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Add ${response[0].label}, Successfully`,
+            title: this.lang === 'en' ? `Add ${response[0].label}, Successfully` : `أضيف ${response[0].label}, بنجاح`,
             toast: false,
-            text: `ID this Type : " ${response[0].id} "`,
+            text: this.lang === 'en' ? `ID this Location : " ${response[0].id} "` : `معرف موقع وحدة التحكم : " ${response[0].id} "`,
             showConfirmButton: false,
             timer: 1500
           })
@@ -188,14 +233,18 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'error',
-            title: `<strong>Add New Location Faild</strong>`,
+            title: this.lang === 'en' ? `<strong>Failed, Add New Location</strong>` : `<strong>فشل إضافة موقع جديد</strong>`,
             toast: false,
             showConfirmButton: false,
             timer: 1500
           })
         });
       } else {
-        this.errorNameLocationController = "Sorry! Add controller Location Faild!";
+        if (this.lang === 'en') {
+          this.errorNameLocationController = "Excuse me ! Failed to add controller Location";
+        } else {
+          this.errorNameLocationController = "عذرا ! فشل إضافة موقع لوحدة تحكم";
+        }
         setTimeout(() => {
           this.errorNameLocationController = null;
         }, 3000);
@@ -223,9 +272,9 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Update Location " ${response[0].label} " , Successfully`,
+            title: this.lang === 'en' ? `Updated ${response[0].label}, Successfully` : `تم تحديث ${response[0].label}, بنجاح`,
             toast: false,
-            text: `ID this Location : " ${response[0].id} "`,
+            text: this.lang === 'en' ? `ID this Location : " ${response[0].id} "` : `معرف هذا الموقع : " ${response[0].id} "`,
             showConfirmButton: false,
             timer: 1500
           })
@@ -234,15 +283,19 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'error',
-            title: `<strong>Update Location Faild</strong>`,
+            title: this.lang === 'en' ? `<strong>Failed Update this Location</strong>` : `<strong>فشل تحديث هذا الموقع</strong>`,
             toast: false,
-            text: 'name Location is Already Exist 😥',
+            text: this.lang === 'en' ? ' the Location name is Already Exist 😥' : 'اسم الموقع موجود بالفعل 😥',
             showConfirmButton: false,
             timer: 1500
           })
         });
       } else {
-        this.errorNameLocationController = "Sorry! Add controller Location Faild!";
+        if (this.lang === 'en') {
+          this.errorNameLocationController = "Excuse me ! Failed to update controller Location";
+        } else {
+          this.errorNameLocationController = "عذرا ! فشل تحديث موقع وحدة التحكم";
+        }
         setTimeout(() => {
           this.errorNameLocationController = null;
         }, 3000);
@@ -253,22 +306,23 @@ export default {
     /*** Delete name and id location Controller ***/
     async deleteTypeController(locationController_id, Name_Location) {
       this.$swal.fire({
-        title: 'Are you sure?',
-        html: `You won't Delete this Location <strong>"${Name_Location}"</strong> <br> <strong>${locationController_id}</strong>`,
+        title: this.lang === 'en' ? 'Are you sure?' : 'هل أنت واثق؟',
+        html: this.lang === 'en' ? `Do you want to delete this Location? <br> <strong>"${Name_Location}"</strong> <br> <strong>'id : ' ${locationController_id}</strong>` : `  هل تريد أن تحذف هذا الموقع <br> <strong> <strong>"${Name_Location}" <br> </strong> ' رقم المعرف ' ${locationController_id}  </strong>`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#35997c',
         cancelButtonColor: '#cb4848',
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonText: this.lang === 'en' ? 'Cancel' : 'إلغاء',
+        confirmButtonText: this.lang === 'en' ? 'Yes, delete it!' : 'نعم , إحذف'
       }).then((result) => {
         if (result.isConfirmed) {
           this.DeleteTypeControllerFunction(locationController_id);
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Delete Location Controller, Successfully',
+            title: this.lang === 'en' ? 'This Controller Location has been successfully deleted' : 'تم حذف هذا الموقع بنجاح',
             toast: false,
-            text: "LocationID \"" + locationController_id + "\"",
+            text: this.lang === 'en' ? "LocationID \"" + locationController_id + "\"" : "معرف الموقع \"" + locationController_id + "\"",
             showConfirmButton: false,
             timer: 1500
           })
@@ -282,7 +336,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'error',
-          title: `<strong>Delete this Location Faild</strong>`,
+          title: this.lang === 'en' ? `<strong>Failed, Delete this Location</strong>` : `<strong>فشل حذف هذا الموقع</strong>`,
           toast: false,
           showConfirmButton: false,
           timer: 1500

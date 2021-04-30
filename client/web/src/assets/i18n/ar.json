@@ -185,7 +185,7 @@
       "Read": "مقروء"
     },
     "addTypeController": {
-      "title": "قم بإنشاء وحدة تحكم",
+      "title": "قم بإنشاء أنواع وحدة تحكم",
       "table": {
         "btn_Edit": "تعديل",
         "btn_Delete": "حذف"
@@ -193,6 +193,19 @@
       "model": {
         "nameType": "اسم نوع وحدة التحكم",
         "addTypeController": "إضافة نوع تحكم",
+        "clear": "تفريغ المعلومات",
+        "saveChange": "حفظ التغيير"
+      }
+    },
+    "addLocationController": {
+      "title": "قم بإنشاء مواقع وحدة تحكم",
+      "table": {
+        "btn_Edit": "تعديل",
+        "btn_Delete": "حذف"
+      },
+      "model": {
+        "nameType": "اسم موقع وحدة التحكم",
+        "addTypeController": "إضافة موقع وحدة تحكم",
         "clear": "تفريغ المعلومات",
         "saveChange": "حفظ التغيير"
       }

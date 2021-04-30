@@ -85,14 +85,14 @@
           }}
         </h2>
         <div class="input-group__AddProcessorID">
-          <label v-if="!edited" for="input_ProcessorIDAdd">{{
-              $t('AdminDashboard.addTypeController.model.nameType')
-            }}</label>
+          <label v-if="!edited" for="input_ProcessorIDAdd">
+            {{ $t('AdminDashboard.addTypeController.model.nameType') }}
+          </label>
           <input v-if="!edited" id="input_ProcessorIDAdd" v-model.trim="NameTypeController" required type="text"
                  @keypress.enter="addTypeController" @keypress.esc="ClearTypeController">
-          <label v-if="edited" for="input_ProcessorIDUpdate">{{
-              $t('AdminDashboard.addTypeController.model.nameType')
-            }}</label>
+          <label v-if="edited" for="input_ProcessorIDUpdate">
+            {{ $t('AdminDashboard.addTypeController.model.nameType') }}
+          </label>
           <input v-if="edited" id="input_ProcessorIDUpdate" v-model.trim="NameTypeController" required type="text"
                  @keypress.enter="SaveChangeEdited" @keypress.esc="ClearTypeController">
           <p v-if="errorLabel" class="error_style pb-2">{{ errorLabel }}</p>
@@ -246,7 +246,7 @@ export default {
         if (this.lang === 'en') {
           this.errorLabel = "Excuse me ! Failed to add controller Type";
         } else {
-          this.errorLabel = "عذرا ! فشل إضافة نوع تحكم";
+          this.errorLabel = "عذرا ! فشل إضافة نوع  لوحدة تحكم";
         }
         setTimeout(() => {
           this.errorLabel = null;
@@ -258,7 +258,7 @@ export default {
     async deleteTypeController(typeController_id, Name_Type) {
       this.$swal.fire({
         title: this.lang === 'en' ? 'Are you sure?' : 'هل أنت واثق؟',
-        html: this.lang === 'en' ? `Do you want to delete this type? <strong>"${Name_Type}"</strong> <br> <strong>${typeController_id}</strong>` : `هل تريد أن تحذف هذا النوع <strong>"${Name_Type}"</strong> <br> <strong>${typeController_id}</strong>`,
+        html: this.lang === 'en' ? `Do you want to delete this type? <br> <strong>"${Name_Type}"</strong> <br> <strong>'id : ' ${typeController_id}</strong>` : `  هل تريد أن تحذف هذا النوع <br> <strong> <strong>"${Name_Type}" <br> </strong> ' رقم المعرف ' ${typeController_id}  </strong>`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#35997c',
@@ -343,7 +343,7 @@ export default {
         if (this.lang === 'en') {
           this.errorLabel = "Excuse me ! Failed to update controller Type";
         } else {
-          this.errorLabel = "عذرا ! فشل تحديث نوع تحكم";
+          this.errorLabel = "عذرا ! فشل تحديث نوع وحدة التحكم";
         }
         setTimeout(() => {
           this.errorLabel = null;
