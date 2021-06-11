@@ -90,6 +90,11 @@
               <i :class="[ Controller.Status  ? 'desktop_isActive' : '' , 'fas fa-desktop' ]"></i>
             </li>
             <li class="card_item">{{ Controller.ControllerName }}</li>
+            <li class="card_item">
+              <small>Type:</small><strong>{{ Controller.TypeLabel }}</strong>
+              <strong class="pd_left"> | </strong>
+              <small>Location:</small><strong>{{ Controller.LocationLabel }}</strong>
+            </li>
             <li class="card_item">{{ Controller.CreateAt | momentAROrEN }}</li>
             <li class="card_item card_itemBTN">
               <div class="btn_Status">
@@ -99,6 +104,13 @@
                          class="form-check-input"
                          type="checkbox"
                          @change.prevent="ChangeActivation(Controller.id)">
+                </div>
+              </div>
+              <div class="btn_Status">
+                <div class="form-check form-switch">
+                  <button class="btn btn-danger"
+                          @click.prevent="DeleteControllerConnection(Controller.id , Controller.Processor_id)"><i
+                      class="fa fa-trash-alt"></i></button>
                 </div>
               </div>
             </li>
@@ -263,6 +275,49 @@ export default {
     }
   },
   methods: {
+    /* Delete Controller Connection */
+    async DeleteControllerConnection(controller_Id, processor_Id) {
+      this.$swal.fire({
+        title: this.lang === 'en' ? 'Are you sure?' : 'هل أنت متأكد؟',
+        html: this.lang === 'en' ? `Do you want to delete this controller ID? <strong>${controller_Id}</strong>` : `هل تريد أن تحذف معرف وحدة التحكم هذه <strong>${controller_Id}</strong>`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#35997c',
+        cancelButtonColor: '#cb4848',
+        cancelButtonText: this.lang === 'en' ? 'Cancel' : 'إلغاء',
+        confirmButtonText: this.lang === 'en' ? 'Yes, delete it!' : 'نعم , إحذف وحدة التحكم'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await axios.delete('/api/v1/controller/connection', {
+            data: {
+              controllerId: controller_Id,
+              processorId: processor_Id
+            }
+          }).then(() => {
+            this.GetAllControllerConnected();
+            this.$swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: this.lang === 'en' ? 'This connection has been successfully deleted' : 'تم حذف هذا الاتصال بنجاح',
+              toast: false,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          }).catch(async () => {
+            this.$swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: this.lang === 'en' ? `<strong>Failed to delete processor ID</strong>` : `<strong>فشل حذف معرف المعالج</strong>`,
+              toast: false,
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+        }
+      })
+
+    },
+
     async ChangeActivation(id) {
       await axios.post('/api/v1/controller/change', {
         newStatus: '',
@@ -306,8 +361,11 @@ export default {
       await axios.get('/api/v1/controller/connection/all').then(async ({data: {connectionData: response}}) => {
         const userAllControllerConnected = response.map((item) => ({
           id: item.controller_id.toString(),
+          Processor_id: item.processor_id.toString(),
           ControllerName: item.name.toString(),
           CreateAt: item.create_at.toString(),
+          TypeLabel: item.type_label.toString(),
+          LocationLabel: item.location_label.toString(),
           Status: item.status,
           IsActive: true
         }))
@@ -344,7 +402,11 @@ export default {
         return this.$store.getters.userAllControllerConnected.filter(post => {
           moment.locale(this.lang === 'ar' ? 'ar_SA' : 'en_US');
           let date = moment(post.CreateAt).format('DD MMM YYYY');
-          return post.ControllerName.toString().toLowerCase().includes(this.search.toString().toLowerCase()) || date.toString().toLowerCase().includes(this.search.toString().toLowerCase());
+          return post.ControllerName.toString().toLowerCase().includes(this.search.toString().toLowerCase()) ||
+              post.TypeLabel.toString().toLowerCase().includes(this.search.toString().toLowerCase()) ||
+              post.LocationLabel.toString().toLowerCase().includes(this.search.toString().toLowerCase()) ||
+              date.toString().toLowerCase().includes(this.search.toString().toLowerCase());
+
         })
       } else {
         return [];
@@ -360,6 +422,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pd_left {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+
 a {
   &:hover {
     color: black;

@@ -67,7 +67,8 @@
            @closed="CloseAllControllerModal"
            @before-open="CloseAllControllerModal">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseAllControllerModal"></i>
-      <div :class="lang==='ar' ? 'container__AddProcessorID direction-rtl' :'container__AddProcessorID direction-ltr'">
+      <div :class="lang==='ar' ? 'container__AddProcessorID direction-rtl' :'container__AddProcessorID direction-ltr'"
+           :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'">
         <h2 style="text-align: center">
           {{ $t('AdminDashboard.createController.model.title') }}
           <br>

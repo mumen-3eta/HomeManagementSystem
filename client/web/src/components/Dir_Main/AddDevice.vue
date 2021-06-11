@@ -81,7 +81,8 @@
     <modal :resizable="false" :width="650" height="auto" name="AddNewProcessorId" @closed="CloseProcessorId"
            @before-open="CloseProcessorId">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseProcessorId"></i>
-      <div class="container__AddProcessorID">
+      <div :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'"
+           class="container__AddProcessorID">
         <h2>{{ $t('Dashboard.addProcessors.webCame.model.title') }}</h2>
         <div
             :class="lang==='ar' ? 'input-group__AddProcessorID direction-rtl' :'input-group__AddProcessorID direction-ltr'">
@@ -122,10 +123,12 @@
     <!--   End modal Add Processor id  -->
 
     <!--    modal Search Processor id  -->
-    <modal :resizable="false" :width="650" height="auto" name="SearchProcessorId" @closed="AfterCloseScanSearch"
+    <modal :resizable="false" :width="650" height="auto" name="SearchProcessorId"
+           @closed="AfterCloseScanSearch"
            @before-open="AfterCloseScanSearch">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseScanSearch"></i>
-      <div class="container__AddProcessorID">
+      <div :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'"
+           class="container__AddProcessorID">
         <h3>{{ $t('Dashboard.addProcessors.webCame.title') }}</h3>
         <div class="otherWay_AddProcessorID">
           <div class="handle__camera">

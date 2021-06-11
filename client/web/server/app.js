@@ -35,6 +35,7 @@ io.use(async (socket, next) => {
   // const token = socket.request.headers.cookie.match(/(?<=token=)(.*?)(?=;)/)[0];
   const {token} = socket.request.headers;
   try {
+    console.log('socke123t', token)
     const decoded = await verify(token);
     socket.decoded = decoded;
     next();

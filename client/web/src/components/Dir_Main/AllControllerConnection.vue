@@ -68,7 +68,8 @@
            name="ScanSearchControllerId" @closed="AfterCloseScanSearch"
            @before-open="AfterCloseScanSearch">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseScanSearch"></i>
-      <div class="container__AddProcessorID">
+      <div :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'"
+           class="container__AddProcessorID">
         <h3>{{ $t('Dashboard.ControllersConnected.webCame.title') }}</h3>
         <div class="otherWay_AddProcessorID">
           <div class="handle__camera">

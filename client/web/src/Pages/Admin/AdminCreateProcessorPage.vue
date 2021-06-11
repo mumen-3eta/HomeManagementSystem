@@ -67,7 +67,8 @@
            @closed="CloseAllProcessorModal"
            @before-open="CloseAllProcessorModal">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseAllProcessorModal"></i>
-      <div :class="lang==='ar' ? 'container__AddProcessorID direction-rtl' :'container__AddProcessorID direction-ltr'">
+      <div :class="lang==='ar' ? 'container__AddProcessorID direction-rtl' :'container__AddProcessorID direction-ltr'"
+           :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'">
         <h2 style="text-align: center">{{ $t('AdminDashboard.createProcessor.model.title') }}
           <br>
           " {{ processorId }} "

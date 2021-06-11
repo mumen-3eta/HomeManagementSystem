@@ -1,5 +1,5 @@
 const config = require("./config.js");
-const socket = require("socket.io-client")(config.server_url,{
+const socket = require("socket.io-client")(config.server_url, {
   transportOptions: {
     polling: {
       extraHeaders: {
@@ -11,9 +11,15 @@ const socket = require("socket.io-client")(config.server_url,{
       }
     }
   }
-}); 
+});
+socket.on('statusChangeReport', body => {
+  console.log('hi');
+  console.log(body);
+  // some function to hahndel the change of the status
+})
+
 const controllerId = 1
-console.log('hi');
+// console.log('hi');
 socket.emit("connection", () => {
   socket.emit('user connected');
   console.log("Connected to server");
@@ -27,24 +33,21 @@ socket.emit("connection", () => {
 //   })
 })
 
-socket.emit('joinProcessorConnection',({controllerId}))
+socket.emit('joinProcessorConnection', ({controllerId}))
 
-socket.on('msg',msg=>{
+socket.on('msg', msg => {
   console.log(msg);
 })
 
-socket.on('statusChangeReport',body=>{
-  console.log('hi');
-  console.log(body);
-  // some function to hahndel the change of the status 
-})
 
 // an event to send the changes
 // switch.addeventlistiner('change',e=>{
 //   const data = {controllerId:e.target.id,
 //   status:e.target.value}
-setTimeout(function(){ socket.emit('statusChange') }, 1000);
-  // socket.emit('statusChange',data)
+// setTimeout(function () {
+//   // socket.emit('statusChange')
+// }, 1000);
+// socket.emit('statusChange',data)
 // })
 
 // socket.on('statusChangeReport',obj=>{

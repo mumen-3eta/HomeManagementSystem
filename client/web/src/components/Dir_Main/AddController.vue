@@ -61,7 +61,8 @@
            name="ScanControllerId" @closed="CloseScanModalControllerID"
            @before-open="CloseScanModalControllerID">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseScanModalControllerID"></i>
-      <div class="container__AddProcessorID">
+      <div :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'"
+           class="container__AddProcessorID">
         <h3> {{ $t('Dashboard.AddControllerForProcessor.webCame.title') }}</h3>
         <div class="otherWay_AddProcessorID">
           <div class="handle__camera">

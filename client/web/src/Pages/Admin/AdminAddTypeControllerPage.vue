@@ -74,7 +74,8 @@
            @closed="CloseTypeControllerModal"
            @before-open="CloseTypeControllerModal">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseTypeControllerModal"></i>
-      <div :class="lang==='ar' ? 'container__AddProcessorID direction-rtl' :'container__AddProcessorID direction-ltr'">
+      <div :class="lang==='ar' ? 'container__AddProcessorID direction-rtl' :'container__AddProcessorID direction-ltr'"
+           :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'">
         <h2>
           {{
             !edited
