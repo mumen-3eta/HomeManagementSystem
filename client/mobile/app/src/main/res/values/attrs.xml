@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ds">
+        <attr name="colorAccent" format="color"/>
+        <attr name="shade" format="color"/>
+        <attr name="homePageMainColor" format="color"/>
+        <attr name="nionBlue" format="color"/>
+        <attr name="green" format="color"/>
+        <attr name="dark_green" format="color"/>
+        <attr name="white" format="color"/>
+        <attr name="processorGreen" format="color"/>
+        <attr name="black" format="color"/>
+        <attr name="controllerBlue" format="color"/>
+        <attr name="controllerPurple" format="color"/>
+        <attr name="eggWhite" format="color"/>
+        <attr name="buttonBackground" format="color"/>
+        <attr name="buttonBackgroundPressed" format="color"/>
+        <attr name="fieldBackground" format="color"/>
+        <attr name="homepageToolbarIcons" format="color"/>
+        <attr name="deleteRed" format="color"/>
+        <attr name="yellowWarning" format="color"/>
+        <attr name="homeToolbarSelected" format="color"/>
+        <attr name="drawer" format="color"/>
+        <attr name="switchColor" format="color"/>
+        <attr name="red" format="color"/>
+        <attr name="turquoise" format="color"/>
+        <attr name="sun" format="color"/>
+    </declare-styleable>
+</resources>

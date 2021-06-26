@@ -1,6 +1,7 @@
 package graduationproject.homemanagementsystem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -15,6 +16,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Splash.sp.getString("Theme", "") != null || !Splash.sp.getString("Theme", "").equals("")){
+            if (Splash.sp.getString("Theme", "").equals("dark")){
+                setTheme(R.style.DarkTheme);
+            }else {
+                setTheme(R.style.AppTheme);
+            }
+        }else {
+            setTheme(R.style.AppTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 

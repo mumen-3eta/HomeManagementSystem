@@ -1,17 +1,19 @@
 package graduationproject.homemanagementsystem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
@@ -19,15 +21,16 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.util.ArrayList;
+import java.io.IOException;
 
 import graduationproject.homemanagementsystem.dataClasses.JsonApi;
-import graduationproject.homemanagementsystem.dataClasses.LoginBody;
-import graduationproject.homemanagementsystem.dataClasses.deviceClass;
-import graduationproject.homemanagementsystem.dataClasses.userClass;
+import graduationproject.homemanagementsystem.dataClasses.authMe;
+import graduationproject.homemanagementsystem.dataClasses.loginBody;
+import graduationproject.homemanagementsystem.dataClasses.loginResponse;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -41,14 +44,27 @@ public class MainActivity extends AppCompatActivity {
     private EditText userEmailTextField;
     private EditText userPasswordTextField;
     private ScrollView main_page_scroll;
-    public static SharedPreferences sp;
+    private Toast toast;
+    private static final int SPLASH_DISPLAY_LENGTH = 2000;
+
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("https://home-msy.herokuapp.com/api/v1/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    JsonApi jsonApi = retrofit.create(JsonApi.class);
 
 
-    public static ArrayList<userClass> users = new ArrayList<>();
-
-    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Splash.sp.getString("Theme", "") != null || !Splash.sp.getString("Theme", "").equals("")){
+            if (Splash.sp.getString("Theme", "").equals("dark")){
+                setTheme(R.style.DarkTheme);
+            }else {
+                setTheme(R.style.AppTheme);
+            }
+        }else {
+            setTheme(R.style.AppTheme);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -59,36 +75,11 @@ public class MainActivity extends AppCompatActivity {
         userEmailTextField = (EditText) findViewById(R.id.userEmailTextField);
         userPasswordTextField = (EditText) findViewById(R.id.userPasswordTextField);
         main_page_scroll = (ScrollView) findViewById(R.id.main_page_scroll);
+        toast = new Toast(this);
 
-        sp = getSharedPreferences("login",MODE_PRIVATE);
-
-        if (sp.getBoolean("logged", false)){
-            redirectActivity(this, HomePageActivity.class, sp.getString("userEmail",""));
-        }
-
-        drawable =  getResources().getDrawable(R.drawable.drawer_shoice);
+        drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.drawer_shoice);
 
         drawer_home.setBackground(drawable);
-
-        userClass newUser = new userClass("Mumen", "mumen.3eta@gmail.com", "Note12345");
-        deviceClass deviceClass = new deviceClass("My TV", "Living Room", "TV");
-        deviceClass deviceClass2 = new deviceClass("My light", "Living Room", "Light");
-        newUser.getDevices().add(deviceClass);
-        newUser.getDevices().add(deviceClass2);
-        newUser.getDevices().add(deviceClass);
-        newUser.getDevices().add(deviceClass2);
-        newUser.getDevices().add(deviceClass);
-        newUser.getDevices().add(deviceClass2);
-        newUser.getDevices().add(deviceClass);
-        newUser.getDevices().add(deviceClass2);
-        newUser.getDevices().add(deviceClass);
-        newUser.getDevices().add(deviceClass2);
-        newUser.getDevices().add(deviceClass);
-        newUser.getDevices().add(deviceClass2);
-        users.add(newUser);
-
-        CookieManager cookieManager = new CookieManager();
-        CookieHandler.setDefault(cookieManager);
     }
 
     public void ClickMenu(View view){
@@ -124,52 +115,93 @@ public class MainActivity extends AppCompatActivity {
         activity.startActivity(intent);
     }
 
-    public static void redirectActivity(Activity activity, Class aClass, String userEmail) {
-        Intent intent = new Intent(activity,aClass);
-        intent.putExtra("email", userEmail);
-        activity.startActivity(intent);
-    }
-
     public final static Bitmap stringToBitmap(String in){
         byte[] bytes = Base64.decode(in, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
-    public void logApi(View view){
-
-    }
-
     public void loginAction(View view){
         String userEmail = userEmailTextField.getText().toString().trim();
         String userPassword = userPasswordTextField.getText().toString();
-        Toast toast = new Toast(this);
-        boolean validUserEmail = checkUserEmail(userEmail);
-        String correspondingPassword = getCorrespondingPassword(userEmail);
-
-        if (validUserEmail && correspondingPassword.equals(userPassword)){
-            toast.makeText(this, "login successful", Toast.LENGTH_SHORT).show();
-            redirectActivity(this, HomePageActivity.class, userEmail);
-            sp.edit().putBoolean("logged",true).apply();
-            sp.edit().putString("userEmail",userEmail).apply();
-        }else if (!validUserEmail){
-            toast.makeText(this, "email is not valid", Toast.LENGTH_SHORT).show();
-        }else if (validUserEmail && !correspondingPassword.equals("no")){
-            toast.makeText(this, "password is not correct", Toast.LENGTH_SHORT).show();
-        }else if (correspondingPassword.equals("no")){
-            toast.makeText(this, "email or password is not valid", Toast.LENGTH_SHORT).show();
+        boolean validEmail = checkUserEmail(userEmail);
+        loginBody body = new loginBody();
+        if (validEmail){
+            body.setEmail(userEmail);
+        }else if (userEmail.equals("") || userPassword.equals("")){
+            toast.makeText(MainActivity.this, "Email or userName and Password are required", Toast.LENGTH_SHORT).show();
+            return;
+        }else {
+            body.setUserName(userEmail);
         }
 
-        Login();
-    }
+        body.setPassword(userPassword);
+        Call<loginResponse> call = jsonApi.Login(body);
 
-    private void Login() {
-        LoginBody body = new LoginBody();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://hmsy-app.herokuapp.com/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        JsonApi jsonApi = retrofit.create(JsonApi.class);
-        Call call = jsonApi.Login(body);
+        call.enqueue(new Callback<loginResponse>() {
+            @Override
+            public void onResponse(Call<loginResponse> call, Response<loginResponse> response) {
+                if (!response.isSuccessful()){
+                    ResponseBody loginResponse = response.errorBody();
+                    try {
+                        String message = loginResponse.string();
+                        toast.makeText(MainActivity.this, message.substring(10, message.length()-2), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+
+                String token = response.headers().get("Set-Cookie");
+                loginResponse loginResponse = response.body();
+                if (loginResponse.getTitle().equals("User login")){
+                    toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                    Splash.sp.edit().putString("Cookie",token).apply();
+
+                    Call<authMe> call2 = jsonApi.authenticate(Splash.sp.getString("Cookie", ""));
+
+                    call2.enqueue(new Callback<authMe>() {
+                        @Override
+                        public void onResponse(Call<authMe> call, Response<authMe> response) {
+                            if (response.isSuccessful()){
+                                if (response.body().getUser().isIs_admin()){
+                                    Toast.makeText(MainActivity.this, "Admin", Toast.LENGTH_SHORT).show();
+                                    Splash.sp.edit().putBoolean("Admin", true).apply();
+                                    redirectActivity(MainActivity.this, HomePageAdminActivity.class);
+                                }else {
+                                    Toast.makeText(getApplicationContext(), "User", Toast.LENGTH_SHORT).show();
+                                    Splash.sp.edit().putBoolean("Admin", false).apply();
+                                    redirectActivity(MainActivity.this, HomePageActivity.class);
+                                }
+                            }else {
+                                /* New Handler to start the Menu-Activity
+                                 * and close this Splash-Screen after some seconds.*/
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        /* Create an Intent that will start the Menu-Activity. */
+
+                                        Intent mainIntent = new Intent(MainActivity.this, MainActivity.class);
+                                        MainActivity.this.startActivity(mainIntent);
+                                    }
+                                }, SPLASH_DISPLAY_LENGTH);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<authMe> call, Throwable t) {
+                            Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Intent mainIntent = new Intent(MainActivity.this, MainActivity.class);
+                            MainActivity.this.startActivity(mainIntent);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<loginResponse> call, Throwable t) {
+                toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public boolean checkUserEmail(String userEmail){
@@ -178,15 +210,6 @@ public class MainActivity extends AppCompatActivity {
         }else {
             return false;
         }
-    }
-
-    private String  getCorrespondingPassword(String userEmail) {
-        for (userClass user: MainActivity.users){
-            if (user.getUserEmail().equals(userEmail)){
-                return user.getUserPassword();
-            }
-        }
-        return "no";
     }
 
     @Override

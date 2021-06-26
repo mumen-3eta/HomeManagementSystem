@@ -2,23 +2,91 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#03DAC5</item>
+        <item name="shade">#C9E2D5</item>
+        <item name="homePageMainColor">#E9E8EC</item>
+        <item name="nionBlue">#00FFE8</item>
+        <item name="green">#C9F8F8</item>
+        <item name="dark_green">#327B7B</item>
+        <item name="white">#FFFFFF</item>
+        <item name="processorGreen">#1F9D75</item>
+        <item name="black">#000000</item>
+        <item name="controllerBlue">#1F719D</item>
+        <item name="controllerPurple">#88229E</item>
+        <item name="eggWhite">#F8F8F8</item>
+        <item name="buttonBackground">#43B072</item>
+        <item name="buttonBackgroundPressed">#439072</item>
+        <item name="fieldBackground">#C9E2D5</item>
+        <item name="homepageToolbarIcons">#8E8E8D</item>
+        <item name="deleteRed">#FF514C</item>
+        <item name="yellowWarning">#FFE83F</item>
+        <item name="homeToolbarSelected">#454444</item>
+        <item name="drawer">#327B7B</item>
+        <item name="switchColor">#88229e</item>
+        <item name="red">#F12B2B</item>
+        <item name="turquoise">#00c5ff</item>
+        <item name="sun">#Ffbe34</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
     </style>
 
-    <style name="circleImageView" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
+    <!-- Dark application theme. -->
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorAccent">#47504F</item>
+        <item name="shade">#C9E2D5</item>
+        <item name="homePageMainColor">#202125</item>
+        <item name="nionBlue">#00FFE8</item>
+        <item name="green">#191C1C</item>
+        <item name="dark_green">#FFFFFF</item>
+        <item name="white">#000000</item>
+        <item name="processorGreen">#1F9D75</item>
+        <item name="black">#FFFFFF</item>
+        <item name="controllerBlue">#1F719D</item>
+        <item name="controllerPurple">#88229E</item>
+        <item name="eggWhite">#424242</item>
+        <item name="buttonBackground">#43B072</item>
+        <item name="buttonBackgroundPressed">#439072</item>
+        <item name="fieldBackground">#C9E2D5</item>
+        <item name="homepageToolbarIcons">#8E8E8D</item>
+        <item name="deleteRed">#FF514C</item>
+        <item name="yellowWarning">#FFE83F</item>
+        <item name="homeToolbarSelected">#FAFAFA</item>
+        <item name="drawer">#292929</item>
+        <item name="switchColor">#DE8FEF</item>
+        <item name="red">#F12B2B</item>
+        <item name="turquoise">#00c5ff</item>
+        <item name="sun">#Ffbe34</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">?attr/switchColor</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#f1f1f1
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">?attr/homeToolbarSelected</item>
+    </style>
+
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+    </style>
+
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+    </style>
 
 </resources>
