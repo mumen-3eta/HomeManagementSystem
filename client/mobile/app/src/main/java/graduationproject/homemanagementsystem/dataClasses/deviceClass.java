@@ -4,6 +4,7 @@ public class deviceClass {
     private String name;
     private String location;
     private String type;
+    private boolean status;
 
     public deviceClass() {
     }
@@ -37,4 +38,13 @@ public class deviceClass {
     public void setType(String type) {
         this.type = type;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
 }

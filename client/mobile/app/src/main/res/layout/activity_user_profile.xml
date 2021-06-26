@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/home_page_drawer_layout">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/homePageMainColor"
-        tools:context=".UserProfileActivity">
-
+    android:background="?attr/homePageMainColor"
+    tools:context=".UserProfileActivity">
 
         <include
             android:id="@+id/toolbarHomePage"
             layout="@layout/activity_home_page_toolbar" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:backgroundTintMode="src_atop"
+        android:elevation="20dp"
+        android:indeterminate="true"
+        android:indeterminateTint="?attr/dark_green"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarHomePage"
+        app:layout_constraintVertical_bias="0.9" />
+
         <FrameLayout
             android:id="@+id/frame"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarHomePage">
 
             <ImageView
                 android:id="@+id/profilePhoto"
-                android:layout_width="202dp"
-                android:layout_height="match_parent"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:onClick="onPickImage"
                 android:scaleType="centerCrop"
-                android:src="@drawable/profile_avater" />
+                android:src="@drawable/ic_profile" />
             <ImageView
                 android:id="@+id/circle_crop"
                 android:layout_width="200dp"
@@ -41,123 +51,289 @@
 
         </FrameLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/genral_background"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frame">
 
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginLeft="44dp"
-            android:layout_marginTop="44dp"
-            android:text="Email Address"
-            android:textColor="@android:color/white"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frame" />
+            android:background="@drawable/genral_background_dark"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="7dp">
 
-        <EditText
-            android:id="@+id/profileEmailTextField"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginLeft="44dp"
-            android:background="@drawable/inner_field_background"
-            android:paddingLeft="10dp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:text="Email"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            <TextView
+                android:id="@+id/basic_info_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/info_background"
+                android:onClick="showBasicInfo"
+                android:padding="5dp"
+                android:text="basic info"
+                android:textColor="?attr/dark_green"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginLeft="44dp"
-            android:layout_marginTop="44dp"
-            android:text="Name"
-            android:textColor="@android:color/white"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileEmailTextField" />
+            <TextView
+                android:id="@+id/login_info_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:onClick="showLoginInfo"
+                android:padding="5dp"
+                android:text="login info"
+                android:textColor="?attr/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/profileNameTextField"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginLeft="44dp"
-            android:background="@drawable/inner_field_background"
-            android:paddingLeft="10dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            <TextView
+                android:id="@+id/darkMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:onClick="showDarkMode"
+                android:padding="5dp"
+                android:text="dark mode"
+                android:textColor="?attr/white"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginLeft="44dp"
-            android:layout_marginTop="44dp"
-            android:text="Password"
-            android:textColor="@android:color/white"
-            android:textSize="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileNameTextField" />
+        <ViewFlipper
+            android:id="@+id/view_flipper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/profilePasswordTextField"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
-            android:layout_marginLeft="44dp"
-            android:background="@drawable/inner_field_background"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:paddingLeft="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <Button
-            android:id="@+id/updateProfileButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="61dp"
-            android:text="update"
-            android:elevation="5dp"
-            android:background="@drawable/inner_button_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profilePasswordTextField"
-            android:onClick="updateProfile"/>
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="10dp"
+                    android:text="First Name"
+                    android:textColor="?attr/dark_green"
+                    android:textSize="20dp" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="251dp"
-            android:layout_marginLeft="251dp"
-            app:layout_constraintStart_toStartOf="@+id/profilePasswordTextField"
-            app:layout_constraintTop_toBottomOf="@+id/textView13"
-            android:src="@drawable/ic_baseline_visibility_24"
-            android:onClick="viewPassword"/>
+                <EditText
+                    android:id="@+id/firstNameTextField"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:ems="10"
+                    android:hint="First Name"
+                    android:inputType="textPersonName"
+                    android:textColor="?attr/dark_green"
+                    android:textColorHint="?attr/dark_green"/>
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Last Name"
+                    android:textColor="?attr/dark_green"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/lastNameTextField"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:ems="10"
+                    android:hint="Last Name"
+                    android:inputType="textPersonName"
+                    android:textColor="?attr/dark_green"
+                    android:textColorHint="?attr/dark_green"/>
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="44dp"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Phone Number"
+                    android:textColor="?attr/dark_green"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/phoneNumberTextField"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:ems="10"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:textColor="?attr/dark_green"
+                    android:textColorHint="?attr/dark_green"/>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <RelativeLayout
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        tools:ignore="MissingConstraints"
-        android:layout_gravity="left"
-        >
-        <include
-            layout="@layout/home_page_drawer" />
+                <Button
+                    android:id="@+id/updateBasicInfoButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/button_status"
+                    android:elevation="15dp"
+                    android:onClick="updateBasicInfo"
+                    android:text="update"
+                    android:textColor="?attr/white"/>
+            </LinearLayout>
 
-    </RelativeLayout>
-</androidx.drawerlayout.widget.DrawerLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Username"
+                    android:textColor="?attr/dark_green"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/userNameTextField"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:ems="10"
+                    android:hint="Username"
+                    android:inputType="textPersonName"
+                    android:textColor="?attr/dark_green"
+                    android:textColorHint="?attr/dark_green"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Current Password"
+                    android:textColor="?attr/dark_green"
+                    android:textSize="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/NewPasswordTextField"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="44dp"
+                        android:ems="10"
+                        android:hint="New Password"
+                        android:inputType="textPassword"
+                        android:textColor="?attr/dark_green"
+                        android:textColorHint="?attr/dark_green"/>
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="-35dp"
+                        android:onClick="viewPassword"
+                        android:src="@drawable/ic_baseline_visibility_24"
+                        app:tint="?attr/dark_green" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="44dp"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="10dp"
+                    android:text="New Password"
+                    android:textColor="?attr/dark_green"
+                    android:textSize="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/ConfirmPasswordTextField"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="44dp"
+                        android:ems="10"
+                        android:hint="Confirm Password"
+                        android:inputType="textPassword"
+                        android:textColor="?attr/dark_green"
+                        android:textColorHint="?attr/dark_green"/>
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="-35dp"
+                        android:onClick="viewNewPassword"
+                        android:src="@drawable/ic_baseline_visibility_24"
+                        app:tint="?attr/dark_green" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/updateLoginInfoButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/button_status"
+                    android:elevation="5dp"
+                    android:onClick="updateBasicInfo"
+                    android:text="update" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginTop="10dp"
+                    android:text="use dark mode"
+                    android:textColor="?attr/dark_green"
+                    android:textSize="20dp"/>
+
+                <Switch
+                    android:id="@+id/darkModeSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="40dp"
+                    android:theme="@style/SCBSwitch"
+                    android:switchMinWidth="65dp" />
+
+            </LinearLayout>
+        </ViewFlipper>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

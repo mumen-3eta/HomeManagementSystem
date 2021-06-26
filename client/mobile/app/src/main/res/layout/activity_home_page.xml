@@ -1,63 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/home_page_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e9e8ec">
+    android:background="?attr/homePageMainColor"
+    tools:context=".HomePageActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
+        android:id="@+id/toolbarHomePage"
+        layout="@layout/activity_home_page_toolbar" />
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".HomePageActivity">
-
-        <include
-            android:id="@+id/toolbarHomePage"
-            layout="@layout/activity_home_page_toolbar" />
-
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarHomePage">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarHomePage">
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:weightSum="2"
+
+            >
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:orientation="horizontal"
-                android:weightSum="2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/processor_border"
+                android:elevation="5dp"
+                android:orientation="vertical"
+                android:onClick="viewProcessors">
 
-                >
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/processor_border"
-                    android:orientation="vertical"
-                    android:elevation="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    >
-                    <FrameLayout
-                        android:layout_gravity="start"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:onClick="goUserProfile"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:background="#1f9d75">
+                <FrameLayout
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="?attr/processorGreen">
 
                     <ImageView
-                        android:layout_gravity="center"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_gravity="center"
                         android:src="@drawable/ic_processor_logo" />
 
                     <ImageView
@@ -65,113 +60,123 @@
                         android:layout_height="64dp"
                         android:src="@drawable/ic_processor_photo_crop" />
 
-                    </FrameLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Number of Processors: "
-                            android:layout_marginTop="5dp"
-                            android:textSize="13dp"
-                            android:layout_marginLeft="15dp"
-                            android:textColor="@android:color/black"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="2"
-                            android:layout_marginTop="5dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="13dp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="10dp"
-                    android:layout_height="match_parent" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/controller_border"
-                    android:orientation="vertical"
-                    android:elevation="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    >
-                    <FrameLayout
-                        android:layout_gravity="start"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:onClick="goUserProfile"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:background="#1f719d">
+                        android:layout_marginTop="5dp"
+                        android:text="Number of Processors: "
+                        android:textColor="?attr/black"
+                        android:textSize="13dp" />
 
-                        <ImageView
-                            android:layout_gravity="center"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_devices_logo" />
-
-                        <ImageView
-                            android:layout_width="64dp"
-                            android:layout_height="64dp"
-                            android:src="@drawable/ic_processor_photo_crop" />
-
-                    </FrameLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/numberOfProcessors"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Number of Controllers: "
-                            android:layout_marginTop="5dp"
-                            android:textSize="13dp"
-                            android:layout_marginLeft="15dp"
-                            android:textColor="@android:color/black"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="12"
-                            android:layout_marginTop="5dp"
-                            android:textColor="@android:color/black"
-                            android:textSize="13dp"/>
-                    </LinearLayout>
-
+                        android:layout_marginTop="5dp"
+                        android:text="0"
+                        android:textColor="?attr/black"
+                        android:textSize="13dp" />
                 </LinearLayout>
 
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/listView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@null"
-                android:scrollbars="none"
-                android:scrollIndicators="bottom"
-                tools:listitem="@layout/device_item"/>
+            <LinearLayout
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/controller_border"
+                android:elevation="5dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="?attr/controllerBlue">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_devices_logo" />
+
+                    <ImageView
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:src="@drawable/ic_processor_photo_crop" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Number of Controllers: "
+                        android:textColor="?attr/black"
+                        android:textSize="13dp" />
+
+                    <TextView
+                        android:id="@+id/numberOfControllers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="0"
+                        android:textColor="?attr/black"
+                        android:textSize="13dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:scrollIndicators="none"
+            android:scrollbars="none"
+            tools:listitem="@layout/device_item" />
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+        android:id="@+id/HomepageProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:backgroundTintMode="src_atop"
+        android:elevation="20dp"
+        android:indeterminate="true"
+        android:indeterminateTint="?attr/dark_green"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarHomePage"
+        app:layout_constraintVertical_bias="0.9" />
 
-    <RelativeLayout
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        tools:ignore="MissingConstraints">
+</androidx.constraintlayout.widget.ConstraintLayout>
 
-        <include layout="@layout/home_page_drawer" />
-
-    </RelativeLayout>
-</androidx.drawerlayout.widget.DrawerLayout>

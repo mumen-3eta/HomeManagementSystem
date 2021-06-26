@@ -1,17 +1,19 @@
 package graduationproject.homemanagementsystem;
 
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
+import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -21,200 +23,289 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import graduationproject.homemanagementsystem.dataClasses.userClass;
+import graduationproject.homemanagementsystem.dataClasses.JsonApi;
+import graduationproject.homemanagementsystem.dataClasses.data;
+import graduationproject.homemanagementsystem.dataClasses.getProfile;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    private DrawerLayout homePageDrawer;
-    private LinearLayout drawer_profile;
-    private LinearLayout drawer_logout;
-    private Drawable drawable;
-    private TextView userNameBar;
-    private EditText profileEmailTextField;
-    private EditText profileNameTextField;
-    private EditText profilePasswordTextField;
+    private LinearLayout log_out;
     private ImageView profilePhoto;
     private ImageView pic;
     private String userEmail;
     private final int logoutTimeOut = 499;
     private boolean isVisible = true;
-    private userClass currentUser;
+    private boolean isVisibleNew = true;
+    private LinearLayout frame;
+    private Drawable homepage_selected;
+    private Drawable info_background;
+    private ViewFlipper view_flipper;
+    private TextView basic_info_text;
+    private TextView login_info_text;
+    private TextView NewPasswordTextField;
+    private TextView ConfirmPasswordTextField;
+    private Toast toast;
+    private EditText firstNameTextField;
+    private EditText lastNameTextField;
+    private EditText phoneNumberTextField;
+    private EditText userNameTextField;
+    private data userData;
+    private ProgressBar progressBar;
+    private Button updateBasicInfoButton;
+    private StorageReference storageReference;
+    private TextView darkMode;
+    private Switch darkModeSwitch;
+    private boolean dark;
+    private int darkGreen;
+    private int white;
+
+
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("https://home-msy.herokuapp.com/api/v1/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    JsonApi jsonApi = retrofit.create(JsonApi.class);
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Splash.sp.getString("Theme", "") != null || !Splash.sp.getString("Theme", "").equals("")){
+            if (Splash.sp.getString("Theme", "").equals("dark")){
+                setTheme(R.style.DarkTheme);
+                darkGreen = getResources().getColor(R.color.white);
+                white = getResources().getColor(R.color.black);
+                info_background = ContextCompat.getDrawable(getApplicationContext(), R.drawable.info_background_dark);
+                dark = true;
+            }else {
+                setTheme(R.style.AppTheme);
+                info_background = ContextCompat.getDrawable(getApplicationContext(), R.drawable.info_background);
+                darkGreen = getResources().getColor(R.color.darkGreen);
+                white = getResources().getColor(R.color.white);
+                dark = false;
+            }
+        }else {
+            setTheme(R.style.AppTheme);
+            info_background = ContextCompat.getDrawable(getApplicationContext(), R.drawable.info_background);
+            darkGreen = getResources().getColor(R.color.darkGreen);
+            white = getResources().getColor(R.color.white);
+            dark = false;
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        homePageDrawer = (DrawerLayout) findViewById(R.id.home_page_drawer_layout);
-        drawer_profile = (LinearLayout) findViewById(R.id.drawer_profile);
-        drawer_logout = (LinearLayout) findViewById(R.id.drawer_logout);
-        userNameBar = (TextView) findViewById(R.id.userNameBar);
-        profileEmailTextField = (EditText) findViewById(R.id.profileEmailTextField);
-        profileNameTextField = (EditText) findViewById(R.id.profileNameTextField);
-        profilePasswordTextField = (EditText) findViewById(R.id.profilePasswordTextField);
+
+        log_out = (LinearLayout) findViewById(R.id.log_out);
         profilePhoto = (ImageView) findViewById(R.id.profilePhoto);
         pic = (ImageView) findViewById(R.id.pic);
-
-        drawable = getResources().getDrawable(R.drawable.home_page_drawer_shoice);
-
-        drawer_profile.setBackground(drawable);
+        view_flipper = (ViewFlipper) findViewById(R.id.view_flipper);
+        basic_info_text = (TextView) findViewById(R.id.basic_info_text);
+        login_info_text = (TextView) findViewById(R.id.login_info_text);
+        NewPasswordTextField = (TextView) findViewById(R.id.NewPasswordTextField);
+        ConfirmPasswordTextField = (TextView) findViewById(R.id.ConfirmPasswordTextField);
+        homepage_selected = ContextCompat.getDrawable(getApplicationContext(), R.drawable.homepage_selected);
+        frame = (LinearLayout) findViewById(R.id.frame);
+        frame.setBackground(homepage_selected);
+        firstNameTextField = (EditText) findViewById(R.id.firstNameTextField);
+        lastNameTextField = (EditText) findViewById(R.id.lastNameTextField);
+        phoneNumberTextField = (EditText) findViewById(R.id.phoneNumberTextField);
+        userNameTextField = (EditText) findViewById(R.id.userNameTextField);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        updateBasicInfoButton = (Button) findViewById(R.id.updateBasicInfoButton);
+        darkMode = (TextView) findViewById(R.id.darkMode);
+        darkModeSwitch = (Switch) findViewById(R.id.darkModeSwitch);
+        darkModeSwitch.setChecked(dark);
+        storageReference = FirebaseStorage.getInstance().getReference("/User/Profile");
 
         Intent intent = getIntent();
-        try {
-            if (intent.getStringExtra("email").equals("")) {
+        if (intent.hasExtra("child")){
+            darkMode.setBackground(info_background);
+            darkMode.setTextColor(darkGreen);
+            basic_info_text.setBackground(null);
+            basic_info_text.setTextColor(white);
+            view_flipper.setDisplayedChild(intent.getIntExtra("child", -1));
+        }else {
+            darkMode.setBackground(null);
+            darkMode.setTextColor(white);
+            basic_info_text.setBackground(info_background);
+            basic_info_text.setTextColor(darkGreen);
+        }
+        login_info_text.setBackground(null);
+        login_info_text.setTextColor(white);
 
-            } else {
-                userEmail = intent.getStringExtra("email");
-                Log.e("Check user list", userEmail);
-                for (userClass user : MainActivity.users) {
-                    if (user.getUserEmail().equals(userEmail)) {
-                        currentUser = user;
-                        userNameBar.setText(user.getUserName());
-                        profileEmailTextField.setText(user.getUserEmail());
-                        profileNameTextField.setText(user.getUserName());
-                        profilePasswordTextField.setText(user.getUserPassword());
-                        if (user.getUserPhoto() != null) {
-                            pic.setImageBitmap(user.getUserPhoto());
-                            profilePhoto.setImageBitmap(user.getUserPhoto());
-                        }
+
+
+        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                try {
+                    if (isChecked){
+                        setTheme(R.style.DarkTheme);
+                        Splash.sp.edit().putString("Theme", "dark").apply();
+                    }else {
+                        setTheme(R.style.AppTheme);
+                        Splash.sp.edit().putString("Theme", "light").apply();
                     }
+                    Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+                    intent.putExtra("child",2);
+                    startActivity(intent);
+                }catch (Exception e) {
+                    Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+                    intent.putExtra("child",2);
+                    startActivity(intent);
+
                 }
+
             }
-        } catch (NullPointerException e) {
-            //do nothing
+        });
+
+        updateBasicInfoButton.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+        Call<getProfile> call = jsonApi.getProfileData(Splash.sp.getString("Cookie", ""));
+        call.enqueue(new Callback<getProfile>() {
+            @Override
+            public void onResponse(Call<getProfile> call, Response<getProfile> response) {
+                if (!response.isSuccessful()) {
+                    ResponseBody loginResponse = response.errorBody();
+                    try {
+                        String message = loginResponse.string();
+                        toast.makeText(UserProfileActivity.this, message.substring(10, message.length() - 2), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    progressBar.setVisibility(View.INVISIBLE);
+                    updateBasicInfoButton.setVisibility(View.VISIBLE);
+                    return;
+                }
+                userData = response.body().getProfileData().get(0);
+                userEmail = userData.getEmail().trim();
+                if (!(userData.getFirst_name() == null)) {
+                    firstNameTextField.setText(userData.getFirst_name().trim());
+                }
+                if (!(userData.getLast_name() == null)) {
+                    lastNameTextField.setText(userData.getLast_name().trim());
+                }
+                if (!(userData.getMobile() == null)) {
+                    phoneNumberTextField.setText(userData.getMobile().trim());
+                }
+                userNameTextField.setText(userData.getUser_name().trim());
+                progressBar.setVisibility(View.INVISIBLE);
+                updateBasicInfoButton.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onFailure(Call<getProfile> call, Throwable t) {
+                toast.makeText(UserProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
+                updateBasicInfoButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        if (Splash.currentUser.getImage() == null || Splash.currentUser.getImage().equals("")) {
+
+        } else {
+            Glide.with(getApplicationContext()).load(Splash.currentUser.getImage()).into(profilePhoto);
+            Glide.with(getApplicationContext()).load(Splash.currentUser.getImage()).into(pic);
         }
     }
 
-    public void ClickMenu(View view) {
-        openDrawer(homePageDrawer);
+    private void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+        intent.putExtra("child",2);
+        startActivity(intent);
+        finish();
     }
 
-    public void hideDrawer(View view) {
-        closeDrawer(homePageDrawer);
-    }
-
-    public void goHome(View view) {
-        redirectActivity(this, HomePageActivity.class, userEmail);
+    public void homePage(View view) {
+        frame.setBackground(null);
+        LinearLayout home_logo = (LinearLayout) findViewById(R.id.home_logo);
+        home_logo.setBackground(homepage_selected);
+        if (Splash.sp.getBoolean("Admin", false)){
+            redirectActivity(this, HomePageAdminActivity.class);
+        }else {
+            redirectActivity(this, HomePageActivity.class);
+        }
     }
 
     public void goAddNewDevice(View view) {
-        redirectActivity(this, AddNewDeviceActivity.class, userEmail);
+        frame.setBackground(null);
+        LinearLayout add_device = (LinearLayout) findViewById(R.id.add_device);
+        add_device.setBackground(homepage_selected);
+        redirectActivity(this, AddNewDeviceActivity.class);
     }
 
     public void goUserProfile(View view) {
-        closeDrawer(homePageDrawer);
     }
 
     public void viewPassword(View view) {
         if (isVisible) {
-            profilePasswordTextField.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            NewPasswordTextField.setTransformationMethod(PasswordTransformationMethod.getInstance());
             isVisible = false;
         } else {
-            profilePasswordTextField.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            NewPasswordTextField.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             isVisible = true;
         }
     }
 
-    public void updateProfile(View view) {
-        boolean isChangedEmail = !(profileEmailTextField.getText().toString().trim().equals(currentUser.getUserEmail()));
-        boolean isChangedName = !(profileNameTextField.getText().toString().trim().equals(currentUser.getUserName()));
-        boolean isChangedPassword = !(profilePasswordTextField.getText().toString().trim().equals(currentUser.getUserPassword()));
-        Toast toast = new Toast(this);
-        if (!isChangedEmail && !isChangedName && !isChangedPassword) {
-            toast.makeText(this, "no changes to profile", Toast.LENGTH_SHORT).show();
-            redirectActivity(this, HomePageActivity.class, currentUser.getUserEmail());
+    public void viewNewPassword(View view) {
+        if (isVisibleNew) {
+            ConfirmPasswordTextField.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            isVisibleNew = false;
         } else {
-            boolean validUserEmail = SignUpActivity.checkUserEmail(profileEmailTextField.getText().toString());
-            boolean isUsedEmail = isUsedEmail(profileEmailTextField.getText().toString().trim(), currentUser.getUserEmail());
-            boolean validUserName = SignUpActivity.checkUserName(profileNameTextField.getText().toString().trim());
-            String passwordToast = SignUpActivity.checkUserPassword(profilePasswordTextField.getText().toString());
-            if (validUserEmail && !isUsedEmail && validUserName && passwordToast.equals("valid")) {
-                currentUser.setUserEmail(profileEmailTextField.getText().toString().trim());
-                currentUser.setUserName(profileNameTextField.getText().toString().trim());
-                currentUser.setUserPassword(profilePasswordTextField.getText().toString());
-                toast.makeText(this, "profile updated successfully", Toast.LENGTH_SHORT).show();
-                redirectActivity(this, HomePageActivity.class, currentUser.getUserEmail());
-            } else if (!validUserEmail) {
-                toast.makeText(this, "new email is not valid", Toast.LENGTH_SHORT).show();
-            } else if (isUsedEmail) {
-                toast.makeText(this, "new email already exist", Toast.LENGTH_SHORT).show();
-            } else if (!validUserName) {
-                toast.makeText(this, "new name is not valid", Toast.LENGTH_SHORT).show();
-            } else if (!passwordToast.equals("valid")) {
-                toast.makeText(this, passwordToast, Toast.LENGTH_SHORT).show();
-            } else {
-                toast.makeText(this, "something went wrong, please try again", Toast.LENGTH_SHORT).show();
-            }
+            ConfirmPasswordTextField.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            isVisibleNew = true;
         }
     }
 
     @SuppressLint("ResourceAsColor")
     public void logoutAction(View view) {
-        drawer_profile.setBackground(new Drawable() {
-            @Override
-            public void draw(@NonNull Canvas canvas) {
-
-            }
-
-            @Override
-            public void setAlpha(int i) {
-
-            }
-
-            @Override
-            public void setColorFilter(@Nullable ColorFilter colorFilter) {
-
-            }
-
-            @SuppressLint("WrongConstant")
-            @Override
-            public int getOpacity() {
-                return 0;
-            }
-        });
-        drawer_logout.setBackground(drawable);
+        frame.setBackground(null);
+        log_out.setBackground(homepage_selected);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                MainActivity.sp.edit().putBoolean("logged",false).apply();
+                Splash.sp.edit().putString("Cookie", "").apply();
                 Activity UserProfileActivity = UserProfileActivity.this;
                 redirectActivity(UserProfileActivity, MainActivity.class);
             }
         }, logoutTimeOut);
-
-    }
-
-    public static void openDrawer(DrawerLayout drawerLayout) {
-        drawerLayout.openDrawer(GravityCompat.START);
-    }
-
-    public static void closeDrawer(DrawerLayout drawerLayout) {
-        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     public static void redirectActivity(Activity activity, Class aClass) {
         Intent intent = new Intent(activity, aClass);
-        activity.startActivity(intent);
-    }
-
-    public static void redirectActivity(Activity activity, Class aClass, String userEmail) {
-        Intent intent = new Intent(activity, aClass);
-        intent.putExtra("email", userEmail);
         activity.startActivity(intent);
     }
 
@@ -223,6 +314,8 @@ public class UserProfileActivity extends AppCompatActivity {
                 .setActivityTitle("Crop Photo")
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(1, 1)
+                .setFixAspectRatio(true)
+                .setAutoZoomEnabled(true)
                 .start(this);
     }
 
@@ -248,38 +341,236 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            Uri resultUri = result.getUri();
-            // Load the image located at photoUri into selectedImage
-            Bitmap selectedImage = loadFromUri(resultUri);
-            // Load the selected image into a preview\
-            profilePhoto.setImageBitmap(selectedImage);
-            pic.setImageBitmap(selectedImage);
-            currentUser.setUserPhoto(selectedImage);
-        }
-    }
-
-    public final static String bitmapToString(Bitmap in) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        in.compress(Bitmap.CompressFormat.PNG, 100, bytes);
-        return Base64.encodeToString(bytes.toByteArray(), Base64.DEFAULT);
-    }
-
-    private boolean isUsedEmail(String newEmail, String userEmail) {
-        if (!newEmail.equals(userEmail)) {
-            for (userClass user : MainActivity.users) {
-                if (user.getUserEmail().equals(newEmail)) {
-                    return true;
-                }
+        try {
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                Uri resultUri = result.getUri();
+                uploadProfilePhoto(resultUri);
+                // Load the image located at photoUri into selectedImage
+                Bitmap selectedImage = loadFromUri(resultUri);
+                // Load the selected image into a preview\
+                profilePhoto.setImageBitmap(selectedImage);
+                pic.setImageBitmap(selectedImage);
             }
+        } catch (Exception e) {
+            return;
         }
-        return false;
+    }
+
+
+    private void uploadProfilePhoto(Uri resultUri) {
+
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setTitle("Uploading Photo...");
+        pd.show();
+
+        // Create a reference to 'images/mountains.jpg'
+        StorageReference mountainImagesRef = storageReference.child(userEmail + ".jpg");
+        mountainImagesRef.putFile(resultUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        pd.dismiss();
+                        toast.makeText(UserProfileActivity.this, "Photo uploaded", Toast.LENGTH_LONG).show();
+                        Task<Uri> firebaseUri = taskSnapshot.getStorage().getDownloadUrl();
+                        firebaseUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+                                String url = uri.toString();
+                                updatePhotoUrl(url);
+                                Log.e("url", url + "   " + url.length());
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        pd.dismiss();
+                        toast.makeText(UserProfileActivity.this, "Failed to upload", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                        pd.setMessage("Progress " + (int) progressPercent + "%");
+                    }
+                });
+
+    }
+
+    private void updatePhotoUrl(String url) {
+        data userData = new data();
+        userData.setImage(url);
+        Call<getProfile> call = jsonApi.updateProfile(Splash.sp.getString("Cookie", ""), userData);
+        call.enqueue(new Callback<getProfile>() {
+            @Override
+            public void onResponse(Call<getProfile> call, Response<getProfile> response) {
+                if (!response.isSuccessful()) {
+                    ResponseBody loginResponse = response.errorBody();
+                    try {
+                        String message = loginResponse.string();
+                        Log.e("e", message);
+                        toast.makeText(UserProfileActivity.this, message.substring(10, message.length() - 2), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    progressBar.setVisibility(View.INVISIBLE);
+                    updateBasicInfoButton.setVisibility(View.VISIBLE);
+                    return;
+                }
+                getProfile updateResponse = response.body();
+                if (updateResponse.getDetail().equals("Data Successfully updated")) {
+                    toast.makeText(UserProfileActivity.this, "Profile Successfully updated", Toast.LENGTH_SHORT).show();
+                    Splash.currentUser = updateResponse.getProfileData().get(0);
+                }
+                progressBar.setVisibility(View.INVISIBLE);
+                updateBasicInfoButton.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<getProfile> call, Throwable t) {
+                toast.makeText(UserProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("t", t.getMessage());
+                progressBar.setVisibility(View.INVISIBLE);
+                updateBasicInfoButton.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
         //do nothing
     }
+
+
+
+    public void showLoginInfo(View view) {
+        if (view_flipper.getDisplayedChild() == 1) {
+            return;
+        }
+        login_info_text.setBackground(info_background);
+        login_info_text.setTextColor(darkGreen);
+        basic_info_text.setBackground(null);
+        basic_info_text.setTextColor(white);
+        darkMode.setBackground(null);
+        darkMode.setTextColor(white);
+        if (view_flipper.getDisplayedChild() == 0) {
+            view_flipper.setInAnimation(this, R.anim.slide_in_right);
+            view_flipper.setOutAnimation(this, R.anim.slide_out_left);
+        }else {
+            view_flipper.setInAnimation(this, android.R.anim.slide_in_left);
+            view_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
+        }
+        view_flipper.setDisplayedChild(1);
+    }
+
+
+
+    public void showBasicInfo(View view) {
+        if (view_flipper.getDisplayedChild() == 0) {
+            return;
+        }
+        basic_info_text.setBackground(info_background);
+        basic_info_text.setTextColor(darkGreen);
+        login_info_text.setBackground(null);
+        login_info_text.setTextColor(white);
+        darkMode.setBackground(null);
+        darkMode.setTextColor(white);
+        view_flipper.setInAnimation(this, android.R.anim.slide_in_left);
+        view_flipper.setOutAnimation(this, android.R.anim.slide_out_right);
+        view_flipper.setDisplayedChild(0);
+    }
+
+
+
+    public void showDarkMode(View view) {
+        if (view_flipper.getDisplayedChild() == 2) {
+            return;
+        }
+        darkMode.setBackground(info_background);
+        darkMode.setTextColor(darkGreen);
+        basic_info_text.setBackground(null);
+        basic_info_text.setTextColor(white);
+        login_info_text.setBackground(null);
+        login_info_text.setTextColor(white);
+        view_flipper.setInAnimation(this, R.anim.slide_in_right);
+        view_flipper.setOutAnimation(this, R.anim.slide_out_left);
+        view_flipper.setDisplayedChild(2);
+    }
+
+    public void updateBasicInfo(View view) {
+
+        final data updateData = new data();
+        if (!firstNameTextField.getText().toString().trim().equals("")) {
+            updateData.setFirstName(firstNameTextField.getText().toString().trim());
+        }
+        if (!lastNameTextField.getText().toString().trim().equals("")) {
+            updateData.setLastName(lastNameTextField.getText().toString().trim());
+        }
+        if (!phoneNumberTextField.getText().toString().trim().equals("")) {
+            updateData.setMobile(phoneNumberTextField.getText().toString().trim());
+        }
+        if (!userData.getUser_name().equals(userNameTextField.getText().toString().trim())) {
+            updateData.setUserName(userNameTextField.getText().toString().trim());
+        }
+        if (checkNewPassword()) {
+            updateData.setPassword(NewPasswordTextField.getText().toString());
+        } else {
+
+        }
+
+        updateBasicInfoButton.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        Call<getProfile> call = jsonApi.updateProfile(Splash.sp.getString("Cookie", ""), updateData);
+        call.enqueue(new Callback<getProfile>() {
+            @Override
+            public void onResponse(Call<getProfile> call, Response<getProfile> response) {
+                if (!response.isSuccessful()) {
+                    ResponseBody loginResponse = response.errorBody();
+                    try {
+                        String message = loginResponse.string();
+                        toast.makeText(UserProfileActivity.this, message.substring(10, message.length() - 2), Toast.LENGTH_SHORT).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    progressBar.setVisibility(View.INVISIBLE);
+                    updateBasicInfoButton.setVisibility(View.VISIBLE);
+                    return;
+                }
+                getProfile updateResponse = response.body();
+                if (updateResponse.getDetail().equals("Data Successfully updated")) {
+                    toast.makeText(UserProfileActivity.this, "Profile Successfully updated", Toast.LENGTH_SHORT).show();
+                    Splash.currentUser = updateResponse.getProfileData().get(0);
+                }
+                progressBar.setVisibility(View.INVISIBLE);
+                updateBasicInfoButton.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(Call<getProfile> call, Throwable t) {
+                toast.makeText(UserProfileActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
+                updateBasicInfoButton.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private boolean checkNewPassword() {
+        if (NewPasswordTextField.getText().toString().isEmpty() && ConfirmPasswordTextField.getText().toString().isEmpty()) {
+            return false;
+        }
+
+        if (NewPasswordTextField.getText().toString().equals(ConfirmPasswordTextField.getText().toString())) {
+            return true;
+        } else {
+            toast.makeText(UserProfileActivity.this, "Passwords Do Not Match", Toast.LENGTH_SHORT);
+            return false;
+        }
+    }
+
+
 }

@@ -2,62 +2,101 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbarHomePage"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/toolbar_background"
+    android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="12dp"
-    android:gravity="center_vertical"
+    android:elevation="10dp">
 
-    android:id="@+id/toolbarHomePage"
-    android:background="@drawable/toolbar_background">
-
-
-    <ImageView
-        android:id="@+id/imageView2"
+    <LinearLayout
+        android:id="@+id/home_logo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="ClickMenu"
-        android:src="@drawable/ic_drawer_handel"
+        android:layout_height="match_parent"
+        android:onClick="homePage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/frame"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintEnd_toStartOf="@+id/userNameBar"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="goUserProfile">
+        android:padding="5dp">
 
         <ImageView
-            android:id="@+id/pic"
-            android:scaleType="fitCenter"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_profile" />
+            android:id="@+id/home_logo_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/homepage_icon" />
+    </LinearLayout>
 
-        <ImageView
-            android:id="@+id/circle_crop"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_photo_crop" />
-
-
-
-    </FrameLayout>
-
-
-
-    <TextView
-        android:id="@+id/userNameBar"
+    <LinearLayout
+        android:id="@+id/add_device"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="user name"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="match_parent"
+        android:onClick="goAddNewDevice"
+        app:layout_constraintEnd_toStartOf="@+id/frame"
+        app:layout_constraintStart_toEndOf="@+id/home_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/add_device_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_device" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/frame"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:onClick="goUserProfile"
+        app:layout_constraintEnd_toStartOf="@+id/log_out"
+        app:layout_constraintStart_toEndOf="@id/add_device"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:onClick="goUserProfile">
+
+            <ImageView
+                android:id="@+id/pic"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_profile" />
+
+            <ImageView
+                android:id="@+id/circle_crop"
+                android:layout_width="42dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_photo_crop" />
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/log_out"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="goUserProfile"/>
+        android:padding="5dp"
+        android:onClick="logoutAction">
+        <ImageView
+            android:id="@+id/log_out_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_exit"/>
+
+    </LinearLayout>
+
+
+
+
+
 
 
 

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="380dp"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:background="?attr/eggWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_warning"/>
+
+        <TextView
+            android:id="@+id/txt_dia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:text="Confirm Removing Processor..."
+            android:textColor="?attr/black"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginVertical="30dp"
+        android:textColor="?attr/black"
+        android:text="Removing this processor will cause all it's controllers to be removed"/>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:orientation="horizontal"
+        android:layout_marginRight="30dp">
+
+
+        <Button
+            android:id="@+id/btn_no"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="?attr/eggWhite"
+            android:text="Cancel"
+            android:textColor="?attr/black"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:background="?attr/eggWhite"
+            android:text="Remove"
+            android:textColor="?attr/black"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

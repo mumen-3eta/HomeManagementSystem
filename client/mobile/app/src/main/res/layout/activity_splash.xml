@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     tools:context=".Splash"
-    android:background="@color/green">
+    android:background="?attr/green">
 
 
     <ImageView
@@ -13,7 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        android:src="@drawable/component" />
+        android:src="@drawable/ic_splash_logo" />
 
 
 </LinearLayout>

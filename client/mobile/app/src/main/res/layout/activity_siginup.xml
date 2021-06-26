@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorAccent"
+        android:background="?attr/homePageMainColor"
         tools:context=".SignUpActivity">
 
 
@@ -19,10 +19,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="30dp"
+            android:background="@drawable/genral_background"
+            android:elevation="10dp"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,11 +31,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/genral_background"
-            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView2"
@@ -43,7 +39,7 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="Sign Up"
-                android:textColor="@color/dark_green"
+                android:textColor="?attr/dark_green"
                 android:textSize="50dp" />
 
 
@@ -54,10 +50,10 @@
                 android:layout_margin="20dp"
                 android:ems="10"
                 android:gravity="center"
-                android:textColor="@color/dark_green"
-                android:textColorHint="@color/dark_green"
-                android:hint="Enter Your Name"
-                android:inputType="textPersonName" />
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:textColor="?attr/dark_green"
+                android:textColorHint="?attr/dark_green"/>
 
             <EditText
                 android:id="@+id/userEmailTextField"
@@ -66,10 +62,10 @@
                 android:layout_margin="20dp"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Enter Your Email"
-                android:textColor="@color/dark_green"
-                android:textColorHint="@color/dark_green"
-                android:inputType="textEmailAddress" />
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:textColor="?attr/dark_green"
+                android:textColorHint="?attr/dark_green"/>
 
 
             <EditText
@@ -79,10 +75,9 @@
                 android:layout_margin="20dp"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Enter Your Password"
-                android:textColor="@color/dark_green"
-                android:textColorHint="@color/dark_green"
-                android:inputType="textPassword" />
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColorHint="?attr/dark_green"/>
 
             <EditText
                 android:id="@+id/confirmPasswordTextField"
@@ -91,27 +86,25 @@
                 android:layout_margin="20dp"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Confirm Your Password"
-                android:textColor="@color/dark_green"
-                android:textColorHint="@color/dark_green"
-                android:inputType="textPassword" />
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:textColor="?attr/dark_green"
+                android:textColorHint="?attr/dark_green"/>
 
             <Button
                 android:id="@+id/signUpButton"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/button_status"
+                android:elevation="5dp"
                 android:onClick="signUpAction"
                 android:padding="10dp"
                 android:text="Sign Up"
-                android:elevation="5dp"
-                android:layout_gravity="center"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            </LinearLayout>
-
+                android:textColor="?attr/white"
+                android:textSize="18dp" />
         </LinearLayout>
 
 

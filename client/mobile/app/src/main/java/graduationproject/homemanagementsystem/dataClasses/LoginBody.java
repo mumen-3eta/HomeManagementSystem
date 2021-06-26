@@ -1,6 +1,6 @@
 package graduationproject.homemanagementsystem.dataClasses;
 
-public class LoginBody {
+public class loginBody {
     private String email;
     private String userName;
     private String password;
