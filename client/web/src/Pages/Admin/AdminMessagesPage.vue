@@ -32,7 +32,10 @@
           <div slot="table-actions" class="btn_searchScan"></div>
           <template slot="table-row" slot-scope="props">
             <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-              <button class="btn_deleted"><i class="fas fa-trash-alt"></i> Delete</button>
+              <button class="btn_deleted"><i
+                  class="fas fa-trash-alt"></i>
+                Delete
+              </button>
               <button class="btn_read">
                 <div class="btn_Status">
                   <div class="form-check form-switch">
@@ -49,9 +52,6 @@
               </span>
           </template>
         </vue-good-table>
-      </div>
-      <div v-if="rows.length === 0" class="project my-3 mx-auto p-2 position-relative">
-        <p>No Messages</p>
       </div>
     </div>
   </div>
@@ -93,14 +93,21 @@ export default {
           sortable: false,
         },
       ],
-      rows: this.$store.getters.allMessages,
+      rows: this.$store.getters.allMessages ? this.$store.getters.allMessages : [],
     }
   },
   created() {
     this.socket = io('http://localhost:3001');
   },
+  methods: {
+    DeleteMessage(id) {
+      console.log(id)
+    }
+  },
   mounted() {
-    // reserve event that sent from server
+    /***
+     * // reserve event that sent from server
+     */
     this.socket.on("all_messages_server", (data) => {
       /*
       * create route in api (create/message)
@@ -114,7 +121,7 @@ export default {
       * */
       this.NowMessages.push(data);//api and database use (convert NowMessages to api)
       this.$store.dispatch('allMessages', this.NowMessages);
-      this.rows = this.$store.getters.allMessages;
+      this.rows = this.$store.getters.allMessages ? this.$store.getters.allMessages : [];
     });
   },
   computed: {

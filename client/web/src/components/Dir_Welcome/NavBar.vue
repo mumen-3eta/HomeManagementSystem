@@ -100,29 +100,55 @@ export default {
   name: "Nav-Bar",
   methods: {
     async handleClick() {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      await axios.put('/api/v1/users/logout');
-      localStorage.removeItem('csrfToken');
-      await this.$store.dispatch('user', null);
-      await this.$store.dispatch('TokenUser', null);
-      await this.$store.dispatch('deviceInfoAdd', null);
-      await this.$store.dispatch('processorId', null);
-      await this.$store.dispatch('controllerId', null);
-      await this.$store.dispatch('userProcessorIds', null);
-      await this.$store.dispatch('userAllProcessor', null);
-      await this.$store.dispatch('NewTypeController', null);
-      await this.$store.dispatch('allTypeController', null);
-      await this.$store.dispatch('NewLocationController', null);
-      await this.$store.dispatch('allLocationController', null);
-      await this.$store.dispatch('TypeControllerData', null);
-      await this.$store.dispatch('LocationControllerData', null);
-      await this.$store.dispatch('NewControllerData', null);
+      await axios.get('/api/v1/users/logout').then(async () => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'logout Successfully',
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        await this.$store.dispatch('user', null);
+        await this.$store.dispatch('TokenUser', null);
+        await this.$store.dispatch('userProfile', null);
+        await this.$store.dispatch('deviceInfoAdd', null);
+        await this.$store.dispatch('processorId', null);
+        await this.$store.dispatch('controllerId', null);
+        await this.$store.dispatch('userProcessorIds', null);
+        await this.$store.dispatch('userAllProcessor', null);
+        await this.$store.dispatch('NewTypeController', null);
+        await this.$store.dispatch('allTypeController', null);
+        await this.$store.dispatch('NewLocationController', null);
+        await this.$store.dispatch('allLocationController', null);
+        await this.$store.dispatch('TypeControllerData', null);
+        await this.$store.dispatch('LocationControllerData', null);
+        await this.$store.dispatch('NewControllerData', null);
+        await this.$router.push('/v2/login');
+      }).catch(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'logout Faild',
+          toast: true,
+          showConfirmButton: false,
+          timer: 1500
+        })
+        console.log("logout Faild")
+      });
 
-      await this.$router.push('/v2/login');
-    }
+    },
   },
   computed: {
     ...mapGetters(['user', 'deviceInfoAdd', 'TokenUser'])
+  },
+  async beforeCreate() {
+    await axios.get('/api/v1/users/me').then(async ({data: {user: response}}) => {
+      await this.$store.dispatch('TokenUser', response);
+    }).catch(async () => {
+      console.log("unauthenticated")
+      await this.$store.dispatch('TokenUser', null);
+    });
   },
   mounted() {
     // menu open and close

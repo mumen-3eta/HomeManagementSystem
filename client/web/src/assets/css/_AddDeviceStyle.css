@@ -13,9 +13,9 @@
     flex-direction: column;
     padding: 1rem 2rem;
     font-family: Ubuntu, Arial, Helvetica, sans-serif;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
-    justify-items: start;
+    justify-items: center;
     justify-self: center;
     transition: all 0.3s ease;
 }

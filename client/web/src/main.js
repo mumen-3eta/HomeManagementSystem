@@ -22,6 +22,7 @@ Vue.use(VueGoodTablePlugin);
 Vue.use(vModal)
 Vue.use(VueQrcodeReader)
 Vue.use(Vuelidate)
+Vue.use(require('vue-moment'));
 
 // Initialize Firebase
 firebase.initializeApp({

@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router'
 import WelcomePage from "@/Pages/Site/WelcomePage";
-import store from "@/vuex";
 import PageNotFound from "@/Pages/ErrorsPages/PageNotFound";
 import newLoginPage from "@/Pages/Site/newLoginPage";
 import newRegisterPage from "@/Pages/Site/newRegisterPage";
@@ -17,6 +16,10 @@ import AddDevice from "@/components/Dir_Main/AddDevice";
 import AddController from "@/components/Dir_Main/AddController";
 import AllController from "@/components/Dir_Main/AllController";
 import ShowControllerInfo from "@/components/Dir_Main/ShowControllerInfo";
+import axios from "axios";
+import store from "@/vuex";
+import AllControllerConnection from "@/components/Dir_Main/AllControllerConnection";
+import AdminAllUsersPage from "@/Pages/Admin/AdminAllUsersPage";
 
 Vue.use(Router)
 
@@ -30,12 +33,13 @@ export default new Router({
             component: newLoginPage,
             // already be login
             beforeEnter: (to, from, next) => {
-                if (store.getters['TokenUser']) {
+                axios.get('/api/v1/users/me').then(() => {
                     return next({
                         name: "WelcomePage"
                     })
-                }
-                next()
+                }).catch(() => {
+                    next()
+                });
             }
         },
         {
@@ -44,46 +48,48 @@ export default new Router({
             component: newRegisterPage,
             // already be login
             beforeEnter: (to, from, next) => {
-                if (store.getters['TokenUser']) {
+                axios.get('/api/v1/users/me').then(() => {
                     return next({
                         name: "WelcomePage"
                     })
-                }
-                next()
+                }).catch(() => {
+                    next()
+                });
             }
         },
         {
             path: '/v2/main/home',
-            name: "MainLayout",
             component: MainLayout,
             children: [
                 {
-                    path: '/',
+                    path: '',
                     name: "DashboardMain",
                     component: DashboardMain,
                     // must be login
-                    beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
-                            return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        next()
-                    }
+                    // beforeEnter: (to, from, next) => {
+                    //     axios.get('/api/v1/users/me').then(() => {
+                    //         next()
+                    //     }).catch(() => {
+                    //         return next({
+                    //             name: "newRegisterPage"
+                    //         })
+                    //     });
+                    // }
                 },
                 {
                     path: '/v2/main/profile',
                     name: "ProfileUserMain",
                     component: ProfileUserMain,
                     // must be login
-                    beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
-                            return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        next()
-                    }
+                    // beforeEnter: (to, from, next) => {
+                    //     axios.get('/api/v1/users/me').then(() => {
+                    //         next()
+                    //     }).catch(() => {
+                    //         return next({
+                    //             name: "newRegisterPage"
+                    //         })
+                    //     });
+                    // }
                 },
                 {
                     path: '/v2/main/device/add',
@@ -91,17 +97,24 @@ export default new Router({
                     component: AddDevice,
                     // must be login
                     beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
+                        if (store.getters['user'].is_admin) {
                             return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        if (store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
+                                path: '/v2/main/home'
                             })
                         }
                         next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
                     }
                 },
                 {
@@ -110,37 +123,53 @@ export default new Router({
                     component: AddController,
                     // must be login
                     beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
+                        if (store.getters['user'].is_admin) {
                             return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        if (store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
+                                path: '/v2/main/home'
                             })
                         }
                         next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
                     }
                 },
                 {
-                    path: '/v2/main/device/all/controller/:processor_id',
+                    path: '/v2/main/device/all/controller/:connection_id',
                     name: "AllController",
                     component: AllController,
                     // must be login
                     beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
+                        if (store.getters['user'].is_admin) {
                             return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        if (store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
+                                path: '/v2/main/home'
                             })
                         }
                         next()
                     }
+                    //     axios.get('/api/v1/users/me').then(response => {
+                    //         if (response.data.user.is_admin) {
+                    //             return next({
+                    //                 path: '/v2/main/home'
+                    //             })
+                    //         }
+                    //         next()
+                    //     }).catch(() => {
+                    //
+                    //         return next({
+                    //             name: "newRegisterPage"
+                    //         })
+                    //     });
+                    // }
                 },
                 {
                     path: '/v2/main/device/processor/:processor_id/controller/:controller_id',
@@ -148,14 +177,35 @@ export default new Router({
                     component: ShowControllerInfo,
                     // must be login
                     beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
+                        if (store.getters['user'].is_admin) {
                             return next({
-                                name: "newRegisterPage"
+                                path: '/v2/main/home'
                             })
                         }
-                        if (store.getters['user'].basicInfo.isAdmin) {
+                        next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
+                    }
+                },
+                {
+                    path: '/v2/main/controller/connected',
+                    name: "AllControllerConnection",
+                    component: AllControllerConnection,
+                    // must be login
+                    beforeEnter: (to, from, next) => {
+                        if (store.getters['user'].is_admin) {
                             return next({
-                                name: "MainHomePage"
+                                path: '/v2/main/home'
                             })
                         }
                         next()
@@ -169,17 +219,24 @@ export default new Router({
                     component: AdminCreateProcessorPage,
                     // must be login
                     beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
+                        if (!store.getters['user'].is_admin) {
                             return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
+                                path: '/v2/main/home'
                             })
                         }
                         next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (!response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
                     }
                 },
                 {
@@ -188,17 +245,24 @@ export default new Router({
                     component: AdminCreateControllerPage,
                     // must be login
                     beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
+                        if (!store.getters['user'].is_admin) {
                             return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
+                                path: '/v2/main/home'
                             })
                         }
                         next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (!response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
                     }
                 },
                 {
@@ -207,17 +271,24 @@ export default new Router({
                     component: AdminAddTypeControllerPage,
                     // must be login
                     beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
+                        if (!store.getters['user'].is_admin) {
                             return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
+                                path: '/v2/main/home'
                             })
                         }
                         next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (!response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
                     }
                 },
                 {
@@ -226,17 +297,24 @@ export default new Router({
                     component: AdminAddLocationControllerPage,
                     // must be login
                     beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
+                        if (!store.getters['user'].is_admin) {
                             return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
+                                path: '/v2/main/home'
                             })
                         }
                         next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (!response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
                     }
                 },
                 {
@@ -245,28 +323,65 @@ export default new Router({
                     component: AdminMessagesPage,
                     // must be login
                     beforeEnter: (to, from, next) => {
-                        if (!store.getters['TokenUser']) {
+                        if (!store.getters['user'].is_admin) {
                             return next({
-                                name: "newRegisterPage"
-                            })
-                        }
-                        if (!store.getters['user'].basicInfo.isAdmin) {
-                            return next({
-                                name: "MainHomePage"
+                                path: '/v2/main/home'
                             })
                         }
                         next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (!response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
+                    }
+                },
+                {
+                    path: '/v2/main/admin/all/Users',
+                    name: "AdminAllUsersPage",
+                    component: AdminAllUsersPage,
+                    // must be login
+                    beforeEnter: (to, from, next) => {
+                        if (!store.getters['user'].is_admin) {
+                            return next({
+                                path: '/v2/main/home'
+                            })
+                        }
+                        next()
+                        // axios.get('/api/v1/users/me').then(response => {
+                        //     if (!response.data.user.is_admin) {
+                        //         return next({
+                        //             path: '/v2/main/home'
+                        //         })
+                        //     }
+                        //     next()
+                        // }).catch(() => {
+                        //     return next({
+                        //         name: "newRegisterPage"
+                        //     })
+                        // });
                     }
                 },
             ],
             // must be login
             beforeEnter: (to, from, next) => {
-                if (!store.getters['TokenUser']) {
+                axios.get('/api/v1/users/me').then(() => {
+                    next()
+                }).catch(async () => {
+                    await this.$store.dispatch('user', null);
+                    await this.$store.dispatch('TokenUser', null);
+                    await this.$store.dispatch('userProfile', null);
                     return next({
                         name: "newRegisterPage"
                     })
-                }
-                next()
+                });
             }
         },
 

@@ -64,8 +64,13 @@
       <div class="container__AddProcessorID">
         <h2>{{ !edited ? "Add New Location for Controller" : `Edit Location name: "${EditInfo.Name_Location}"` }}</h2>
         <div class="input-group__AddProcessorID">
-          <label for="input_ProcessorID">Location Name</label>
-          <input id="input_ProcessorID" v-model.trim="NameLocationController" required type="text">
+          <label v-if="!edited" for="input_ProcessorID_Add">Location Name</label>
+          <input v-if="!edited" id="input_ProcessorID_Add" v-model.trim="NameLocationController"
+                 required type="text" @keypress.enter="addLocationController"
+                 @keypress.esc="CloseLocationControllerModal">
+          <label v-if="edited" for="input_ProcessorID_Edit">Location Name</label>
+          <input v-if="edited" id="input_ProcessorID_Edit" v-model.trim="NameLocationController"
+                 required type="text" @keypress.enter="SaveChangeLocation" @keypress.esc="CloseLocationControllerModal">
           <p v-if="errorNameLocationController" class="error_style pb-2">{{ errorNameLocationController }}</p>
           <div v-if="!edited" class="btn-group__AddProcessorID">
             <button class="btn btn-secondary" @click.prevent="addLocationController">Add Location Controller</button>
@@ -122,7 +127,7 @@ export default {
           sortable: false,
         },
       ],
-      rows: this.$store.getters.allLocationController,
+      rows: this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [],
     }
   },
   methods: {
@@ -150,36 +155,43 @@ export default {
     async addLocationController() {
       let NameLocationController = this.NameLocationController;
       if (NameLocationController) {
-        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const {data: {data: controllerLocation}} = await axios.post('/api/v1/controller/location', {
-          label: this.NameLocationController,
+        await axios.post('/api/v1/controller/location', {
+          label: NameLocationController,
+        }).then(async ({data: {data: response}}) => {
+          await axios.get('/api/v1/controller/location').then(async ({data: {locationLabels: response}}) => {
+            const All_Location_Controller = response.map((item, i) => ({
+              id: (++i).toString(),
+              nameLocation: item.label,
+              locationId: item.id,
+              btn_Action: ''
+            }))
+            await this.$store.dispatch('allLocationController', All_Location_Controller);
+            this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
+          }).catch(() => {
+            console.log("get Faild")
+            this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
+          });
+          this.$modal.hide('AddNewLocationController')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: `Add ${response[0].label}, Successfully`,
+            toast: false,
+            text: `ID this Type : " ${response[0].id} "`,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }).catch(() => {
+          this.$modal.hide('AddNewLocationController')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `<strong>Add New Location Faild</strong>`,
+            toast: false,
+            showConfirmButton: false,
+            timer: 1500
+          })
         });
-        await this.$store.dispatch('NewLocationController', controllerLocation);
-
-        const {data: {data: allLocationController}} = await axios.get('/api/v1/controller/location');
-        const All_Location_Controller = allLocationController.map((item, i) => ({
-          id: i,
-          nameLocation: item.label,
-          locationId: item.locationId,
-          btn_Action: ''
-        }))
-
-        this.socket.emit("all_Location_Controller", All_Location_Controller);
-        this.socket.on("all_Location_Controller_server", (data) => {
-          this.$store.dispatch('allLocationController', data);
-          this.rows = this.$store.getters.allLocationController;
-        });
-
-        this.CloseLocationControllerModal();
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `Add ${controllerLocation.label}, Successfully`,
-          toast: false,
-          text: `ID this Location : " ${controllerLocation._id} "`,
-          showConfirmButton: false,
-          timer: 1500
-        })
       } else {
         this.errorNameLocationController = "Sorry! Add controller Location Faild!";
         setTimeout(() => {
@@ -200,36 +212,33 @@ export default {
     async SaveChangeLocation() {
       let NameLocationController = this.NameLocationController;
       if (NameLocationController) {
-        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const {data: {data: controllerLocation}} = await axios.put('/api/v1/controller/location', {
+        await axios.put('/api/v1/controller/location', {
           locationId: this.EditInfo.Location_id,
-          label: this.NameLocationController,
+          label: NameLocationController,
+        }).then(async ({data: {data: response}}) => {
+          await this.GetAllLocations();
+          this.$modal.hide('AddNewLocationController')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: `Update Location " ${response[0].label} " , Successfully`,
+            toast: false,
+            text: `ID this Location : " ${response[0].id} "`,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }).catch(() => {
+          this.$modal.hide('AddNewLocationController')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `<strong>Update Location Faild</strong>`,
+            toast: false,
+            text: 'name Location is Already Exist 😥',
+            showConfirmButton: false,
+            timer: 1500
+          })
         });
-        await this.$store.dispatch('NewLocationController', controllerLocation);
-
-        const {data: {data: allLocationController}} = await axios.get('/api/v1/controller/location');
-        const All_Location_Controller = allLocationController.map((item, i) => ({
-          id: i,
-          nameLocation: item.label,
-          locationId: item.locationId,
-          btn_Action: ''
-        }))
-        this.socket.emit("all_Location_Controller", All_Location_Controller);
-        this.socket.on("all_Location_Controller_server", (data) => {
-          this.$store.dispatch('allLocationController', data);
-          this.rows = this.$store.getters.allLocationController;
-        });
-
-        this.CloseLocationControllerModal();
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `Add ${controllerLocation.label}, Successfully`,
-          toast: false,
-          text: `ID this Location : " ${controllerLocation._id} "`,
-          showConfirmButton: false,
-          timer: 1500
-        })
       } else {
         this.errorNameLocationController = "Sorry! Add controller Location Faild!";
         setTimeout(() => {
@@ -265,40 +274,43 @@ export default {
       })
     },
     async DeleteTypeControllerFunction(locationController_id) {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      await axios.delete('/api/v1/controller/location', {data: {locationId: locationController_id}});
-      const {data: {data: allLocationController}} = await axios.get('/api/v1/controller/location');
-      const All_Location_Controller = allLocationController.map((item, i) => ({
-        id: i,
-        nameLocation: item.label,
-        locationId: item.locationId,
-        btn_Action: ''
-      }))
-      this.socket.emit("all_Location_Controller", All_Location_Controller);
-      this.socket.on("all_Location_Controller_server", (data) => {
-        this.$store.dispatch('allLocationController', data);
-        this.rows = this.$store.getters.allLocationController;
+      await axios.delete('/api/v1/controller/location', {data: {locationId: locationController_id}}).then(async () => {
+        await this.GetAllLocations();
+      }).catch(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: `<strong>Delete this Location Faild</strong>`,
+          toast: false,
+          showConfirmButton: false,
+          timer: 1500
+        })
       });
 
     },
+
+    /* get All Controller Location */
+    async GetAllLocations() {
+      await axios.get('/api/v1/controller/location').then(async ({data: {locationLabels: response}}) => {
+        const All_Location_Controller = response.map((item, i) => ({
+          id: (++i).toString(),
+          nameLocation: item.label,
+          locationId: item.id,
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('allLocationController', All_Location_Controller);
+        this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
+      }).catch(() => {
+        console.log("get Faild")
+        this.rows = this.$store.getters.allLocationController ? this.$store.getters.allLocationController : [];
+      });
+    }
   },
   computed: {
-    ...mapGetters(['NewLocationController', 'allLocationController'])
+    ...mapGetters(['allLocationController'])
   },
   async beforeMount() {
-    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const {data: {data: allLocationController}} = await axios.get('/api/v1/controller/location');
-    const All_Location_Controller = allLocationController.map((item, i) => ({
-      id: i,
-      nameLocation: item.label,
-      locationId: item.locationId,
-      btn_Action: ''
-    }))
-    this.socket.emit("all_Location_Controller", All_Location_Controller);
-    this.socket.on("all_Location_Controller_server", (data) => {
-      this.$store.dispatch('allLocationController', data);
-      this.rows = this.$store.getters.allLocationController;
-    });
+    await this.GetAllLocations();
   },
   created() {
     this.socket = io('http://localhost:3001');

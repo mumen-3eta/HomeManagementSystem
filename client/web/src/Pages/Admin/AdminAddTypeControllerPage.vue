@@ -36,7 +36,11 @@
                     enabled: true,
                     skipDiacritics: true,
                     placeholder: 'Search this table'
-                  }">
+                  }"
+              :sort-options="{
+                  enabled: true,
+                }"
+          >
             <div slot="table-actions" class="btn_searchScan"></div>
             <template slot="table-row" slot-scope="props">
               <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
@@ -65,8 +69,12 @@
       <div class="container__AddProcessorID">
         <h2>{{ !edited ? "Add New Type for Controller" : `Edit type name: "${EditInfo.Name_Type}"` }}</h2>
         <div class="input-group__AddProcessorID">
-          <label for="input_ProcessorID">Type Name</label>
-          <input id="input_ProcessorID" v-model.trim="NameTypeController" required type="text">
+          <label v-if="!edited" for="input_ProcessorIDAdd">Type Name</label>
+          <input v-if="!edited" id="input_ProcessorIDAdd" v-model.trim="NameTypeController" required type="text"
+                 @keypress.enter="addTypeController" @keypress.esc="ClearTypeController">
+          <label v-if="edited" for="input_ProcessorIDUpdate">Type Name</label>
+          <input v-if="edited" id="input_ProcessorIDUpdate" v-model.trim="NameTypeController" required type="text"
+                 @keypress.enter="SaveChangeEdited" @keypress.esc="ClearTypeController">
           <p v-if="errorLabel" class="error_style pb-2">{{ errorLabel }}</p>
           <div v-if="!edited" class="btn-group__AddProcessorID">
             <button class="btn btn-secondary" @click.prevent="addTypeController">Add Type Controller</button>
@@ -124,7 +132,7 @@ export default {
           sortable: false,
         },
       ],
-      rows: this.$store.getters.allTypeController,
+      rows: this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [],
     }
   },
   methods: {
@@ -146,37 +154,44 @@ export default {
     async addTypeController() {
       let NameTypeController = this.NameTypeController;
       if (NameTypeController) {
-        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const {data: {data: controllerType}} = await axios.post('/api/v1/controller/type', {
-          label: this.NameTypeController,
-        });
-        await this.$store.dispatch('NewTypeController', controllerType);
+        await axios.post('/api/v1/controller/type', {
+          label: NameTypeController,
+        }).then(async ({data: {data: response}}) => {
+          await axios.get('/api/v1/controller/type').then(async ({data: {typeLabels: response}}) => {
+            const All_Type_Controller = response.map((item, i) => ({
+              id: (++i).toString(),
+              nameType: item.label,
+              labelId: item.id,
+              btn_Action: ''
+            }))
+            await this.$store.dispatch('allTypeController', All_Type_Controller);
+            this.rows = this.$store.getters.allTypeController;
 
-        const {data: {data: allTypeController}} = await axios.get('/api/v1/controller/type');
-        const All_Type_Controller = allTypeController.map((item, i) => ({
-          id: i,
-          nameType: item.label,
-          labelId: item.labelId,
-          btn_Action: ''
-        }))
-        this.socket.emit("all_Type_Controller", All_Type_Controller);
-        this.socket.on("all_Type_Controller_server", (data) => {
-          this.$store.dispatch('allTypeController', data);
-          this.rows = this.$store.getters.allTypeController;
-        });
-        // await this.$store.dispatch('allTypeController', All_Type_Controller);
+          }).catch(() => {
+            console.log("get Faild")
+          });
 
-        // this.rows = this.$store.getters.allTypeController;
-        this.$modal.hide('AddNewTypeController')
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `Add ${controllerType.label}, Successfully`,
-          toast: false,
-          text: `ID this Type : " ${controllerType._id} "`,
-          showConfirmButton: false,
-          timer: 1500
-        })
+          this.$modal.hide('AddNewTypeController')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: `Add ${response[0].label}, Successfully`,
+            toast: false,
+            text: `ID this Type : " ${response[0].id} "`,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }).catch(() => {
+          this.$modal.hide('AddNewTypeController')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `<strong>Add New Type Faild</strong>`,
+            toast: false,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        });
       } else {
         this.errorLabel = "Sorry! Add controller Type Faild!";
         setTimeout(() => {
@@ -211,22 +226,18 @@ export default {
       })
     },
     async DeleteTypeControllerFunction(typeController_id) {
-      axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-      await axios.delete('/api/v1/controller/type', {data: {labelId: typeController_id}});
-      const {data: {data: allTypeController}} = await axios.get('/api/v1/controller/type');
-      const All_Type_Controller = allTypeController.map((item, i) => ({
-        id: i,
-        nameType: item.label,
-        labelId: item.labelId,
-        btn_Action: ''
-      }))
-      this.socket.emit("all_Type_Controller", All_Type_Controller);
-      this.socket.on("all_Type_Controller_server", (data) => {
-        this.$store.dispatch('allTypeController', data);
-        this.rows = this.$store.getters.allTypeController;
+      await axios.delete('/api/v1/controller/type', {data: {typeId: typeController_id}}).then(async () => {
+        await this.GetAllTypes();
+      }).catch(() => {
+        this.$swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: `<strong>Delete this Type Faild</strong>`,
+          toast: false,
+          showConfirmButton: false,
+          timer: 1500
+        })
       });
-      // await this.$store.dispatch('allTypeController', All_Type_Controller);
-      // this.rows = this.$store.getters.allTypeController;
     },
     /*** btn Clear Type ***/
     ClearTypeController() {
@@ -245,38 +256,34 @@ export default {
     async SaveChangeEdited() {
       let NameTypeController = this.NameTypeController;
       if (NameTypeController) {
-        axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-        const {data: {data: controllerType}} = await axios.put('/api/v1/controller/type', {
-          labelId: this.EditInfo.Type_id,
-          label: this.NameTypeController,
+        await axios.put('/api/v1/controller/type', {
+          typeId: this.EditInfo.Type_id,
+          label: NameTypeController,
+        }).then(async ({data: {data: response}}) => {
+          await this.GetAllTypes();
+          this.$modal.hide('AddNewTypeController')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: `Update type " ${response[0].label} " , Successfully`,
+            toast: false,
+            text: `ID this Type : " ${response[0].id} "`,
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }).catch(() => {
+          this.$modal.hide('AddNewTypeController')
+          this.$swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: `<strong>Update Type Faild</strong>`,
+            toast: false,
+            text: 'name type is Already Exist 😥',
+            showConfirmButton: false,
+            timer: 1500
+          })
         });
-        await this.$store.dispatch('NewTypeController', controllerType);
 
-        const {data: {data: allTypeController}} = await axios.get('/api/v1/controller/type');
-        const All_Type_Controller = allTypeController.map((item, i) => ({
-          id: i,
-          nameType: item.label,
-          labelId: item.labelId,
-          btn_Action: ''
-        }))
-        this.socket.emit("all_Type_Controller", All_Type_Controller);
-        this.socket.on("all_Type_Controller_server", (data) => {
-          this.$store.dispatch('allTypeController', data);
-          this.rows = this.$store.getters.allTypeController;
-        });
-        // await this.$store.dispatch('allTypeController', All_Type_Controller);
-        //
-        // this.rows = this.$store.getters.allTypeController;
-        this.$modal.hide('AddNewTypeController')
-        this.$swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: `Update type " ${controllerType.label} " , Successfully`,
-          toast: false,
-          text: `ID this Type : " ${controllerType._id} "`,
-          showConfirmButton: false,
-          timer: 1500
-        })
       } else {
         this.errorLabel = "Sorry! update controller Type Faild!";
         setTimeout(() => {
@@ -285,30 +292,31 @@ export default {
       }
 
     },
-
+    /*** Get All Type Controller  ***/
+    async GetAllTypes() {
+      await axios.get('/api/v1/controller/type').then(async ({data: {typeLabels: response}}) => {
+        const All_Type_Controller = response.map((item, i) => ({
+          id: (++i).toString(),
+          nameType: item.label,
+          labelId: item.id,
+          btn_Action: ''
+        }))
+        await this.$store.dispatch('allTypeController', All_Type_Controller);
+        this.rows = this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [];
+      }).catch(() => {
+        console.log("get Faild")
+        this.rows = this.$store.getters.allTypeController ? this.$store.getters.allTypeController : [];
+      });
+    }
   },
   created() {
     this.socket = io('http://localhost:3001');
   },
   async beforeMount() {
-    axios.defaults.headers.common['csrf-token'] = localStorage.getItem('csrfToken');
-    const {data: {data: allTypeController}} = await axios.get('/api/v1/controller/type');
-    const All_Type_Controller = allTypeController.map((item, i) => ({
-      id: i,
-      nameType: item.label,
-      labelId: item.labelId,
-      btn_Action: ''
-    }))
-    this.socket.emit("all_Type_Controller", All_Type_Controller);
-    this.socket.on("all_Type_Controller_server", (data) => {
-      this.$store.dispatch('allTypeController', data);
-      this.rows = this.$store.getters.allTypeController;
-    });
-    // await this.$store.dispatch('allTypeController', All_Type_Controller);
-    // this.rows = this.$store.getters.allTypeController;
+    await this.GetAllTypes();
   },
   computed: {
-    ...mapGetters(['NewTypeController', 'allTypeController'])
+    ...mapGetters(['allTypeController'])
   },
 }
 </script>

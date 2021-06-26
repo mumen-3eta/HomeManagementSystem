@@ -62,43 +62,78 @@ export default {
   },
   methods: {
     async checkForm() {
-      if (this.userNameOrEmail) {
-        let userNameOrEmail = this.userNameOrEmail;
+      let UserNameOrEmail = this.userNameOrEmail;
+      /* Check input userName or Email*/
+      if (UserNameOrEmail) {
         let usernameRegex = /^[a-zA-Z0-9]+$/;
         let EmailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        let CheckUserName = usernameRegex.test(userNameOrEmail);//true or false
-        let CheckEmail = EmailRegex.test(userNameOrEmail);//true or false
+        let CheckUserName = usernameRegex.test(UserNameOrEmail);//true or false
+        let CheckEmail = EmailRegex.test(UserNameOrEmail);//true or false
+        /* this condition to Check if username Or Email not input correctly 👺  */
         if (!CheckEmail && !CheckUserName) {
           this.errors.errorUserNameOrEmail = "Sorry! Email Faild, must be (@) and (.) and ignored space";
           setTimeout(() => {
             this.errors.errorUserNameOrEmail = null;
           }, 3000);
           return false;
-        } else {
-          if (!CheckUserName && !CheckEmail) {
-            this.errors.errorUserNameOrEmail = "Sorry! User Name Faild, must be (a-z) and (0-1) and ignored space";
-            setTimeout(() => {
-              this.errors.errorUserNameOrEmail = null;
-            }, 3000);
-            return false;
-          }
         }
-      }
 
-      try {
-        let response = await axios.post('/api/v1/users/login', {
-          email: this.userNameOrEmail,
-          password: this.Password
-        });
-        localStorage.setItem('csrfToken', response.data.csrfToken);
-        await this.$store.dispatch('TokenUser', response.data);
-        await this.$router.push('/v2/main/home');
-      } catch (e) {
-        this.errors.errorUserNameOrEmail = 'Invalid Email/Password' || e.msg || e.message;
+        if (CheckEmail) {
+          await axios.post('/api/v1/users/login', {
+            email: UserNameOrEmail,
+            password: this.Password
+          }).then(async ({data: response}) => {
+            await this.$store.dispatch('TokenUser', response);
+            this.LoadingActivation();
+            await this.GetUserData();
+          }).catch(() => {
+            this.errors.errorUserNameOrEmail = 'Invalid Email/Password';
+            return false;
+          });
+        }
+        if (CheckUserName) {
+          await axios.post('/api/v1/users/login', {
+            userName: UserNameOrEmail,
+            password: this.Password
+          }).then(async ({data: response}) => {
+            await this.$store.dispatch('TokenUser', response);
+            this.LoadingActivation();
+            await this.GetUserData();
+          }).catch(() => {
+            this.errors.errorUserNameOrEmail = 'Invalid userName/Password';
+            return false;
+          });
+        }
+
+      } else {
+        /* if not Input userName And Email  👽  */
+        this.errors.errorUserNameOrEmail = "Sorry! User Name Faild oR Password  is Required ";
+        setTimeout(() => {
+          this.errors.errorUserNameOrEmail = null;
+
+        }, 3000);
         return false;
       }
 
-
+    },
+    async GetUserData() {
+      await axios.get('/api/v1/users/me').then(async ({data: {user: userInfo}}) => {
+        await this.$store.dispatch('user', userInfo);
+      }).catch(() => {
+        console.log('Failed response me')
+      });
+      await axios.get('/api/v1/users/profile').then(async ({data: {profileData: userProfile}}) => {
+        await this.$store.dispatch('userProfile', userProfile[0]);
+      }).catch(() => {
+        console.log('Failed response profile')
+      });
+      await this.$router.push('/v2/main/home');
+    },
+    LoadingActivation() {
+      document.getElementById("loadingScreen").style.display = "flex";
+      setTimeout(function () {
+        document.getElementById("loadingScreen").style.display = "none";
+      }, 750);
     },
   },
   mounted() {
