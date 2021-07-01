@@ -1,0 +1,226 @@
+{
+  "loading_Text": "loading",
+  "navBar": {
+    "home": "Home",
+    "aboutUs": "About us",
+    "contactUs": "contact us",
+    "ourTeam": "our Team",
+    "login": "Login",
+    "sigUp": "SigUp",
+    "logout": "logout",
+    "dashboard": "Dashboard"
+  },
+  "ourTeam": "Our Team",
+  "frequently_Asked_Questions": "Frequently Asked Questions",
+  "contactUs": {
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send"
+  },
+  "404": {
+    "NotFound": "Not Found",
+    "goBack": "Go Back"
+  },
+  "login": {
+    "title": "Welcome back",
+    "body": "Sign to continue using HMSy",
+    "newAccount": "Don't have an account?",
+    "registerHere": "Register Here",
+    "btn_text": "Login",
+    "forgotPassword": "Forgot your password ?",
+    "usernameOrEmail": "username or E-mail",
+    "password": "Password"
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "body": "Signup to continue using HMSy",
+    "username": "username",
+    "email": "E-mail",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "btn_text": "Sign Up",
+    "goToLogin_text": "You have an account?",
+    "goToLogin_link": "Login Here"
+  },
+  "Dashboard": {
+    "NoDataForTable": "No data for table",
+    "Header_nav": {
+      "profile": "Profile",
+      "createProcessor": "Create Processor",
+      "createController": "Create Controller",
+      "addTypeController": "Add Type Controller",
+      "addLocationController": "Add Location Controller",
+      "myDevice": "my device",
+      "logOut": "log out"
+    },
+    "Aside_Nav": {
+      "text_Admin": "Admin"
+    },
+    "Body": {
+      "title": "DashBoard",
+      "subTitle": "All Controllers",
+      "searchLabel": "Search by name Or Date"
+    },
+    "Profile": {
+      "title": "Update Your Profile",
+      "Image": {
+        "chooseYourImage": "Choose Your Image",
+        "upload": "Upload",
+        "cancel": "Cancel"
+      },
+      "UpdateForm": {
+        "baseInfo": "Base Info",
+        "loginInfo": "Login info",
+        "btn_Update": "Update"
+      },
+      "baseInfo": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "mobile": "mobile"
+      },
+      "loginInfo": {
+        "new": "New",
+        "userName": "User Name",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Your Password"
+      }
+    },
+    "ControllersConnected": {
+      "allControllerConnected": "All controllers connected to the processor",
+      "btn_Text": "Scan To Search",
+      "webCame": {
+        "title": "Scan QR Code To Search",
+        "messageWait": "Wait For Open Camera...",
+        "error": "place camera, Pleas Check your web Came"
+      }
+    },
+    "addProcessors": {
+      "title": "Processors",
+      "btn_Text": "Scan To Search",
+      "webCame": {
+        "addTitle": "Another Way To Add Processor ID",
+        "title": "Scan QR Code To Search",
+        "messageWait": "Wait For Open Camera...",
+        "error": "place camera, Pleas Check your web Came",
+        "model": {
+          "title": "Add New Processor ID",
+          "Input_label": "Processor ID",
+          "btn_text": "Add Processor Id",
+          "btn_Clear": "Clear"
+        }
+      },
+      "table": {
+        "addController": "Add Controller",
+        "controller": "Controllers",
+        "delete": "Delete"
+      }
+    },
+    "allControllerForProcessor": {
+      "title": "All Controller for Processor :",
+      "btn_Text": "Scan To Search",
+      "webCame": {
+        "addTitle": "Another Way To Add Processor ID",
+        "title": "Scan QR Code To Search",
+        "messageWait": "Wait For Open Camera...",
+        "error": "place camera, Pleas Check your web Came",
+        "model": {
+          "title": "Add New Processor ID",
+          "Input_label": "Processor ID",
+          "btn_text": "Add Processor Id",
+          "btn_Clear": "Clear"
+        }
+      },
+      "table": {
+        "addController": "Add Controller",
+        "controller": "Controllers",
+        "delete": "Delete"
+      }
+    },
+    "AddControllerForProcessor": {
+      "title": "Add Controller",
+      "btn_Text": "Scan To Search",
+      "webCame": {
+        "title": "Scan QR Code To Search",
+        "messageWait": "Wait For Open Camera...",
+        "error": "place camera, Pleas Check your web Came"
+      },
+      "Form": {
+        "buttonCreate": "Create Controller",
+        "buttonClear": "Clear",
+        "name": "Name :",
+        "typeController": "Type Controller :",
+        "controllerID": "Controller ID :",
+        "locationController": "Location Controller :",
+        "btn_Scan": "Scan",
+        "placeholderScan": "Enter Controller id Or Scan QRCode",
+        "placeholderName": "Enter Name Controller"
+      }
+    }
+  },
+  "AdminDashboard": {
+    "Body": {
+      "title": "Admin DashBoard |"
+    },
+    "createProcessor": {
+      "title": "Create Processor",
+      "btn_Generate": "Generate Id Processor",
+      "table": {
+        "btn_QRCode": "Get QR Code"
+      },
+      "model": {
+        "title": "QRCode For Processors",
+        "error": "Sorry, something went wrong",
+        "btn_Copy": "Copy the Processor Id",
+        "btn_Download": "Download as image"
+      }
+    },
+    "createController": {
+      "title": "Create Controller",
+      "btn_Generate": "Generate Id Controller",
+      "table": {
+        "btn_QRCode": "Get QR Code"
+      },
+      "model": {
+        "title": "QRCode For this Controller",
+        "error": "Sorry, something went wrong",
+        "btn_Copy": "Copy the Controller Id",
+        "btn_Download": "Download as image"
+      }
+    },
+    "allUser": {
+      "title": "All Users"
+    },
+    "Messages": {
+      "title": "All Messages",
+      "Delete": "Delete",
+      "Read": "Readable"
+    },
+    "addTypeController": {
+      "title": "Add Type Controller",
+      "table": {
+        "btn_Edit": "Edit",
+        "btn_Delete": "Delete"
+      },
+      "model": {
+        "nameType": "Controller type name",
+        "addTypeController": "Add Type Controller",
+        "clear": "Clear",
+        "saveChange": "Save Change"
+      }
+    },
+    "addLocationController": {
+      "title": "Add Location Controller",
+      "table": {
+        "btn_Edit": "Edit",
+        "btn_Delete": "Delete"
+      },
+      "model": {
+        "nameType": "Controller Location name",
+        "addTypeController": "Add Location Controller",
+        "clear": "Clear",
+        "saveChange": "Save Change"
+      }
+    }
+  }
+}

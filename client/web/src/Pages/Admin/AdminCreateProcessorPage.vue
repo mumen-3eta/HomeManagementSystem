@@ -1,28 +1,31 @@
 <template>
   <div class="wrapper">
     <!--   ********** body content can change it here *****************-->
-    <div class="container_Admin_CreateDevice">
-      <h2>Create Processor</h2>
+    <div
+        :class="lang==='ar' ? 'container_Admin_CreateDevice direction-rtl' :'container_Admin_CreateDevice direction-ltr'">
+      <h2>{{ $t('AdminDashboard.createProcessor.title') }}</h2>
       <div class="btn-group_Generate">
-        <button class="btn btn-secondary" @click.prevent="generateId">Generate Id Processor</button>
+        <button class="btn btn-secondary" @click.prevent="generateId">
+          {{ $t('AdminDashboard.createProcessor.btn_Generate') }}
+        </button>
       </div>
       <div class="project my-3 mx-auto p-2 position-relative">
         <vue-good-table
-            :columns="columns"
+            :columns="this.lang === 'en' ? columns_EN : columns_AR"
             :pagination-options="{
                     enabled: true,
-                    mode: 'records',
+                    mode: 'pages',
                     perPage: 5,
                     position: 'bottom',
                     perPageDropdown: [5, 7, 9],
                     dropdownAllowAll: false,
                     setCurrentPage: 1,
-                    nextLabel: 'next',
-                    prevLabel: 'prev',
-                    rowsPerPageLabel: 'Rows per page',
-                    ofLabel: 'of',
-                    pageLabel: 'page', // for 'pages' mode
-                    allLabel: 'All',
+                    nextLabel:  this.lang==='en' ? 'next' : 'التالي',
+                    prevLabel: this.lang==='en' ? 'prev' : 'السابق',
+                    rowsPerPageLabel: this.lang==='en' ? 'Rows per page' : 'عدد الصفوف في الصفحة',
+                    ofLabel: this.lang==='en' ? 'of' :'من' ,
+                    pageLabel: this.lang==='en' ? 'page' :'صفحة', // for 'pages' mode
+                    allLabel:  this.lang==='en' ?  'All' : 'الجميع',
                   }"
             :rows="rows"
             :search-options=" {
@@ -36,13 +39,18 @@
                         {field: 'Create_at', type: 'desc'},
                         {field: 'id', type: 'desc'},
                     ]
-              }">
+              }"
+            :theme="mode==='dark' ? 'black-rhino' : ''">
+          <div slot="emptystate" style="text-align: center">
+            {{ $t('Dashboard.NoDataForTable') }}
+          </div>
           <div slot="table-actions" class="btn_searchScan"></div>
           <template slot="table-row" slot-scope="props">
             <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
               <button class="btn_AddController"
                       @click.prevent="showQRCodeModal(props.row.processorID)"><i
-                  class="fas fa-edit"></i> QRCode
+                  class="fas fa-edit"></i>
+                {{ $t('AdminDashboard.createProcessor.table.btn_QRCode') }}
               </button>
             </div>
             <span v-else>
@@ -59,16 +67,19 @@
            @closed="CloseAllProcessorModal"
            @before-open="CloseAllProcessorModal">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseAllProcessorModal"></i>
-      <div class="container__AddProcessorID">
-        <h2>QRCode For Processors</h2>
+      <div :class="lang==='ar' ? 'container__AddProcessorID direction-rtl' :'container__AddProcessorID direction-ltr'"
+           :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'">
+        <h2 style="text-align: center">{{ $t('AdminDashboard.createProcessor.model.title') }}
+          <br>
+          " {{ processorId }} "
+        </h2>
         <div class="input-group__AddProcessorID">
           <div class="container__DeviceId">
             <div v-if="processorId" class="container__processor_Id">
               <div class="svg_Generator">
                 <div>
-                  <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="processorId">Sorry ,
-                    some
-                    thing error
+                  <qrcode-vue id="svg_element" :margin="2" :quality="1" :scale="7" v-bind:value="processorId">
+                    {{ $t('AdminDashboard.createProcessor.model.error') }}
                   </qrcode-vue>
 
                   <div v-if="processorId">
@@ -79,9 +90,11 @@
                 </div>
               </div>
               <div class="btn-group_Generate-2">
-                <button class="btn btn-secondary" @click.prevent="copyText">Copy Processor Id</button>
+                <button class="btn btn-secondary" @click.prevent="copyText">
+                  {{ $t('AdminDashboard.createProcessor.model.btn_Copy') }}
+                </button>
                 <button id="DownloadsAsImage" class="btn btn-primary" @click.prevent="downloadsAsImage(processorId)">
-                  Downloads as image
+                  {{ $t('AdminDashboard.createProcessor.model.btn_Download') }}
                 </button>
               </div>
             </div>
@@ -102,7 +115,9 @@ export default {
   name: "AdminCreateProcessorPage",
   data() {
     return {
-      columns: [
+      lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
+      columns_EN: [
         {
           label: 'ID',
           field: 'id',
@@ -114,12 +129,35 @@ export default {
           type: 'string',
         },
         {
-          label: 'Create At',
+          label: 'Date added',
           field: 'Create_at',
           type: 'string',
         },
         {
-          label: 'Action',
+          label: 'Settings',
+          field: 'btn_Action',
+          type: 'string',
+          sortable: false,
+        },
+      ],
+      columns_AR: [
+        {
+          label: 'رقم الترتيب',
+          field: 'id',
+          type: 'string',
+        },
+        {
+          label: 'معرف المعالج',
+          field: 'processorID',
+          type: 'string',
+        },
+        {
+          label: 'تاريخ الاضافة',
+          field: 'Create_at',
+          type: 'string',
+        },
+        {
+          label: 'الاعدادات',
           field: 'btn_Action',
           type: 'string',
           sortable: false,
@@ -151,7 +189,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Create Processor ID',
+          title: this.lang === 'en' ? 'Create Processor ID' : 'إنشاء معرف المعالج',
           toast: false,
           text: response[0].id.toString(),
           showConfirmButton: false,
@@ -163,7 +201,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'Create Processor Faild',
+          title: this.lang === 'en' ? 'Failed Create Processor ID' : 'فشل إنشاء معرّف المعالج',
           toast: false,
           showConfirmButton: false,
           timer: 1500
@@ -177,9 +215,9 @@ export default {
       this.$swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Copied the text',
+        title: copyText.value,
         toast: true,
-        text: copyText.value,
+        text: this.lang === 'en' ? 'Copied the Processor ID' : 'نسخ معرّف المعالج',
         showConfirmButton: false,
         timer: 1500
       })

@@ -4,42 +4,49 @@
       <div class="container__infoBox-shadow"></div>
       <div v-animate-onscroll.repeat="'animated fadeIn'" class="contactUs-main__section ">
         <div v-animate-onscroll.repeat="'animated fadeInUp'" class="contactus__title">
-          <h2 class="contactus__title-h">{{ SiteContactUsInfo.MainTitle }}</h2>
+          <h2 class="contactus__title-h">
+            {{ lang === 'en' ? SiteContactUsInfo_EN.MainTitle : SiteContactUsInfo_AR.MainTitle }}</h2>
         </div>
-        <div class="contactUs__info">
+        <div :class=" lang==='ar' ? 'contactUs__info direction-rtl' :'contactUs__info direction-ltr'">
           <div v-animate-onscroll.repeat="'animated fadeIn fadeInLeft'" class="information__Section">
-            <h3 class="information__Section-title">{{ SiteContactUsInfo.SectionTitle }}</h3>
-            <p class="information__Section-p">{{ SiteContactUsInfo.SectionBody }}</p>
+            <h3 class="information__Section-title">
+              {{ lang === 'en' ? SiteContactUsInfo_EN.SectionTitle : SiteContactUsInfo_AR.SectionTitle }}</h3>
+            <p class="information__Section-p">
+              {{ lang === 'en' ? SiteContactUsInfo_EN.SectionBody : SiteContactUsInfo_AR.SectionBody }}</p>
             <ul class="container__contactInfo">
-              <li v-for="(content , index) in SiteContactUsInfo.ContactUsList" :key="index"
+              <li v-for="(content , index) in lang === 'en' ? SiteContactUsInfo_EN.ContactUsList : SiteContactUsInfo_AR.ContactUsList"
+                  :key="index"
                   class="container-contactUs__list">
-                <i :class="content.Type"></i>
+                <i :class="content.Type " style="margin-left: 0.5rem"></i>
                 <p class="container-contactUs__p">{{ content.BodyContent }}</p>
               </li>
             </ul>
 
           </div>
+          <!--          :class=" lang==='ar' ? 'labelInputContact_AR' :'labelInputContact'"-->
           <div v-animate-onscroll.repeat="'animated fadeIn fadeInLeft'" class="contactMsg__Section">
             <form class="form__contactUs" @submit.prevent="checkSendMessage">
               <div class="form__contactUs-group">
-                <label id="lab_EmailInputContact" class="labelInputContact "
-                       for="EmailInputContact">Email</label>
+                <label id="lab_EmailInputContact" :class=" lang==='ar' ? 'labelInputContact_AR' :'labelInputContact'"
+                       for="EmailInputContact">{{ $t('contactUs.email') }}</label>
                 <input id="EmailInputContact" v-model.trim="Email" class="InputContact" type="email">
                 <p class="error_style mTop__5">{{ errors.errorEmail }}</p>
               </div>
               <div class="form__contactUs-group">
-                <label id="lab_SubjectInputContact" class="labelInputContact" for="SubjectInputContact">Subject</label>
+                <label id="lab_SubjectInputContact" :class=" lang==='ar' ? 'labelInputContact_AR' :'labelInputContact'"
+                       for="SubjectInputContact">{{ $t('contactUs.subject') }}</label>
                 <input id="SubjectInputContact" v-model.trim="Subject" class="InputContact" type="text">
                 <p class="error_style mTop__5">{{ errors.errorSubject }}</p>
               </div>
               <div class="form__contactUs-group">
-                <label id="lab_MsgInputContact" class="labelInputContact" for="MsgInputContact">Message</label>
+                <label id="lab_MsgInputContact" :class=" lang==='ar' ? 'labelInputContact_AR' :'labelInputContact'"
+                       for="MsgInputContact">{{ $t('contactUs.message') }}</label>
                 <textarea id="MsgInputContact" v-model.trim="Message" class="InputContact" cols="30"
                           rows="10"></textarea>
                 <p class="error_style">{{ errors.errorMessage }}</p>
               </div>
               <div class="form__contactUs-group">
-                <button class="form__contactUs-btn" type="submit">Send</button>
+                <button class="form__contactUs-btn" type="submit">{{ $t('contactUs.send') }}</button>
               </div>
             </form>
           </div>
@@ -50,12 +57,13 @@
 </template>
 
 <script>
-import io from "socket.io-client";
+
 
 export default {
   name: "ContactUsAndInfoSc",
   data() {
     return {
+      lang: localStorage.getItem('lang') || 'en',
       socket: null,
       Email: null,
       Subject: null,
@@ -65,12 +73,22 @@ export default {
         errorSubject: null,
         errorMessage: null,
       },
-      SiteContactUsInfo: {
-        MainTitle: 'Contact the Pied Piper team',
+      SiteContactUsInfo_EN: {
+        MainTitle: 'Contact the HMSy team',
         SectionTitle: 'Let\'s talk about the future of the internet',
         SectionBody: 'We\'re here to answer your questions and discuss the decentralized future of the internet.',
         ContactUsList: [
-          {Type: 'fas fa-map-marker-alt', BodyContent: 'Palestine - Gaza Strep',},
+          {Type: 'fas fa-map-marker-alt', BodyContent: 'Palestine - Gaza Strip',},
+          {Type: 'fas fa-phone-volume', BodyContent: '+970-XXX-XXX-XXX',},
+          {Type: 'fas fa-envelope', BodyContent: 'info_HMSy@HMSy.com',},
+        ],
+      },
+      SiteContactUsInfo_AR: {
+        MainTitle: 'HMSy اتصل بفريق ',
+        SectionTitle: 'لنتحدث عن مستقبل الإنترنت',
+        SectionBody: 'نحن هنا للإجابة على أسئلتك ومناقشة المستقبل اللامركزي للإنترنت.',
+        ContactUsList: [
+          {Type: 'fas fa-map-marker-alt', BodyContent: 'فلسطين - قطاع غزة',},
           {Type: 'fas fa-phone-volume', BodyContent: '+970-XXX-XXX-XXX',},
           {Type: 'fas fa-envelope', BodyContent: 'info_HMSy@HMSy.com',},
         ],
@@ -159,9 +177,6 @@ export default {
       document.getElementById("lab_MsgInputContact").style.backgroundColor = "";
       document.getElementById("lab_MsgInputContact").classList.remove("AddMoved");
     },
-  },
-  created() {
-    this.socket = io('http://localhost:3001');
   },
   mounted() {
     const input1 = document.getElementById("EmailInputContact");

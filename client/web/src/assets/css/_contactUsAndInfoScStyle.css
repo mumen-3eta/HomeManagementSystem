@@ -256,6 +256,15 @@ textarea.InputContact {
     transition: all 0.3s ease;
 }
 
+.labelInputContact_AR {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.5rem;
+    font-size: 1.2rem;
+    color: var(--input-color);
+    transition: all 0.3s ease;
+}
+
 .AddBorder {
     border-bottom: 2px solid var(--input-color);
 }

@@ -1,22 +1,34 @@
 <template>
   <header class="Main__Header">
     <main class="main__login">
-      <div class="login__photo"></div>
-      <div class="login__inform">
+      <div class="login__photo">
+        <a class="nav_link-btn nav_lang custom-select" href="javascript:void;">
+            <span class="icon_nav_lang">
+             <i class="fas fa-globe-americas"></i>
+            </span>
+          <select v-model="lang" class="select_nav_lang" @change="changeLanguage($event)">
+            <option value="en">English</option>
+            <option value="ar">عربي</option>
+          </select>
+        </a>
+      </div>
+      <div :class=" lang==='ar' ? 'login__inform direction-rtl' :'login__inform direction-ltr'">
         <div class="close__to-home">
-          <router-link class="close__to-home_link" to="/"><i class="far fa-times-circle"></i></router-link>
+          <router-link :class=" lang==='ar' ? 'close__to-home_link_AR' :'close__to-home_link'"
+                       to="/"><i class="far fa-times-circle"></i></router-link>
         </div>
-        <h2 class="login__inform-title">Welcome back</h2>
-        <p class="login__inform-minTitle">Sign to continue using HMSy</p>
+        <h2 class="login__inform-title">{{ $t('login.title') }}</h2>
+        <p class="login__inform-minTitle">{{ $t('login.body') }}</p>
         <form action="#" class="login__form" @submit.prevent="checkForm">
           <div class="form__group">
-            <label id="emailUsername_LabelInput" class="form__input-label" for="EmailUsername_input">username or
-              E-mail</label>
+            <label id="emailUsername_LabelInput" :class=" lang==='ar' ? 'form__input-label_AR' :'form__input-label'"
+                   for="EmailUsername_input">{{ $t('login.usernameOrEmail') }}</label>
             <input id="EmailUsername_input" v-model.trim="userNameOrEmail" class="form__input-input" type="text">
             <hr id="line1" class="style_line">
           </div>
           <div class="form__group">
-            <label id="password_LabelInput" class="form__input-label" for="password_input">Password</label>
+            <label id="password_LabelInput" :class=" lang==='ar' ? 'form__input-label_AR' :'form__input-label'"
+                   for="password_input">{{ $t('login.password') }}</label>
             <input id="password_input" v-model.trim="Password" class="form__input-input" type="password">
             <hr id="line2" class="style_line">
 
@@ -25,17 +37,17 @@
           <p class="error_style">{{ this.errors.errorPassword }}</p>
           <div class="form__group">
             <p class="form__forgot">
-              <a class="form__forgot-link" href="">Forgot your password?</a>
+              <a class="form__forgot-link" href="">{{ $t('login.forgotPassword') }}</a>
             </p>
           </div>
           <div class="form__group">
-            <button class="form__button-submit" type="submit">Login</button>
+            <button class="form__button-submit" type="submit">{{ $t('login.btn_text') }}</button>
           </div>
         </form>
         <div class="go__register">
           <p class="register__label">
-            Don't have an account?
-            <router-link class="register__label-link" to="/v2/register">Register Here</router-link>
+            {{ $t('login.newAccount') }}
+            <router-link class="register__label-link" to="/v2/register">{{ $t('login.registerHere') }}</router-link>
           </p>
         </div>
       </div>
@@ -52,6 +64,7 @@ export default {
   components: {},
   data() {
     return {
+      lang: localStorage.getItem('lang') || 'en',
       userNameOrEmail: '',
       Password: '',
       errors: {
@@ -71,7 +84,11 @@ export default {
         let CheckEmail = EmailRegex.test(UserNameOrEmail);//true or false
         /* this condition to Check if username Or Email not input correctly 👺  */
         if (!CheckEmail && !CheckUserName) {
-          this.errors.errorUserNameOrEmail = "Sorry! Email Faild, must be (@) and (.) and ignored space";
+          if (this.lang === 'en') {
+            this.errors.errorUserNameOrEmail = "Excuse me ! Email failed, must be (@), (.) And a space ignored";
+          } else {
+            this.errors.errorUserNameOrEmail = "عفواً 👽 فشل البريد الإلكتروني ، يجب أن يكون (@) و (.) ومسافة متجاهلة";
+          }
           setTimeout(() => {
             this.errors.errorUserNameOrEmail = null;
           }, 3000);
@@ -87,7 +104,11 @@ export default {
             this.LoadingActivation();
             await this.GetUserData();
           }).catch(() => {
-            this.errors.errorUserNameOrEmail = 'Invalid Email/Password';
+            if (this.lang === 'en') {
+              this.errors.errorUserNameOrEmail = 'Invalid Email Or Password';
+            } else {
+              this.errors.errorUserNameOrEmail = 'البريد الإلكتروني أو كلمة السر خاطئة';
+            }
             return false;
           });
         }
@@ -100,14 +121,22 @@ export default {
             this.LoadingActivation();
             await this.GetUserData();
           }).catch(() => {
-            this.errors.errorUserNameOrEmail = 'Invalid userName/Password';
+            if (this.lang === 'en') {
+              this.errors.errorUserNameOrEmail = 'Invalid Email Or Password';
+            } else {
+              this.errors.errorUserNameOrEmail = 'البريد الإلكتروني أو كلمة السر خاطئة';
+            }
             return false;
           });
         }
 
       } else {
         /* if not Input userName And Email  👽  */
-        this.errors.errorUserNameOrEmail = "Sorry! User Name Faild oR Password  is Required ";
+        if (this.lang === 'en') {
+          this.errors.errorUserNameOrEmail = "Excuse me 👽 Username failed or password is required";
+        } else {
+          this.errors.errorUserNameOrEmail = "عفواً 👽 فشل اسم المستخدم أو مطلوب كلمة المرور";
+        }
         setTimeout(() => {
           this.errors.errorUserNameOrEmail = null;
 
@@ -133,7 +162,11 @@ export default {
       document.getElementById("loadingScreen").style.display = "flex";
       setTimeout(function () {
         document.getElementById("loadingScreen").style.display = "none";
-      }, 750);
+      }, 950);
+    },
+    changeLanguage(event) {
+      window.location.reload();
+      localStorage.setItem('lang', event.target.value);
     },
   },
   mounted() {

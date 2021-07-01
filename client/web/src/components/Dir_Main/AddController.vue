@@ -1,17 +1,19 @@
 <template>
-  <!--  <div>-->
-  <!--    <p>Add controller {{ ProcessorID }}</p>-->
-  <!--  </div>-->
-  <section class="Main__Section-AddControllerUser">
-    <h2>Add Controller</h2>
+  <section
+      :class="lang==='ar' ? 'Main__Section-AddControllerUser direction-rtl' :' Main__Section-AddControllerUser direction-ltr'">
+    <h2>{{ $t('Dashboard.AddControllerForProcessor.title') }}</h2>
     <div class="SubMain__Section-AddControllerUser">
       <div class="input-group__AddControllerUser">
-        <label for="NameControllerUser">Name</label>
-        <input id="NameControllerUser" v-model.trim="NameControllerUser" placeholder="Enter Name Controller"
+        <label for="NameControllerUser">{{ $t('Dashboard.AddControllerForProcessor.Form.name') }}</label>
+        <input id="NameControllerUser" v-model.trim="NameControllerUser"
+               :placeholder="$t('Dashboard.AddControllerForProcessor.Form.placeholderName')"
                type="text">
       </div>
       <div class="input-group__AddControllerUser">
-        <label for="TypeController">Type Controller : {{ typeController_id ? typeController_id.label : '' }}</label>
+        <label for="TypeController">
+          {{ $t('Dashboard.AddControllerForProcessor.Form.typeController') }}
+          {{ typeController_id ? typeController_id.label : '' }}
+        </label>
         <div @click.prevent="getAllTypeController">
           <!--          $store.state.TypeControllerData-->
           <v-select id="TypeController" v-model.trim="typeController_id"
@@ -22,15 +24,21 @@
     </div>
     <div class="SubMain__Section-AddControllerUser">
       <div class="input-group__AddControllerUser">
-        <label for="ControllerID">Controller ID</label>
-        <div class="input__BTN-group__AddControllerUser">
-          <input id="ControllerID" v-model.trim="ControllerID" placeholder="Enter Controller id Or Scan QRCode"
+        <label for="ControllerID">{{ $t('Dashboard.AddControllerForProcessor.Form.controllerID') }} </label>
+        <div
+            :class=" lang==='en' ? 'input__BTN-group__AddControllerUser direction-ltr' :'input__BTN-group__AddControllerUser '"
+            :style="lang==='ar' ?'margin-right: -0.5rem' : ''">
+          <input id="ControllerID" v-model.trim="ControllerID"
+                 :placeholder="$t('Dashboard.AddControllerForProcessor.Form.placeholderScan')"
+                 :style="lang==='ar' ?'margin-left: 1.5rem' : ''"
                  type="text">
-          <button class="btn btn-secondary" @click.prevent="OpenScanModalControllerID">Scan</button>
+          <button class="btn btn-secondary" @click.prevent="OpenScanModalControllerID">
+            {{ $t('Dashboard.AddControllerForProcessor.Form.btn_Scan') }}
+          </button>
         </div>
       </div>
       <div class="input-group__AddControllerUser">
-        <label for="LocationController">Location Controller :
+        <label for="LocationController">{{ $t('Dashboard.AddControllerForProcessor.Form.locationController') }}
           {{ locationController_id ? locationController_id.label : '' }}</label>
         <div @click.prevent="getAllLocationController">
           <v-select id="LocationController" v-model.trim="locationController_id"
@@ -41,21 +49,28 @@
       </div>
     </div>
     <div>
-      <button class="btn btn-info" @click.prevent="CreateControllerForUser">Create</button>
-      <button class="btn btn-danger" @click.prevent="ClearAllDataController">Clear</button>
+      <button :style="lang==='ar' ? 'margin-left: 0.5rem' :''" class="btn btn-info"
+              @click.prevent="CreateControllerForUser">{{ $t('Dashboard.AddControllerForProcessor.Form.buttonCreate') }}
+      </button>
+      <button class="btn btn-danger"
+              @click.prevent="ClearAllDataController">{{ $t('Dashboard.AddControllerForProcessor.Form.buttonClear') }}
+      </button>
     </div>
     <!--    modal Search Processor id  -->
-    <modal :resizable="false" :width="650" height="auto" name="ScanControllerId" @closed="CloseScanModalControllerID"
+    <modal :class=" lang==='ar' ? 'direction-ltr' :''" :resizable="false" :width="650" height="auto"
+           name="ScanControllerId" @closed="CloseScanModalControllerID"
            @before-open="CloseScanModalControllerID">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseScanModalControllerID"></i>
-      <div class="container__AddProcessorID">
-        <h3>Scan Controller QRCode</h3>
+      <div :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'"
+           class="container__AddProcessorID">
+        <h3> {{ $t('Dashboard.AddControllerForProcessor.webCame.title') }}</h3>
         <div class="otherWay_AddProcessorID">
           <div class="handle__camera">
             <qrcode-stream v-if="isShowingCamera" @decode="onDecodeControllerID" @init="onInit">
-              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">Wait For Open Camera...</p>
+              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">
+                {{ $t('Dashboard.AddControllerForProcessor.webCame.messageWait') }}</p>
             </qrcode-stream>
-            <p v-if="!isShowingCamera">place camera, Pleas Check your web Came</p>
+            <p v-if="!isShowingCamera">{{ $t('Dashboard.AddControllerForProcessor.webCame.error') }}</p>
           </div>
         </div>
       </div>
@@ -68,12 +83,12 @@
 <script>
 import {mapGetters} from "vuex";
 import axios from "axios";
-import io from "socket.io-client";
 
 export default {
   name: "AddController",
   data() {
     return {
+      lang: localStorage.getItem('lang') || 'en',
       ProcessorID: this.$route.params.processor_id ? this.$route.params.processor_id : '',
       ControllerID: '',
       NameControllerUser: '',
@@ -101,7 +116,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'success',
-            title: `Add Controller ${response[0].name} , Successfully`,
+            title: this.lang === 'en' ? `Add Controller ${response[0].name} , Successfully` : `إضافة وحدة التحكم  ${response[0].name} , بنجاح `,
             toast: false,
             text: response[0].id,
             showConfirmButton: false,
@@ -115,9 +130,9 @@ export default {
             this.$swal.fire({
               position: 'center',
               icon: 'error',
-              title: `<strong>this Controller Already Exist</strong>`,
+              title: this.lang === 'en' ? `<strong>this Controller Already Exist</strong>` : `<strong>وحدة التحكم هذه موجودة بالفعل</strong>`,
               toast: false,
-              text: 'Add Controller, Faild',
+              text: this.lang === 'en' ? 'Failed Add Controller' : 'فشل إضافة وحدة تحكم',
               showConfirmButton: false,
               timer: 1500
             })
@@ -125,7 +140,7 @@ export default {
             this.$swal.fire({
               position: 'center',
               icon: 'error',
-              title: `<strong>Add Controller, Faild</strong>`,
+              title: this.lang === 'en' ? `<strong>Failed Add Controller</strong>` : `<strong>فشل إضافة وحدة تحكم</strong>`,
               toast: false,
               showConfirmButton: false,
               timer: 1500
@@ -134,7 +149,11 @@ export default {
         });
 
       } else {
-        this.error = 'All Input Required';
+        if (this.lang === 'en') {
+          this.error = 'All Input Required';
+        } else {
+          this.error = 'كل المدخلات مطلوبة';
+        }
         setTimeout(() => {
           this.error = false;
         }, 2000);
@@ -218,7 +237,7 @@ export default {
     ...mapGetters(['TypeControllerData', 'LocationControllerData'])
   },
   created() {
-    this.socket = io('http://localhost:3001');
+    // this.socket = io('http://localhost:3001');
   },
 }
 </script>

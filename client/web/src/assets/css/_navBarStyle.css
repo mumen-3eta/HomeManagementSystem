@@ -238,3 +238,73 @@ button:focus {
         color: var(--white_color);
     }
 }
+
+
+/* nav_lang */
+.nav_lang {
+    margin-left: 0.2rem;
+    background: none;
+    width: 100%;
+    padding: 0 0.25rem;
+    cursor: pointer;
+}
+
+.nav_lang:hover {
+    color: var(--green-700-v1);
+}
+
+.nav_lang:hover .icon_nav_lang,
+.nav_lang:hover .select_nav_lang {
+    background: var(--white_color);
+    color: var(--green-700-v1);
+}
+
+.nav_lang .icon_nav_lang {
+    padding: 0.5rem 0.3rem;
+    background: var(--green-700-v1);
+    border-radius: 5px 0 0 5px;
+    text-align: center;
+}
+
+
+.nav_lang .icon_nav_lang i {
+    font-size: 1.2rem;
+}
+
+
+.nav_lang .select_nav_lang {
+    padding: 0.45rem 0.05rem;
+    background: var(--green-700-v1);
+    color: var(--white_color);
+    border-radius: 0 5px 5px 0;
+    border: none;
+    outline: none;
+    width: 75px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.nav_lang .select_nav_lang:hover {
+    color: var(--green-700-v1);
+    background: var(--white_color);
+}
+
+.nav_lang section {
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+.nav_lang option {
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+}
+
+
+/* direction  rtl*/
+.direction-rtl {
+    direction: rtl;
+}
+
+.direction-ltr {
+    direction: ltr;
+}

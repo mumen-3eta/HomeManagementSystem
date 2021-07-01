@@ -1,0 +1,214 @@
+{
+  "loading_Text": "جاري التحميل",
+  "navBar": {
+    "home": "الرئيسية",
+    "aboutUs": "تعرف علينا",
+    "contactUs": "تواصل معنا",
+    "ourTeam": "الفريق",
+    "login": "تسجيل الدخول",
+    "sigUp": "إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم"
+  },
+  "ourTeam": "فريقنا",
+  "frequently_Asked_Questions": "أسئلة مطروحة علينا",
+  "contactUs": {
+    "email": "البريد الإلكتروني",
+    "subject": "العنوان",
+    "message": "الرسالة",
+    "send": "إرسال"
+  },
+  "404": {
+    "NotFound": "الصفحة غير متوفرة",
+    "goBack": "الرجوع"
+  },
+  "login": {
+    "title": "أهلا بعودتك",
+    "body": "قم بتسجيل الدخول لمواصلة استخدام HMSy",
+    "newAccount": "ليس لديك حساب؟",
+    "registerHere": "سجل هنا",
+    "btn_text": "دخول",
+    "forgotPassword": "نسيت رقمك السري ؟",
+    "usernameOrEmail": "البريد الإلكتروني أو إسم المستخدم",
+    "password": "كلمة المرور"
+  },
+  "signUp": {
+    "title": "اشتراك",
+    "body": "اشترك لمتابعة استخدام HMSy",
+    "username": "اسم االمستخدم",
+    "email": "بريد إلكتروني",
+    "password": "كلمه السر",
+    "forgotPassword": "نسيت رقمك السري؟",
+    "btn_text": "اشتراك",
+    "goToLogin_text": "لديك حساب؟",
+    "goToLogin_link": "تسجيل الدخول من هنا"
+  },
+  "Dashboard": {
+    "NoDataForTable": "لا يوجد بيانات في الجدول",
+    "Header_nav": {
+      "profile": "الملف الشخصي",
+      "createProcessor": "إنشاء المعالج",
+      "createController": "إنشاء وحدة تحكم",
+      "addTypeController": "إضافة نوع وحدة التحكم",
+      "addLocationController": "أضف مواقع وحدة التحكم",
+      "myDevice": "جهازي",
+      "logOut": "تسجيل خروج"
+    },
+    "Aside_Nav": {
+      "text_Admin": "المسؤول"
+    },
+    "Body": {
+      "title": "لوحة التحكم",
+      "subTitle": "جميع وحدات التحكم",
+      "searchLabel": "البحث بالاسم أو التاريخ"
+    },
+    "Profile": {
+      "title": "تحديث ملفك الشخصي",
+      "Image": {
+        "chooseYourImage": "اختر صورتك",
+        "upload": "رفع الصورة",
+        "cancel": "إلغاء"
+      },
+      "UpdateForm": {
+        "baseInfo": "معلومات أساسية",
+        "loginInfo": "معلومات تسجيل الدخول",
+        "btn_Update": "تحديث"
+      },
+      "baseInfo": {
+        "firstName": "الاسم الأول",
+        "lastName": "الكنية",
+        "mobile": "رقم الهاتف أو المحمول"
+      },
+      "loginInfo": {
+        "new": "الجديد",
+        "userName": "إسم المستخدم",
+        "newPassword": "كلمة المرور الجديدة",
+        "confirmPassword": "تأكيد كلمة المرور الجديدة"
+      }
+    },
+    "ControllersConnected": {
+      "allControllerConnected": "جميع وحدات التحكم متصلة بالمعالج",
+      "btn_Text": "QR Code للبحث إمسح",
+      "webCame": {
+        "title": "QR Code للبحث إمسح",
+        "messageWait": "... انتظر فتح الكاميرا",
+        "error": "ضع الكاميرا ، يرجى التحقق من كاميرا الويب الخاصة بك"
+      }
+    },
+    "addProcessors": {
+      "title": "المعالجات",
+      "btn_Text": "QR Code للبحث إمسح",
+      "webCame": {
+        "addTitle": "طريقة أخرى لإضافة معرف المعالج",
+        "title": "QR Code للبحث إمسح",
+        "messageWait": "... انتظر فتح الكاميرا",
+        "error": "ضع الكاميرا ، يرجى التحقق من كاميرا الويب الخاصة بك",
+        "model": {
+          "title": "أضف معرف معالج جديد",
+          "Input_label": "معرف المعالج",
+          "btn_text": "إضافة معرف المعالج",
+          "btn_Clear": "إلغاء"
+        }
+      },
+      "table": {
+        "addController": "أضف وحدة تحكم",
+        "controller": "وحدات تحكم",
+        "delete": "حذف"
+      }
+    },
+    "allControllerForProcessor": {
+      "title": "كل أجهزة التحكم للمعالج:",
+      "btn_Text": "QR Code للبحث إمسح",
+      "webCame": {
+        "title": "QR Code للبحث إمسح",
+        "messageWait": "... انتظر فتح الكاميرا",
+        "error": "ضع الكاميرا ، يرجى التحقق من كاميرا الويب الخاصة بك"
+      }
+    },
+    "AddControllerForProcessor": {
+      "title": "إضافة وحدة تحكم جديدة",
+      "btn_Text": "QR Code للبحث إمسح",
+      "webCame": {
+        "title": "QR Code للبحث إمسح",
+        "messageWait": "... انتظر فتح الكاميرا",
+        "error": "ضع الكاميرا ، يرجى التحقق من كاميرا الويب الخاصة بك"
+      },
+      "Form": {
+        "buttonCreate": "إنشاء وحدة تحكم",
+        "buttonClear": "إلغاء",
+        "name": "إسم وحدة التحكم :",
+        "typeController": "نوع وحدة التحكم :",
+        "controllerID": "معرف وحدة التحكم :",
+        "locationController": "موقع وحدة التحكم :",
+        "btn_Scan": "إمسح الكود",
+        "placeholderScan": "أدخل معرف وحدة التحكم أو امسح رمز QR code",
+        "placeholderName": "أدخل وحدة تحكم الاسم"
+      }
+    }
+  },
+  "AdminDashboard": {
+    "Body": {
+      "title": "لوحة التحكم للمسؤول |"
+    },
+    "createProcessor": {
+      "title": "قم بإنشاء المعالج",
+      "btn_Generate": "إنشاء معرف المعالج",
+      "table": {
+        "btn_QRCode": "احصل على رمز الاستجابة السريعة (QR Code)"
+      },
+      "model": {
+        "title": "رمز الاستجابة السريعة (QR Code) , للمعالج هذا",
+        "error": "عذرا ،هناك خطأ ما",
+        "btn_Copy": "انسخ معرف المعالج",
+        "btn_Download": "تنزيل كصورة"
+      }
+    },
+    "createController": {
+      "title": "قم بإنشاء وحدة تحكم",
+      "btn_Generate": "إنشاء معرف وحدة التحكم",
+      "table": {
+        "btn_QRCode": "احصل على رمز الاستجابة السريعة (QR Code)"
+      },
+      "model": {
+        "title": "رمز الاستجابة السريعة (QR Code) , لوحدة التحكم هذه",
+        "error": "عذرا ،هناك خطأ ما",
+        "btn_Copy": "انسخ معرف وحدة التحكم",
+        "btn_Download": "تنزيل كصورة"
+      }
+    },
+    "allUser": {
+      "title": "جميع المستخدمين"
+    },
+    "Messages": {
+      "title": "جميع الرسائل",
+      "Delete": "حذف",
+      "Read": "مقروء"
+    },
+    "addTypeController": {
+      "title": "قم بإنشاء أنواع وحدة تحكم",
+      "table": {
+        "btn_Edit": "تعديل",
+        "btn_Delete": "حذف"
+      },
+      "model": {
+        "nameType": "اسم نوع وحدة التحكم",
+        "addTypeController": "إضافة نوع تحكم",
+        "clear": "تفريغ المعلومات",
+        "saveChange": "حفظ التغيير"
+      }
+    },
+    "addLocationController": {
+      "title": "قم بإنشاء مواقع وحدة تحكم",
+      "table": {
+        "btn_Edit": "تعديل",
+        "btn_Delete": "حذف"
+      },
+      "model": {
+        "nameType": "اسم موقع وحدة التحكم",
+        "addTypeController": "إضافة موقع وحدة تحكم",
+        "clear": "تفريغ المعلومات",
+        "saveChange": "حفظ التغيير"
+      }
+    }
+  }
+}

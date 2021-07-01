@@ -1,30 +1,31 @@
 <template>
-  <div>
-    <h2>All Controller Connected</h2>
+  <div :class="lang==='ar' ? 'direction-rtl' :'direction-ltr'">
+    <h2>{{ $t('Dashboard.ControllersConnected.allControllerConnected') }}</h2>
     <div class="SubMain__Section-AllController my-3 mx-auto p-2 position-relative">
-      <div class="search_group">
+      <div :class="lang==='ar' ? 'search_group direction-ltr' :'search_group '">
         <i class="fa fa-search search_group-icon"></i>
         <label for="searchId"></label>
         <input id="searchId" v-model="searchTerm" class="search_group-input" type="search">
-        <button class="btn btn-secondary mx-2 search_group-btn" @click.prevent="OpenScanSearch">Scan To Search
+        <button class="btn btn-secondary mx-2 search_group-btn" @click.prevent="OpenScanSearch">
+          {{ $t('Dashboard.ControllersConnected.btn_Text') }}
         </button>
       </div>
       <vue-good-table
-          :columns="columns"
+          :columns="this.lang === 'en' ? columns_EN : columns_AR"
           :pagination-options="{
                     enabled: true,
-                    mode: 'records',
+                    mode: 'pages',
                     perPage: 5,
                     position: 'bottom',
                     perPageDropdown: [5, 7, 9],
                     dropdownAllowAll: false,
                     setCurrentPage: 1,
-                    nextLabel: 'next',
-                    prevLabel: 'prev',
-                    rowsPerPageLabel: 'Rows per page',
-                    ofLabel: 'of',
-                    pageLabel: 'page', // for 'pages' mode
-                    allLabel: 'All',
+                    nextLabel:  this.lang==='en' ? 'next' : 'التالي',
+                    prevLabel: this.lang==='en' ? 'prev' : 'السابق',
+                    rowsPerPageLabel: this.lang==='en' ? 'Rows per page' : 'عدد الصفوف في الصفحة',
+                    ofLabel: this.lang==='en' ? 'of' :'من' ,
+                    pageLabel: this.lang==='en' ? 'page' :'صفحة', // for 'pages' mode
+                    allLabel:  this.lang==='en' ?  'All' : 'الجميع',
                   }"
           :rows="rows"
           :search-options=" {
@@ -32,16 +33,14 @@
                     skipDiacritics: true,
                     placeholder: 'Search this table',
                     externalQuery: searchTerm
-                  }">
+                  }"
+          :theme="mode==='dark' ? 'black-rhino' : ''">
+        <div slot="emptystate" style="text-align: center">
+          {{ $t('Dashboard.NoDataForTable') }}
+        </div>
         <div slot="table-actions" class="btn_searchScan"></div>
         <template slot="table-row" slot-scope="props">
           <div v-if="props.column.field === 'btn_Action'" class="btn_actionGroup">
-            <!--            <router-link-->
-            <!--                :to="{path:'/v2/main/device/processor/' + $route.params.connection_id + '/controller/' + props.row.Controller_Id }">-->
-            <!--              <button class="btn_Show">-->
-            <!--                <i class="fas fa-eye"></i>-->
-            <!--              </button>-->
-            <!--            </router-link>-->
             <button class="btn_deleted"
                     @click.prevent="DeleteControllerConnection(props.row.ControllerId ,props.row.ProcessorId)">
               <i class="fas fa-trash-alt"></i>
@@ -50,7 +49,7 @@
               <div class="form-check form-switch">
                 <label for="flexSwitchCheckChecked"></label>
                 <input id="flexSwitchCheckChecked"
-                       :checked="props.row.Status === 'ON' ? 'checked' : '' "
+                       :checked="props.row.Status === 'ON' ? 'checked' : '' || props.row.Status === 'شغال' ? 'checked' : ''  "
                        class="form-check-input"
                        type="checkbox"
                        @change.prevent="ChangeActivation(props.row.ControllerId)">
@@ -65,17 +64,20 @@
     </div>
 
     <!--    modal Search Processor id  -->
-    <modal :resizable="false" :width="650" height="auto" name="ScanSearchControllerId" @closed="AfterCloseScanSearch"
+    <modal :class=" lang==='ar' ? 'direction-ltr' :''" :resizable="false" :width="650" height="auto"
+           name="ScanSearchControllerId" @closed="AfterCloseScanSearch"
            @before-open="AfterCloseScanSearch">
       <i class="fas-closeBTN fas fa-times" @click.prevent="CloseScanSearch"></i>
-      <div class="container__AddProcessorID">
-        <h3>Scan To Search</h3>
+      <div :style="mode ==='dark' ? 'background-color: #323232' :'background-color:#fff'"
+           class="container__AddProcessorID">
+        <h3>{{ $t('Dashboard.ControllersConnected.webCame.title') }}</h3>
         <div class="otherWay_AddProcessorID">
           <div class="handle__camera">
             <qrcode-stream v-if="isShowingCamera" @decode="onDecodeSearch" @init="onInit">
-              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">Wait For Open Camera...</p>
+              <p v-if="isShowingCamera && isShowingWait" class="wait_class-cam">
+                {{ $t('Dashboard.ControllersConnected.webCame.messageWait') }}</p>
             </qrcode-stream>
-            <p v-if="!isShowingCamera">place camera, Pleas Check your web Came</p>
+            <p v-if="!isShowingCamera">{{ $t('Dashboard.ControllersConnected.webCame.error') }}</p>
           </div>
         </div>
       </div>
@@ -92,15 +94,13 @@ export default {
   name: "AllControllerConnection",
   data() {
     return {
-      // ControllerID: '',
-      // NameControllerUser: '',
-      // typeController_id: '',
-      // locationController_id: '',
+      lang: localStorage.getItem('lang') || 'en',
+      mode: localStorage.getItem('mode') || 'default',//default
       isShowingCamera: false,
       isShowingWait: true,
       searchTerm: '',
       Status: false,
-      columns: [
+      columns_EN: [
         {
           label: 'ID',
           field: 'id',
@@ -125,7 +125,7 @@ export default {
           sortable: false,
         },
         {
-          label: 'create At',
+          label: 'Date added',
           field: 'CreateAt',
           type: 'string',
         },
@@ -136,7 +136,49 @@ export default {
           sortable: false,
         },
         {
-          label: 'Action',
+          label: 'Settings',
+          field: 'btn_Action',
+          type: 'string',
+          sortable: false,
+        },
+      ],
+      columns_AR: [
+        {
+          label: 'رقم الترتيب',
+          field: 'id',
+          type: 'string',
+        },
+        {
+          label: 'الاسم',
+          field: 'ControllerName',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'معرف وحدة التحكم',
+          field: 'ControllerId',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'معرف المعالج',
+          field: 'ProcessorId',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'تاريخ الاضافة',
+          field: 'CreateAt',
+          type: 'string',
+        },
+        {
+          label: 'الحالة',
+          field: 'Status',
+          type: 'string',
+          sortable: false,
+        },
+        {
+          label: 'إعدادات',
           field: 'btn_Action',
           type: 'string',
           sortable: false,
@@ -192,13 +234,14 @@ export default {
     /* Delete Controller Connection */
     async DeleteControllerConnection(controller_Id, processor_Id) {
       this.$swal.fire({
-        title: 'Are you sure?',
-        html: `You won't Delete this controller Id <strong>${controller_Id}</strong>`,
+        title: this.lang === 'en' ? 'Are you sure?' : 'هل أنت متأكد؟',
+        html: this.lang === 'en' ? `Do you want to delete this controller ID? <strong>${controller_Id}</strong>` : `هل تريد أن تحذف معرف وحدة التحكم هذه <strong>${controller_Id}</strong>`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#35997c',
         cancelButtonColor: '#cb4848',
-        confirmButtonText: 'Yes, delete it!'
+        cancelButtonText: this.lang === 'en' ? 'Cancel' : 'إلغاء',
+        confirmButtonText: this.lang === 'en' ? 'Yes, delete it!' : 'نعم , إحذف وحدة التحكم'
       }).then(async (result) => {
         if (result.isConfirmed) {
           await axios.delete('/api/v1/controller/connection', {
@@ -210,7 +253,7 @@ export default {
             this.$swal.fire({
               position: 'center',
               icon: 'success',
-              title: 'Delete this Connection, Successfully',
+              title: this.lang === 'en' ? 'This connection has been successfully deleted' : 'تم حذف هذا الاتصال بنجاح',
               toast: false,
               showConfirmButton: false,
               timer: 1500
@@ -219,7 +262,7 @@ export default {
             this.$swal.fire({
               position: 'center',
               icon: 'error',
-              title: `<strong>Delete Processor ID, Faild</strong>`,
+              title: this.lang === 'en' ? `<strong>Failed to delete processor ID</strong>` : `<strong>فشل حذف معرف المعالج</strong>`,
               toast: false,
               showConfirmButton: false,
               timer: 1500
@@ -242,7 +285,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'warning',
-            title: 'Active this Controller, Successfully',
+            title: this.lang === 'en' ? 'This Controller has been successfully activated' : 'تم تنشيط وحدة التحكم هذه بنجاح',
             toast: false,
             showConfirmButton: false,
             timer: 1500
@@ -251,7 +294,7 @@ export default {
           this.$swal.fire({
             position: 'center',
             icon: 'warning',
-            title: 'Not Active this Controller, Successfully',
+            title: this.lang === 'en' ? 'This controller has been successfully deactivated' : 'تم إلغاء تنشيط وحدة التحكم هذه ، بنجاح',
             toast: false,
             showConfirmButton: false,
             timer: 1500
@@ -262,7 +305,7 @@ export default {
         this.$swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'Change Status, Faild',
+          title: this.lang === 'en' ? 'Failed Change Status' : 'فشل تغيير الحالة',
           toast: false,
           showConfirmButton: false,
           timer: 1500
@@ -274,13 +317,15 @@ export default {
     /*** ---------------- Get All Controller Connected With Processor ---------------- ***/
     async GetAllControllerConnectedForThisUser() {
       await axios.get('/api/v1/controller/connection/all').then(async ({data: {connectionData: response}}) => {
+        let ON = this.lang === 'en' ? 'ON' : 'شغال';
+        let OFF = this.lang === 'en' ? 'OFF' : 'لا يعمل';
         const AllControllerConnectedForThisUser = response.map((item) => ({
           id: (item.id).toString(),
           ControllerName: item.name.toString(),
           ControllerId: item.controller_id.toString(),
           ProcessorId: item.processor_id.toString(),
           CreateAt: this.FormatDate(item.create_at.toString()),
-          Status: item.status === false ? 'OFF' : 'ON',
+          Status: item.status === false ? OFF : ON,
           ActiveStatus: item.status,
           btn_Action: ''
         }))
